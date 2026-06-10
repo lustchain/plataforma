@@ -32,3 +32,9 @@ Update v20260610-logo-clean-big-v6:
 - Logo maior no topo.
 - Removido completamente o quadro/contorno em volta da logo.
 - Cache busting atualizado.
+
+
+Update v20260610-topbar-pink-border-v7:
+- Linha/contorno do topo trocado para rosa LUST.
+- Espessura aumentada para 3px.
+- Visual mais suave/profissional.
