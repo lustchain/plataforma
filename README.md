@@ -51,7 +51,7 @@ Update v20260610-active-nav-underline-v9:
 - Aplicado em todas as páginas.
 
 
-Clean static version: arquivos antigos Next/INRI removidos. Deploy GitHub Pages sem npm/build.
+Clean static version: arquivos antigos Next/legacy removidos. Deploy GitHub Pages sem npm/build.
 
 
 Update v20260610-top-promo-bar-v10:

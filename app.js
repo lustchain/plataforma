@@ -253,3 +253,23 @@ renderWalletButton();
 readState();
 setTimeout(readState, 900);
 setTimeout(readState, 2500);
+
+
+// Back to top button
+const backToTopButton = document.querySelector("#backToTop");
+
+function syncBackToTopButton() {
+  if (!backToTopButton) return;
+  if (window.scrollY > 360) {
+    backToTopButton.classList.add("show");
+  } else {
+    backToTopButton.classList.remove("show");
+  }
+}
+
+backToTopButton?.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+window.addEventListener("scroll", syncBackToTopButton, { passive: true });
+syncBackToTopButton();
