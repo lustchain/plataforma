@@ -119,10 +119,52 @@
     </div>
   </section>
 
-  <section class="miner-section" id="downloads">
+  <section class="miner-section" id="faucet">
     <div class="section-head">
       <div>
         <div class="kicker">Step 2</div>
+        <h2>Get small gas for registration.</h2>
+      </div>
+      <p>The faucet sends only <strong>0.01 LST</strong> to help a new wallet register and make a few first transactions. It is rate limited and never asks for your seed phrase.</p>
+    </div>
+
+    <div class="grid two">
+      <div class="form miner-wallet-panel faucet-panel">
+        <small>Official LUST gas faucet</small>
+        <div class="miner-status-grid">
+          <div><span>Faucet amount</span><strong>0.01 LST</strong></div>
+          <div><span>Eligibility</span><strong data-faucet-state>Connect wallet</strong></div>
+          <div><span>Your LST balance</span><strong data-faucet-wallet-balance>--</strong></div>
+          <div><span>Faucet status</span><strong data-faucet-server-state>Waiting</strong></div>
+        </div>
+
+        <div class="hero-buttons miner-actions-row">
+          <button class="btn primary" type="button" data-claim-faucet>Claim 0.01 LST</button>
+          <button class="btn" type="button" data-refresh-miner>Refresh status</button>
+        </div>
+
+        <div class="notice miner-log" data-faucet-log>
+          Connect your wallet first. The faucet is only for initial gas and is protected against abuse.
+        </div>
+      </div>
+
+      <div class="box">
+        <small>Faucet safety rules</small>
+        <div class="code-card">
+          <div><span>Amount</span><code>0.01 LST</code></div>
+          <div><span>Max wallet balance</span><code>0.02 LST</code></div>
+          <div><span>Cooldown</span><code>1 claim / wallet / 24h</code></div>
+          <div><span>Purpose</span><code>Register miner wallet + first gas</code></div>
+        </div>
+        <p class="mini-copy">The faucet only sends gas. It does not register the wallet for you. Registration still happens with your own MetaMask confirmation.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="miner-section" id="downloads">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Step 3</div>
         <h2>Download the official miner.</h2>
       </div>
       <p>The miner uses a latest snapshot URL that updates automatically. The installer SHA only changes when the scripts change; the snapshot SHA changes when the snapshot updates.</p>
@@ -135,9 +177,9 @@
           <small>Windows</small>
           <h3>Windows one-click miner</h3>
           <p>Extract the ZIP and double-click <strong>START-LUST-MINER-WINDOWS.bat</strong>.</p>
-          <a class="btn primary" href="http://157.230.84.128:18082/lust-v7a12-miner-windows-latest-snapshot.zip" target="_blank" rel="noreferrer">Download Windows ZIP</a>
+          <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a12-miner-windows-latest-snapshot.zip" target="_blank" rel="noreferrer">Download Windows ZIP</a>
         </div>
-        <div class="sha-box"><span>SHA256</span><code>64f667763a222d32de29fb5848645a7773ebbbf3026df531b3cebda3ed0c3a25</code></div>
+        <div class="sha-box"><span>SHA256</span><code>3955e4117481273248eb42971148811c40e0bceab5f1d706a510597a6f4decbc</code></div>
       </div>
 
       <div class="download-card">
@@ -146,9 +188,9 @@
           <small>Ubuntu / Linux</small>
           <h3>Linux latest-snapshot miner</h3>
           <p>Extract the TGZ, give permission and run <strong>./START-LUST-MINER-LINUX.sh</strong>.</p>
-          <a class="btn primary" href="http://157.230.84.128:18082/lust-v7a12-miner-linux-latest-snapshot.tar.gz" target="_blank" rel="noreferrer">Download Linux TGZ</a>
+          <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a12-miner-linux-latest-snapshot.tar.gz" target="_blank" rel="noreferrer">Download Linux TGZ</a>
         </div>
-        <div class="sha-box"><span>SHA256</span><code>ffa21951fe397b130c7f3237a969d2993b383ad2cfb6d0e04c7f2388a401c449</code></div>
+        <div class="sha-box"><span>SHA256</span><code>9d113d2a2fbe7a864feb10772e02153f9ca327c8b2b5d41aa6ad823c626d2330</code></div>
       </div>
     </div>
   </section>
@@ -156,7 +198,7 @@
   <section class="miner-section">
     <div class="section-head">
       <div>
-        <div class="kicker">Step 3</div>
+        <div class="kicker">Step 4</div>
         <h2>Start, stop and monitor.</h2>
       </div>
       <p>The status panel shows wallet, uptime, peers, gap, mined blocks, estimated rewards, snapshot info and recent logs.</p>
@@ -189,13 +231,13 @@ STATUS-LUST-MINER-WINDOWS.bat</code></pre>
     </div>
 
     <div class="grid three snapshot-grid">
-      <div class="box"><small>Snapshot block</small><strong class="big-metric" data-snapshot-block>99696</strong></div>
-      <div class="box"><small>Snapshot SHA</small><code data-snapshot-sha>06c4593e824237aca05b1bd2e0426e3167d997e5db5b024368bd0bf341404083</code></div>
+      <div class="box"><small>Snapshot block</small><strong class="big-metric" data-snapshot-block>103754</strong></div>
+      <div class="box"><small>Snapshot SHA</small><code data-snapshot-sha>a2d8c7dad1ba37123ca475b92f34283c73d9c947c81ba441717695d7c1fc534e</code></div>
       <div class="box"><small>Update rule</small><strong>Every 1000+ blocks</strong></div>
     </div>
 
     <div class="hero-buttons">
-      <a class="btn" href="http://104.131.40.124:18083/snapshot/snapshot-info.json" target="_blank" rel="noreferrer">Open snapshot info</a>
+      <a class="btn" href="https://snapshot.lustchain.org/snapshot/snapshot-info.json" target="_blank" rel="noreferrer">Open snapshot info</a>
       <a class="btn" href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">Open Explorer</a>
       <a class="btn" href="https://rpc.lustchain.org" target="_blank" rel="noreferrer">RPC</a>
     </div>

@@ -279,10 +279,19 @@ const LUST_REGISTRY_ADDRESS = "0x0000000000000000000000000000000000006923";
 const LUST_REGISTER_DATA = "0x4c5143525f5631";
 const LUST_RPC_URL = "https://rpc.lustchain.org";
 const LUST_EXPLORER_URL = "https://explorer.lustchain.org";
-const LUST_SNAPSHOT_INFO_URL = "http://104.131.40.124:18083/snapshot/snapshot-info.json";
+const LUST_SNAPSHOT_INFO_URL = "https://snapshot.lustchain.org/snapshot/snapshot-info.json";
+const LUST_FAUCET_STATUS_URL = "https://downloads.lustchain.org/faucet/status";
+const LUST_FAUCET_CLAIM_URL = "https://downloads.lustchain.org/faucet/claim";
 
 function setMinerLog(message, tone = "") {
   document.querySelectorAll("[data-miner-log]").forEach((el) => {
+    el.textContent = message;
+    el.dataset.tone = tone;
+  });
+}
+
+function setFaucetLog(message, tone = "") {
+  document.querySelectorAll("[data-faucet-log]").forEach((el) => {
     el.textContent = message;
     el.dataset.tone = tone;
   });
@@ -414,6 +423,69 @@ async function registerMinerWallet() {
   }
 }
 
+
+async function updateFaucetStatus(address) {
+  if (!document.querySelector("[data-faucet-state]")) return;
+
+  if (!address) {
+    setText("[data-faucet-state]", "Connect wallet");
+    setText("[data-faucet-wallet-balance]", "--");
+    setText("[data-faucet-server-state]", "Waiting");
+    return;
+  }
+
+  try {
+    const url = `${LUST_FAUCET_STATUS_URL}?address=${encodeURIComponent(address)}`;
+    const status = await fetch(url, { cache: "no-store" }).then((r) => r.json());
+
+    if (!status.ok) {
+      setText("[data-faucet-state]", status.message || "Not available");
+      setText("[data-faucet-server-state]", "Online");
+      return;
+    }
+
+    setText("[data-faucet-wallet-balance]", `${status.walletBalanceLST ?? "--"} LST`);
+    setText("[data-faucet-server-state]", `Online · ${status.faucetBalanceLST ?? "--"} LST`);
+
+    if (status.eligible) {
+      setText("[data-faucet-state]", "Eligible");
+      setFaucetLog("Your wallet can claim 0.01 LST for initial gas.", "ok");
+    } else {
+      setText("[data-faucet-state]", status.reason || "Not eligible");
+      setFaucetLog(status.reason || "This wallet is not eligible right now.", "warn");
+    }
+  } catch (err) {
+    console.error(err);
+    setText("[data-faucet-server-state]", "Offline");
+    setFaucetLog("Faucet status is not available right now. Try again in a moment.", "warn");
+  }
+}
+
+async function claimFaucet() {
+  try {
+    const account = await getWalletAccount();
+    setFaucetLog("Requesting 0.01 LST from the faucet...", "");
+
+    const res = await fetch(LUST_FAUCET_CLAIM_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ address: account })
+    });
+
+    const json = await res.json().catch(() => ({}));
+
+    if (!res.ok || !json.ok) {
+      throw new Error(json.message || "Faucet claim failed.");
+    }
+
+    setFaucetLog(`Faucet sent 0.01 LST. Tx: ${json.txHash}`, "ok");
+    setTimeout(updateMinerPage, 3500);
+  } catch (err) {
+    console.error(err);
+    setFaucetLog(err?.message || "Faucet claim failed.", "warn");
+  }
+}
+
 async function updateMinerPage() {
   const hasMinerPage = document.querySelector("[data-registration-state]") || document.querySelector("[data-snapshot-block]");
   if (!hasMinerPage) return;
@@ -427,7 +499,9 @@ async function updateMinerPage() {
   if (address) {
     try {
       const bal = await lustRpc("eth_getBalance", [address, "latest"]);
-      setText("[data-lust-balance]", weiHexToLst(bal));
+      const balText = weiHexToLst(bal);
+      setText("[data-lust-balance]", balText);
+      setText("[data-faucet-wallet-balance]", balText);
     } catch (_) {
       setText("[data-lust-balance]", "--");
     }
@@ -444,6 +518,8 @@ async function updateMinerPage() {
     setText("[data-registration-state]", "Connect wallet first");
   }
 
+  await updateFaucetStatus(address);
+
   try {
     const snap = await fetch(LUST_SNAPSHOT_INFO_URL, { cache: "no-store" }).then((r) => r.json());
     if (snap?.block) setText("[data-snapshot-block]", String(snap.block));
@@ -456,6 +532,7 @@ async function updateMinerPage() {
 window.addLustChainToWallet = addLustChainToWallet;
 window.registerMinerWallet = registerMinerWallet;
 window.updateMinerPage = updateMinerPage;
+window.claimFaucet = claimFaucet;
 
 document.addEventListener("click", (event) => {
   if (event.target.closest("[data-add-lust-chain]")) {
@@ -469,6 +546,10 @@ document.addEventListener("click", (event) => {
   if (event.target.closest("[data-refresh-miner]")) {
     event.preventDefault();
     updateMinerPage();
+  }
+  if (event.target.closest("[data-claim-faucet]")) {
+    event.preventDefault();
+    claimFaucet();
   }
 });
 
