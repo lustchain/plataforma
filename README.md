@@ -1,16 +1,14 @@
-# LUST Simple Platform — Real Reown AppKit Modal
+# LUST Platform — Reown AppKit All Pages Working V2
 
-Versão estática sem Next e sem npm.
+Sem Next, sem npm e sem build.
 
-Connect wallet:
-- Usa Reown AppKit real, igual padrão INRI.
-- Modal profissional de conexão com WalletConnect, MetaMask, Rainbow, Trust Wallet, Coinbase etc.
-- Quando conectado, clicar no botão abre o modal profissional de Account da Reown, com disconnect integrado.
-- Cores adaptadas para LUST (#F70375).
+Correções:
+- `app.js` com Reown AppKit real.
+- Todas as páginas usam `<script type="module" src="./app.js?...">`.
+- Todas as páginas usam o mesmo header.
+- Cache busting aplicado em `styles.css` e `app.js`.
+- Contornos grossos mantidos.
+- `index.html` redireciona para `bridge.html`.
 
-GitHub Pages:
-1. Extraia o ZIP.
-2. Suba os arquivos extraídos para a raiz do repositório.
-3. Settings > Pages > Source: GitHub Actions.
-4. Rode o workflow.
-5. Depois do deploy, use Ctrl+F5.
+Suba os arquivos extraídos para a raiz do GitHub.
+Depois do deploy, abra em janela anônima ou use Ctrl+F5.

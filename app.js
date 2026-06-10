@@ -37,7 +37,6 @@ const ethereumNetwork = defineChain({
   },
   blockExplorers: {
     default: { name: "Etherscan", url: "https://etherscan.io" }
-  }
 });
 
 const polygonNetwork = defineChain({
@@ -56,11 +55,8 @@ const polygonNetwork = defineChain({
 });
 
 const featuredWalletIds = [
-  // MetaMask
   "c57ca95b47569778a828d19178114f2db125b25b778adf5cba72bd778e231769",
-  // Rainbow
   "1ae92b26df02f0abca6304df07debccd18262fdf5fe82daa81593582dac9a369",
-  // Trust Wallet
   "4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0"
 ];
 
@@ -171,11 +167,13 @@ function readAppKitState() {
     const address = appKit.getAddress?.() || "";
     const rawChainId = appKit.getChainId?.() || "";
     const isConnected = Boolean(appKit.getIsConnected?.() || address);
+
     currentWallet = {
       address,
       chainId: normalizeChainId(rawChainId),
       isConnected
     };
+
     updateConnectButtons();
   } catch (err) {
     console.warn("AppKit state read failed", err);
@@ -185,14 +183,16 @@ function readAppKitState() {
 async function openWallet() {
   try {
     readAppKitState();
+
     if (currentWallet.isConnected && currentWallet.address) {
       await appKit.open({ view: "Account" });
     } else {
       await appKit.open({ view: "Connect", namespace: "eip155" });
     }
 
-    window.setTimeout(readAppKitState, 450);
-    window.setTimeout(readAppKitState, 1400);
+    window.setTimeout(readAppKitState, 400);
+    window.setTimeout(readAppKitState, 1200);
+    window.setTimeout(readAppKitState, 2500);
   } catch (err) {
     console.error(err);
     alert("Could not open wallet modal.");
@@ -229,6 +229,7 @@ appKit.subscribeProvider?.((state) => {
     chainId: normalizeChainId(state?.chainId || appKit.getChainId?.() || ""),
     isConnected: Boolean(state?.isConnected || state?.address || appKit.getIsConnected?.())
   };
+
   updateConnectButtons();
 
   if (currentWallet.isConnected && currentWallet.address && normalizeChainId(currentWallet.chainId) !== LUST_CHAIN_ID_HEX) {
@@ -238,10 +239,12 @@ appKit.subscribeProvider?.((state) => {
 
 appKit.subscribeState?.(() => {
   window.setTimeout(readAppKitState, 100);
+  window.setTimeout(readAppKitState, 1000);
 });
 
 appKit.subscribeEvents?.(() => {
   window.setTimeout(readAppKitState, 120);
+  window.setTimeout(readAppKitState, 900);
 });
 
 document.addEventListener("click", (event) => {
@@ -274,5 +277,5 @@ document.querySelectorAll("[data-tab]").forEach((tab) => {
 
 updateConnectButtons();
 readAppKitState();
-window.setTimeout(readAppKitState, 800);
-window.setTimeout(readAppKitState, 2500);
+window.setTimeout(readAppKitState, 700);
+window.setTimeout(readAppKitState, 2200);

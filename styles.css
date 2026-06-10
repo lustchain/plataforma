@@ -1,8 +1,7 @@
 :root{
   --bg:#050007;
   --panel:#0d0711;
-  --panel2:#14091a;
-  --line:rgba(255,255,255,.24);
+  --line:rgba(255,255,255,.26);
   --text:#fff7ff;
   --muted:#c8b8cf;
   --pink:#f70375;
@@ -36,7 +35,7 @@ button,input{font:inherit}
   justify-content:space-between;
   gap:22px;
   padding:14px clamp(16px,4vw,56px);
-  border-bottom:1px solid var(--line);
+  border-bottom:2px solid var(--line);
   background:#07000a;
 }
 
@@ -112,11 +111,11 @@ button,input{font:inherit}
 }
 
 .btn:hover{
-  border-color:rgba(255,255,255,.42);
+  border-color:rgba(255,255,255,.44);
 }
 
 .btn.primary{
-  border:2px solid rgba(247,3,117,.55);
+  border:2px solid rgba(247,3,117,.58);
   background:linear-gradient(135deg,rgba(247,3,117,.95),rgba(143,53,255,.95));
 }
 
@@ -124,10 +123,14 @@ button,input{font:inherit}
   min-width:246px;
   justify-content:flex-start;
   gap:12px;
-  background:#080715;
-  border:2px solid rgba(247,3,117,.72);
+  background:#071018;
+  border:2px solid rgba(247,3,117,.88);
   padding:9px 13px;
   border-radius:14px;
+}
+
+.connect-btn:hover{
+  border-color:rgba(255,75,168,1);
 }
 
 .connect-icon{
@@ -137,10 +140,22 @@ button,input{font:inherit}
   display:grid;
   place-items:center;
   background:rgba(247,3,117,.10);
-  border:2px solid rgba(247,3,117,.42);
+  border:2px solid rgba(247,3,117,.38);
   color:var(--pink2);
   font-size:16px;
   font-weight:950;
+}
+
+.connect-icon.ready{
+  color:var(--ok);
+  border-color:rgba(78,255,190,.45);
+  background:rgba(78,255,190,.09);
+}
+
+.connect-icon.warn{
+  color:#ffcc66;
+  border-color:rgba(255,204,102,.45);
+  background:rgba(255,204,102,.09);
 }
 
 .connect-copy{
@@ -251,7 +266,7 @@ p{
   gap:16px;
   align-items:center;
   padding:15px 0;
-  border-bottom:1px solid var(--line);
+  border-bottom:2px solid var(--line);
 }
 
 .row:last-child{border-bottom:0}
@@ -299,7 +314,7 @@ p{
 
 .result{
   margin-top:18px;
-  border:2px solid rgba(247,3,117,.42);
+  border:2px solid rgba(247,3,117,.44);
   background:rgba(247,3,117,.055);
   border-radius:16px;
   padding:18px;
@@ -328,12 +343,23 @@ p{
 }
 
 .footer{
-  border-top:1px solid var(--line);
+  border-top:2px solid var(--line);
   padding:24px clamp(18px,4vw,56px);
   display:flex;
   justify-content:space-between;
   gap:20px;
   color:var(--muted);
+}
+
+/* Real Reown/AppKit modal — LUST colors */
+w3m-modal,
+appkit-modal{
+  z-index:2147483000 !important;
+  --w3m-z-index:2147483000;
+  --w3m-accent:#f70375;
+  --w3m-color-mix:#f70375;
+  --w3m-color-mix-strength:22%;
+  --w3m-border-radius-master:12px;
 }
 
 @media(max-width:980px){
@@ -364,88 +390,4 @@ p{
     min-width:unset;
     width:100%;
   }
-}
-
-
-/* ===== Stronger LUST outlines / wallet dropdown fix ===== */
-.card,.box,.form,.input,.result,.notice,.wallet-modal,.wallet-option,.wallet-status-box{
-  border-width:2px !important;
-}
-
-.connect-btn{
-  border-width:2px !important;
-  border-color:rgba(247,3,117,.85) !important;
-  background:linear-gradient(180deg,rgba(18,7,24,.98),rgba(8,6,18,.98)) !important;
-}
-
-.connect-btn:hover{
-  border-color:rgba(255,75,168,1) !important;
-}
-
-.wallet-modal-backdrop{
-  z-index:999999 !important;
-}
-
-.wallet-modal{
-  box-shadow:none !important;
-  border-color:rgba(247,3,117,.78) !important;
-}
-
-.wallet-close,
-.wallet-option,
-.wallet-status-box,
-.wallet-modal-actions .btn{
-  border-width:2px !important;
-}
-
-.wallet-option:hover{
-  border-color:rgba(255,75,168,.95) !important;
-}
-
-.wallet-disconnect-danger{
-  border-color:rgba(255,91,141,.75) !important;
-  color:#fff !important;
-  background:rgba(255,91,141,.09) !important;
-}
-
-.wallet-disconnect-danger:hover{
-  border-color:rgba(255,91,141,1) !important;
-}
-
-
-/* ===== Real Reown/AppKit modal — LUST colors ===== */
-w3m-modal,
-appkit-modal{
-  z-index:2147483000 !important;
-  --w3m-z-index:2147483000;
-  --w3m-accent:#f70375;
-  --w3m-color-mix:#f70375;
-  --w3m-color-mix-strength:22%;
-  --w3m-border-radius-master:12px;
-}
-
-.wallet-modal-backdrop{
-  display:none !important;
-}
-
-.connect-btn{
-  border-width:2px !important;
-  border-color:rgba(247,3,117,.88) !important;
-  background:#071018 !important;
-}
-
-.connect-btn:hover{
-  border-color:rgba(255,75,168,1) !important;
-}
-
-.connect-icon.ready{
-  color:#4effbe !important;
-  border-color:rgba(78,255,190,.35) !important;
-  background:rgba(78,255,190,.09) !important;
-}
-
-.connect-icon.warn{
-  color:#ffcc66 !important;
-  border-color:rgba(255,204,102,.35) !important;
-  background:rgba(255,204,102,.08) !important;
 }
