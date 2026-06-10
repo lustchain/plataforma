@@ -3,189 +3,160 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>LUST Chain Platform</title>
+  <title>LUST Platform</title>
   <meta name="description" content="LUST Chain platform for LUSDT bridge and public LST mining." />
   <link rel="stylesheet" href="./styles.css" />
 </head>
-
 <body>
   <header class="topbar">
-    <a class="brand" href="./">
-      <div class="brand-mark">L</div>
-      <div>
-        <strong>LUST</strong>
-        <span>Platform</span>
-      </div>
+    <a class="brand" href="#top" aria-label="LUST Platform">
+      <span class="brand-icon">L</span>
+      <span class="brand-text"><b>LUST</b><small>Platform</small></span>
     </a>
 
     <nav class="nav">
       <a href="#bridge">Bridge</a>
       <a href="#mining">Mining</a>
       <a href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">Explorer</a>
-      <a href="#docs">Docs</a>
+      <a href="#network">Network</a>
     </nav>
 
-    <div class="actions">
-      <button class="ghost" id="addNetworkBtn">Add LUST</button>
-      <button class="primary small" id="connectBtn">Connect</button>
+    <div class="top-actions">
+      <button class="btn btn-soft" data-add-network>Add LUST</button>
+      <button class="btn btn-main" id="connectBtn">Connect</button>
     </div>
   </header>
 
-  <main>
-    <section class="hero">
-      <div class="hero-copy">
-        <div class="pill">
-          <span></span>
-          MAINNET LIVE · CHAIN ID 6923
-        </div>
+  <main id="top">
+    <section class="hero section-shell">
+      <div class="hero-left">
+        <div class="status-pill"><span></span>Mainnet Live · Chain ID 6923</div>
+        <h1>LUST Chain</h1>
+        <p class="lead">Bridge LUSDT and mine LST from one simple platform.</p>
 
-        <h1>
-          Bridge LUSDT.<br />
-          Mine <em>LST</em>.
-        </h1>
-
-        <p>
-          A clean platform for LUST Chain users. Move stable liquidity through the
-          LUSDT bridge and participate in public LST mining.
-        </p>
-
-        <div class="hero-buttons">
-          <a class="primary" href="#bridge">Open Bridge</a>
-          <a class="secondary" href="#mining">Start Mining</a>
-          <button class="secondary" id="addNetworkBtn2">Add Network</button>
-        </div>
-
-        <div class="stats">
-          <div>
-            <strong>6923</strong>
-            <span>Chain ID</span>
-          </div>
-          <div>
-            <strong>LST</strong>
-            <span>Native Token</span>
-          </div>
-          <div>
-            <strong>2 LST</strong>
-            <span>Block Reward</span>
-          </div>
-          <div>
-            <strong>LQC</strong>
-            <span>Consensus</span>
-          </div>
+        <div class="hero-actions">
+          <a class="btn btn-main" href="#bridge">Open Bridge</a>
+          <a class="btn btn-soft" href="#mining">Start Mining</a>
+          <button class="btn btn-soft" data-add-network>Add Network</button>
         </div>
       </div>
 
-      <div class="hero-panel">
-        <div class="panel-head">
-          <span>LUST Network</span>
-          <b>Online</b>
+      <aside class="network-card">
+        <h2>Network</h2>
+        <div class="mini-row"><span>Chain ID</span><b>6923</b></div>
+        <div class="mini-row"><span>Token</span><b>LST</b></div>
+        <div class="mini-row"><span>Reward</span><b>2 LST</b></div>
+        <div class="mini-row"><span>Status</span><b class="green">Online</b></div>
+      </aside>
+    </section>
+
+    <section class="quick-grid">
+      <a class="quick-card" href="#bridge">
+        <small>Bridge</small>
+        <strong>LUSDT</strong>
+        <span>Polygon / BSC ⇄ LUST</span>
+      </a>
+      <a class="quick-card" href="#mining">
+        <small>Mining</small>
+        <strong>LST</strong>
+        <span>Public miner for users</span>
+      </a>
+      <a class="quick-card" href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">
+        <small>Explorer</small>
+        <strong>Blocks</strong>
+        <span>Transactions and addresses</span>
+      </a>
+    </section>
+
+    <section class="section-shell two-col" id="bridge">
+      <div class="copy-block">
+        <span class="eyebrow">LUSDT Bridge</span>
+        <h2>Move stable liquidity into LUST.</h2>
+        <p>Simple bridge flow like the INRI platform: choose direction, enter amount, check fee and continue to the official bridge.</p>
+        <div class="note-box">
+          Fee estimate: <b>0.20%</b><br />
+          Destination: <b>LUST Chain</b><br />
+          Bridge asset: <b>LUSDT</b>
+        </div>
+      </div>
+
+      <div class="bridge-box">
+        <div class="bridge-tabs" role="tablist" aria-label="Bridge direction">
+          <button class="tab active" data-direction="buy">Buy LUSDT</button>
+          <button class="tab" data-direction="sell">Sell LUSDT</button>
         </div>
 
-        <div class="network-list">
+        <div class="route-line">
           <div>
-            <span>RPC</span>
-            <strong>rpc.lustchain.org</strong>
+            <small>From</small>
+            <b id="fromNetwork">Polygon</b>
+            <span id="fromToken">USDT</span>
           </div>
+          <div class="arrow">↓</div>
           <div>
-            <span>Explorer</span>
-            <strong>explorer.lustchain.org</strong>
-          </div>
-          <div>
-            <span>Bridge Asset</span>
-            <strong>LUSDT</strong>
-          </div>
-          <div>
-            <span>Mining Asset</span>
-            <strong>LST</strong>
+            <small>To</small>
+            <b id="toNetwork">LUST Chain</b>
+            <span id="toToken">LUSDT</span>
           </div>
         </div>
 
-        <div class="glow-card">
-          <small>Public Mining</small>
-          <strong>Open to users</strong>
-          <p>Download the miner, add your wallet and join the LUST network.</p>
+        <label class="amount-label" for="amountInput">Amount</label>
+        <div class="amount-box">
+          <input id="amountInput" inputmode="decimal" value="100" />
+          <button id="maxBtn">MAX</button>
         </div>
+
+        <div class="summary">
+          <div><span>Bridge fee</span><b id="feeValue">0.20 LUSDT</b></div>
+          <div><span>You receive</span><b id="receiveValue">99.80 LUSDT</b></div>
+          <div><span>Status</span><b class="green">Ready</b></div>
+        </div>
+
+        <div class="bridge-actions">
+          <button class="btn btn-main wide" id="openBridgeBtn">Open Official Bridge</button>
+          <button class="btn btn-soft wide" data-add-network>Add LUST Network</button>
+        </div>
+
+        <p class="safe-text">This page is a clean entry screen. Final approval, deposit, burn and claim happen inside the official bridge flow.</p>
       </div>
     </section>
 
-    <section class="cards">
-      <article>
-        <span>01</span>
-        <h3>LUSDT Bridge</h3>
-        <p>Move stable liquidity into LUST Chain using a simple bridge flow.</p>
-        <a href="#bridge">Open bridge →</a>
-      </article>
-
-      <article>
-        <span>02</span>
-        <h3>Public Mining</h3>
-        <p>Mine LST from Windows or Linux and help secure the network.</p>
-        <a href="#mining">Start mining →</a>
-      </article>
-
-      <article>
-        <span>03</span>
-        <h3>Explorer</h3>
-        <p>Track blocks, transactions, addresses and network activity.</p>
-        <a href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">View explorer →</a>
-      </article>
-    </section>
-
-    <section class="split" id="bridge">
-      <div>
-        <div class="tag">Bridge</div>
-        <h2>Bridge LUSDT to LUST Chain.</h2>
-        <p>
-          LUSDT is the stable liquidity layer for LUST. Use the bridge to move value
-          into the ecosystem and prepare for DeFi, trading and payments.
-        </p>
-        <a class="primary" href="#">Open LUSDT Bridge</a>
+    <section class="section-shell two-col reverse" id="mining">
+      <div class="miner-panel">
+        <div class="mini-row"><span>Miner kit</span><b>Windows / Linux</b></div>
+        <div class="mini-row"><span>Reward</span><b>2 LST / block</b></div>
+        <div class="mini-row"><span>Mode</span><b>Public mining</b></div>
+        <div class="mini-row"><span>Explorer</span><b class="green">Online</b></div>
       </div>
 
-      <div class="terminal">
-        <div><span>Asset</span><b>LUSDT</b></div>
-        <div><span>Network</span><b>LUST Chain</b></div>
-        <div><span>Chain ID</span><b>6923</b></div>
-        <div><span>Status</span><b class="green">Ready</b></div>
-      </div>
-    </section>
-
-    <section class="split reverse" id="mining">
-      <div class="terminal">
-        <div><span>Miner Kit</span><b>Windows / Linux</b></div>
-        <div><span>Reward</span><b>2 LST / block</b></div>
-        <div><span>Mode</span><b>Public Mining</b></div>
-        <div><span>Status</span><b class="green">Mainnet Live</b></div>
-      </div>
-
-      <div>
-        <div class="tag">Mining</div>
+      <div class="copy-block">
+        <span class="eyebrow">Public Mining</span>
         <h2>Start mining LST.</h2>
-        <p>
-          LUST Chain is built for public participation. Add your wallet, install the
-          miner and join the network without needing a centralized pool.
-        </p>
-        <div class="hero-buttons">
-          <a class="primary" href="#">Download Windows</a>
-          <a class="secondary" href="#">Linux Guide</a>
+        <p>Download the LUST public miner, add your wallet and participate in the network with a simple setup.</p>
+        <div class="hero-actions">
+          <a class="btn btn-main" href="#">Windows Miner</a>
+          <a class="btn btn-soft" href="#">Linux Guide</a>
         </div>
       </div>
     </section>
 
-    <section class="docs" id="docs">
-      <h2>Network details</h2>
-      <div class="docs-grid">
-        <div><span>RPC</span><strong>https://rpc.lustchain.org</strong></div>
-        <div><span>Backup RPC</span><strong>https://rpc-backup.lustchain.org</strong></div>
-        <div><span>Explorer</span><strong>https://explorer.lustchain.org</strong></div>
-        <div><span>Currency</span><strong>LST</strong></div>
+    <section class="section-shell" id="network">
+      <div class="copy-block center">
+        <span class="eyebrow">Network Details</span>
+        <h2>Connect to LUST Chain.</h2>
+      </div>
+      <div class="details-grid">
+        <div><span>RPC</span><b>https://rpc.lustchain.org</b></div>
+        <div><span>Backup RPC</span><b>https://rpc-backup.lustchain.org</b></div>
+        <div><span>Explorer</span><b>https://explorer.lustchain.org</b></div>
+        <div><span>Currency</span><b>LST</b></div>
       </div>
     </section>
   </main>
 
-  <footer>
-    <strong>LUST Chain</strong>
-    <span>Public mining EVM network for bridge liquidity and LST rewards.</span>
+  <footer class="footer">
+    <b>LUST Chain</b>
+    <span>Bridge LUSDT. Mine LST. Build on a sovereign EVM network.</span>
   </footer>
 
   <script src="./app.js"></script>

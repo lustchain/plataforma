@@ -1,58 +1,50 @@
-const LUST_CHAIN = {
-  chainId: "0x1b0b",
-  chainName: "LUST Chain",
-  nativeCurrency: {
-    name: "LST",
-    symbol: "LST",
-    decimals: 18
-  },
-  rpcUrls: ["https://rpc.lustchain.org"],
-  blockExplorerUrls: ["https://explorer.lustchain.org"]
+const OFFICIAL_BRIDGE_URL = 'https://lusdt-bridge.lustchain.org'
+const FEE = 0.002
+const chain = {
+  chainId: '0x1b0b',
+  chainName: 'LUST Chain',
+  nativeCurrency: { name: 'LST', symbol: 'LST', decimals: 18 },
+  rpcUrls: ['https://rpc.lustchain.org'],
+  blockExplorerUrls: ['https://explorer.lustchain.org']
 }
-
-function shortAddress(address) {
-  if (!address) return "Connect"
-  return `${address.slice(0, 6)}...${address.slice(-4)}`
+let direction = 'buy'
+function qs(s){return document.querySelector(s)}
+function qsa(s){return [...document.querySelectorAll(s)]}
+function short(a){return a ? `${a.slice(0,6)}...${a.slice(-4)}` : 'Connect'}
+function updateBridge(){
+  const amount = Number(qs('#amountInput')?.value || 0)
+  const fee = Math.max(0, amount * FEE)
+  const receive = Math.max(0, amount - fee)
+  qs('#feeValue').textContent = `${fee.toFixed(amount < 10 ? 4 : 2)} LUSDT`
+  qs('#receiveValue').textContent = `${receive.toFixed(amount < 10 ? 4 : 2)} LUSDT`
+  const buy = direction === 'buy'
+  qs('#fromNetwork').textContent = buy ? 'Polygon' : 'LUST Chain'
+  qs('#fromToken').textContent = buy ? 'USDT' : 'LUSDT'
+  qs('#toNetwork').textContent = buy ? 'LUST Chain' : 'Polygon'
+  qs('#toToken').textContent = buy ? 'LUSDT' : 'USDT'
 }
-
-async function addLustNetwork() {
-  if (!window.ethereum) {
-    alert("MetaMask not found. Install MetaMask first.")
-    return
-  }
-
-  try {
-    await window.ethereum.request({
-      method: "wallet_addEthereumChain",
-      params: [LUST_CHAIN]
-    })
-  } catch (err) {
-    console.error(err)
-    alert("Could not add LUST Chain.")
-  }
+async function addNetwork(){
+  if(!window.ethereum){ alert('MetaMask not found.'); return }
+  try{ await window.ethereum.request({ method:'wallet_addEthereumChain', params:[chain] }) }
+  catch(e){ console.error(e); alert('Could not add LUST Chain.') }
 }
-
-async function connectWallet() {
-  if (!window.ethereum) {
-    alert("MetaMask not found. Install MetaMask first.")
-    return
-  }
-
-  try {
-    await addLustNetwork()
-    const accounts = await window.ethereum.request({
-      method: "eth_requestAccounts"
-    })
-
-    const account = accounts && accounts[0]
-    const btn = document.getElementById("connectBtn")
-    if (btn && account) btn.textContent = shortAddress(account)
-  } catch (err) {
-    console.error(err)
-    alert("Wallet connection cancelled or failed.")
-  }
+async function connect(){
+  if(!window.ethereum){ alert('MetaMask not found.'); return }
+  try{
+    await addNetwork()
+    const accounts = await window.ethereum.request({ method:'eth_requestAccounts' })
+    qs('#connectBtn').textContent = short(accounts?.[0])
+  }catch(e){ console.error(e) }
 }
-
-document.getElementById("addNetworkBtn")?.addEventListener("click", addLustNetwork)
-document.getElementById("addNetworkBtn2")?.addEventListener("click", addLustNetwork)
-document.getElementById("connectBtn")?.addEventListener("click", connectWallet)
+qsa('[data-add-network]').forEach(b=>b.addEventListener('click',addNetwork))
+qs('#connectBtn')?.addEventListener('click',connect)
+qsa('.tab').forEach(tab=>tab.addEventListener('click',()=>{
+  direction = tab.dataset.direction || 'buy'
+  qsa('.tab').forEach(t=>t.classList.remove('active'))
+  tab.classList.add('active')
+  updateBridge()
+}))
+qs('#amountInput')?.addEventListener('input',updateBridge)
+qs('#maxBtn')?.addEventListener('click',()=>{ qs('#amountInput').value='100'; updateBridge() })
+qs('#openBridgeBtn')?.addEventListener('click',()=>{ window.open(OFFICIAL_BRIDGE_URL, '_blank', 'noopener,noreferrer') })
+updateBridge()
