@@ -48,5 +48,7 @@ Update v20260610-topbar-pink-thick-v8:
 
 Update v20260610-active-nav-underline-v9:
 - Adicionado tracinho rosa no menu da página ativa.
-- Estilo parecido com a INRI.
 - Aplicado em todas as páginas.
+
+
+Clean static version: arquivos antigos Next/INRI removidos. Deploy GitHub Pages sem npm/build.
