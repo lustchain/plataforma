@@ -1,12 +1,12 @@
-# LUST Platform — Full Connect Button Click V3
+# LUST Platform — Official AppKit Button V4
 
-Correção:
-- O botão inteiro Connect wallet abre o modal, não só a setinha.
-- Aplicado em TODAS as páginas HTML.
-- `onclick` direto + listener JS + CSS `pointer-events:none` nos filhos do botão.
-- Cache busting novo em `styles.css` e `app.js`.
-- Reown AppKit real mantido.
+Correção principal:
+- Removido botão custom quebrado.
+- Header de TODAS as páginas usa `<appkit-button>`, o botão oficial da Reown/AppKit.
+- O botão oficial abre conexão e, depois de conectado, abre o modal de account/desconectar profissional.
+- Sem onclick manual, sem gambiarra, sem modal próprio.
+- Cache busting novo.
 
-Depois do deploy:
-- Use Ctrl+F5 ou janela anônima.
-- Confirme que cada página carregou `app.js?v20260610-full-connect-button-v3`.
+Depois de subir:
+- Use janela anônima ou Ctrl+F5.
+- Teste Bridge, Mining, Swap, Staking, Liquidity, P2P, NFTs, Factory, Explorer e Docs.

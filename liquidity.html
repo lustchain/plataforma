@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Liquidity | LUST Platform</title>
   <meta name="description" content="LUST Chain platform." />
-  <link rel="stylesheet" href="./styles.css?v20260610-full-connect-button-v3" />
+  <link rel="stylesheet" href="./styles.css?v20260610-official-appkit-button-v4" />
 </head>
 <body>
 <header class="topbar">
@@ -31,29 +31,14 @@
   </nav>
 
   <div class="actions">
-    <button class="btn connect-btn" data-connect onclick="window.openLustWallet && window.openLustWallet(event)">
-      <div class="connect-icon">◫</div>
-      <div class="connect-copy">
-        <strong>Connect wallet</strong>
-        <span>Wallet not connected</span>
-      </div>
-      <div class="connect-caret">⌄</div>
-    </button>
+    <div class="appkit-wrap">
+      <appkit-button></appkit-button>
+    </div>
   </div>
 </header>
 
 <main class="wrap page">
-<section class="hero">
-  <div class="kicker">Liquidity</div>
-  <h1>Add liquidity.</h1>
-  <p>Liquidity page for LST, WLST and LUSDT pairs. No unrelated content.</p>
-
-  <div class="grid three">
-    <div class="card"><small>Pair</small><h3>LST / LUSDT</h3><p>Main liquidity pair.</p></div>
-    <div class="card"><small>Pair</small><h3>WLST / LUSDT</h3><p>Wrapped asset pair.</p></div>
-    <div class="card"><small>Status</small><h3>Ready soon</h3><p>Add router/pool links here.</p></div>
-  </div>
-</section>
+<section class="hero"><div class="kicker">Liquidity</div><h1>Add liquidity.</h1><p>Liquidity page for LST, WLST and LUSDT pairs. No unrelated content.</p><div class="grid three"><div class="card"><small>Pair</small><h3>LST / LUSDT</h3><p>Main liquidity pair.</p></div><div class="card"><small>Pair</small><h3>WLST / LUSDT</h3><p>Wrapped asset pair.</p></div><div class="card"><small>Status</small><h3>Ready soon</h3><p>Add router/pool links here.</p></div></div></section>
 </main>
 
 <footer class="footer">
@@ -61,6 +46,6 @@
   <span>Chain ID 6923 · LST · RPC https://rpc.lustchain.org</span>
 </footer>
 
-<script type="module" src="./app.js?v20260610-full-connect-button-v3"></script>
+<script type="module" src="./app.js?v20260610-official-appkit-button-v4"></script>
 </body>
 </html>

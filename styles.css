@@ -96,6 +96,29 @@ button,input{font:inherit}
   gap:10px;
 }
 
+.appkit-wrap{
+  min-width:210px;
+  display:flex;
+  justify-content:flex-end;
+}
+
+/* Reown/AppKit official component colors */
+appkit-button,
+w3m-button,
+w3m-modal,
+appkit-modal{
+  --w3m-accent:#f70375;
+  --w3m-color-mix:#f70375;
+  --w3m-color-mix-strength:22%;
+  --w3m-border-radius-master:12px;
+  --w3m-z-index:2147483000;
+}
+
+w3m-modal,
+appkit-modal{
+  z-index:2147483000 !important;
+}
+
 .btn{
   border:2px solid var(--line);
   border-radius:999px;
@@ -117,69 +140,6 @@ button,input{font:inherit}
 .btn.primary{
   border:2px solid rgba(247,3,117,.58);
   background:linear-gradient(135deg,rgba(247,3,117,.95),rgba(143,53,255,.95));
-}
-
-.connect-btn{
-  min-width:246px;
-  justify-content:flex-start;
-  gap:12px;
-  background:#071018;
-  border:2px solid rgba(247,3,117,.88);
-  padding:9px 13px;
-  border-radius:14px;
-}
-
-.connect-btn:hover{
-  border-color:rgba(255,75,168,1);
-}
-
-.connect-icon{
-  width:33px;
-  height:33px;
-  border-radius:10px;
-  display:grid;
-  place-items:center;
-  background:rgba(247,3,117,.10);
-  border:2px solid rgba(247,3,117,.38);
-  color:var(--pink2);
-  font-size:16px;
-  font-weight:950;
-}
-
-.connect-icon.ready{
-  color:var(--ok);
-  border-color:rgba(78,255,190,.45);
-  background:rgba(78,255,190,.09);
-}
-
-.connect-icon.warn{
-  color:#ffcc66;
-  border-color:rgba(255,204,102,.45);
-  background:rgba(255,204,102,.09);
-}
-
-.connect-copy{
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  line-height:1.08;
-}
-
-.connect-copy strong{
-  font-size:14px;
-}
-
-.connect-copy span{
-  margin-top:4px;
-  font-size:10px;
-  color:#c6b6cc;
-  letter-spacing:.11em;
-  text-transform:uppercase;
-}
-
-.connect-caret{
-  margin-left:auto;
-  color:#f0d7f0;
 }
 
 .wrap{
@@ -351,17 +311,6 @@ p{
   color:var(--muted);
 }
 
-/* Real Reown/AppKit modal — LUST colors */
-w3m-modal,
-appkit-modal{
-  z-index:2147483000 !important;
-  --w3m-z-index:2147483000;
-  --w3m-accent:#f70375;
-  --w3m-color-mix:#f70375;
-  --w3m-color-mix-strength:22%;
-  --w3m-border-radius-master:12px;
-}
-
 @media(max-width:980px){
   .topbar{
     align-items:flex-start;
@@ -372,6 +321,12 @@ appkit-modal{
     justify-content:flex-start;
   }
 
+  .actions,
+  .appkit-wrap{
+    width:100%;
+    justify-content:flex-start;
+  }
+
   .grid.two,.grid.three{
     grid-template-columns:1fr;
   }
@@ -379,34 +334,4 @@ appkit-modal{
   .footer{
     flex-direction:column;
   }
-}
-
-@media(max-width:560px){
-  .actions{
-    width:100%;
-  }
-
-  .connect-btn{
-    min-width:unset;
-    width:100%;
-  }
-}
-
-
-/* ===== FULL CONNECT BUTTON CLICK FIX V3 ===== */
-[data-connect]{
-  cursor:pointer !important;
-}
-
-[data-connect] *{
-  pointer-events:none !important;
-}
-
-.connect-btn{
-  cursor:pointer !important;
-  user-select:none !important;
-}
-
-.connect-btn:active{
-  transform:translateY(1px);
 }

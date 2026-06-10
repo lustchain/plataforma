@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Docs | LUST Platform</title>
   <meta name="description" content="LUST Chain platform." />
-  <link rel="stylesheet" href="./styles.css?v20260610-full-connect-button-v3" />
+  <link rel="stylesheet" href="./styles.css?v20260610-official-appkit-button-v4" />
 </head>
 <body>
 <header class="topbar">
@@ -31,37 +31,14 @@
   </nav>
 
   <div class="actions">
-    <button class="btn connect-btn" data-connect onclick="window.openLustWallet && window.openLustWallet(event)">
-      <div class="connect-icon">◫</div>
-      <div class="connect-copy">
-        <strong>Connect wallet</strong>
-        <span>Wallet not connected</span>
-      </div>
-      <div class="connect-caret">⌄</div>
-    </button>
+    <div class="appkit-wrap">
+      <appkit-button></appkit-button>
+    </div>
   </div>
 </header>
 
 <main class="wrap page">
-<section class="hero">
-  <div class="kicker">Docs</div>
-  <h1>Network details.</h1>
-  <p>Official connection details and basic network information for LUST Chain.</p>
-
-  <div class="box">
-    <div class="row"><span>Network name</span><strong>LUST Chain</strong></div>
-    <div class="row"><span>Chain ID</span><strong>6923</strong></div>
-    <div class="row"><span>Hex Chain ID</span><strong>0x1b0b</strong></div>
-    <div class="row"><span>Currency</span><strong>LST</strong></div>
-    <div class="row"><span>RPC</span><strong>https://rpc.lustchain.org</strong></div>
-    <div class="row"><span>Backup RPC</span><strong>https://rpc-backup.lustchain.org</strong></div>
-    <div class="row"><span>Explorer</span><strong>https://explorer.lustchain.org</strong></div>
-  </div>
-
-  <div class="hero-buttons">
-    <button class="btn primary" data-connect onclick="window.openLustWallet && window.openLustWallet(event)">Connect wallet</button>
-  </div>
-</section>
+<section class="hero"><div class="kicker">Docs</div><h1>Network details.</h1><p>Official connection details and basic network information for LUST Chain.</p><div class="box"><div class="row"><span>Network name</span><strong>LUST Chain</strong></div><div class="row"><span>Chain ID</span><strong>6923</strong></div><div class="row"><span>Hex Chain ID</span><strong>0x1b0b</strong></div><div class="row"><span>Currency</span><strong>LST</strong></div><div class="row"><span>RPC</span><strong>https://rpc.lustchain.org</strong></div><div class="row"><span>Backup RPC</span><strong>https://rpc-backup.lustchain.org</strong></div><div class="row"><span>Explorer</span><strong>https://explorer.lustchain.org</strong></div></div></section>
 </main>
 
 <footer class="footer">
@@ -69,6 +46,6 @@
   <span>Chain ID 6923 · LST · RPC https://rpc.lustchain.org</span>
 </footer>
 
-<script type="module" src="./app.js?v20260610-full-connect-button-v3"></script>
+<script type="module" src="./app.js?v20260610-official-appkit-button-v4"></script>
 </body>
 </html>
