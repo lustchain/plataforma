@@ -180,7 +180,11 @@ function readAppKitState() {
   }
 }
 
-async function openWallet() {
+async function openWallet(event) {
+  if (event) {
+    event.preventDefault?.();
+    event.stopPropagation?.();
+  }
   try {
     readAppKitState();
 
@@ -198,6 +202,8 @@ async function openWallet() {
     alert("Could not open wallet modal.");
   }
 }
+
+window.openLustWallet = openWallet;
 
 async function switchToLust() {
   try {
@@ -247,11 +253,26 @@ appKit.subscribeEvents?.(() => {
   window.setTimeout(readAppKitState, 900);
 });
 
+function bindConnectButtons() {
+  document.querySelectorAll("[data-connect]").forEach((btn) => {
+    if (btn.dataset.boundConnect === "1") return;
+    btn.dataset.boundConnect = "1";
+    btn.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      openWallet(event);
+    });
+  });
+}
+
+bindConnectButtons();
+
 document.addEventListener("click", (event) => {
   const connectButton = event.target.closest("[data-connect]");
   if (connectButton) {
     event.preventDefault();
-    openWallet();
+    event.stopPropagation();
+    openWallet(event);
   }
 });
 
@@ -279,3 +300,7 @@ updateConnectButtons();
 readAppKitState();
 window.setTimeout(readAppKitState, 700);
 window.setTimeout(readAppKitState, 2200);
+
+
+window.setTimeout(bindConnectButtons, 500);
+window.setTimeout(bindConnectButtons, 1500);

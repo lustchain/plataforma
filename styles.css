@@ -391,3 +391,22 @@ appkit-modal{
     width:100%;
   }
 }
+
+
+/* ===== FULL CONNECT BUTTON CLICK FIX V3 ===== */
+[data-connect]{
+  cursor:pointer !important;
+}
+
+[data-connect] *{
+  pointer-events:none !important;
+}
+
+.connect-btn{
+  cursor:pointer !important;
+  user-select:none !important;
+}
+
+.connect-btn:active{
+  transform:translateY(1px);
+}
