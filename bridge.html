@@ -11,23 +11,37 @@
 <header class="topbar">
   <a class="brand" href="./bridge.html">
     <div class="logo">L</div>
-    <div><strong>LUST</strong><span>Platform</span></div>
+    <div>
+      <strong>LUST</strong>
+      <span>Platform</span>
+    </div>
   </a>
-  <nav class="nav"><a class="active" href="./bridge.html">Bridge</a>
-<a class="" href="./mining.html">Mining</a>
-<a class="" href="./swap.html">Swap</a>
-<a class="" href="./staking.html">Staking</a>
-<a class="" href="./liquidity.html">Liquidity</a>
-<a class="" href="./p2p.html">P2P</a>
-<a class="" href="./nfts.html">NFTs</a>
-<a class="" href="./factory.html">Factory</a>
-<a class="" href="./explorer.html">Explorer</a>
-<a class="" href="./docs.html">Docs</a></nav>
+
+  <nav class="nav">
+      <a class="active" href="./bridge.html">Bridge</a>
+      <a class="" href="./mining.html">Mining</a>
+      <a class="" href="./swap.html">Swap</a>
+      <a class="" href="./staking.html">Staking</a>
+      <a class="" href="./liquidity.html">Liquidity</a>
+      <a class="" href="./p2p.html">P2P</a>
+      <a class="" href="./nfts.html">NFTs</a>
+      <a class="" href="./factory.html">Factory</a>
+      <a class="" href="./explorer.html">Explorer</a>
+      <a class="" href="./docs.html">Docs</a>
+  </nav>
+
   <div class="actions">
-    <button class="btn" data-add-network>Add LUST</button>
-    <button class="btn primary" data-connect>Connect</button>
+    <button class="btn connect-btn" data-connect>
+      <div class="connect-icon">◫</div>
+      <div class="connect-copy">
+        <strong>Connect wallet</strong>
+        <span>Wallet not connected</span>
+      </div>
+      <div class="connect-caret">⌄</div>
+    </button>
   </div>
 </header>
+
 <main class="wrap page">
 <section class="hero">
   <div class="kicker">LUSDT Bridge</div>
@@ -59,7 +73,6 @@
 
       <div class="hero-buttons">
         <a class="btn primary" href="https://lusdt-bridge.lustchain.org" target="_blank" rel="noreferrer">Open Official Bridge</a>
-        <button class="btn" data-add-network>Add LUST Network</button>
       </div>
     </div>
 
@@ -73,10 +86,12 @@
   </div>
 </section>
 </main>
+
 <footer class="footer">
   <strong>LUST Chain</strong>
   <span>Chain ID 6923 · LST · RPC https://rpc.lustchain.org</span>
 </footer>
+
 <script src="./app.js"></script>
 </body>
 </html>
