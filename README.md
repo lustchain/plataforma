@@ -26,3 +26,9 @@ Domínio:
      185.199.110.153
      185.199.111.153
 3. Aguarde DNS propagar e ative Enforce HTTPS.
+
+
+Update v20260610-logo-clean-big-v6:
+- Logo maior no topo.
+- Removido completamente o quadro/contorno em volta da logo.
+- Cache busting atualizado.
