@@ -52,3 +52,9 @@ Update v20260610-active-nav-underline-v9:
 
 
 Clean static version: arquivos antigos Next/INRI removidos. Deploy GitHub Pages sem npm/build.
+
+
+Update v20260610-top-promo-bar-v10:
+- Adicionada faixa rosa acima do topo em todas as páginas.
+- Texto: Invest in life’s pleasures!
+- Cache busting atualizado.

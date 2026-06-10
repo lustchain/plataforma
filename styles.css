@@ -241,3 +241,33 @@ w3m-modal,appkit-modal{
   height:3px !important;
   background:var(--pink) !important;
 }
+
+
+/* Top promo bar update v20260610-top-promo-bar-v10 */
+.promo-bar {
+  width:100%;
+  min-height:34px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px 18px;
+  background:#d92b84;
+  color:#fff;
+  font-weight:800;
+  font-size:16px;
+  letter-spacing:.02em;
+  text-align:center;
+  border-bottom:2px solid rgba(255,255,255,.12);
+}
+
+.topbar {
+  top:0;
+}
+
+@media(max-width:560px){
+  .promo-bar {
+    font-size:13px;
+    min-height:30px;
+    padding:6px 12px;
+  }
+}
