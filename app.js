@@ -1,68 +1,138 @@
+import { createAppKit } from "https://esm.sh/@reown/appkit@1.8.20";
+import { EthersAdapter } from "https://esm.sh/@reown/appkit-adapter-ethers@1.8.20";
+import { defineChain } from "https://esm.sh/@reown/appkit@1.8.20/networks";
+
 const LUST_CHAIN_ID_DECIMAL = 6923;
 const LUST_CHAIN_ID_HEX = "0x1b0b";
-const LUST_CAIP_CHAIN_ID = "eip155:6923";
 const LUST_REOWN_PROJECT_ID = "abda6475ac4aba59197da882facababc";
 
-const LUST_CHAIN = {
-  chainId: LUST_CHAIN_ID_HEX,
-  chainName: "LUST Chain",
+const lustNetwork = defineChain({
+  id: LUST_CHAIN_ID_DECIMAL,
+  caipNetworkId: `eip155:${LUST_CHAIN_ID_DECIMAL}`,
+  chainNamespace: "eip155",
+  name: "LUST Chain",
   nativeCurrency: {
+    decimals: 18,
     name: "LST",
-    symbol: "LST",
-    decimals: 18
+    symbol: "LST"
   },
-  rpcUrls: ["https://rpc.lustchain.org"],
-  blockExplorerUrls: ["https://explorer.lustchain.org"]
-};
+  rpcUrls: {
+    default: { http: ["https://rpc.lustchain.org"] },
+    public: { http: ["https://rpc.lustchain.org"] }
+  },
+  blockExplorers: {
+    default: { name: "LUST Explorer", url: "https://explorer.lustchain.org" }
+  }
+});
 
-let activeWallet = {
-  connector: "",
+const ethereumNetwork = defineChain({
+  id: 1,
+  caipNetworkId: "eip155:1",
+  chainNamespace: "eip155",
+  name: "Ethereum",
+  nativeCurrency: { decimals: 18, name: "Ether", symbol: "ETH" },
+  rpcUrls: {
+    default: { http: ["https://ethereum-rpc.publicnode.com"] },
+    public: { http: ["https://ethereum-rpc.publicnode.com"] }
+  },
+  blockExplorers: {
+    default: { name: "Etherscan", url: "https://etherscan.io" }
+  }
+});
+
+const polygonNetwork = defineChain({
+  id: 137,
+  caipNetworkId: "eip155:137",
+  chainNamespace: "eip155",
+  name: "Polygon",
+  nativeCurrency: { decimals: 18, name: "POL", symbol: "POL" },
+  rpcUrls: {
+    default: { http: ["https://polygon-rpc.com"] },
+    public: { http: ["https://polygon-rpc.com"] }
+  },
+  blockExplorers: {
+    default: { name: "PolygonScan", url: "https://polygonscan.com" }
+  }
+});
+
+const featuredWalletIds = [
+  // MetaMask
+  "c57ca95b47569778a828d19178114f2db125b25b778adf5cba72bd778e231769",
+  // Rainbow
+  "1ae92b26df02f0abca6304df07debccd18262fdf5fe82daa81593582dac9a369",
+  // Trust Wallet
+  "4622a2b2d6af1c9844944291e5e7351a6aa24cd7b23099efac1b2fd875da31a0"
+];
+
+const appKit = createAppKit({
+  adapters: [new EthersAdapter()],
+  networks: [lustNetwork, ethereumNetwork, polygonNetwork],
+  defaultNetwork: lustNetwork,
+  defaultAccountTypes: { eip155: "eoa" },
+  projectId: LUST_REOWN_PROJECT_ID,
+  metadata: {
+    name: "LUST Platform",
+    description: "Official LUST Chain platform",
+    url: window.location.origin,
+    icons: [`${window.location.origin}/icon.png`]
+  },
+  customRpcUrls: {
+    "eip155:6923": [{ url: "https://rpc.lustchain.org" }],
+    "eip155:1": [{ url: "https://ethereum-rpc.publicnode.com" }],
+    "eip155:137": [{ url: "https://polygon-rpc.com" }]
+  },
+  themeMode: "dark",
+  themeVariables: {
+    "--w3m-accent": "#f70375",
+    "--w3m-border-radius-master": "12px"
+  },
+  featuredWalletIds,
+  allWallets: "SHOW",
+  enableWallets: true,
+  enableWalletGuide: true,
+  enableNetworkSwitch: true,
+  enableReconnect: true,
+  enableMobileFullScreen: true,
+  allowUnsupportedChain: true,
+  enableCoinbase: true,
+  coinbasePreference: "eoaOnly",
+  features: {
+    analytics: true,
+    email: false,
+    socials: false,
+    swaps: false,
+    onramp: false,
+    connectMethodsOrder: ["wallet"]
+  }
+});
+
+window.lustAppKit = appKit;
+
+let currentWallet = {
   address: "",
   chainId: "",
-  provider: null
+  isConnected: false
 };
 
-let walletConnectProviderPromise = null;
+function normalizeChainId(value) {
+  if (value === null || value === undefined || value === "") return "";
+  if (typeof value === "number" && Number.isFinite(value)) return `0x${value.toString(16)}`;
+  const raw = String(value).trim().toLowerCase();
+  if (!raw) return "";
+  if (raw.startsWith("0x")) return raw;
+  if (raw.startsWith("eip155:")) {
+    const parsed = Number(raw.replace("eip155:", ""));
+    return Number.isFinite(parsed) ? `0x${parsed.toString(16)}` : "";
+  }
+  const parsed = Number(raw);
+  return Number.isFinite(parsed) ? `0x${parsed.toString(16)}` : raw;
+}
 
 function shortAddress(address) {
   return address ? `${address.slice(0, 6)}...${address.slice(-4)}` : "Connect wallet";
 }
 
-function chainText(chainId) {
-  const normalized = normalizeChainId(chainId);
-  if (!normalized) return "Wallet not connected";
-  if (normalized === LUST_CHAIN_ID_HEX) return "LUST CHAIN READY";
-  const number = normalized.startsWith("0x") ? parseInt(normalized, 16) : Number(normalized);
-  return Number.isFinite(number) ? `SWITCH TO LUST ${LUST_CHAIN_ID_DECIMAL}` : "Wrong network";
-}
-
-function normalizeChainId(chainId) {
-  if (chainId === undefined || chainId === null || chainId === "") return "";
-  if (typeof chainId === "number") return `0x${chainId.toString(16)}`.toLowerCase();
-  const raw = String(chainId).trim().toLowerCase();
-  if (!raw) return "";
-  if (raw.startsWith("0x")) return raw;
-  if (raw.startsWith("eip155:")) {
-    const value = Number(raw.replace("eip155:", ""));
-    return Number.isFinite(value) ? `0x${value.toString(16)}`.toLowerCase() : "";
-  }
-  const value = Number(raw);
-  return Number.isFinite(value) ? `0x${value.toString(16)}`.toLowerCase() : raw;
-}
-
-function connectedHtml(address, chainId) {
-  const ready = normalizeChainId(chainId) === LUST_CHAIN_ID_HEX;
-  return `
-    <div class="connect-icon">${ready ? "✓" : "!"}</div>
-    <div class="connect-copy">
-      <strong>${shortAddress(address)}</strong>
-      <span>${chainText(chainId)}</span>
-    </div>
-    <div class="connect-caret">⌄</div>
-  `;
-}
-
-function disconnectedHtml() {
+function buttonDisconnectedHtml() {
   return `
     <div class="connect-icon">◫</div>
     <div class="connect-copy">
@@ -73,376 +143,69 @@ function disconnectedHtml() {
   `;
 }
 
-function setConnectedState({ connector, address, chainId, provider }) {
-  activeWallet = {
-    connector: connector || "injected",
-    address: address || "",
-    chainId: normalizeChainId(chainId) || LUST_CHAIN_ID_HEX,
-    provider: provider || null
-  };
+function buttonConnectedHtml(address, chainId) {
+  const ready = normalizeChainId(chainId) === LUST_CHAIN_ID_HEX;
+  return `
+    <div class="connect-icon ${ready ? "ready" : "warn"}">${ready ? "✓" : "!"}</div>
+    <div class="connect-copy">
+      <strong>${shortAddress(address)}</strong>
+      <span>${ready ? "LUST CHAIN READY" : `SWITCH TO LUST ${LUST_CHAIN_ID_DECIMAL}`}</span>
+    </div>
+    <div class="connect-caret">⌄</div>
+  `;
+}
+
+function updateConnectButtons() {
+  const address = currentWallet.address || "";
+  const chainId = normalizeChainId(currentWallet.chainId || "");
 
   document.querySelectorAll("[data-connect]").forEach((btn) => {
-    btn.innerHTML = connectedHtml(activeWallet.address, activeWallet.chainId);
+    btn.innerHTML = currentWallet.isConnected && address
+      ? buttonConnectedHtml(address, chainId)
+      : buttonDisconnectedHtml();
   });
-
-  try {
-    localStorage.setItem("lust_wallet_connector", activeWallet.connector);
-  } catch {}
 }
 
-function setDisconnectedState() {
-  activeWallet = { connector: "", address: "", chainId: "", provider: null };
-  document.querySelectorAll("[data-connect]").forEach((btn) => {
-    btn.innerHTML = disconnectedHtml();
-  });
+function readAppKitState() {
   try {
-    localStorage.removeItem("lust_wallet_connector");
-  } catch {}
-}
-
-async function addLustNetwork(provider = window.ethereum) {
-  if (!provider) {
-    alert("Browser wallet not found.");
-    return false;
-  }
-
-  try {
-    await provider.request({
-      method: "wallet_addEthereumChain",
-      params: [LUST_CHAIN]
-    });
-    return true;
+    const address = appKit.getAddress?.() || "";
+    const rawChainId = appKit.getChainId?.() || "";
+    const isConnected = Boolean(appKit.getIsConnected?.() || address);
+    currentWallet = {
+      address,
+      chainId: normalizeChainId(rawChainId),
+      isConnected
+    };
+    updateConnectButtons();
   } catch (err) {
-    console.error(err);
-    return false;
+    console.warn("AppKit state read failed", err);
   }
 }
 
-async function switchToLust(provider = activeWallet.provider || window.ethereum) {
-  if (!provider) {
-    alert("Wallet not found.");
-    return false;
-  }
-
+async function openWallet() {
   try {
-    await provider.request({
-      method: "wallet_switchEthereumChain",
-      params: [{ chainId: LUST_CHAIN_ID_HEX }]
-    });
-    return true;
-  } catch (err) {
-    if (err && (err.code === 4902 || err.code === -32603)) {
-      return addLustNetwork(provider);
-    }
-    console.error(err);
-    return false;
-  }
-}
-
-function ensureWalletModal() {
-  let modal = document.getElementById("walletModal");
-  if (modal) return modal;
-
-  modal = document.createElement("div");
-  modal.id = "walletModal";
-  modal.className = "wallet-modal-backdrop";
-  modal.innerHTML = `
-    <div class="wallet-modal" role="dialog" aria-modal="true" aria-label="Connect wallet">
-      <div class="wallet-modal-head">
-        <div class="wallet-modal-title">
-          <div class="connect-icon">◫</div>
-          <div>
-            <div>Connect wallet</div>
-            <small style="color:var(--muted);font-weight:800">LUST Chain</small>
-          </div>
-        </div>
-        <button class="wallet-close" type="button" data-wallet-close>×</button>
-      </div>
-      <div class="wallet-modal-body" id="walletModalBody"></div>
-    </div>
-  `;
-  document.body.appendChild(modal);
-
-  modal.addEventListener("click", (event) => {
-    if (event.target === modal || event.target.closest("[data-wallet-close]")) {
-      closeWalletModal();
-    }
-  });
-
-  return modal;
-}
-
-function openWalletModal() {
-  const modal = ensureWalletModal();
-  modal.classList.add("open");
-  renderWalletModal();
-}
-
-function closeWalletModal() {
-  document.getElementById("walletModal")?.classList.remove("open");
-}
-
-function renderWalletModal() {
-  const body = document.getElementById("walletModalBody");
-  if (!body) return;
-
-  if (activeWallet.address) {
-    body.innerHTML = `
-      <div class="wallet-status-box">
-        <div class="row"><span>Status</span><strong class="status">${chainText(activeWallet.chainId)}</strong></div>
-        <div class="row"><span>Connector</span><strong>${activeWallet.connector === "walletconnect" ? "WalletConnect" : "Browser wallet"}</strong></div>
-        <div>
-          <span style="color:var(--muted);font-size:13px">Address</span>
-          <div class="wallet-address">${activeWallet.address}</div>
-        </div>
-      </div>
-      <div class="wallet-modal-actions">
-        <button class="btn primary" type="button" data-wallet-switch>Switch/Add LUST</button>
-        <button class="btn" type="button" data-wallet-copy>Copy address</button>
-        <button class="btn wallet-disconnect-danger" type="button" data-wallet-disconnect>Disconnect</button>
-        <a class="btn" href="https://explorer.lustchain.org/address/${activeWallet.address}" target="_blank" rel="noreferrer">Explorer</a>
-      </div>
-      <p class="wallet-note">This button behaves like the INRI wallet button: click connected state to manage wallet, switch network, copy address or disconnect.</p>
-    `;
-    body.querySelector("[data-wallet-switch]")?.addEventListener("click", async () => {
-      await switchToLust(activeWallet.provider || window.ethereum);
-      await hydrateWallet();
-      renderWalletModal();
-    });
-    body.querySelector("[data-wallet-copy]")?.addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(activeWallet.address);
-      } catch {}
-    });
-    body.querySelector("[data-wallet-disconnect]")?.addEventListener("click", async () => {
-      await disconnectWallet();
-      closeWalletModal();
-    });
-    return;
-  }
-
-  body.innerHTML = `
-    <button class="wallet-option" type="button" data-browser-wallet>
-      <div class="wallet-option-icon">M</div>
-      <div class="wallet-option-copy">
-        <strong>Browser wallet</strong>
-        <span>MetaMask, Rabby, Brave Wallet and injected EVM wallets.</span>
-      </div>
-    </button>
-
-    <button class="wallet-option" type="button" data-walletconnect>
-      <div class="wallet-option-icon">WC</div>
-      <div class="wallet-option-copy">
-        <strong>WalletConnect</strong>
-        <span>Open QR modal for mobile wallets and WalletConnect-compatible apps.</span>
-      </div>
-    </button>
-
-    <p class="wallet-note">WalletConnect uses the LUST Chain Reown project and opens the QR modal. Browser wallet also adds/switches to Chain ID 6923.</p>
-  `;
-
-  body.querySelector("[data-browser-wallet]")?.addEventListener("click", connectBrowserWallet);
-  body.querySelector("[data-walletconnect]")?.addEventListener("click", connectWalletConnect);
-}
-
-function setWalletModalLoading(message) {
-  const body = document.getElementById("walletModalBody");
-  if (!body) return;
-  body.innerHTML = `
-    <div class="wallet-loading">
-      <div class="wallet-spinner"></div>
-      <span>${message}</span>
-    </div>
-  `;
-}
-
-async function connectBrowserWallet() {
-  if (!window.ethereum) {
-    alert("MetaMask/browser wallet not found.");
-    return;
-  }
-
-  try {
-    setWalletModalLoading("Connecting browser wallet...");
-    await addLustNetwork(window.ethereum);
-    const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-    const chainId = await window.ethereum.request({ method: "eth_chainId" }).catch(() => LUST_CHAIN_ID_HEX);
-    const address = accounts && accounts[0];
-
-    if (address) {
-      setConnectedState({
-        connector: "injected",
-        address,
-        chainId,
-        provider: window.ethereum
-      });
-      renderWalletModal();
+    readAppKitState();
+    if (currentWallet.isConnected && currentWallet.address) {
+      await appKit.open({ view: "Account" });
     } else {
-      setDisconnectedState();
-      renderWalletModal();
+      await appKit.open({ view: "Connect", namespace: "eip155" });
     }
+
+    window.setTimeout(readAppKitState, 450);
+    window.setTimeout(readAppKitState, 1400);
   } catch (err) {
     console.error(err);
-    setDisconnectedState();
-    renderWalletModal();
+    alert("Could not open wallet modal.");
   }
 }
 
-async function loadWalletConnectProvider() {
-  if (!walletConnectProviderPromise) {
-    walletConnectProviderPromise = import("https://esm.sh/@walletconnect/ethereum-provider@2.21.8").then(
-      (mod) => mod.EthereumProvider.init({
-        projectId: LUST_REOWN_PROJECT_ID,
-        metadata: {
-          name: "LUST Platform",
-          description: "Official LUST Chain platform",
-          url: window.location.origin,
-          icons: [`${window.location.origin}/icon.png`]
-        },
-        showQrModal: true,
-        chains: [LUST_CHAIN_ID_DECIMAL],
-        optionalChains: [LUST_CHAIN_ID_DECIMAL],
-        methods: [
-          "eth_accounts",
-          "eth_requestAccounts",
-          "eth_chainId",
-          "eth_sendTransaction",
-          "personal_sign",
-          "eth_sign",
-          "eth_signTypedData",
-          "eth_signTypedData_v3",
-          "eth_signTypedData_v4",
-          "wallet_switchEthereumChain",
-          "wallet_addEthereumChain"
-        ],
-        optionalMethods: ["wallet_watchAsset"],
-        events: ["accountsChanged", "chainChanged", "disconnect"],
-        optionalEvents: ["accountsChanged", "chainChanged", "disconnect"],
-        rpcMap: {
-          [LUST_CHAIN_ID_DECIMAL]: "https://rpc.lustchain.org"
-        }
-      })
-    );
-  }
-
-  return walletConnectProviderPromise;
-}
-
-async function readProviderState(provider) {
-  let address = "";
-  let chainId = LUST_CHAIN_ID_HEX;
-
+async function switchToLust() {
   try {
-    const accounts = await provider.request({ method: "eth_accounts" }, LUST_CAIP_CHAIN_ID);
-    address = Array.isArray(accounts) ? accounts[0] || "" : "";
-  } catch {}
-
-  try {
-    const nextChainId = await provider.request({ method: "eth_chainId" }, LUST_CAIP_CHAIN_ID);
-    chainId = normalizeChainId(nextChainId) || LUST_CHAIN_ID_HEX;
-  } catch {}
-
-  if (!address && provider.session) {
-    const accounts = provider.session?.namespaces?.eip155?.accounts || [];
-    const first = accounts[0] || "";
-    const parts = first.split(":");
-    if (parts.length >= 3) {
-      address = parts[2];
-      chainId = normalizeChainId(parts[1]) || LUST_CHAIN_ID_HEX;
-    }
-  }
-
-  return { address, chainId };
-}
-
-async function connectWalletConnect() {
-  try {
-    setWalletModalLoading("Opening WalletConnect QR...");
-    const provider = await loadWalletConnectProvider();
-
-    provider.on?.("accountsChanged", async () => {
-      const state = await readProviderState(provider);
-      if (state.address) {
-        setConnectedState({ connector: "walletconnect", address: state.address, chainId: state.chainId, provider });
-      }
-    });
-
-    provider.on?.("chainChanged", async () => {
-      const state = await readProviderState(provider);
-      if (state.address) {
-        setConnectedState({ connector: "walletconnect", address: state.address, chainId: state.chainId, provider });
-      }
-    });
-
-    provider.on?.("disconnect", () => {
-      setDisconnectedState();
-    });
-
-    await provider.connect();
-    const state = await readProviderState(provider);
-
-    if (state.address) {
-      setConnectedState({
-        connector: "walletconnect",
-        address: state.address,
-        chainId: state.chainId || LUST_CHAIN_ID_HEX,
-        provider
-      });
-      renderWalletModal();
-    } else {
-      setDisconnectedState();
-      renderWalletModal();
-    }
+    await appKit.switchNetwork(lustNetwork);
+    window.setTimeout(readAppKitState, 450);
   } catch (err) {
-    console.error(err);
-    setDisconnectedState();
-    renderWalletModal();
-    alert("WalletConnect connection failed or was cancelled.");
+    console.warn("Network switch cancelled or failed", err);
   }
-}
-
-async function disconnectWallet() {
-  try {
-    if (activeWallet.connector === "walletconnect" && activeWallet.provider?.disconnect) {
-      await activeWallet.provider.disconnect();
-    }
-  } catch (err) {
-    console.error(err);
-  }
-
-  try {
-    localStorage.removeItem("lust_wallet_connector");
-  } catch {}
-
-  setDisconnectedState();
-}
-
-async function hydrateWallet() {
-  try {
-    const saved = localStorage.getItem("lust_wallet_connector");
-
-    if (saved === "walletconnect") {
-      const provider = await loadWalletConnectProvider();
-      const state = await readProviderState(provider);
-      if (state.address) {
-        setConnectedState({ connector: "walletconnect", address: state.address, chainId: state.chainId, provider });
-        return;
-      }
-    }
-
-    if (window.ethereum) {
-      const accounts = await window.ethereum.request({ method: "eth_accounts" });
-      const chainId = await window.ethereum.request({ method: "eth_chainId" }).catch(() => "");
-      if (accounts && accounts[0]) {
-        setConnectedState({ connector: "injected", address: accounts[0], chainId, provider: window.ethereum });
-        return;
-      }
-    }
-  } catch (err) {
-    console.error(err);
-  }
-
-  setDisconnectedState();
 }
 
 function bridgeCalc() {
@@ -460,11 +223,32 @@ function bridgeCalc() {
   receiveEl.textContent = `${receive.toFixed(4)} LUSDT`;
 }
 
+appKit.subscribeProvider?.((state) => {
+  currentWallet = {
+    address: state?.address || appKit.getAddress?.() || "",
+    chainId: normalizeChainId(state?.chainId || appKit.getChainId?.() || ""),
+    isConnected: Boolean(state?.isConnected || state?.address || appKit.getIsConnected?.())
+  };
+  updateConnectButtons();
+
+  if (currentWallet.isConnected && currentWallet.address && normalizeChainId(currentWallet.chainId) !== LUST_CHAIN_ID_HEX) {
+    window.setTimeout(switchToLust, 300);
+  }
+});
+
+appKit.subscribeState?.(() => {
+  window.setTimeout(readAppKitState, 100);
+});
+
+appKit.subscribeEvents?.(() => {
+  window.setTimeout(readAppKitState, 120);
+});
+
 document.addEventListener("click", (event) => {
   const connectButton = event.target.closest("[data-connect]");
   if (connectButton) {
     event.preventDefault();
-    openWalletModal();
+    openWallet();
   }
 });
 
@@ -488,7 +272,7 @@ document.querySelectorAll("[data-tab]").forEach((tab) => {
   });
 });
 
-window.ethereum?.on?.("accountsChanged", hydrateWallet);
-window.ethereum?.on?.("chainChanged", hydrateWallet);
-
-hydrateWallet();
+updateConnectButtons();
+readAppKitState();
+window.setTimeout(readAppKitState, 800);
+window.setTimeout(readAppKitState, 2500);

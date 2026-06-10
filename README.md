@@ -1,33 +1,16 @@
-# LUST Simple Platform — WalletConnect Button
+# LUST Simple Platform — Real Reown AppKit Modal
 
 Versão estática sem Next e sem npm.
 
-Botão Connect:
-- Abre modal próprio no estilo INRI
-- Browser wallet / MetaMask
-- WalletConnect v2 via CDN
-- Switch/Add LUST Chain
-- Account modal simples com copiar endereço, explorer e disconnect
+Connect wallet:
+- Usa Reown AppKit real, igual padrão INRI.
+- Modal profissional de conexão com WalletConnect, MetaMask, Rainbow, Trust Wallet, Coinbase etc.
+- Quando conectado, clicar no botão abre o modal profissional de Account da Reown, com disconnect integrado.
+- Cores adaptadas para LUST (#F70375).
 
-Arquivos:
-- index.html redireciona para bridge.html
-- bridge.html
-- mining.html
-- swap.html
-- staking.html
-- liquidity.html
-- p2p.html
-- nfts.html
-- factory.html
-- explorer.html
-- docs.html
-- styles.css
-- app.js
-- .github/workflows/deploy-pages.yml
-
-
-Fix atual:
-- Contornos engrossados em todas as páginas.
-- Connect wallet com borda mais forte.
-- Clique no Connect abre modal sempre.
-- Disconnect fecha modal e limpa estado local.
+GitHub Pages:
+1. Extraia o ZIP.
+2. Suba os arquivos extraídos para a raiz do repositório.
+3. Settings > Pages > Source: GitHub Actions.
+4. Rode o workflow.
+5. Depois do deploy, use Ctrl+F5.
