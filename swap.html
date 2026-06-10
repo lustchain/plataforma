@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Swap | LUST Platform</title>
   <meta name="description" content="LUST Chain platform." />
-  <link rel="stylesheet" href="./styles.css?v20260610-official-appkit-button-v4" />
+  <link rel="stylesheet" href="./styles.css?v20260610-custom-lust-button-v5" />
 </head>
 <body>
 <header class="topbar">
@@ -31,9 +31,14 @@
   </nav>
 
   <div class="actions">
-    <div class="appkit-wrap">
-      <appkit-button></appkit-button>
-    </div>
+    <button class="btn connect-btn" type="button" data-connect-wallet aria-label="Connect wallet">
+      <div class="connect-icon">◫</div>
+      <div class="connect-copy">
+        <strong>Connect wallet</strong>
+        <span>Wallet not connected</span>
+      </div>
+      <div class="connect-caret">⌄</div>
+    </button>
   </div>
 </header>
 
@@ -46,6 +51,6 @@
   <span>Chain ID 6923 · LST · RPC https://rpc.lustchain.org</span>
 </footer>
 
-<script type="module" src="./app.js?v20260610-official-appkit-button-v4"></script>
+<script type="module" src="./app.js?v20260610-custom-lust-button-v5"></script>
 </body>
 </html>

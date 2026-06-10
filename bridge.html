@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Bridge | LUST Platform</title>
   <meta name="description" content="LUST Chain platform." />
-  <link rel="stylesheet" href="./styles.css?v20260610-official-appkit-button-v4" />
+  <link rel="stylesheet" href="./styles.css?v20260610-custom-lust-button-v5" />
 </head>
 <body>
 <header class="topbar">
@@ -31,9 +31,14 @@
   </nav>
 
   <div class="actions">
-    <div class="appkit-wrap">
-      <appkit-button></appkit-button>
-    </div>
+    <button class="btn connect-btn" type="button" data-connect-wallet aria-label="Connect wallet">
+      <div class="connect-icon">◫</div>
+      <div class="connect-copy">
+        <strong>Connect wallet</strong>
+        <span>Wallet not connected</span>
+      </div>
+      <div class="connect-caret">⌄</div>
+    </button>
   </div>
 </header>
 
@@ -42,42 +47,16 @@
   <div class="kicker">LUSDT Bridge</div>
   <h1>Bridge LUSDT.</h1>
   <p>Move stable liquidity between Polygon/BSC and LUST Chain. This page has only the bridge flow.</p>
-
   <div class="grid two">
     <div class="form">
-      <div class="tabs">
-        <button class="tab active" data-tab="buy">Buy / Deposit</button>
-        <button class="tab" data-tab="sell">Sell / Withdraw</button>
-      </div>
-
-      <label>Route</label>
-      <div class="input" id="bridgeRoute">Polygon/BSC → LUST Chain</div>
-
-      <label>Amount</label>
-      <input class="input" id="bridgeAmount" type="number" min="0" step="0.01" value="100" />
-
-      <div class="result">
-        <span>Bridge fee 0.20%</span>
-        <strong id="bridgeFee">0.2000 LUSDT</strong>
-      </div>
-
-      <div class="result">
-        <span>You receive</span>
-        <strong id="bridgeReceive">99.8000 LUSDT</strong>
-      </div>
-
-      <div class="hero-buttons">
-        <a class="btn primary" href="https://lusdt-bridge.lustchain.org" target="_blank" rel="noreferrer">Open Official Bridge</a>
-      </div>
+      <div class="tabs"><button class="tab active" data-tab="buy">Buy / Deposit</button><button class="tab" data-tab="sell">Sell / Withdraw</button></div>
+      <label>Route</label><div class="input" id="bridgeRoute">Polygon/BSC → LUST Chain</div>
+      <label>Amount</label><input class="input" id="bridgeAmount" type="number" min="0" step="0.01" value="100" />
+      <div class="result"><span>Bridge fee 0.20%</span><strong id="bridgeFee">0.2000 LUSDT</strong></div>
+      <div class="result"><span>You receive</span><strong id="bridgeReceive">99.8000 LUSDT</strong></div>
+      <div class="hero-buttons"><a class="btn primary" href="https://lusdt-bridge.lustchain.org" target="_blank" rel="noreferrer">Open Official Bridge</a></div>
     </div>
-
-    <div class="box">
-      <small>Bridge details</small>
-      <div class="row"><span>Asset</span><strong>LUSDT</strong></div>
-      <div class="row"><span>Destination</span><strong>LUST Chain</strong></div>
-      <div class="row"><span>Chain ID</span><strong>6923</strong></div>
-      <div class="row"><span>Status</span><strong class="status">Ready</strong></div>
-    </div>
+    <div class="box"><small>Bridge details</small><div class="row"><span>Asset</span><strong>LUSDT</strong></div><div class="row"><span>Destination</span><strong>LUST Chain</strong></div><div class="row"><span>Chain ID</span><strong>6923</strong></div><div class="row"><span>Status</span><strong class="status">Ready</strong></div></div>
   </div>
 </section>
 </main>
@@ -87,6 +66,6 @@
   <span>Chain ID 6923 · LST · RPC https://rpc.lustchain.org</span>
 </footer>
 
-<script type="module" src="./app.js?v20260610-official-appkit-button-v4"></script>
+<script type="module" src="./app.js?v20260610-custom-lust-button-v5"></script>
 </body>
 </html>

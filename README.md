@@ -1,12 +1,14 @@
-# LUST Platform — Official AppKit Button V4
+# LUST Platform — Custom LUST Button V5
 
-Correção principal:
-- Removido botão custom quebrado.
-- Header de TODAS as páginas usa `<appkit-button>`, o botão oficial da Reown/AppKit.
-- O botão oficial abre conexão e, depois de conectado, abre o modal de account/desconectar profissional.
-- Sem onclick manual, sem gambiarra, sem modal próprio.
-- Cache busting novo.
+Correção:
+- Saiu o botão oficial azul da Reown.
+- Voltou o botão custom no estilo INRI/LUST.
+- Não mostra ETH no botão.
+- Mostra LUST CHAIN · LST quando conectado na rede correta.
+- Ao clicar no botão custom, abre o modal profissional da Reown/AppKit.
+- Se conectado fora da rede, tenta trocar para LUST Chain.
+- Aplicado em todas as páginas.
 
-Depois de subir:
-- Use janela anônima ou Ctrl+F5.
-- Teste Bridge, Mining, Swap, Staking, Liquidity, P2P, NFTs, Factory, Explorer e Docs.
+Depois de subir no GitHub Pages:
+- Use Ctrl+F5 ou janela anônima.
+- Confirme que o HTML carrega `app.js?v20260610-custom-lust-button-v5`.
