@@ -38,3 +38,15 @@ Update v20260610-topbar-pink-border-v7:
 - Linha/contorno do topo trocado para rosa LUST.
 - Espessura aumentada para 3px.
 - Visual mais suave/profissional.
+
+
+Update v20260610-topbar-pink-thick-v8:
+- Linha do header em rosa LUST aplicada em todas as páginas.
+- Espessura aumentada para 5px.
+- Rosa mais visível.
+
+
+Update v20260610-active-nav-underline-v9:
+- Adicionado tracinho rosa no menu da página ativa.
+- Estilo parecido com a INRI.
+- Aplicado em todas as páginas.
