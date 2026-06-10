@@ -1,1 +1,82 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LUST Bridge</title><link rel="stylesheet" href="./styles.css"></head><body><header class="topbar"><div class="wrap"><a class="brand" href="./index.html"><span class="brand-mark">L</span><span>LUST<small>Platform</small></span></a><nav class="nav"><a href="./index.html">Home</a><a href="./bridge.html">Bridge</a><a href="./mining.html">Mining</a><a href="./explorer.html">Explorer</a><a href="./docs.html">Docs</a></nav><div class="actions"><button class="btn" data-add-network>Add LUST</button><button class="btn primary" data-connect>Connect</button></div></div></header><main><section class="page-head"><div class="wrap"><div class="pill">LUSDT BRIDGE</div><h1>Bridge LUSDT.</h1><p class="lead">Only bridge functions on this page. Buy or sell LUSDT using the LUST bridge flow.</p></div></section><section class="section"><div class="wrap grid2"><div class="module card"><div class="tabs"><button id="buyTab" class="btn tab active">Buy LUSDT</button><button id="sellTab" class="btn tab">Sell LUSDT</button></div><div class="bridge-box" style="margin-top:20px"><div class="field"><label>Amount</label><div class="input-row"><input id="amount" type="number" min="0" value="100"><select><option>LUSDT</option></select></div></div><div class="quote"><div><span>Route</span><b id="route">Polygon/BSC → LUST</b></div><div><span>Bridge fee</span><b id="fee">0.2000 LUSDT</b></div><div><span>You receive</span><b id="receive">99.8000 LUSDT</b></div></div><a class="btn primary" href="https://lusdt-bridge.lustchain.org" target="_blank" rel="noreferrer">Open Official Bridge</a></div></div><aside class="module card"><div class="tag">Bridge details</div><ul class="list"><li><b>Asset:</b> LUSDT</li><li><b>Chain:</b> LUST Chain</li><li><b>Chain ID:</b> 6923</li><li><b>RPC:</b> https://rpc.lustchain.org</li><li><b>Explorer:</b> https://explorer.lustchain.org</li></ul></aside></div></section></main><footer class="footer"><div class="wrap"><b>LUST Bridge</b><span>Clean page for bridge only.</span></div></footer><script src="./app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bridge | LUST Platform</title>
+  <meta name="description" content="LUST Chain platform." />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="./bridge.html">
+    <div class="logo">L</div>
+    <div><strong>LUST</strong><span>Platform</span></div>
+  </a>
+  <nav class="nav"><a class="active" href="./bridge.html">Bridge</a>
+<a class="" href="./mining.html">Mining</a>
+<a class="" href="./swap.html">Swap</a>
+<a class="" href="./staking.html">Staking</a>
+<a class="" href="./liquidity.html">Liquidity</a>
+<a class="" href="./p2p.html">P2P</a>
+<a class="" href="./nfts.html">NFTs</a>
+<a class="" href="./factory.html">Factory</a>
+<a class="" href="./explorer.html">Explorer</a>
+<a class="" href="./docs.html">Docs</a></nav>
+  <div class="actions">
+    <button class="btn" data-add-network>Add LUST</button>
+    <button class="btn primary" data-connect>Connect</button>
+  </div>
+</header>
+<main class="wrap page">
+<section class="hero">
+  <div class="kicker">LUSDT Bridge</div>
+  <h1>Bridge LUSDT.</h1>
+  <p>Move stable liquidity between Polygon/BSC and LUST Chain. This page has only the bridge flow.</p>
+
+  <div class="grid two">
+    <div class="form">
+      <div class="tabs">
+        <button class="tab active" data-tab="buy">Buy / Deposit</button>
+        <button class="tab" data-tab="sell">Sell / Withdraw</button>
+      </div>
+
+      <label>Route</label>
+      <div class="input" id="bridgeRoute">Polygon/BSC → LUST Chain</div>
+
+      <label>Amount</label>
+      <input class="input" id="bridgeAmount" type="number" min="0" step="0.01" value="100" />
+
+      <div class="result">
+        <span>Bridge fee 0.20%</span>
+        <strong id="bridgeFee">0.2000 LUSDT</strong>
+      </div>
+
+      <div class="result">
+        <span>You receive</span>
+        <strong id="bridgeReceive">99.8000 LUSDT</strong>
+      </div>
+
+      <div class="hero-buttons">
+        <a class="btn primary" href="https://lusdt-bridge.lustchain.org" target="_blank" rel="noreferrer">Open Official Bridge</a>
+        <button class="btn" data-add-network>Add LUST Network</button>
+      </div>
+    </div>
+
+    <div class="box">
+      <small>Bridge details</small>
+      <div class="row"><span>Asset</span><strong>LUSDT</strong></div>
+      <div class="row"><span>Destination</span><strong>LUST Chain</strong></div>
+      <div class="row"><span>Chain ID</span><strong>6923</strong></div>
+      <div class="row"><span>Status</span><strong class="status">Ready</strong></div>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="footer">
+  <strong>LUST Chain</strong>
+  <span>Chain ID 6923 · LST · RPC https://rpc.lustchain.org</span>
+</footer>
+<script src="./app.js"></script>
+</body>
+</html>

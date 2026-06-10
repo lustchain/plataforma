@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Docs | LUST Platform</title>
+  <title>Swap | LUST Platform</title>
   <meta name="description" content="LUST Chain platform." />
   <link rel="stylesheet" href="./styles.css" />
 </head>
@@ -15,14 +15,14 @@
   </a>
   <nav class="nav"><a class="" href="./bridge.html">Bridge</a>
 <a class="" href="./mining.html">Mining</a>
-<a class="" href="./swap.html">Swap</a>
+<a class="active" href="./swap.html">Swap</a>
 <a class="" href="./staking.html">Staking</a>
 <a class="" href="./liquidity.html">Liquidity</a>
 <a class="" href="./p2p.html">P2P</a>
 <a class="" href="./nfts.html">NFTs</a>
 <a class="" href="./factory.html">Factory</a>
 <a class="" href="./explorer.html">Explorer</a>
-<a class="active" href="./docs.html">Docs</a></nav>
+<a class="" href="./docs.html">Docs</a></nav>
   <div class="actions">
     <button class="btn" data-add-network>Add LUST</button>
     <button class="btn primary" data-connect>Connect</button>
@@ -30,22 +30,20 @@
 </header>
 <main class="wrap page">
 <section class="hero">
-  <div class="kicker">Docs</div>
-  <h1>Network details.</h1>
-  <p>Only official connection details and basic network information.</p>
+  <div class="kicker">Swap</div>
+  <h1>Swap LST and LUSDT.</h1>
+  <p>Simple swap page reserved for WLST/LST/LUSDT trading. Keep only swap information here.</p>
 
-  <div class="box">
-    <div class="row"><span>Network name</span><strong>LUST Chain</strong></div>
-    <div class="row"><span>Chain ID</span><strong>6923</strong></div>
-    <div class="row"><span>Hex Chain ID</span><strong>0x1b0b</strong></div>
-    <div class="row"><span>Currency</span><strong>LST</strong></div>
-    <div class="row"><span>RPC</span><strong>https://rpc.lustchain.org</strong></div>
-    <div class="row"><span>Backup RPC</span><strong>https://rpc-backup.lustchain.org</strong></div>
-    <div class="row"><span>Explorer</span><strong>https://explorer.lustchain.org</strong></div>
-  </div>
-
-  <div class="hero-buttons">
-    <button class="btn primary" data-add-network>Add LUST to MetaMask</button>
+  <div class="form">
+    <label>From</label>
+    <div class="input">LST</div>
+    <label>To</label>
+    <div class="input">LUSDT</div>
+    <div class="notice">Swap contracts/liquidity links can be added here when the router is ready.</div>
+    <div class="hero-buttons">
+      <a class="btn primary" href="#">Open Swap</a>
+      <button class="btn" data-add-network>Add Network</button>
+    </div>
   </div>
 </section>
 </main>
