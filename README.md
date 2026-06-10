@@ -24,3 +24,10 @@ Arquivos:
 - styles.css
 - app.js
 - .github/workflows/deploy-pages.yml
+
+
+Fix atual:
+- Contornos engrossados em todas as páginas.
+- Connect wallet com borda mais forte.
+- Clique no Connect abre modal sempre.
+- Disconnect fecha modal e limpa estado local.

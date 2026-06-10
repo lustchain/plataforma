@@ -199,7 +199,7 @@ function renderWalletModal() {
       <div class="wallet-modal-actions">
         <button class="btn primary" type="button" data-wallet-switch>Switch/Add LUST</button>
         <button class="btn" type="button" data-wallet-copy>Copy address</button>
-        <button class="btn" type="button" data-wallet-disconnect>Disconnect</button>
+        <button class="btn wallet-disconnect-danger" type="button" data-wallet-disconnect>Disconnect</button>
         <a class="btn" href="https://explorer.lustchain.org/address/${activeWallet.address}" target="_blank" rel="noreferrer">Explorer</a>
       </div>
       <p class="wallet-note">This button behaves like the INRI wallet button: click connected state to manage wallet, switch network, copy address or disconnect.</p>
@@ -214,7 +214,10 @@ function renderWalletModal() {
         await navigator.clipboard.writeText(activeWallet.address);
       } catch {}
     });
-    body.querySelector("[data-wallet-disconnect]")?.addEventListener("click", disconnectWallet);
+    body.querySelector("[data-wallet-disconnect]")?.addEventListener("click", async () => {
+      await disconnectWallet();
+      closeWalletModal();
+    });
     return;
   }
 
@@ -405,10 +408,13 @@ async function disconnectWallet() {
     }
   } catch (err) {
     console.error(err);
-  } finally {
-    setDisconnectedState();
-    renderWalletModal();
   }
+
+  try {
+    localStorage.removeItem("lust_wallet_connector");
+  } catch {}
+
+  setDisconnectedState();
 }
 
 async function hydrateWallet() {
@@ -454,8 +460,12 @@ function bridgeCalc() {
   receiveEl.textContent = `${receive.toFixed(4)} LUSDT`;
 }
 
-document.querySelectorAll("[data-connect]").forEach((el) => {
-  el.addEventListener("click", openWalletModal);
+document.addEventListener("click", (event) => {
+  const connectButton = event.target.closest("[data-connect]");
+  if (connectButton) {
+    event.preventDefault();
+    openWalletModal();
+  }
 });
 
 document.querySelector("#bridgeAmount")?.addEventListener("input", bridgeCalc);
