@@ -1,14 +1,28 @@
-# LUST Platform — Custom LUST Button V5
+# LUST Platform — Logo/Favicon Ready
 
-Correção:
-- Saiu o botão oficial azul da Reown.
-- Voltou o botão custom no estilo INRI/LUST.
-- Não mostra ETH no botão.
-- Mostra LUST CHAIN · LST quando conectado na rede correta.
-- Ao clicar no botão custom, abre o modal profissional da Reown/AppKit.
-- Se conectado fora da rede, tenta trocar para LUST Chain.
-- Aplicado em todas as páginas.
+Atualizações:
+- Logo LUST adicionada no topo em todas as páginas.
+- Favicon adicionado:
+  - `assets/favicon.ico`
+  - `assets/favicon.png`
+  - `assets/apple-touch-icon.png`
+- Cache busting: `v20260610-logo-favicon`.
+- Botão custom LUST + Reown AppKit mantido.
 
-Depois de subir no GitHub Pages:
-- Use Ctrl+F5 ou janela anônima.
-- Confirme que o HTML carrega `app.js?v20260610-custom-lust-button-v5`.
+Arquivos para subir na raiz do GitHub:
+- `.github/`
+- `assets/`
+- `app.js`
+- `styles.css`
+- todos os `.html`
+
+Domínio:
+1. Em GitHub > Settings > Pages > Custom domain, coloque o domínio/subdomínio.
+2. No Hostinger DNS, crie:
+   - Para subdomínio como `platform.lustchain.org`: CNAME `platform` -> `lustchain.github.io`
+   - Para domínio raiz como `lustchain.org`: A records para GitHub Pages:
+     185.199.108.153
+     185.199.109.153
+     185.199.110.153
+     185.199.111.153
+3. Aguarde DNS propagar e ative Enforce HTTPS.
