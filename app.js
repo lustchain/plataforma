@@ -273,3 +273,204 @@ backToTopButton?.addEventListener("click", () => {
 
 window.addEventListener("scroll", syncBackToTopButton, { passive: true });
 syncBackToTopButton();
+
+// LUST miner registration + mining page helpers v20260610-miner-launch-v1
+const LUST_REGISTRY_ADDRESS = "0x0000000000000000000000000000000000006923";
+const LUST_REGISTER_DATA = "0x4c5143525f5631";
+const LUST_RPC_URL = "https://rpc.lustchain.org";
+const LUST_EXPLORER_URL = "https://explorer.lustchain.org";
+const LUST_SNAPSHOT_INFO_URL = "http://104.131.40.124:18083/snapshot/snapshot-info.json";
+
+function setMinerLog(message, tone = "") {
+  document.querySelectorAll("[data-miner-log]").forEach((el) => {
+    el.textContent = message;
+    el.dataset.tone = tone;
+  });
+}
+
+function setText(selector, text) {
+  document.querySelectorAll(selector).forEach((el) => { el.textContent = text; });
+}
+
+function getInjectedEthereum() {
+  return window.ethereum || null;
+}
+
+function localRegistrationKey(address) {
+  return `lustMinerRegistered:${String(address || "").toLowerCase()}`;
+}
+
+async function lustRpc(method, params = []) {
+  const res = await fetch(LUST_RPC_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params })
+  });
+  const json = await res.json();
+  if (json.error) throw new Error(json.error.message || "RPC error");
+  return json.result;
+}
+
+function weiHexToLst(hexValue) {
+  try {
+    const raw = BigInt(hexValue || "0x0");
+    const whole = raw / 1000000000000000000n;
+    const frac = raw % 1000000000000000000n;
+    return `${whole}.${frac.toString().padStart(18, "0").slice(0, 6)} LST`;
+  } catch (_) {
+    return "--";
+  }
+}
+
+async function addLustChainToWallet() {
+  const eth = getInjectedEthereum();
+  if (!eth) {
+    setMinerLog("MetaMask or an injected wallet was not found. Install MetaMask and try again.", "warn");
+    return false;
+  }
+
+  try {
+    await eth.request({
+      method: "wallet_addEthereumChain",
+      params: [{
+        chainId: LUST_CHAIN_ID_HEX,
+        chainName: "LUST Chain",
+        nativeCurrency: { name: "LST", symbol: "LST", decimals: 18 },
+        rpcUrls: ["https://rpc.lustchain.org"],
+        blockExplorerUrls: ["https://explorer.lustchain.org"]
+      }]
+    });
+    await eth.request({ method: "wallet_switchEthereumChain", params: [{ chainId: LUST_CHAIN_ID_HEX }] });
+    setMinerLog("LUST Chain is selected in your wallet.", "ok");
+    setTimeout(readState, 300);
+    setTimeout(updateMinerPage, 700);
+    return true;
+  } catch (err) {
+    console.error(err);
+    setMinerLog(err?.message || "Could not add/switch to LUST Chain.", "warn");
+    return false;
+  }
+}
+
+async function getWalletAccount() {
+  const eth = getInjectedEthereum();
+  if (!eth) throw new Error("MetaMask or injected wallet not found.");
+  const accounts = await eth.request({ method: "eth_requestAccounts" });
+  const account = accounts?.[0] || "";
+  if (!account) throw new Error("No wallet account selected.");
+  return account;
+}
+
+async function waitForTxReceipt(txHash, timeoutMs = 180000) {
+  const start = Date.now();
+  while (Date.now() - start < timeoutMs) {
+    const receipt = await lustRpc("eth_getTransactionReceipt", [txHash]).catch(() => null);
+    if (receipt) return receipt;
+    await new Promise((resolve) => setTimeout(resolve, 3500));
+  }
+  return null;
+}
+
+async function registerMinerWallet() {
+  try {
+    setMinerLog("Opening wallet confirmation for miner registration...", "");
+    const eth = getInjectedEthereum();
+    if (!eth) throw new Error("MetaMask or injected wallet not found.");
+
+    const account = await getWalletAccount();
+    await addLustChainToWallet();
+
+    const chainId = normalizeChainId(await eth.request({ method: "eth_chainId" }));
+    if (chainId !== LUST_CHAIN_ID_HEX) {
+      throw new Error("Please switch to LUST Chain before registering.");
+    }
+
+    const txHash = await eth.request({
+      method: "eth_sendTransaction",
+      params: [{
+        from: account,
+        to: LUST_REGISTRY_ADDRESS,
+        value: "0x0",
+        data: LUST_REGISTER_DATA
+      }]
+    });
+
+    setMinerLog(`Registration sent. Waiting confirmation: ${txHash}`, "");
+    const receipt = await waitForTxReceipt(txHash);
+
+    if (receipt?.status === "0x1") {
+      localStorage.setItem(localRegistrationKey(account), JSON.stringify({ txHash, time: Date.now() }));
+      setMinerLog(`Miner wallet registered successfully. Tx: ${txHash}`, "ok");
+    } else if (receipt) {
+      setMinerLog(`Registration transaction failed. Tx: ${txHash}`, "warn");
+    } else {
+      setMinerLog(`Transaction sent but confirmation is still pending. Check explorer: ${txHash}`, "warn");
+    }
+
+    updateMinerPage();
+  } catch (err) {
+    console.error(err);
+    setMinerLog(err?.message || "Registration rejected or failed.", "warn");
+  }
+}
+
+async function updateMinerPage() {
+  const hasMinerPage = document.querySelector("[data-registration-state]") || document.querySelector("[data-snapshot-block]");
+  if (!hasMinerPage) return;
+
+  readState();
+  const address = walletState.address || "";
+  const chain = normalizeChainId(walletState.chainId || "");
+  setText("[data-connected-address]", address ? shortAddress(address) : "Not connected");
+  setText("[data-chain-state]", chain === LUST_CHAIN_ID_HEX ? "LUST Chain" : (address ? "Wrong network" : "Not connected"));
+
+  if (address) {
+    try {
+      const bal = await lustRpc("eth_getBalance", [address, "latest"]);
+      setText("[data-lust-balance]", weiHexToLst(bal));
+    } catch (_) {
+      setText("[data-lust-balance]", "--");
+    }
+
+    const saved = localStorage.getItem(localRegistrationKey(address));
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      setText("[data-registration-state]", `Saved tx ${shortAddress(parsed.txHash || "")}`);
+    } else {
+      setText("[data-registration-state]", "Ready to register");
+    }
+  } else {
+    setText("[data-lust-balance]", "--");
+    setText("[data-registration-state]", "Connect wallet first");
+  }
+
+  try {
+    const snap = await fetch(LUST_SNAPSHOT_INFO_URL, { cache: "no-store" }).then((r) => r.json());
+    if (snap?.block) setText("[data-snapshot-block]", String(snap.block));
+    if (snap?.sha256) setText("[data-snapshot-sha]", snap.sha256);
+  } catch (_) {
+    // HTTP snapshot info may be blocked by HTTPS pages until final HTTPS snapshot domain is live.
+  }
+}
+
+window.addLustChainToWallet = addLustChainToWallet;
+window.registerMinerWallet = registerMinerWallet;
+window.updateMinerPage = updateMinerPage;
+
+document.addEventListener("click", (event) => {
+  if (event.target.closest("[data-add-lust-chain]")) {
+    event.preventDefault();
+    addLustChainToWallet();
+  }
+  if (event.target.closest("[data-register-miner]")) {
+    event.preventDefault();
+    registerMinerWallet();
+  }
+  if (event.target.closest("[data-refresh-miner]")) {
+    event.preventDefault();
+    updateMinerPage();
+  }
+});
+
+setTimeout(updateMinerPage, 800);
+setInterval(updateMinerPage, 15000);

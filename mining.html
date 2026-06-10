@@ -4,14 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mining | LUST Platform</title>
-  <meta name="description" content="LUST Chain platform." />
-    <link rel="icon" href="./assets/favicon.ico">
+  <meta name="description" content="Register your wallet and download the official LUST Chain public miner." />
+  <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-<link rel="stylesheet" href="./styles.css?v20260610-solid-buttons-backtop-clean" />
+  <link rel="stylesheet" href="./styles.css?v20260610-miner-launch-v1" />
 </head>
 <body>
-<div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
+<div class="promo-bar">Public mining is live soon — register your wallet, download the miner and mine LST.</div>
 <header class="topbar">
   <a class="brand" href="./bridge.html">
     <div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div>
@@ -35,6 +35,7 @@
   </nav>
 
   <div class="actions">
+    <a class="btn header-miner-btn" href="./mining.html">Mine LST</a>
     <button class="btn connect-btn" type="button" data-connect-wallet aria-label="Connect wallet">
       <div class="connect-icon">◫</div>
       <div class="connect-copy">
@@ -46,8 +47,167 @@
   </div>
 </header>
 
-<main class="wrap page">
-<section class="hero"><div class="kicker">Public Mining</div><h1>Mine LST.</h1><p>Download the miner, add your wallet and participate in LUST Chain public mining.</p><div class="grid two"><div class="box"><small>Mining status</small><div class="row"><span>Network</span><strong>Mainnet</strong></div><div class="row"><span>Reward</span><strong>2 LST / block</strong></div><div class="row"><span>Consensus</span><strong>LQC</strong></div><div class="row"><span>Required wallet</span><strong>LST address</strong></div></div><div class="box"><small>Downloads</small><p>Use the latest official miner kit and snapshot. Replace these buttons with the final download links when ready.</p><div class="hero-buttons"><a class="btn primary" href="#">Windows Miner</a><a class="btn" href="#">Linux Miner</a><a class="btn" href="#">Mining Guide</a></div></div></div></section>
+<main class="wrap page miner-page">
+  <section class="miner-hero">
+    <div class="miner-hero-copy">
+      <div class="kicker">Public LUST Mining</div>
+      <h1>Mine LST from your own computer.</h1>
+      <p>LUST Chain public mining lets normal users participate without expensive mining farms. Register your wallet once, download the official miner and let the miner sync safely before it starts mining.</p>
+      <div class="hero-buttons">
+        <button class="btn primary" type="button" data-connect-wallet>Connect wallet</button>
+        <button class="btn" type="button" data-add-lust-chain>Add LUST Chain</button>
+        <a class="btn" href="#downloads">Download miner</a>
+      </div>
+      <div class="security-strip">
+        <span>✓ No seed phrase</span>
+        <span>✓ MetaMask confirmation</span>
+        <span>✓ Official SHA256</span>
+        <span>✓ Snapshot latest</span>
+      </div>
+    </div>
+    <div class="miner-command-card">
+      <small>Miner launch status</small>
+      <div class="row"><span>Network</span><strong>LUST Chain Mainnet</strong></div>
+      <div class="row"><span>Chain ID</span><strong>6923 / 0x1b0b</strong></div>
+      <div class="row"><span>Native coin</span><strong>LST</strong></div>
+      <div class="row"><span>Consensus</span><strong>LQC</strong></div>
+      <div class="row"><span>Public reward</span><strong>1.4 LST / block</strong></div>
+      <div class="row"><span>Network reserve</span><strong>0.6 LST / block</strong></div>
+    </div>
+  </section>
+
+  <section class="miner-section" id="register">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Step 1</div>
+        <h2>Register your miner wallet.</h2>
+      </div>
+      <p>The registration is a normal MetaMask transaction sent by your own wallet. The site never asks for private key, seed phrase or password.</p>
+    </div>
+
+    <div class="grid two">
+      <div class="form miner-wallet-panel">
+        <small>Secure wallet registration</small>
+        <div class="miner-status-grid">
+          <div><span>Connected wallet</span><strong data-connected-address>Not connected</strong></div>
+          <div><span>Network</span><strong data-chain-state>Waiting</strong></div>
+          <div><span>LST balance</span><strong data-lust-balance>--</strong></div>
+          <div><span>Registration</span><strong data-registration-state>Not checked</strong></div>
+        </div>
+
+        <div class="hero-buttons miner-actions-row">
+          <button class="btn primary" type="button" data-register-miner>Register Miner Wallet</button>
+          <button class="btn" type="button" data-add-lust-chain>Add/Switch LUST</button>
+          <button class="btn" type="button" data-refresh-miner>Status refresh</button>
+        </div>
+
+        <div class="notice miner-log" data-miner-log>
+          Connect your wallet, switch to LUST Chain and click Register Miner Wallet.
+        </div>
+      </div>
+
+      <div class="box">
+        <small>Registration transaction</small>
+        <div class="code-card">
+          <div><span>To</span><code>0x0000000000000000000000000000000000006923</code></div>
+          <div><span>Data</span><code>0x4c5143525f5631</code></div>
+          <div><span>Value</span><code>0 LST</code></div>
+          <div><span>Meaning</span><code>LQCR_V1</code></div>
+        </div>
+        <p class="mini-copy">You only pay the LUST network gas fee. If your wallet has no LST, use the official faucet when it is enabled.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="miner-section" id="downloads">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Step 2</div>
+        <h2>Download the official miner.</h2>
+      </div>
+      <p>The miner uses a latest snapshot URL that updates automatically. The installer SHA only changes when the scripts change; the snapshot SHA changes when the snapshot updates.</p>
+    </div>
+
+    <div class="grid two download-grid">
+      <div class="download-card">
+        <div class="download-icon">⊞</div>
+        <div>
+          <small>Windows</small>
+          <h3>Windows one-click miner</h3>
+          <p>Extract the ZIP and double-click <strong>START-LUST-MINER-WINDOWS.bat</strong>.</p>
+          <a class="btn primary" href="http://157.230.84.128:18082/lust-v7a12-miner-windows-latest-snapshot.zip" target="_blank" rel="noreferrer">Download Windows ZIP</a>
+        </div>
+        <div class="sha-box"><span>SHA256</span><code>64f667763a222d32de29fb5848645a7773ebbbf3026df531b3cebda3ed0c3a25</code></div>
+      </div>
+
+      <div class="download-card">
+        <div class="download-icon">⌁</div>
+        <div>
+          <small>Ubuntu / Linux</small>
+          <h3>Linux latest-snapshot miner</h3>
+          <p>Extract the TGZ, give permission and run <strong>./START-LUST-MINER-LINUX.sh</strong>.</p>
+          <a class="btn primary" href="http://157.230.84.128:18082/lust-v7a12-miner-linux-latest-snapshot.tar.gz" target="_blank" rel="noreferrer">Download Linux TGZ</a>
+        </div>
+        <div class="sha-box"><span>SHA256</span><code>ffa21951fe397b130c7f3237a969d2993b383ad2cfb6d0e04c7f2388a401c449</code></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="miner-section">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Step 3</div>
+        <h2>Start, stop and monitor.</h2>
+      </div>
+      <p>The status panel shows wallet, uptime, peers, gap, mined blocks, estimated rewards, snapshot info and recent logs.</p>
+    </div>
+
+    <div class="grid two">
+      <div class="box command-box">
+        <small>Windows commands</small>
+        <pre><code>START-LUST-MINER-WINDOWS.bat
+STOP-LUST-MINER-WINDOWS.bat
+STATUS-LUST-MINER-WINDOWS.bat</code></pre>
+      </div>
+      <div class="box command-box">
+        <small>Ubuntu / Linux commands</small>
+        <pre><code>chmod +x START-LUST-MINER-LINUX.sh STOP-LUST-MINER-LINUX.sh STATUS-LUST-MINER-LINUX.sh
+./START-LUST-MINER-LINUX.sh
+./STOP-LUST-MINER-LINUX.sh
+./STATUS-LUST-MINER-LINUX.sh</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="miner-section">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Latest snapshot</div>
+        <h2>Fast sync for public miners.</h2>
+      </div>
+      <p>The miner downloads a fresh snapshot automatically from the official snapshot server. The snapshot builder checks every 10 minutes and publishes a new one only after 1000+ blocks.</p>
+    </div>
+
+    <div class="grid three snapshot-grid">
+      <div class="box"><small>Snapshot block</small><strong class="big-metric" data-snapshot-block>99696</strong></div>
+      <div class="box"><small>Snapshot SHA</small><code data-snapshot-sha>06c4593e824237aca05b1bd2e0426e3167d997e5db5b024368bd0bf341404083</code></div>
+      <div class="box"><small>Update rule</small><strong>Every 1000+ blocks</strong></div>
+    </div>
+
+    <div class="hero-buttons">
+      <a class="btn" href="http://104.131.40.124:18083/snapshot/snapshot-info.json" target="_blank" rel="noreferrer">Open snapshot info</a>
+      <a class="btn" href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">Open Explorer</a>
+      <a class="btn" href="https://rpc.lustchain.org" target="_blank" rel="noreferrer">RPC</a>
+    </div>
+  </section>
+
+  <section class="miner-section security-section">
+    <div class="grid three">
+      <div class="card"><small>Security</small><h3>Never enter your seed.</h3><p>The official site only asks MetaMask to sign/send a registration transaction. Never type your seed phrase on any website.</p></div>
+      <div class="card"><small>Wallet rule</small><h3>One machine, one wallet.</h3><p>For clean testing and production, use one registered wallet per miner machine. Do not run the same wallet on many devices at the same time.</p></div>
+      <div class="card"><small>Safe start</small><h3>No isolated mining.</h3><p>The miner starts with mining off, waits for peers, chain ID and gap, then enables mining only when the node is ready.</p></div>
+    </div>
+  </section>
 </main>
 
 <footer class="footer">
@@ -57,6 +217,6 @@
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
-<script type="module" src="./app.js?v20260610-solid-buttons-backtop-clean"></script>
+<script type="module" src="./app.js?v20260610-miner-launch-v1"></script>
 </body>
 </html>
