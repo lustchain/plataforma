@@ -8,7 +8,7 @@
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css?v20260611-miner-stats-v1" />
+  <link rel="stylesheet" href="./styles.css?v20260611-miner-stats-v2-final-safe" />
 </head>
 <body>
 <div class="promo-bar">Public mining is live — register your wallet, download TX-FEED V2 and track registered miners live.</div>
@@ -119,10 +119,15 @@
         <strong class="big-metric" data-mining-pending>Loading...</strong>
         <span>Pending public transactions visible to miners.</span>
       </div>
+      <div class="box live-stat-card">
+        <small>Registry scan</small>
+        <strong class="big-metric compact-address" data-mining-scan-progress>Starting...</strong>
+        <span>First sync reads historic registration transactions, then stays live.</span>
+      </div>
     </div>
 
     <div class="notice miner-log" data-mining-stats-log>
-      Loading live mining stats from rpc.lustchain.org/mining-stats...
+      Loading live mining stats from rpc.lustchain.org/mining-stats. During first sync, the registry counter may show 0 until the scanner reaches recent blocks.
     </div>
 
     <div class="hero-buttons">
@@ -337,6 +342,6 @@ tail -f ~/LUST-Miner/logs/txfeed-linux.log
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
-<script type="module" src="./app.js?v20260611-miner-stats-v1"></script>
+<script type="module" src="./app.js?v20260611-miner-stats-v2-final-safe"></script>
 </body>
 </html>

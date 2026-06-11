@@ -274,7 +274,7 @@ backToTopButton?.addEventListener("click", () => {
 window.addEventListener("scroll", syncBackToTopButton, { passive: true });
 syncBackToTopButton();
 
-// LUST miner registration + mining page helpers v20260611-miner-stats-v1
+// LUST miner registration + mining page helpers v20260611-miner-stats-v2-final-safe
 const LUST_REGISTRY_ADDRESS = "0x0000000000000000000000000000000000006923";
 const LUST_REGISTER_DATA = "0x4c5143525f5631";
 const LUST_RPC_URL = "https://rpc.lustchain.org";
@@ -480,15 +480,22 @@ async function updateMiningStatsPanel() {
   if (!hasPanel) return;
 
   try {
+    const ts = Date.now();
     const [statsRes, feedRes] = await Promise.allSettled([
-      fetch(LUST_MINING_STATS_URL, { cache: "no-store" }).then((r) => r.json()),
-      fetch(LUST_PENDING_RAW_URL, { cache: "no-store" }).then((r) => r.json())
+      fetch(`${LUST_MINING_STATS_URL}?t=${ts}`, { cache: "no-store" }).then((r) => {
+        if (!r.ok) throw new Error(`Mining stats HTTP ${r.status}`);
+        return r.json();
+      }),
+      fetch(`${LUST_PENDING_RAW_URL}?t=${ts}`, { cache: "no-store" }).then((r) => {
+        if (!r.ok) throw new Error(`TX-FEED HTTP ${r.status}`);
+        return r.json();
+      })
     ]);
 
     const stats = statsRes.status === "fulfilled" ? statsRes.value : null;
     const feed = feedRes.status === "fulfilled" ? feedRes.value : null;
 
-    if (!stats || stats.ok === false) throw new Error(stats?.error || "Mining stats API unavailable");
+    if (!stats || stats.ok === false) throw new Error(stats?.error || statsRes.reason?.message || "Mining stats API unavailable");
 
     setText("[data-mining-registered]", fmtNumber(stats.registeredMiners));
     setText("[data-mining-active]", fmtNumber(stats.activePublicMinersLast200));
@@ -496,7 +503,7 @@ async function updateMiningStatsPanel() {
     setText("[data-mining-official-blocks]", fmtNumber(stats.officialBlocksLast200));
     setText("[data-mining-last-public]", fmtAddress(stats.lastPublicMiner));
 
-    const lastPublicBlock = stats.lastPublicMinerBlock ? `Last public block: ${fmtNumber(stats.lastPublicMinerBlock)}` : "Waiting for public miner block...";
+    const lastPublicBlock = stats.lastPublicMinerBlock ? `Last public block: ${fmtNumber(stats.lastPublicMinerBlock)}` : "Indexer is still scanning public blocks...";
     setText("[data-mining-last-public-block]", lastPublicBlock);
 
     if (feed && feed.ok !== false) {
@@ -504,14 +511,29 @@ async function updateMiningStatsPanel() {
     } else if (stats.pendingTxCount !== undefined) {
       setText("[data-mining-pending]", fmtNumber(stats.pendingTxCount));
     } else {
-      setText("[data-mining-pending]", "--");
+      setText("[data-mining-pending]", "0");
     }
 
+    const head = Number(stats.head || 0);
+    const scannedTo = Number(stats.scannedTo || 0);
+    const pct = head > 0 ? Math.min(100, Math.max(0, (scannedTo / head) * 100)) : 0;
+    const progress = stats.scanComplete
+      ? "Registry scan complete"
+      : `Registry scan ${pct.toFixed(1)}% · scanned ${fmtNumber(scannedTo)} / ${fmtNumber(head)} blocks`;
+    setText("[data-mining-scan-progress]", progress);
+
     const updated = stats.updatedAt ? new Date(stats.updatedAt).toLocaleString() : "now";
-    const head = stats.head ? `Head ${fmtNumber(stats.head)}` : "Head loading";
-    setMiningStatsLog(`${head} · updated ${updated} · registration txs: ${fmtNumber(stats.registrationTxs || 0)} · TX-FEED V2 active`, "ok");
+    const tone = stats.scanComplete ? "ok" : "warn";
+    setMiningStatsLog(`${progress} · updated ${updated} · registration txs: ${fmtNumber(stats.registrationTxs || 0)} · TX-FEED V2 active`, tone);
   } catch (err) {
     console.error(err);
+    setText("[data-mining-registered]", "--");
+    setText("[data-mining-active]", "--");
+    setText("[data-mining-public-blocks]", "--");
+    setText("[data-mining-official-blocks]", "--");
+    setText("[data-mining-last-public]", "--");
+    setText("[data-mining-pending]", "--");
+    setText("[data-mining-scan-progress]", "Mining stats API unavailable");
     setMiningStatsLog(err?.message || "Could not load live mining stats.", "warn");
   }
 }
