@@ -458,3 +458,20 @@ pre{
 .faucet-panel .miner-status-grid strong { word-break: break-word; }
 .notice[data-tone="ok"], .miner-log[data-tone="ok"] { border-color: rgba(36, 255, 185, .45); background: rgba(36, 255, 185, .08); color: #d9fff5; }
 .notice[data-tone="warn"], .miner-log[data-tone="warn"] { border-color: rgba(255, 190, 80, .5); background: rgba(255, 190, 80, .09); color: #fff1d6; }
+
+
+/* Live mining stats */
+.mining-live-grid .live-stat-card {
+  min-height: 170px;
+}
+.live-stat-card span {
+  display: block;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.big-metric.compact-address {
+  font-size: clamp(18px, 2.2vw, 28px);
+  word-break: break-word;
+}

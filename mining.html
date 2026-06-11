@@ -8,10 +8,10 @@
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css?v20260611-txfeed-v2-final" />
+  <link rel="stylesheet" href="./styles.css?v20260611-miner-stats-v1" />
 </head>
 <body>
-<div class="promo-bar">Public mining is live — register your wallet, download the TX-FEED V2 miner and mine LST.</div>
+<div class="promo-bar">Public mining is live — register your wallet, download TX-FEED V2 and track registered miners live.</div>
 <header class="topbar">
   <a class="brand" href="./bridge.html">
     <div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div>
@@ -74,6 +74,61 @@
       <div class="row"><span>Consensus</span><strong>LQC</strong></div>
       <div class="row"><span>Public reward</span><strong>1.4 LST / block</strong></div>
       <div class="row"><span>Network reserve</span><strong>0.6 LST / block</strong></div>
+      <div class="row"><span>Registered miners</span><strong data-mining-registered>Loading...</strong></div>
+      <div class="row"><span>Active public miners</span><strong data-mining-active>Loading...</strong></div>
+    </div>
+  </section>
+
+  <section class="miner-section" id="public-mining-stats">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Live public mining</div>
+        <h2>Registered miners and public mining activity.</h2>
+      </div>
+      <p>This panel reads on-chain miner registrations and recent block producers. A registered miner is a unique wallet that sent the official LQCR_V1 registration transaction on LUST Chain.</p>
+    </div>
+
+    <div class="grid three mining-live-grid">
+      <div class="box live-stat-card">
+        <small>Registered miners</small>
+        <strong class="big-metric" data-mining-registered>Loading...</strong>
+        <span>Unique wallets registered on-chain.</span>
+      </div>
+      <div class="box live-stat-card">
+        <small>Active public miners</small>
+        <strong class="big-metric" data-mining-active>Loading...</strong>
+        <span>Unique public miners in the last 200 blocks.</span>
+      </div>
+      <div class="box live-stat-card">
+        <small>Public blocks / last 200</small>
+        <strong class="big-metric" data-mining-public-blocks>Loading...</strong>
+        <span>Blocks produced by non-official public miners.</span>
+      </div>
+      <div class="box live-stat-card">
+        <small>Official fallback / last 200</small>
+        <strong class="big-metric" data-mining-official-blocks>Loading...</strong>
+        <span>Blocks produced by the official fallback producer.</span>
+      </div>
+      <div class="box live-stat-card">
+        <small>Last public miner</small>
+        <strong class="big-metric compact-address" data-mining-last-public>Loading...</strong>
+        <span data-mining-last-public-block>Waiting for block data...</span>
+      </div>
+      <div class="box live-stat-card">
+        <small>TX-FEED status</small>
+        <strong class="big-metric" data-mining-pending>Loading...</strong>
+        <span>Pending public transactions visible to miners.</span>
+      </div>
+    </div>
+
+    <div class="notice miner-log" data-mining-stats-log>
+      Loading live mining stats from rpc.lustchain.org/mining-stats...
+    </div>
+
+    <div class="hero-buttons">
+      <a class="btn" href="https://rpc.lustchain.org/mining-stats" target="_blank" rel="noreferrer">Open mining stats API</a>
+      <a class="btn" href="https://rpc.lustchain.org/pending-raw" target="_blank" rel="noreferrer">Open TX-FEED</a>
+      <a class="btn" href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">Open Explorer</a>
     </div>
   </section>
 
@@ -282,6 +337,6 @@ tail -f ~/LUST-Miner/logs/txfeed-linux.log
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
-<script type="module" src="./app.js?v20260611-txfeed-v2-final"></script>
+<script type="module" src="./app.js?v20260611-miner-stats-v1"></script>
 </body>
 </html>

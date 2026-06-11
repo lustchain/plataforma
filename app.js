@@ -274,7 +274,7 @@ backToTopButton?.addEventListener("click", () => {
 window.addEventListener("scroll", syncBackToTopButton, { passive: true });
 syncBackToTopButton();
 
-// LUST miner registration + mining page helpers v20260611-txfeed-v2-final
+// LUST miner registration + mining page helpers v20260611-miner-stats-v1
 const LUST_REGISTRY_ADDRESS = "0x0000000000000000000000000000000000006923";
 const LUST_REGISTER_DATA = "0x4c5143525f5631";
 const LUST_RPC_URL = "https://rpc.lustchain.org";
@@ -282,6 +282,8 @@ const LUST_EXPLORER_URL = "https://explorer.lustchain.org";
 const LUST_SNAPSHOT_INFO_URL = "https://snapshot.lustchain.org/snapshot/snapshot-info.json";
 const LUST_FAUCET_STATUS_URL = "https://downloads.lustchain.org/faucet/status";
 const LUST_FAUCET_CLAIM_URL = "https://downloads.lustchain.org/faucet/claim";
+const LUST_MINING_STATS_URL = "https://rpc.lustchain.org/mining-stats";
+const LUST_PENDING_RAW_URL = "https://rpc.lustchain.org/pending-raw";
 
 function setMinerLog(message, tone = "") {
   document.querySelectorAll("[data-miner-log]").forEach((el) => {
@@ -292,6 +294,23 @@ function setMinerLog(message, tone = "") {
 
 function setText(selector, text) {
   document.querySelectorAll(selector).forEach((el) => { el.textContent = text; });
+}
+
+function setMiningStatsLog(message, tone = "") {
+  document.querySelectorAll("[data-mining-stats-log]").forEach((el) => {
+    el.textContent = message;
+    el.dataset.tone = tone;
+  });
+}
+
+function fmtNumber(value) {
+  const n = Number(value || 0);
+  if (!Number.isFinite(n)) return "0";
+  return new Intl.NumberFormat("en-US").format(n);
+}
+
+function fmtAddress(value) {
+  return value ? shortAddress(value) : "--";
 }
 
 function getInjectedEthereum() {
@@ -456,6 +475,48 @@ async function updateMinerPage() {
 }
 
 
+async function updateMiningStatsPanel() {
+  const hasPanel = document.querySelector("[data-mining-registered]") || document.querySelector("[data-mining-pending]");
+  if (!hasPanel) return;
+
+  try {
+    const [statsRes, feedRes] = await Promise.allSettled([
+      fetch(LUST_MINING_STATS_URL, { cache: "no-store" }).then((r) => r.json()),
+      fetch(LUST_PENDING_RAW_URL, { cache: "no-store" }).then((r) => r.json())
+    ]);
+
+    const stats = statsRes.status === "fulfilled" ? statsRes.value : null;
+    const feed = feedRes.status === "fulfilled" ? feedRes.value : null;
+
+    if (!stats || stats.ok === false) throw new Error(stats?.error || "Mining stats API unavailable");
+
+    setText("[data-mining-registered]", fmtNumber(stats.registeredMiners));
+    setText("[data-mining-active]", fmtNumber(stats.activePublicMinersLast200));
+    setText("[data-mining-public-blocks]", fmtNumber(stats.publicBlocksLast200));
+    setText("[data-mining-official-blocks]", fmtNumber(stats.officialBlocksLast200));
+    setText("[data-mining-last-public]", fmtAddress(stats.lastPublicMiner));
+
+    const lastPublicBlock = stats.lastPublicMinerBlock ? `Last public block: ${fmtNumber(stats.lastPublicMinerBlock)}` : "Waiting for public miner block...";
+    setText("[data-mining-last-public-block]", lastPublicBlock);
+
+    if (feed && feed.ok !== false) {
+      setText("[data-mining-pending]", fmtNumber(feed.count || 0));
+    } else if (stats.pendingTxCount !== undefined) {
+      setText("[data-mining-pending]", fmtNumber(stats.pendingTxCount));
+    } else {
+      setText("[data-mining-pending]", "--");
+    }
+
+    const updated = stats.updatedAt ? new Date(stats.updatedAt).toLocaleString() : "now";
+    const head = stats.head ? `Head ${fmtNumber(stats.head)}` : "Head loading";
+    setMiningStatsLog(`${head} · updated ${updated} · registration txs: ${fmtNumber(stats.registrationTxs || 0)} · TX-FEED V2 active`, "ok");
+  } catch (err) {
+    console.error(err);
+    setMiningStatsLog(err?.message || "Could not load live mining stats.", "warn");
+  }
+}
+
+
 function setFaucetLog(message, tone = "") {
   document.querySelectorAll("[data-faucet-log]").forEach((el) => {
     el.textContent = message;
@@ -527,6 +588,7 @@ window.addLustChainToWallet = addLustChainToWallet;
 window.registerMinerWallet = registerMinerWallet;
 window.updateMinerPage = updateMinerPage;
 window.updateFaucetPanel = updateFaucetPanel;
+window.updateMiningStatsPanel = updateMiningStatsPanel;
 window.claimLustFaucet = claimLustFaucet;
 
 document.addEventListener("click", (event) => {
@@ -542,6 +604,7 @@ document.addEventListener("click", (event) => {
     event.preventDefault();
     updateMinerPage();
     updateFaucetPanel();
+    updateMiningStatsPanel();
   }
   if (event.target.closest("[data-claim-faucet]")) {
     event.preventDefault();
@@ -555,5 +618,7 @@ document.addEventListener("click", (event) => {
 
 setTimeout(updateMinerPage, 800);
 setTimeout(updateFaucetPanel, 1200);
+setTimeout(updateMiningStatsPanel, 1500);
 setInterval(updateMinerPage, 15000);
 setInterval(updateFaucetPanel, 20000);
+setInterval(updateMiningStatsPanel, 15000);
