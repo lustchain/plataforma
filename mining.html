@@ -122,29 +122,30 @@
   <section class="miner-section" id="faucet">
     <div class="section-head">
       <div>
-        <div class="kicker">Step 2</div>
-        <h2>Get small gas for registration.</h2>
+        <div class="kicker">Step 1.5</div>
+        <h2>Claim 0.01 LST for gas.</h2>
       </div>
-      <p>The faucet sends only <strong>0.01 LST</strong> to help a new wallet register and make a few first transactions. It is rate limited and never asks for your seed phrase.</p>
+      <p>The official faucet helps a new wallet pay the registration gas. It is one claim per wallet, forever. The site never asks for seed phrase or private key.</p>
     </div>
 
     <div class="grid two">
       <div class="form miner-wallet-panel faucet-panel">
-        <small>Official LUST gas faucet</small>
+        <small>Official LUST faucet</small>
         <div class="miner-status-grid">
-          <div><span>Faucet amount</span><strong>0.01 LST</strong></div>
-          <div><span>Eligibility</span><strong data-faucet-state>Connect wallet</strong></div>
-          <div><span>Your LST balance</span><strong data-faucet-wallet-balance>--</strong></div>
-          <div><span>Faucet status</span><strong data-faucet-server-state>Waiting</strong></div>
+          <div><span>Claim amount</span><strong data-faucet-amount>0.01 LST</strong></div>
+          <div><span>Faucet balance</span><strong data-faucet-balance>Checking...</strong></div>
+          <div><span>Your wallet balance</span><strong data-faucet-wallet-balance>Connect wallet</strong></div>
+          <div><span>Eligibility</span><strong data-faucet-eligibility>Connect wallet</strong></div>
         </div>
 
         <div class="hero-buttons miner-actions-row">
           <button class="btn primary" type="button" data-claim-faucet>Claim 0.01 LST</button>
-          <button class="btn" type="button" data-refresh-miner>Refresh status</button>
+          <button class="btn" type="button" data-connect-wallet>Connect wallet</button>
+          <button class="btn" type="button" data-refresh-faucet>Refresh faucet</button>
         </div>
 
         <div class="notice miner-log" data-faucet-log>
-          Connect your wallet first. The faucet is only for initial gas and is protected against abuse.
+          Connect a new wallet to check faucet eligibility.
         </div>
       </div>
 
@@ -152,11 +153,11 @@
         <small>Faucet safety rules</small>
         <div class="code-card">
           <div><span>Amount</span><code>0.01 LST</code></div>
-          <div><span>Max wallet balance</span><code>0.02 LST</code></div>
-          <div><span>Cooldown</span><code>1 claim / wallet / 24h</code></div>
-          <div><span>Purpose</span><code>Register miner wallet + first gas</code></div>
+          <div><span>Wallet limit</span><code>1 claim per wallet forever</code></div>
+          <div><span>Balance rule</span><code>Only wallets below 0.02 LST</code></div>
+          <div><span>Purpose</span><code>Gas for miner registration</code></div>
         </div>
-        <p class="mini-copy">The faucet only sends gas. It does not register the wallet for you. Registration still happens with your own MetaMask confirmation.</p>
+        <p class="mini-copy">Use this before registration only if your wallet has no LST. After claiming, click Register Miner Wallet and confirm the transaction in MetaMask.</p>
       </div>
     </div>
   </section>
@@ -164,7 +165,7 @@
   <section class="miner-section" id="downloads">
     <div class="section-head">
       <div>
-        <div class="kicker">Step 3</div>
+        <div class="kicker">Step 2</div>
         <h2>Download the official miner.</h2>
       </div>
       <p>The miner uses a latest snapshot URL that updates automatically. The installer SHA only changes when the scripts change; the snapshot SHA changes when the snapshot updates.</p>
@@ -198,7 +199,7 @@
   <section class="miner-section">
     <div class="section-head">
       <div>
-        <div class="kicker">Step 4</div>
+        <div class="kicker">Step 3</div>
         <h2>Start, stop and monitor.</h2>
       </div>
       <p>The status panel shows wallet, uptime, peers, gap, mined blocks, estimated rewards, snapshot info and recent logs.</p>

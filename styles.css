@@ -454,19 +454,7 @@ pre{
   .header-miner-btn{width:100%}
 }
 
-
 /* Faucet panel */
-.faucet-panel .miner-status-grid div{
-  min-height:86px;
-}
-.notice[data-tone="ok"]{
-  border-color:rgba(78,255,190,.38);
-  background:rgba(78,255,190,.08);
-}
-.notice[data-tone="warn"]{
-  border-color:rgba(255,190,80,.42);
-  background:rgba(255,190,80,.08);
-}
-.faucet-panel{
-  box-shadow:0 0 40px rgba(247,3,117,.08);
-}
+.faucet-panel .miner-status-grid strong { word-break: break-word; }
+.notice[data-tone="ok"], .miner-log[data-tone="ok"] { border-color: rgba(36, 255, 185, .45); background: rgba(36, 255, 185, .08); color: #d9fff5; }
+.notice[data-tone="warn"], .miner-log[data-tone="warn"] { border-color: rgba(255, 190, 80, .5); background: rgba(255, 190, 80, .09); color: #fff1d6; }

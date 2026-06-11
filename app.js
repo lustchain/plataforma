@@ -290,13 +290,6 @@ function setMinerLog(message, tone = "") {
   });
 }
 
-function setFaucetLog(message, tone = "") {
-  document.querySelectorAll("[data-faucet-log]").forEach((el) => {
-    el.textContent = message;
-    el.dataset.tone = tone;
-  });
-}
-
 function setText(selector, text) {
   document.querySelectorAll(selector).forEach((el) => { el.textContent = text; });
 }
@@ -423,69 +416,6 @@ async function registerMinerWallet() {
   }
 }
 
-
-async function updateFaucetStatus(address) {
-  if (!document.querySelector("[data-faucet-state]")) return;
-
-  if (!address) {
-    setText("[data-faucet-state]", "Connect wallet");
-    setText("[data-faucet-wallet-balance]", "--");
-    setText("[data-faucet-server-state]", "Waiting");
-    return;
-  }
-
-  try {
-    const url = `${LUST_FAUCET_STATUS_URL}?address=${encodeURIComponent(address)}`;
-    const status = await fetch(url, { cache: "no-store" }).then((r) => r.json());
-
-    if (!status.ok) {
-      setText("[data-faucet-state]", status.message || "Not available");
-      setText("[data-faucet-server-state]", "Online");
-      return;
-    }
-
-    setText("[data-faucet-wallet-balance]", `${status.walletBalanceLST ?? "--"} LST`);
-    setText("[data-faucet-server-state]", `Online · ${status.faucetBalanceLST ?? "--"} LST`);
-
-    if (status.eligible) {
-      setText("[data-faucet-state]", "Eligible");
-      setFaucetLog("Your wallet can claim 0.01 LST for initial gas.", "ok");
-    } else {
-      setText("[data-faucet-state]", status.reason || "Not eligible");
-      setFaucetLog(status.reason || "This wallet is not eligible right now.", "warn");
-    }
-  } catch (err) {
-    console.error(err);
-    setText("[data-faucet-server-state]", "Offline");
-    setFaucetLog("Faucet status is not available right now. Try again in a moment.", "warn");
-  }
-}
-
-async function claimFaucet() {
-  try {
-    const account = await getWalletAccount();
-    setFaucetLog("Requesting 0.01 LST from the faucet...", "");
-
-    const res = await fetch(LUST_FAUCET_CLAIM_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ address: account })
-    });
-
-    const json = await res.json().catch(() => ({}));
-
-    if (!res.ok || !json.ok) {
-      throw new Error(json.message || "Faucet claim failed.");
-    }
-
-    setFaucetLog(`Faucet sent 0.01 LST. Tx: ${json.txHash}`, "ok");
-    setTimeout(updateMinerPage, 3500);
-  } catch (err) {
-    console.error(err);
-    setFaucetLog(err?.message || "Faucet claim failed.", "warn");
-  }
-}
-
 async function updateMinerPage() {
   const hasMinerPage = document.querySelector("[data-registration-state]") || document.querySelector("[data-snapshot-block]");
   if (!hasMinerPage) return;
@@ -499,9 +429,7 @@ async function updateMinerPage() {
   if (address) {
     try {
       const bal = await lustRpc("eth_getBalance", [address, "latest"]);
-      const balText = weiHexToLst(bal);
-      setText("[data-lust-balance]", balText);
-      setText("[data-faucet-wallet-balance]", balText);
+      setText("[data-lust-balance]", weiHexToLst(bal));
     } catch (_) {
       setText("[data-lust-balance]", "--");
     }
@@ -518,8 +446,6 @@ async function updateMinerPage() {
     setText("[data-registration-state]", "Connect wallet first");
   }
 
-  await updateFaucetStatus(address);
-
   try {
     const snap = await fetch(LUST_SNAPSHOT_INFO_URL, { cache: "no-store" }).then((r) => r.json());
     if (snap?.block) setText("[data-snapshot-block]", String(snap.block));
@@ -529,10 +455,79 @@ async function updateMinerPage() {
   }
 }
 
+
+function setFaucetLog(message, tone = "") {
+  document.querySelectorAll("[data-faucet-log]").forEach((el) => {
+    el.textContent = message;
+    el.dataset.tone = tone;
+  });
+}
+
+async function updateFaucetPanel() {
+  const hasFaucet = document.querySelector("[data-faucet-eligibility]") || document.querySelector("[data-faucet-balance]");
+  if (!hasFaucet) return;
+
+  const address = walletState.address || "";
+  const url = address ? `${LUST_FAUCET_STATUS_URL}?address=${encodeURIComponent(address)}` : LUST_FAUCET_STATUS_URL;
+
+  try {
+    const res = await fetch(url, { cache: "no-store" });
+    const json = await res.json();
+
+    if (!json.ok) throw new Error(json.message || "Faucet status failed");
+
+    setText("[data-faucet-amount]", `${json.amountLST || "0.01"} LST`);
+    setText("[data-faucet-balance]", `${json.faucetBalanceLST || "--"} LST`);
+    setText("[data-faucet-wallet-balance]", json.walletBalanceLST ? `${json.walletBalanceLST} LST` : "Connect wallet");
+    setText("[data-faucet-eligibility]", json.eligible ? "Eligible" : (json.reason || "Not eligible"));
+
+    if (!address) {
+      setFaucetLog("Connect your wallet to check faucet eligibility.", "");
+    } else if (json.eligible) {
+      setFaucetLog("Your wallet can claim 0.01 LST for miner registration gas.", "ok");
+    } else {
+      setFaucetLog(json.reason || "This wallet is not eligible for the faucet.", "warn");
+    }
+  } catch (err) {
+    console.error(err);
+    setFaucetLog(err?.message || "Could not read faucet status.", "warn");
+  }
+}
+
+async function claimLustFaucet() {
+  try {
+    const eth = getInjectedEthereum();
+    if (!eth) throw new Error("MetaMask or injected wallet not found.");
+
+    setFaucetLog("Checking wallet and faucet eligibility...", "");
+    const account = await getWalletAccount();
+    await addLustChainToWallet();
+
+    const res = await fetch(LUST_FAUCET_CLAIM_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ address: account })
+    });
+
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok || !json.ok) {
+      throw new Error(json.message || json.reason || "Faucet claim failed.");
+    }
+
+    setFaucetLog(`Faucet sent ${json.amountLST || "0.01"} LST. Tx: ${json.txHash}`, "ok");
+    setTimeout(updateFaucetPanel, 2500);
+    setTimeout(updateMinerPage, 3500);
+  } catch (err) {
+    console.error(err);
+    setFaucetLog(err?.message || "Faucet claim rejected or failed.", "warn");
+  }
+}
+
 window.addLustChainToWallet = addLustChainToWallet;
 window.registerMinerWallet = registerMinerWallet;
 window.updateMinerPage = updateMinerPage;
-window.claimFaucet = claimFaucet;
+window.updateFaucetPanel = updateFaucetPanel;
+window.claimLustFaucet = claimLustFaucet;
 
 document.addEventListener("click", (event) => {
   if (event.target.closest("[data-add-lust-chain]")) {
@@ -546,12 +541,19 @@ document.addEventListener("click", (event) => {
   if (event.target.closest("[data-refresh-miner]")) {
     event.preventDefault();
     updateMinerPage();
+    updateFaucetPanel();
   }
   if (event.target.closest("[data-claim-faucet]")) {
     event.preventDefault();
-    claimFaucet();
+    claimLustFaucet();
+  }
+  if (event.target.closest("[data-refresh-faucet]")) {
+    event.preventDefault();
+    updateFaucetPanel();
   }
 });
 
 setTimeout(updateMinerPage, 800);
+setTimeout(updateFaucetPanel, 1200);
 setInterval(updateMinerPage, 15000);
+setInterval(updateFaucetPanel, 20000);
