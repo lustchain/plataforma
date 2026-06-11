@@ -274,7 +274,7 @@ backToTopButton?.addEventListener("click", () => {
 window.addEventListener("scroll", syncBackToTopButton, { passive: true });
 syncBackToTopButton();
 
-// LUST miner registration + mining page helpers v20260611-miner-stats-v2-jsonp-final
+// LUST miner registration + mining page helpers v20260611-txfeed-v3-final
 const LUST_REGISTRY_ADDRESS = "0x0000000000000000000000000000000000006923";
 const LUST_REGISTER_DATA = "0x4c5143525f5631";
 const LUST_RPC_URL = "https://rpc.lustchain.org";
@@ -565,7 +565,7 @@ async function updateMiningStatsPanel() {
 
     const updated = stats.updatedAt ? new Date(stats.updatedAt).toLocaleString() : "now";
     const tone = stats.scanComplete ? "ok" : "warn";
-    setMiningStatsLog(`${progress} · updated ${updated} · registration txs: ${fmtNumber(stats.registrationTxs || 0)} · TX-FEED V2 active`, tone);
+    setMiningStatsLog(`${progress} · updated ${updated} · registration txs: ${fmtNumber(stats.registrationTxs || 0)} · TX-FEED V3 active`, tone);
   } catch (err) {
     console.error(err);
     setText("[data-mining-registered]", "--");

@@ -60,12 +60,12 @@ Update v20260610-top-promo-bar-v10:
 - Cache busting atualizado.
 
 
-## Public miner TX-FEED V2 package hashes
+## Public miner TX-FEED V3 package hashes
 
 Windows ZIP:
-`63b061ff027020c95197a869875bdcb4b3452bfefac7bea682971b9de0dc65ad`
+`40da8ea55995d2ff811f479a62fb1814a6bc7f1cc373c66d6735c90cf7a5b20f`
 
 Ubuntu/Linux TGZ:
-`3b659599eab720d4003157c15eebc8ef03a0abe51f6a1bc2129fc09f68e8fe61`
+`4cf5e509804b60b1c16232e529c623eeeea080f1cffaf899096de94e764664d5`
 
-TX-FEED V2 checks the public pending transaction feed every 1 second and injects raw pending transactions into the local miner node. Windows opens a second TX-FEED V2 window. Ubuntu/Linux starts the feed in background and logs to `~/LUST-Miner/logs/txfeed-linux.log`.
+TX-FEED V3 checks the public pending transaction feed every 1 second and injects raw pending transactions into the local miner node. Windows opens a second TX-FEED V3 window. Ubuntu/Linux starts the feed in background and logs to `~/LUST-Miner/logs/txfeed-v3.log`.
