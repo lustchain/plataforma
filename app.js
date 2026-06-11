@@ -274,7 +274,7 @@ backToTopButton?.addEventListener("click", () => {
 window.addEventListener("scroll", syncBackToTopButton, { passive: true });
 syncBackToTopButton();
 
-// LUST miner registration + mining page helpers v20260611-miner-stats-v2-final-safe
+// LUST miner registration + mining page helpers v20260611-miner-stats-v2-jsonp-final
 const LUST_REGISTRY_ADDRESS = "0x0000000000000000000000000000000000006923";
 const LUST_REGISTER_DATA = "0x4c5143525f5631";
 const LUST_RPC_URL = "https://rpc.lustchain.org";
@@ -475,6 +475,50 @@ async function updateMinerPage() {
 }
 
 
+
+function fetchJsonp(url, timeoutMs = 9000) {
+  return new Promise((resolve, reject) => {
+    const cb = `__lustJsonp_${Date.now()}_${Math.floor(Math.random() * 100000)}`;
+    const script = document.createElement("script");
+    const sep = url.includes("?") ? "&" : "?";
+    const timer = setTimeout(() => {
+      cleanup();
+      reject(new Error("Mining stats JSONP timeout"));
+    }, timeoutMs);
+
+    function cleanup() {
+      clearTimeout(timer);
+      try { delete window[cb]; } catch (_) { window[cb] = undefined; }
+      if (script.parentNode) script.parentNode.removeChild(script);
+    }
+
+    window[cb] = (data) => {
+      cleanup();
+      resolve(data);
+    };
+
+    script.onerror = () => {
+      cleanup();
+      reject(new Error("Mining stats JSONP failed"));
+    };
+
+    script.src = `${url}${sep}callback=${encodeURIComponent(cb)}&t=${Date.now()}`;
+    document.head.appendChild(script);
+  });
+}
+
+async function fetchMiningStatsLive() {
+  const ts = Date.now();
+  try {
+    const res = await fetch(`${LUST_MINING_STATS_URL}?t=${ts}`, { cache: "no-store", mode: "cors" });
+    if (!res.ok) throw new Error(`Mining stats HTTP ${res.status}`);
+    return await res.json();
+  } catch (fetchErr) {
+    console.warn("Mining stats fetch failed, trying JSONP fallback", fetchErr);
+    return await fetchJsonp("https://rpc.lustchain.org/mining-stats.js");
+  }
+}
+
 async function updateMiningStatsPanel() {
   const hasPanel = document.querySelector("[data-mining-registered]") || document.querySelector("[data-mining-pending]");
   if (!hasPanel) return;
@@ -482,11 +526,8 @@ async function updateMiningStatsPanel() {
   try {
     const ts = Date.now();
     const [statsRes, feedRes] = await Promise.allSettled([
-      fetch(`${LUST_MINING_STATS_URL}?t=${ts}`, { cache: "no-store" }).then((r) => {
-        if (!r.ok) throw new Error(`Mining stats HTTP ${r.status}`);
-        return r.json();
-      }),
-      fetch(`${LUST_PENDING_RAW_URL}?t=${ts}`, { cache: "no-store" }).then((r) => {
+      fetchMiningStatsLive(),
+      fetch(`${LUST_PENDING_RAW_URL}?t=${ts}`, { cache: "no-store", mode: "cors" }).then((r) => {
         if (!r.ok) throw new Error(`TX-FEED HTTP ${r.status}`);
         return r.json();
       })
@@ -534,7 +575,7 @@ async function updateMiningStatsPanel() {
     setText("[data-mining-last-public]", "--");
     setText("[data-mining-pending]", "--");
     setText("[data-mining-scan-progress]", "Mining stats API unavailable");
-    setMiningStatsLog(err?.message || "Could not load live mining stats.", "warn");
+    setMiningStatsLog(`${err?.message || "Could not load live mining stats."} · Open the API button below; if it opens, refresh with Ctrl+F5.`, "warn");
   }
 }
 
