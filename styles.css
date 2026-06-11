@@ -458,3 +458,7 @@ pre{
 .faucet-panel .miner-status-grid strong { word-break: break-word; }
 .notice[data-tone="ok"], .miner-log[data-tone="ok"] { border-color: rgba(36, 255, 185, .45); background: rgba(36, 255, 185, .08); color: #d9fff5; }
 .notice[data-tone="warn"], .miner-log[data-tone="warn"] { border-color: rgba(255, 190, 80, .5); background: rgba(255, 190, 80, .09); color: #fff1d6; }
+
+/* TX-FEED miner fairness update */
+.txfeed-section .box code{white-space:normal;overflow-wrap:anywhere}
+#clean-test pre code{white-space:pre-wrap}

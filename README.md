@@ -58,3 +58,13 @@ Update v20260610-top-promo-bar-v10:
 - Adicionada faixa rosa acima do topo em todas as páginas.
 - Texto: Invest in life’s pleasures!
 - Cache busting atualizado.
+
+
+## LUST mining page update
+
+Updated mining downloads and instructions for V7A12 TX-FEED packages.
+
+- Windows SHA256: a12f316d60d26ec972ab7afddf4cc34eef7c0f9dba1ef11197bee07187657425
+- Ubuntu/Linux SHA256: b2651cc553d5a712e98c81fe56308808ccd1cca10acb81611082b052d5ca26c5
+- Public TX-FEED endpoint: https://rpc.lustchain.org/pending-raw
+
