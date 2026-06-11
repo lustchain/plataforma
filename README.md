@@ -63,11 +63,11 @@ Update v20260610-top-promo-bar-v10:
 ## Public miner TX-FEED V3 package hashes
 
 Windows ZIP:
-`40da8ea55995d2ff811f479a62fb1814a6bc7f1cc373c66d6735c90cf7a5b20f`
+`24f8cd0778236d65f390be4ec624fbb3c4d13e004915c2cad628b9dfba2c4c13`
 
 Ubuntu/Linux TGZ:
-`9295f7eab201589da6f7d2575dea72d40541abc93a9f251709247f436c1a5be8`
+`2ef91fc4156a41714a77321109ae6ede87c7a45a6ff22fdcb7c6a89d09c3ce25`
 
-TX-FEED V3 checks the public pending transaction feed every 1 second and injects raw pending transactions into the local miner node. Windows opens a second TX-FEED V3 window. Ubuntu/Linux starts the feed in background and logs to `~/LUST-Miner/logs/txfeed-v3.log`.
+Windows is the recommended/easy public miner at launch. Ubuntu/Linux is advanced/beta. TX-FEED V3 checks the public pending transaction feed every 0.5 seconds and injects raw pending transactions into the local miner node.
 
-Linux package note: default local RPC is 18547 and P2P is 30313, so it can run beside INRI on 8545/30303.
+Snapshot server note: latest snapshot is rebuilt automatically when the public snapshot is behind by about 1000 blocks.

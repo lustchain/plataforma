@@ -35,7 +35,6 @@
   </nav>
 
   <div class="actions">
-    <a class="btn header-miner-btn" href="./mining.html">Mine LST</a>
     <button class="btn connect-btn" type="button" data-connect-wallet aria-label="Connect wallet">
       <div class="connect-icon">◫</div>
       <div class="connect-copy">
@@ -241,18 +240,18 @@
           <p>Extract the ZIP and double-click <strong>START-LUST-MINER-WINDOWS.bat</strong>. It opens the miner plus a second <strong>LUST TX-FEED V3</strong> window. Keep both windows open.</p>
           <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a12-miner-windows-latest-snapshot.zip" target="_blank" rel="noreferrer">Download Windows ZIP</a>
         </div>
-        <div class="sha-box"><span>SHA256</span><code>40da8ea55995d2ff811f479a62fb1814a6bc7f1cc373c66d6735c90cf7a5b20f</code></div>
+        <div class="sha-box"><span>SHA256</span><code>24f8cd0778236d65f390be4ec624fbb3c4d13e004915c2cad628b9dfba2c4c13</code></div>
       </div>
 
       <div class="download-card">
         <div class="download-icon">⌁</div>
         <div>
-          <small>Ubuntu / Linux</small>
+          <small>Ubuntu / Linux · Advanced / Beta</small>
           <h3>Linux latest-snapshot miner</h3>
-          <p>Extract the TGZ, give permission and run <strong>./START-LUST-MINER-LINUX.sh</strong>. TX-FEED V3 starts in background and logs to <strong>~/LUST-Miner/logs/txfeed-v3.log</strong>.</p>
+          <p>For clean Ubuntu/VPS users. Extract the TGZ, give permission and run <strong>./START-LUST-MINER-LINUX.sh</strong>. TX-FEED V3 starts in background and logs to <strong>~/LUST-Miner/logs/txfeed-v3.log</strong>. If you already run INRI or another geth on the same Ubuntu/WSL, use Windows miner or advanced ports.</p>
           <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a12-miner-linux-latest-snapshot.tar.gz" target="_blank" rel="noreferrer">Download Linux TGZ</a>
         </div>
-        <div class="sha-box"><span>SHA256</span><code>9295f7eab201589da6f7d2575dea72d40541abc93a9f251709247f436c1a5be8</code></div>
+        <div class="sha-box"><span>SHA256</span><code>2ef91fc4156a41714a77321109ae6ede87c7a45a6ff22fdcb7c6a89d09c3ce25</code></div>
       </div>
     </div>
   </section>
@@ -271,7 +270,7 @@
     <div class="grid three">
       <div class="card"><small>Windows</small><h3>Two windows stay open.</h3><p>START opens <strong>LUST MINER</strong> and <strong>LUST TX-FEED V3</strong>. The feed auto-detects local RPC port 18547 or 8545 and logs to <strong>LUST-Miner/logs/txfeed-v3.log</strong>.</p></div>
       <div class="card"><small>Ubuntu / Linux</small><h3>Background feed.</h3><p>The Linux starter launches TX-FEED V3 in background. It uses local RPC <strong>18547</strong> and P2P <strong>30313</strong> by default to avoid conflicts with INRI or another geth. Check the live feed log at <strong>~/LUST-Miner/logs/txfeed-v3.log</strong>.</p></div>
-      <div class="card"><small>Pending feed</small><h3>Public endpoint.</h3><p>The miner reads <strong>https://rpc.lustchain.org/pending-raw</strong> first and can fall back to <strong>https://rpc-backup.lustchain.org/pending-raw</strong>.</p></div>
+      <div class="card"><small>Pending feed</small><h3>Public endpoint.</h3><p>The miner reads <strong>https://rpc.lustchain.org/pending-raw</strong>. This is the official public transaction feed used by TX-FEED V3.</p></div>
     </div>
   </section>
 
@@ -295,11 +294,12 @@ STATUS-LUST-MINER-WINDOWS.bat
       </div>
       <div class="box command-box">
         <small>Ubuntu / Linux commands</small>
-        <pre><code>chmod +x START-LUST-MINER-LINUX.sh STOP-LUST-MINER-LINUX.sh STATUS-LUST-MINER-LINUX.sh TXFEED-LUST-MINER-LINUX.sh
+        <pre><code>chmod +x START-LUST-MINER-LINUX.sh STOP-LUST-MINER-LINUX.sh STATUS-LUST-MINER-LINUX.sh TXFEED-LUST-V3.py
 ./START-LUST-MINER-LINUX.sh
 ./STATUS-LUST-MINER-LINUX.sh
 tail -f ~/LUST-Miner/logs/txfeed-v3.log
 ./STOP-LUST-MINER-LINUX.sh</code></pre>
+        <p class="mini-copy">Linux is advanced/beta for launch. Windows is the recommended public miner for normal users.</p>
       </div>
     </div>
   </section>
@@ -310,13 +310,13 @@ tail -f ~/LUST-Miner/logs/txfeed-v3.log
         <div class="kicker">Latest snapshot</div>
         <h2>Fast sync for public miners.</h2>
       </div>
-      <p>The miner downloads a fresh snapshot automatically from the official snapshot server. The page reads the current block and SHA directly from snapshot-info.json.</p>
+      <p>The miner downloads a fresh snapshot automatically from the official snapshot server. The snapshot server rebuilds automatically when the public snapshot is behind by about 1000 blocks. The page reads the current block and SHA directly from snapshot-info.json.</p>
     </div>
 
     <div class="grid three snapshot-grid">
       <div class="box"><small>Snapshot block</small><strong class="big-metric" data-snapshot-block>Loading...</strong></div>
       <div class="box"><small>Snapshot SHA</small><code data-snapshot-sha>Loading latest snapshot...</code></div>
-      <div class="box"><small>Update rule</small><strong>Auto latest</strong></div>
+      <div class="box"><small>Update rule</small><strong>Auto latest · gap 1000 blocks</strong></div>
     </div>
 
     <div class="hero-buttons">
@@ -353,6 +353,6 @@ tail -f ~/LUST-Miner/logs/txfeed-v3.log
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
-<script type="module" src="./app.js?v20260611-txfeed-v3-final"></script>
+<script type="module" src="./app.js?v20260611-final-launch-hashes"></script>
 </body>
 </html>
