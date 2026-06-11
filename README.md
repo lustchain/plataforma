@@ -60,11 +60,12 @@ Update v20260610-top-promo-bar-v10:
 - Cache busting atualizado.
 
 
-## LUST mining page update
+## Public miner TX-FEED V2 package hashes
 
-Updated mining downloads and instructions for V7A12 TX-FEED packages.
+Windows ZIP:
+`63b061ff027020c95197a869875bdcb4b3452bfefac7bea682971b9de0dc65ad`
 
-- Windows SHA256: a12f316d60d26ec972ab7afddf4cc34eef7c0f9dba1ef11197bee07187657425
-- Ubuntu/Linux SHA256: b2651cc553d5a712e98c81fe56308808ccd1cca10acb81611082b052d5ca26c5
-- Public TX-FEED endpoint: https://rpc.lustchain.org/pending-raw
+Ubuntu/Linux TGZ:
+`3b659599eab720d4003157c15eebc8ef03a0abe51f6a1bc2129fc09f68e8fe61`
 
+TX-FEED V2 checks the public pending transaction feed every 1 second and injects raw pending transactions into the local miner node. Windows opens a second TX-FEED V2 window. Ubuntu/Linux starts the feed in background and logs to `~/LUST-Miner/logs/txfeed-linux.log`.

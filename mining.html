@@ -8,10 +8,10 @@
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css?v20260611-miner-txfeed-v3" />
+  <link rel="stylesheet" href="./styles.css?v20260611-txfeed-v2-final" />
 </head>
 <body>
-<div class="promo-bar">Public mining is almost ready — register your wallet, download the latest miner and keep TX-FEED active while mining.</div>
+<div class="promo-bar">Public mining is live — register your wallet, download the TX-FEED V2 miner and mine LST.</div>
 <header class="topbar">
   <a class="brand" href="./bridge.html">
     <div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div>
@@ -52,7 +52,7 @@
     <div class="miner-hero-copy">
       <div class="kicker">Public LUST Mining</div>
       <h1>Mine LST from your own computer.</h1>
-      <p>LUST Chain public mining lets normal users participate without expensive mining farms. Register your wallet once, download the official miner and let the miner sync safely before it starts mining.</p>
+      <p>LUST Chain public mining lets normal users participate without expensive mining farms. Register your wallet once, download the official TX-FEED V2 miner and let the miner sync safely before it starts mining.</p>
       <div class="hero-buttons">
         <button class="btn primary" type="button" data-connect-wallet>Connect wallet</button>
         <button class="btn" type="button" data-add-lust-chain>Add LUST Chain</button>
@@ -63,6 +63,7 @@
         <span>✓ MetaMask confirmation</span>
         <span>✓ Official SHA256</span>
         <span>✓ Snapshot latest</span>
+        <span>✓ TX-FEED V2</span>
       </div>
     </div>
     <div class="miner-command-card">
@@ -168,7 +169,7 @@
         <div class="kicker">Step 2</div>
         <h2>Download the official miner.</h2>
       </div>
-      <p>The miner kit downloads the latest snapshot automatically and now includes TX-FEED, which helps public miners receive pending transactions locally before mining blocks. Download the latest package and verify the SHA256.</p>
+      <p>The miner uses the latest snapshot automatically and TX-FEED V2 to pull public pending transactions into the local miner node every second. The package SHA changes when miner scripts change; the snapshot SHA changes when the snapshot updates.</p>
     </div>
 
     <div class="grid two download-grid">
@@ -177,10 +178,10 @@
         <div>
           <small>Windows</small>
           <h3>Windows one-click miner</h3>
-          <p>Extract the ZIP and double-click <strong>START-LUST-MINER-WINDOWS.bat</strong>. It opens the miner and a second <strong>LUST TX-FEED</strong> window. Keep both open.</p>
+          <p>Extract the ZIP and double-click <strong>START-LUST-MINER-WINDOWS.bat</strong>. It opens the miner plus a second <strong>LUST TX-FEED V2</strong> window. Keep both windows open.</p>
           <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a12-miner-windows-latest-snapshot.zip" target="_blank" rel="noreferrer">Download Windows ZIP</a>
         </div>
-        <div class="sha-box"><span>SHA256</span><code>a12f316d60d26ec972ab7afddf4cc34eef7c0f9dba1ef11197bee07187657425</code></div>
+        <div class="sha-box"><span>SHA256</span><code>63b061ff027020c95197a869875bdcb4b3452bfefac7bea682971b9de0dc65ad</code></div>
       </div>
 
       <div class="download-card">
@@ -188,27 +189,29 @@
         <div>
           <small>Ubuntu / Linux</small>
           <h3>Linux latest-snapshot miner</h3>
-          <p>Extract the TGZ, give permission and run <strong>./START-LUST-MINER-LINUX.sh</strong>. TX-FEED starts in background and logs to <strong>~/LUST-Miner/logs/txfeed.log</strong>.</p>
+          <p>Extract the TGZ, give permission and run <strong>./START-LUST-MINER-LINUX.sh</strong>. TX-FEED V2 starts in background and logs to <strong>~/LUST-Miner/logs/txfeed-linux.log</strong>.</p>
           <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a12-miner-linux-latest-snapshot.tar.gz" target="_blank" rel="noreferrer">Download Linux TGZ</a>
         </div>
-        <div class="sha-box"><span>SHA256</span><code>b2651cc553d5a712e98c81fe56308808ccd1cca10acb81611082b052d5ca26c5</code></div>
+        <div class="sha-box"><span>SHA256</span><code>3b659599eab720d4003157c15eebc8ef03a0abe51f6a1bc2129fc09f68e8fe61</code></div>
       </div>
     </div>
   </section>
 
-  <section class="miner-section txfeed-section" id="txfeed">
+
+
+  <section class="miner-section" id="txfeed-v2">
     <div class="section-head">
       <div>
-        <div class="kicker">TX-FEED fairness</div>
-        <h2>Keep public transactions inside your miner.</h2>
+        <div class="kicker">TX-FEED V2</div>
+        <h2>Fast transaction feed for public miners.</h2>
       </div>
-      <p>TX-FEED checks the public pending transaction feed and injects raw pending transactions into your local miner node. This gives public miners a fair chance to include transactions when they mine a block.</p>
+      <p>TX-FEED V2 checks the public pending transaction feed every second and injects valid raw transactions into the local miner node. This gives public miners a real chance to include transactions when they produce the next block.</p>
     </div>
 
     <div class="grid three">
-      <div class="box"><small>Public feed</small><h3>Pending raw txs</h3><p><code>https://rpc.lustchain.org/pending-raw</code></p></div>
-      <div class="box"><small>Windows</small><h3>Two windows</h3><p>START opens <strong>LUST MINER</strong> and <strong>LUST TX-FEED</strong>. Keep both windows open while mining.</p></div>
-      <div class="box"><small>Ubuntu / Linux</small><h3>Background feed</h3><p>TX-FEED runs in background. Check logs at <code>~/LUST-Miner/logs/txfeed.log</code>.</p></div>
+      <div class="card"><small>Windows</small><h3>Two windows stay open.</h3><p>START opens <strong>LUST MINER</strong> and <strong>LUST TX-FEED V2</strong>. The feed auto-detects local RPC port 18547 or 8545 and logs to <strong>LUST-Miner/logs/txfeed-windows.log</strong>.</p></div>
+      <div class="card"><small>Ubuntu / Linux</small><h3>Background feed.</h3><p>The Linux starter launches TX-FEED V2 in background. Check the live feed log at <strong>~/LUST-Miner/logs/txfeed-linux.log</strong>.</p></div>
+      <div class="card"><small>Pending feed</small><h3>Public endpoint.</h3><p>The miner reads <strong>https://rpc.lustchain.org/pending-raw</strong> first and can fall back to <strong>https://rpc-backup.lustchain.org/pending-raw</strong>.</p></div>
     </div>
   </section>
 
@@ -218,46 +221,26 @@
         <div class="kicker">Step 3</div>
         <h2>Start, stop and monitor.</h2>
       </div>
-      <p>The miner starts safely, waits for peers and sync gap, then enables mining. TX-FEED should stay active so your miner can see pending public transactions.</p>
+      <p>The status panel shows wallet, uptime, peers, gap, mined blocks, estimated rewards, snapshot info and recent logs.</p>
     </div>
 
     <div class="grid two">
       <div class="box command-box">
         <small>Windows commands</small>
         <pre><code>START-LUST-MINER-WINDOWS.bat
-TXFEED-LUST-MINER-WINDOWS.bat
 STOP-LUST-MINER-WINDOWS.bat
-STATUS-LUST-MINER-WINDOWS.bat</code></pre>
+STATUS-LUST-MINER-WINDOWS.bat
+
+# START opens LUST MINER + LUST TX-FEED V2</code></pre>
       </div>
       <div class="box command-box">
         <small>Ubuntu / Linux commands</small>
-        <pre><code>chmod +x START-LUST-MINER-LINUX.sh TXFEED-LUST-MINER-LINUX.sh STOP-LUST-MINER-LINUX.sh STATUS-LUST-MINER-LINUX.sh
+        <pre><code>chmod +x START-LUST-MINER-LINUX.sh STOP-LUST-MINER-LINUX.sh STATUS-LUST-MINER-LINUX.sh TXFEED-LUST-MINER-LINUX.sh
 ./START-LUST-MINER-LINUX.sh
-tail -f ~/LUST-Miner/logs/txfeed.log
-./STOP-LUST-MINER-LINUX.sh
-./STATUS-LUST-MINER-LINUX.sh</code></pre>
+./STATUS-LUST-MINER-LINUX.sh
+tail -f ~/LUST-Miner/logs/txfeed-linux.log
+./STOP-LUST-MINER-LINUX.sh</code></pre>
       </div>
-    </div>
-  </section>
-
-  <section class="miner-section" id="clean-test">
-    <div class="section-head">
-      <div>
-        <div class="kicker">Clean test</div>
-        <h2>Testing with another wallet.</h2>
-      </div>
-      <p>To test with a fresh wallet, stop the miner first, then clean the local miner folder. Never delete MetaMask or expose your seed phrase.</p>
-    </div>
-    <div class="grid two">
-      <div class="box command-box"><small>Windows full clean</small><pre><code>Close LUST MINER and LUST TX-FEED
-End any lust-geth.exe process
-Delete: C:\Users\YOUR_USER\LUST-Miner
-Extract the latest ZIP again
-Run START-LUST-MINER-WINDOWS.bat</code></pre></div>
-      <div class="box command-box"><small>Ubuntu / Linux full clean</small><pre><code>pkill -f lust-geth || true
-pkill -f TXFEED-LUST-MINER-LINUX.sh || true
-rm -rf ~/LUST-Miner
-./START-LUST-MINER-LINUX.sh</code></pre></div>
     </div>
   </section>
 
@@ -267,13 +250,13 @@ rm -rf ~/LUST-Miner
         <div class="kicker">Latest snapshot</div>
         <h2>Fast sync for public miners.</h2>
       </div>
-      <p>The miner downloads a fresh snapshot automatically from the official snapshot server. The snapshot builder checks every 10 minutes and publishes a new one only after 1000+ blocks.</p>
+      <p>The miner downloads a fresh snapshot automatically from the official snapshot server. The page reads the current block and SHA directly from snapshot-info.json.</p>
     </div>
 
     <div class="grid three snapshot-grid">
       <div class="box"><small>Snapshot block</small><strong class="big-metric" data-snapshot-block>Loading...</strong></div>
-      <div class="box"><small>Snapshot SHA</small><code data-snapshot-sha>Loading latest SHA...</code></div>
-      <div class="box"><small>Update rule</small><strong>Every 1000+ blocks</strong></div>
+      <div class="box"><small>Snapshot SHA</small><code data-snapshot-sha>Loading latest snapshot...</code></div>
+      <div class="box"><small>Update rule</small><strong>Auto latest</strong></div>
     </div>
 
     <div class="hero-buttons">
@@ -287,7 +270,7 @@ rm -rf ~/LUST-Miner
     <div class="grid three">
       <div class="card"><small>Security</small><h3>Never enter your seed.</h3><p>The official site only asks MetaMask to sign/send a registration transaction. Never type your seed phrase on any website.</p></div>
       <div class="card"><small>Wallet rule</small><h3>One machine, one wallet.</h3><p>For clean testing and production, use one registered wallet per miner machine. Do not run the same wallet on many devices at the same time.</p></div>
-      <div class="card"><small>Safe start + TX-FEED</small><h3>No isolated mining.</h3><p>The miner starts with mining off, waits for peers, chain ID and gap, then keeps TX-FEED active so pending public transactions can reach your local node.</p></div>
+      <div class="card"><small>Safe start</small><h3>No isolated mining.</h3><p>The miner starts with mining off, waits for peers, chain ID and gap, starts TX-FEED V2, then enables mining only when the node is ready.</p></div>
     </div>
   </section>
 </main>
@@ -299,6 +282,6 @@ rm -rf ~/LUST-Miner
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
-<script type="module" src="./app.js?v20260611-miner-txfeed-v3"></script>
+<script type="module" src="./app.js?v20260611-txfeed-v2-final"></script>
 </body>
 </html>

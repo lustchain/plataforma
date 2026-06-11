@@ -274,7 +274,7 @@ backToTopButton?.addEventListener("click", () => {
 window.addEventListener("scroll", syncBackToTopButton, { passive: true });
 syncBackToTopButton();
 
-// LUST miner registration + mining page helpers v20260610-miner-launch-v1
+// LUST miner registration + mining page helpers v20260611-txfeed-v2-final
 const LUST_REGISTRY_ADDRESS = "0x0000000000000000000000000000000000006923";
 const LUST_REGISTER_DATA = "0x4c5143525f5631";
 const LUST_RPC_URL = "https://rpc.lustchain.org";
@@ -368,7 +368,7 @@ async function waitForTxReceipt(txHash, timeoutMs = 180000) {
   while (Date.now() - start < timeoutMs) {
     const receipt = await lustRpc("eth_getTransactionReceipt", [txHash]).catch(() => null);
     if (receipt) return receipt;
-    await new Promise((resolve) => setTimeout(resolve, 3500));
+    await new Promise((resolve) => setTimeout(resolve, 2500));
   }
   return null;
 }
