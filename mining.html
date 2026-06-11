@@ -252,7 +252,7 @@
           <p>Extract the TGZ, give permission and run <strong>./START-LUST-MINER-LINUX.sh</strong>. TX-FEED V3 starts in background and logs to <strong>~/LUST-Miner/logs/txfeed-v3.log</strong>.</p>
           <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a12-miner-linux-latest-snapshot.tar.gz" target="_blank" rel="noreferrer">Download Linux TGZ</a>
         </div>
-        <div class="sha-box"><span>SHA256</span><code>4cf5e509804b60b1c16232e529c623eeeea080f1cffaf899096de94e764664d5</code></div>
+        <div class="sha-box"><span>SHA256</span><code>9295f7eab201589da6f7d2575dea72d40541abc93a9f251709247f436c1a5be8</code></div>
       </div>
     </div>
   </section>
@@ -270,7 +270,7 @@
 
     <div class="grid three">
       <div class="card"><small>Windows</small><h3>Two windows stay open.</h3><p>START opens <strong>LUST MINER</strong> and <strong>LUST TX-FEED V3</strong>. The feed auto-detects local RPC port 18547 or 8545 and logs to <strong>LUST-Miner/logs/txfeed-v3.log</strong>.</p></div>
-      <div class="card"><small>Ubuntu / Linux</small><h3>Background feed.</h3><p>The Linux starter launches TX-FEED V3 in background. Check the live feed log at <strong>~/LUST-Miner/logs/txfeed-v3.log</strong>.</p></div>
+      <div class="card"><small>Ubuntu / Linux</small><h3>Background feed.</h3><p>The Linux starter launches TX-FEED V3 in background. It uses local RPC <strong>18547</strong> and P2P <strong>30313</strong> by default to avoid conflicts with INRI or another geth. Check the live feed log at <strong>~/LUST-Miner/logs/txfeed-v3.log</strong>.</p></div>
       <div class="card"><small>Pending feed</small><h3>Public endpoint.</h3><p>The miner reads <strong>https://rpc.lustchain.org/pending-raw</strong> first and can fall back to <strong>https://rpc-backup.lustchain.org/pending-raw</strong>.</p></div>
     </div>
   </section>

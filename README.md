@@ -66,6 +66,8 @@ Windows ZIP:
 `40da8ea55995d2ff811f479a62fb1814a6bc7f1cc373c66d6735c90cf7a5b20f`
 
 Ubuntu/Linux TGZ:
-`4cf5e509804b60b1c16232e529c623eeeea080f1cffaf899096de94e764664d5`
+`9295f7eab201589da6f7d2575dea72d40541abc93a9f251709247f436c1a5be8`
 
 TX-FEED V3 checks the public pending transaction feed every 1 second and injects raw pending transactions into the local miner node. Windows opens a second TX-FEED V3 window. Ubuntu/Linux starts the feed in background and logs to `~/LUST-Miner/logs/txfeed-v3.log`.
+
+Linux package note: default local RPC is 18547 and P2P is 30313, so it can run beside INRI on 8545/30303.
