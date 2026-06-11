@@ -475,3 +475,143 @@ pre{
   font-size: clamp(18px, 2.2vw, 28px);
   word-break: break-word;
 }
+
+/* LUSDT Bridge app v20260611-lusdt-bridge-v1 */
+.bridge-page{width:min(1240px,94vw)}
+.bridge-hero{
+  display:grid;
+  grid-template-columns:minmax(0,1.18fr) minmax(330px,.82fr);
+  gap:22px;
+  align-items:stretch;
+  padding:12px 0 20px;
+}
+.bridge-hero-copy,
+.bridge-status-card,
+.bridge-shell{
+  border:2px solid rgba(247,3,117,.38);
+  border-radius:28px;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(247,3,117,.22), transparent 34%),
+    radial-gradient(circle at 100% 0%, rgba(143,53,255,.16), transparent 42%),
+    rgba(255,255,255,.035);
+  box-shadow:0 0 42px rgba(247,3,117,.08);
+}
+.bridge-hero-copy{padding:clamp(24px,4vw,44px)}
+.bridge-hero-copy h1{max-width:860px}
+.bridge-badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.bridge-badges span{
+  border:1px solid rgba(247,3,117,.36);
+  background:rgba(247,3,117,.09);
+  color:#ffe5f3;
+  border-radius:999px;
+  padding:8px 12px;
+  font-size:13px;
+  font-weight:900;
+}
+.bridge-live-strip{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+  margin-top:24px;
+}
+.bridge-live-strip div{
+  border:2px solid rgba(255,255,255,.14);
+  background:#08010b;
+  border-radius:18px;
+  padding:15px;
+}
+.bridge-live-strip small,
+.bridge-status-card small,
+.bridge-panel-head small{
+  display:block;
+  color:var(--pink2);
+  font-size:11px;
+  font-weight:950;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin-bottom:7px;
+}
+.bridge-live-strip strong{display:block;font-size:18px}
+.bridge-status-card{padding:24px;background:#08010b}
+.bridge-status-log{
+  margin-top:16px;
+  border:2px solid rgba(255,255,255,.15);
+  border-radius:18px;
+  background:rgba(255,255,255,.04);
+  color:#e9d6ee;
+  padding:15px;
+  line-height:1.55;
+  word-break:break-word;
+}
+.bridge-status-log[data-tone="ok"]{border-color:rgba(78,255,190,.40);background:rgba(78,255,190,.07);color:#ddfff5}
+.bridge-status-log[data-tone="warn"]{border-color:rgba(255,190,80,.48);background:rgba(255,190,80,.08);color:#fff0d5}
+.bridge-shell{margin-top:26px;padding:clamp(18px,3vw,28px)}
+.bridge-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+.bridge-tab{
+  border:2px solid rgba(255,255,255,.20);
+  background:rgba(255,255,255,.055);
+  color:#fff;
+  border-radius:999px;
+  padding:12px 17px;
+  font-weight:950;
+  cursor:pointer;
+}
+.bridge-tab.active{background:var(--pink);border-color:var(--pink)}
+.bridge-panel.hidden{display:none}
+.bridge-panel-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:18px;
+  margin-bottom:18px;
+}
+.bridge-panel-head h2{margin-bottom:8px}
+.bridge-panel-head p{font-size:15px;margin:0;max-width:720px}
+.bridge-form-grid{align-items:stretch}
+.bridge-form{background:rgba(5,0,7,.58)}
+.bridge-quote-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:16px;
+}
+.bridge-quote-grid .result{margin-top:0}
+.bridge-quote-grid .result strong{font-size:clamp(20px,2.2vw,26px);word-break:break-word}
+.bridge-info-box{background:#08010b}
+.bridge-step{
+  display:grid;
+  grid-template-columns:34px minmax(0,1fr);
+  gap:12px;
+  align-items:start;
+  padding:12px 0;
+  border-bottom:2px solid rgba(255,255,255,.12);
+}
+.bridge-step b{
+  width:34px;height:34px;border-radius:12px;
+  display:grid;place-items:center;
+  background:rgba(247,3,117,.12);
+  border:2px solid rgba(247,3,117,.35);
+  color:#fff;
+}
+.bridge-step span{color:var(--muted);line-height:1.55}
+.bridge-contract-grid{margin-top:26px}
+.bridge-contract-grid .box{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.bridge-contract-grid .box p{font-size:15px;margin:0 0 8px}
+button:disabled,
+.btn:disabled{
+  opacity:.48;
+  cursor:not-allowed;
+  filter:grayscale(.2);
+}
+select.input{appearance:none;background:#09020d;color:#fff}
+@media(max-width:980px){
+  .bridge-hero{grid-template-columns:1fr}
+  .bridge-panel-head{display:block}
+  .bridge-panel-head .btn{margin-top:14px}
+  .bridge-live-strip{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .bridge-quote-grid{grid-template-columns:1fr}
+  .bridge-tabs,.hero-buttons{display:grid;grid-template-columns:1fr}
+  .bridge-tab,.bridge-form .btn{width:100%}
+}

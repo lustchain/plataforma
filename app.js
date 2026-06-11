@@ -1,6 +1,7 @@
 import { createAppKit } from "https://esm.sh/@reown/appkit@1.8.20";
 import { EthersAdapter } from "https://esm.sh/@reown/appkit-adapter-ethers@1.8.20";
 import { defineChain } from "https://esm.sh/@reown/appkit@1.8.20/networks";
+import { ethers } from "https://esm.sh/ethers@6.16.0";
 
 const LUST_CHAIN_ID_DECIMAL = 6923;
 const LUST_CHAIN_ID_HEX = "0x1b0b";
@@ -51,9 +52,25 @@ const polygonNetwork = defineChain({
   }
 });
 
+
+const bscNetwork = defineChain({
+  id: 56,
+  caipNetworkId: "eip155:56",
+  chainNamespace: "eip155",
+  name: "BNB Smart Chain",
+  nativeCurrency: { decimals: 18, name: "BNB", symbol: "BNB" },
+  rpcUrls: {
+    default: { http: ["https://bsc-rpc.publicnode.com"] },
+    public: { http: ["https://bsc-rpc.publicnode.com"] }
+  },
+  blockExplorers: {
+    default: { name: "BscScan", url: "https://bscscan.com" }
+  }
+});
+
 const appKit = createAppKit({
   adapters: [new EthersAdapter()],
-  networks: [lustNetwork, ethereumNetwork, polygonNetwork],
+  networks: [lustNetwork, ethereumNetwork, polygonNetwork, bscNetwork],
   defaultNetwork: lustNetwork,
   defaultAccountTypes: { eip155: "eoa" },
   projectId: LUST_REOWN_PROJECT_ID,
@@ -66,7 +83,8 @@ const appKit = createAppKit({
   customRpcUrls: {
     "eip155:6923": [{ url: "https://rpc.lustchain.org" }],
     "eip155:1": [{ url: "https://ethereum-rpc.publicnode.com" }],
-    "eip155:137": [{ url: "https://polygon-rpc.com" }]
+    "eip155:137": [{ url: "https://polygon-bor-rpc.publicnode.com" }],
+    "eip155:56": [{ url: "https://bsc-rpc.publicnode.com" }]
   },
   themeMode: "dark",
   themeVariables: {
@@ -126,12 +144,19 @@ function disconnectedHtml() {
 }
 
 function connectedHtml() {
-  const ready = normalizeChainId(walletState.chainId) === LUST_CHAIN_ID_HEX;
+  const normalized = normalizeChainId(walletState.chainId);
+  const isBridgePage = Boolean(document.querySelector("[data-lusdt-bridge]"));
+  const allowedBridgeChains = new Set([LUST_CHAIN_ID_HEX, "0x89", "0x38"]);
+  const ready = isBridgePage ? allowedBridgeChains.has(normalized) : normalized === LUST_CHAIN_ID_HEX;
+  const label = normalized === LUST_CHAIN_ID_HEX ? "LUST CHAIN · LST"
+    : normalized === "0x89" ? "POLYGON · USDT"
+    : normalized === "0x38" ? "BSC · USDT"
+    : isBridgePage ? "SELECT BRIDGE NETWORK" : "SWITCH TO LUST CHAIN";
   return `
     <div class="connect-icon ${ready ? "ready" : "warn"}">${ready ? "✓" : "!"}</div>
     <div class="connect-copy">
       <strong>${shortAddress(walletState.address)}</strong>
-      <span>${ready ? "LUST CHAIN · LST" : "SWITCH TO LUST CHAIN"}</span>
+      <span>${label}</span>
     </div>
     <div class="connect-caret">⌄</div>
   `;
@@ -196,7 +221,8 @@ appKit.subscribeProvider?.((state) => {
   };
   renderWalletButton();
 
-  if (walletState.connected && walletState.address && normalizeChainId(walletState.chainId) !== LUST_CHAIN_ID_HEX) {
+  const isBridgePage = Boolean(document.querySelector("[data-lusdt-bridge]"));
+  if (!isBridgePage && walletState.connected && walletState.address && normalizeChainId(walletState.chainId) !== LUST_CHAIN_ID_HEX) {
     setTimeout(switchToLust, 350);
   }
 });
@@ -685,3 +711,426 @@ setTimeout(updateMiningStatsPanel, 1500);
 setInterval(updateMinerPage, 15000);
 setInterval(updateFaucetPanel, 20000);
 setInterval(updateMiningStatsPanel, 15000);
+
+
+// LUSDT Bridge app v20260611-lusdt-bridge-v1
+const LUSDT_BRIDGE_API_URL = "https://lusdt-bridge.lustchain.org";
+const LUSDT_TOKEN_ADDRESS = "0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE";
+const LUSDT_EXECUTOR_ADDRESS = "0xbBC818f161D1B7190f85bE258CDB568a5A63f380";
+const LUSDT_POLYGON_LOCKBOX = "0x273cC6A72aF97381daa07332Df768a05cb30CE47";
+const LUSDT_BSC_LOCKBOX = "0x273cC6A72aF97381daa07332Df768a05cb30CE47";
+const POLYGON_USDT_ADDRESS = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F";
+const BSC_USDT_ADDRESS = "0x55d398326f99059fF775485246999027B3197955";
+const BRIDGE_FEE_BPS = 20n;
+
+const BRIDGE_CHAINS = {
+  lust: {
+    key: "lust",
+    chainId: 6923,
+    chainIdHex: "0x1b0b",
+    name: "LUST Chain",
+    nativeCurrency: { name: "LST", symbol: "LST", decimals: 18 },
+    rpcUrls: ["https://rpc.lustchain.org"],
+    blockExplorerUrls: ["https://explorer.lustchain.org"]
+  },
+  polygon: {
+    key: "polygon",
+    chainId: 137,
+    chainIdHex: "0x89",
+    name: "Polygon",
+    nativeCurrency: { name: "POL", symbol: "POL", decimals: 18 },
+    rpcUrls: ["https://polygon-bor-rpc.publicnode.com"],
+    blockExplorerUrls: ["https://polygonscan.com"]
+  },
+  bsc: {
+    key: "bsc",
+    chainId: 56,
+    chainIdHex: "0x38",
+    name: "BNB Smart Chain",
+    nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 },
+    rpcUrls: ["https://bsc-rpc.publicnode.com"],
+    blockExplorerUrls: ["https://bscscan.com"]
+  }
+};
+
+const ERC20_ABI = [
+  "function decimals() view returns (uint8)",
+  "function balanceOf(address) view returns (uint256)",
+  "function allowance(address owner,address spender) view returns (uint256)",
+  "function approve(address spender,uint256 amount) returns (bool)"
+];
+
+const LOCKBOX_POLYGON_ABI = [
+  "function depositsEnabled() view returns (bool)",
+  "function deposit(uint256 amount)",
+  "function release(address recipient,uint256 amount,uint256 nonce,uint256 deadline,bytes[] signatures)",
+  "event Deposited(address indexed user,uint256 amount,bytes32 indexed depositId,uint256 indexed sourceChainId,uint256 destinationChainId)"
+];
+
+const LOCKBOX_BSC_ABI = [
+  "function depositsEnabled() view returns (bool)",
+  "function deposit(uint256 rawAmount18)",
+  "function release(address recipient,uint256 amount6,uint256 nonce,uint256 deadline,bytes[] signatures)",
+  "event Deposited(address indexed user,uint256 rawAmount18,uint256 normalizedAmount6,bytes32 indexed depositId,uint256 indexed sourceChainId,uint256 destinationChainId)"
+];
+
+const EXECUTOR_ABI = [
+  "function mintFromExternalDeposit(address recipient,uint256 amount,bytes32 depositId,uint256 sourceChainId,uint256 deadline,bytes[] signatures)",
+  "function burnForExternalRelease(address recipientExternal,uint256 amount,uint256 destinationChainId,uint256 nonce,uint256 deadline)",
+  "function quoteNetAmount(uint256 amount) view returns (uint256 fee,uint256 net)",
+  "event BurnRequested(address indexed burner,address indexed recipientExternal,uint256 grossAmount,uint256 netAmount,uint256 feeAmount,uint256 nonce,uint256 indexed destinationChainId,uint256 sourceChainId)"
+];
+
+let activeClaim = null;
+let activeRelease = null;
+
+function bridgeLog(message, tone = "") {
+  document.querySelectorAll("[data-bridge-log]").forEach((el) => {
+    el.textContent = message;
+    el.dataset.tone = tone;
+  });
+}
+
+function bridgeShort(value) {
+  return value ? `${String(value).slice(0, 6)}...${String(value).slice(-4)}` : "--";
+}
+
+function formatUnitsSafe(value, decimals = 6, precision = 6) {
+  try {
+    const text = ethers.formatUnits(BigInt(value), decimals);
+    const [a, b = ""] = text.split(".");
+    return `${a}.${b.padEnd(precision, "0").slice(0, precision)}`;
+  } catch (_) {
+    return "0.000000";
+  }
+}
+
+function parseAmount(value, decimals) {
+  const raw = String(value || "0").trim();
+  if (!raw || Number(raw) <= 0) throw new Error("Enter a valid amount.");
+  return ethers.parseUnits(raw, decimals);
+}
+
+function bridgeQuote(amountText) {
+  let amount = 0n;
+  try { amount = ethers.parseUnits(String(amountText || "0"), 6); } catch (_) { amount = 0n; }
+  const fee = amount * BRIDGE_FEE_BPS / 10000n;
+  const net = amount > fee ? amount - fee : 0n;
+  return { amount, fee, net };
+}
+
+function selectedSource() {
+  return document.querySelector("[data-bridge-source]")?.value || "polygon";
+}
+
+function selectedDestination() {
+  return document.querySelector("[data-bridge-destination]")?.value || "polygon";
+}
+
+function bridgeChainFor(kind) {
+  return kind === "bsc" ? BRIDGE_CHAINS.bsc : BRIDGE_CHAINS.polygon;
+}
+
+function sourceToken(kind) {
+  return kind === "bsc"
+    ? { address: BSC_USDT_ADDRESS, decimals: 18, lockbox: LUSDT_BSC_LOCKBOX, lockboxAbi: LOCKBOX_BSC_ABI, chainId: 56 }
+    : { address: POLYGON_USDT_ADDRESS, decimals: 6, lockbox: LUSDT_POLYGON_LOCKBOX, lockboxAbi: LOCKBOX_POLYGON_ABI, chainId: 137 };
+}
+
+async function ensureWalletChain(kind) {
+  const eth = getInjectedEthereum();
+  if (!eth) throw new Error("MetaMask or injected wallet not found.");
+  const chain = typeof kind === "string" ? BRIDGE_CHAINS[kind] : kind;
+  const current = normalizeChainId(await eth.request({ method: "eth_chainId" }));
+  if (current === chain.chainIdHex) return;
+  try {
+    await eth.request({ method: "wallet_switchEthereumChain", params: [{ chainId: chain.chainIdHex }] });
+  } catch (err) {
+    if (err?.code === 4902 || String(err?.message || "").includes("Unrecognized chain")) {
+      await eth.request({
+        method: "wallet_addEthereumChain",
+        params: [{
+          chainId: chain.chainIdHex,
+          chainName: chain.name,
+          nativeCurrency: chain.nativeCurrency,
+          rpcUrls: chain.rpcUrls,
+          blockExplorerUrls: chain.blockExplorerUrls
+        }]
+      });
+      await eth.request({ method: "wallet_switchEthereumChain", params: [{ chainId: chain.chainIdHex }] });
+    } else {
+      throw err;
+    }
+  }
+  setTimeout(readState, 300);
+}
+
+async function browserSigner() {
+  const eth = getInjectedEthereum();
+  if (!eth) throw new Error("MetaMask or injected wallet not found.");
+  await eth.request({ method: "eth_requestAccounts" });
+  const provider = new ethers.BrowserProvider(eth);
+  return provider.getSigner();
+}
+
+async function approveIfNeeded(tokenAddress, spender, amount, signer) {
+  const owner = await signer.getAddress();
+  const token = new ethers.Contract(tokenAddress, ERC20_ABI, signer);
+  const allowance = await token.allowance(owner, spender);
+  if (allowance >= amount) return null;
+  bridgeLog("Opening approval in your wallet...", "");
+  const tx = await token.approve(spender, amount);
+  bridgeLog(`Approval sent: ${tx.hash}. Waiting confirmation...`, "");
+  await tx.wait();
+  return tx.hash;
+}
+
+async function bridgeFetch(path) {
+  const url = `${LUSDT_BRIDGE_API_URL}${path}${path.includes("?") ? "&" : "?"}t=${Date.now()}`;
+  const res = await fetch(url, { cache: "no-store" });
+  if (!res.ok) throw new Error(`Bridge API ${res.status}`);
+  return res.json();
+}
+
+function updateBridgeQuote() {
+  const depositAmount = document.querySelector("[data-bridge-amount]")?.value || "0";
+  const withdrawAmount = document.querySelector("[data-withdraw-amount]")?.value || "0";
+
+  const d = bridgeQuote(depositAmount);
+  const w = bridgeQuote(withdrawAmount);
+
+  setText("[data-bridge-fee]", `${formatUnitsSafe(d.fee)} LUSDT`);
+  setText("[data-bridge-receive]", `${formatUnitsSafe(d.net)} LUSDT`);
+  setText("[data-withdraw-fee]", `${formatUnitsSafe(w.fee)} LUSDT`);
+  setText("[data-withdraw-receive]", `${formatUnitsSafe(w.net)} USDT`);
+}
+
+async function refreshBridgeStatus() {
+  if (!document.querySelector("[data-lusdt-bridge]")) return;
+  try {
+    const [health, stats] = await Promise.all([
+      bridgeFetch("/health"),
+      bridgeFetch("/api/stats")
+    ]);
+    setText("[data-bridge-api-state]", health.ok ? "Online" : "Warning");
+    setText("[data-bridge-threshold]", `${health.threshold || "2"} of ${health.validatorCount || "4"}`);
+    setText("[data-bridge-deposits-state]", "Controlled launch");
+    setText("[data-bridge-lusdt-short]", bridgeShort(stats?.config?.token?.address || LUSDT_TOKEN_ADDRESS));
+    setText("[data-bridge-executor-short]", bridgeShort(stats?.config?.contracts?.lustExecutor || LUSDT_EXECUTOR_ADDRESS));
+    setText("[data-bridge-fee-recipient]", bridgeShort(stats?.config?.fee?.recipient || ""));
+    bridgeLog(`Bridge API online. Claims: ${stats.claims || 0}. Releases: ${stats.releases || 0}.`, "ok");
+  } catch (err) {
+    bridgeLog(`Bridge API not reachable yet: ${err.message}. Check API/domain before public launch.`, "warn");
+    setText("[data-bridge-api-state]", "API offline");
+  }
+}
+
+async function depositToLusdt() {
+  try {
+    const kind = selectedSource();
+    const token = sourceToken(kind);
+    const chain = bridgeChainFor(kind);
+    const amount = parseAmount(document.querySelector("[data-bridge-amount]")?.value, token.decimals);
+
+    await ensureWalletChain(chain);
+    const signer = await browserSigner();
+    await approveIfNeeded(token.address, token.lockbox, amount, signer);
+
+    const lockbox = new ethers.Contract(token.lockbox, token.lockboxAbi, signer);
+    bridgeLog(`Opening ${chain.name} deposit confirmation...`, "");
+    const tx = await lockbox.deposit(amount);
+    setText("[data-bridge-last-deposit]", bridgeShort(tx.hash));
+    bridgeLog(`Deposit sent: ${tx.hash}. Waiting confirmation...`, "");
+    const receipt = await tx.wait();
+
+    let depositId = "";
+    try {
+      const iface = new ethers.Interface(token.lockboxAbi);
+      for (const log of receipt.logs || []) {
+        try {
+          const parsed = iface.parseLog(log);
+          if (parsed?.name === "Deposited") depositId = parsed.args.depositId;
+        } catch (_) {}
+      }
+    } catch (_) {}
+
+    if (depositId) {
+      localStorage.setItem("lustLastDepositId", depositId);
+      setText("[data-bridge-claim-state]", "Waiting confirmations");
+      bridgeLog(`Deposit confirmed. DepositId: ${depositId}. Wait confirmations, then click Find my claim.`, "ok");
+    } else {
+      bridgeLog("Deposit confirmed. Wait confirmations, then click Find my claim.", "ok");
+    }
+  } catch (err) {
+    console.error(err);
+    bridgeLog(err?.shortMessage || err?.message || "Deposit failed or rejected.", "warn");
+  }
+}
+
+function chooseLatestReady(items, filterFn = () => true) {
+  return (items || [])
+    .filter(filterFn)
+    .filter((x) => x.status === "ready")
+    .sort((a, b) => String(b.createdAt || "").localeCompare(String(a.createdAt || "")))[0] || null;
+}
+
+async function findClaim() {
+  try {
+    const account = await getWalletAccount();
+    bridgeLog("Searching claim signatures...", "");
+    const data = await bridgeFetch(`/api/claims/address/${account}`);
+    const claim = chooseLatestReady(data.claims || []);
+    if (!claim) {
+      setText("[data-bridge-claim-state]", "Not ready yet");
+      bridgeLog("No ready claim found yet. Wait confirmations and try again.", "warn");
+      return;
+    }
+    activeClaim = claim;
+    setText("[data-bridge-claim-state]", `${claim.source || "source"} · ${formatUnitsSafe(claim.amount)} LUSDT`);
+    document.querySelector("[data-bridge-mint]")?.removeAttribute("disabled");
+    bridgeLog(`Claim ready from ${claim.source}. Mint amount: ${formatUnitsSafe(claim.amount)} LUSDT.`, "ok");
+  } catch (err) {
+    console.error(err);
+    bridgeLog(err?.message || "Could not find claim.", "warn");
+  }
+}
+
+async function mintClaim() {
+  try {
+    if (!activeClaim) await findClaim();
+    if (!activeClaim) return;
+    await ensureWalletChain(BRIDGE_CHAINS.lust);
+    const signer = await browserSigner();
+    const exec = new ethers.Contract(LUSDT_EXECUTOR_ADDRESS, EXECUTOR_ABI, signer);
+    bridgeLog("Opening LUST mint confirmation...", "");
+    const tx = await exec.mintFromExternalDeposit(
+      activeClaim.recipient,
+      BigInt(activeClaim.amount),
+      activeClaim.depositId,
+      BigInt(activeClaim.sourceChainId),
+      BigInt(activeClaim.deadline),
+      activeClaim.signatures
+    );
+    bridgeLog(`Mint sent: ${tx.hash}. Waiting confirmation...`, "");
+    await tx.wait();
+    bridgeLog(`LUSDT minted successfully. Tx: ${tx.hash}`, "ok");
+    document.querySelector("[data-bridge-mint]")?.setAttribute("disabled", "disabled");
+  } catch (err) {
+    console.error(err);
+    bridgeLog(err?.shortMessage || err?.message || "Mint failed or rejected.", "warn");
+  }
+}
+
+async function burnForRelease() {
+  try {
+    const destination = selectedDestination();
+    const chainId = destination === "bsc" ? 56 : 137;
+    const amount = parseAmount(document.querySelector("[data-withdraw-amount]")?.value, 6);
+    const nonce = BigInt(Date.now());
+    const deadline = BigInt(Math.floor(Date.now() / 1000) + 2592000);
+
+    await ensureWalletChain(BRIDGE_CHAINS.lust);
+    const signer = await browserSigner();
+    await approveIfNeeded(LUSDT_TOKEN_ADDRESS, LUSDT_EXECUTOR_ADDRESS, amount, signer);
+
+    const exec = new ethers.Contract(LUSDT_EXECUTOR_ADDRESS, EXECUTOR_ABI, signer);
+    const account = await signer.getAddress();
+    bridgeLog("Opening LUST burn confirmation...", "");
+    const tx = await exec.burnForExternalRelease(account, amount, BigInt(chainId), nonce, deadline);
+    setText("[data-bridge-last-burn]", bridgeShort(tx.hash));
+    localStorage.setItem("lustLastBurnNonce", String(nonce));
+    bridgeLog(`Burn sent: ${tx.hash}. Waiting confirmation...`, "");
+    await tx.wait();
+    bridgeLog("Burn confirmed. Wait confirmations, then click Find my release.", "ok");
+  } catch (err) {
+    console.error(err);
+    bridgeLog(err?.shortMessage || err?.message || "Burn failed or rejected.", "warn");
+  }
+}
+
+async function findRelease() {
+  try {
+    const account = await getWalletAccount();
+    const destination = selectedDestination();
+    bridgeLog("Searching release signatures...", "");
+    const data = await bridgeFetch(`/api/releases/address/${account}`);
+    const release = chooseLatestReady(data.releases || [], (r) => r.destination === destination);
+    if (!release) {
+      setText("[data-bridge-release-state]", "Not ready yet");
+      bridgeLog("No ready release found yet. Wait confirmations and try again.", "warn");
+      return;
+    }
+    activeRelease = release;
+    setText("[data-bridge-release-state]", `${release.destination} · ${formatUnitsSafe(release.amount)} USDT`);
+    document.querySelector("[data-bridge-release]")?.removeAttribute("disabled");
+    bridgeLog(`Release ready for ${release.destination}. Amount: ${formatUnitsSafe(release.amount)} USDT.`, "ok");
+  } catch (err) {
+    console.error(err);
+    bridgeLog(err?.message || "Could not find release.", "warn");
+  }
+}
+
+async function executeRelease() {
+  try {
+    if (!activeRelease) await findRelease();
+    if (!activeRelease) return;
+
+    const destination = activeRelease.destination === "bsc" ? "bsc" : "polygon";
+    const chain = bridgeChainFor(destination);
+    const lockboxAddress = destination === "bsc" ? LUSDT_BSC_LOCKBOX : LUSDT_POLYGON_LOCKBOX;
+    const abi = destination === "bsc" ? LOCKBOX_BSC_ABI : LOCKBOX_POLYGON_ABI;
+
+    await ensureWalletChain(chain);
+    const signer = await browserSigner();
+    const lockbox = new ethers.Contract(lockboxAddress, abi, signer);
+
+    bridgeLog(`Opening ${chain.name} release confirmation...`, "");
+    const tx = await lockbox.release(
+      activeRelease.recipient,
+      BigInt(activeRelease.amount),
+      BigInt(activeRelease.nonce),
+      BigInt(activeRelease.deadline),
+      activeRelease.signatures
+    );
+    bridgeLog(`Release sent: ${tx.hash}. Waiting confirmation...`, "");
+    await tx.wait();
+    bridgeLog(`USDT released successfully. Tx: ${tx.hash}`, "ok");
+    document.querySelector("[data-bridge-release]")?.setAttribute("disabled", "disabled");
+  } catch (err) {
+    console.error(err);
+    bridgeLog(err?.shortMessage || err?.message || "Release failed or rejected.", "warn");
+  }
+}
+
+function wireLusdtBridge() {
+  if (!document.querySelector("[data-lusdt-bridge]")) return;
+
+  document.querySelectorAll("[data-bridge-tab]").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const selected = tab.getAttribute("data-bridge-tab");
+      document.querySelectorAll("[data-bridge-tab]").forEach((t) => t.classList.toggle("active", t === tab));
+      document.querySelectorAll("[data-bridge-panel]").forEach((panel) => {
+        panel.classList.toggle("hidden", panel.getAttribute("data-bridge-panel") !== selected);
+      });
+    });
+  });
+
+  document.querySelectorAll("[data-bridge-amount],[data-withdraw-amount]").forEach((input) => {
+    input.addEventListener("input", updateBridgeQuote);
+  });
+
+  document.querySelector("[data-bridge-refresh]")?.addEventListener("click", refreshBridgeStatus);
+  document.querySelectorAll("[data-bridge-refresh]").forEach((btn) => btn.addEventListener("click", refreshBridgeStatus));
+  document.querySelector("[data-bridge-deposit]")?.addEventListener("click", depositToLusdt);
+  document.querySelector("[data-bridge-find-claim]")?.addEventListener("click", findClaim);
+  document.querySelector("[data-bridge-mint]")?.addEventListener("click", mintClaim);
+  document.querySelector("[data-bridge-burn]")?.addEventListener("click", burnForRelease);
+  document.querySelector("[data-bridge-find-release]")?.addEventListener("click", findRelease);
+  document.querySelector("[data-bridge-release]")?.addEventListener("click", executeRelease);
+
+  updateBridgeQuote();
+  refreshBridgeStatus();
+  setInterval(refreshBridgeStatus, 30000);
+}
+
+wireLusdtBridge();
