@@ -1574,14 +1574,14 @@ async function findClaim(options = {}) {
 }
 
 async function autoFindClaimSoon() {
-  const attempts = [6000, 12000, 20000, 35000, 55000, 80000];
+  const attempts = [2000, 4000, 6500, 9000, 12000, 16000, 22000, 30000, 45000, 60000, 90000, 120000];
   for (const ms of attempts) {
     setTimeout(() => findClaim({ silent: true }).catch(() => {}), ms);
   }
 }
 
 async function autoFindReleaseSoon() {
-  const attempts = [6000, 12000, 20000, 35000, 55000, 80000];
+  const attempts = [2000, 4000, 6500, 9000, 12000, 16000, 22000, 30000, 45000, 60000, 90000, 120000];
   for (const ms of attempts) {
     setTimeout(() => findRelease({ silent: true }).catch(() => {}), ms);
   }
@@ -1926,9 +1926,9 @@ function wireLusdtBridge() {
   refreshBridgeStatus();
   refreshBridgeLiquidity();
   refreshBridgeWalletUi();
-  setInterval(refreshBridgeStatus, 30000);
-  setInterval(refreshBridgeLiquidity, 45000);
-  setInterval(() => refreshBridgeWalletBalances().catch(() => {}), 12000);
+  setInterval(refreshBridgeStatus, 12000);
+  setInterval(refreshBridgeLiquidity, 18000);
+  setInterval(() => refreshBridgeWalletBalances().catch(() => {}), 6000);
   setInterval(() => {
     if (activeBridgeMode() === "deposit" || localStorage.getItem("lustLastDepositId")) {
       findClaim({ silent: true }).catch(() => {});
