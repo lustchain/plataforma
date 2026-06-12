@@ -178,6 +178,9 @@ function readState() {
     console.warn(err);
   }
   renderWalletButton();
+  if (document.querySelector("[data-lusdt-bridge]")) {
+    setTimeout(refreshBridgeWalletUi, 60);
+  }
 }
 
 async function switchToLust() {
@@ -220,6 +223,9 @@ appKit.subscribeProvider?.((state) => {
     connected: Boolean(state?.isConnected || state?.address || appKit.getIsConnected?.())
   };
   renderWalletButton();
+  if (document.querySelector("[data-lusdt-bridge]")) {
+    setTimeout(refreshBridgeWalletUi, 60);
+  }
 
   const isBridgePage = Boolean(document.querySelector("[data-lusdt-bridge]"));
   if (!isBridgePage && walletState.connected && walletState.address && normalizeChainId(walletState.chainId) !== LUST_CHAIN_ID_HEX) {
@@ -1081,7 +1087,13 @@ function renderPendingClaims(entries = []) {
   }
 
   if (!entries.length) {
-    box.innerHTML = `<div class="claim-item muted">No claim found for this wallet yet.</div>`;
+    const localIds = recentLocalDepositIds();
+    box.innerHTML = localIds.length
+      ? `<div class="claim-summary">No ready claim returned yet. Recent local deposit IDs saved in this browser</div>${localIds.map((id) => `<div class="claim-item"><div><strong>Local recovery hint</strong><small>${bridgeEscape(id)}</small></div><button class="mini-btn" type="button" data-copy-text="${bridgeEscape(id)}">Copy ID</button></div>`).join("")}`
+      : `<div class="claim-item muted">No claim found for this wallet yet. Click Find / Refresh after confirmations.</div>`;
+    box.querySelectorAll('[data-copy-text]').forEach((btn) => btn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(btn.getAttribute('data-copy-text') || ''); btn.textContent='Copied'; setTimeout(()=>btn.textContent='Copy ID',1200); } catch(_) {}
+    }));
     return;
   }
 
@@ -1186,6 +1198,48 @@ function refreshBridgeUiLabels() {
   setText("[data-bridge-title-action]", activeTab === "withdraw" ? "Sell" : "Buy");
 }
 
+async function refreshBridgeWalletBalances() {
+  if (!document.querySelector("[data-lusdt-bridge]")) return;
+  if (!walletState.connected || !walletState.address) {
+    setText("[data-bridge-source-balance]", "Connect wallet");
+    setText("[data-withdraw-source-balance]", "Connect wallet");
+    renderPendingClaims(pendingBridgeClaims);
+    renderPendingReleases(pendingBridgeReleases);
+    return;
+  }
+  const account = walletState.address;
+  try {
+    const sourceKind = selectedSource();
+    const srcCfg = sourceToken(sourceKind);
+    const sourceProvider = new ethers.BrowserProvider(getInjectedEthereum());
+    const sourceTokenContract = new ethers.Contract(srcCfg.address, ERC20_ABI, sourceProvider);
+    const srcBal = await sourceTokenContract.balanceOf(account);
+    setText("[data-bridge-source-balance]", `${formatUnitsSafe(srcBal, srcCfg.decimals)} USDT`);
+  } catch (_) {
+    setText("[data-bridge-source-balance]", "--");
+  }
+  try {
+    const lustProvider = new ethers.JsonRpcProvider(BRIDGE_CHAINS.lust.rpcUrls[0]);
+    const lustToken = new ethers.Contract(LUSDT_TOKEN_ADDRESS, ERC20_ABI, lustProvider);
+    const lusdtBal = await lustToken.balanceOf(account);
+    setText("[data-withdraw-source-balance]", `${formatUnitsSafe(lusdtBal, 6)} LUSDT`);
+  } catch (_) {
+    setText("[data-withdraw-source-balance]", "--");
+  }
+}
+
+function refreshBridgeWalletUi() {
+  if (!document.querySelector("[data-lusdt-bridge]")) return;
+  refreshBridgeWalletBalances().catch(() => {});
+  if (walletState.connected && walletState.address) {
+    findClaim({ silent: true }).catch(() => {});
+    findRelease().catch(() => {});
+  } else {
+    renderPendingClaims(pendingBridgeClaims);
+    renderPendingReleases(pendingBridgeReleases);
+  }
+}
+
 async function refreshBridgeStatus() {
   if (!document.querySelector("[data-lusdt-bridge]")) return;
   try {
@@ -1279,12 +1333,24 @@ function renderPendingReleases(entries = []) {
   if (!box) return;
 
   if (!walletState.connected) {
-    box.innerHTML = `<div class="claim-item muted">Connect wallet and click Find my release.</div>`;
+    const lastNonce = localStorage.getItem("lustLastBurnNonce") || "";
+    box.innerHTML = lastNonce
+      ? `<div class="claim-summary">Last local burn nonce saved in this browser</div><div class="claim-item"><div><strong>Local recovery hint</strong><small>${bridgeEscape(lastNonce)}</small></div><button class="mini-btn" type="button" data-copy-text="${bridgeEscape(lastNonce)}">Copy nonce</button></div>`
+      : `<div class="claim-item muted">Connect wallet and click Find my release.</div>`;
+    box.querySelectorAll('[data-copy-text]').forEach((btn) => btn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(btn.getAttribute('data-copy-text') || ''); btn.textContent='Copied'; setTimeout(()=>btn.textContent='Copy nonce',1200); } catch(_) {}
+    }));
     return;
   }
 
   if (!entries.length) {
-    box.innerHTML = `<div class="claim-item muted">No release found for this wallet yet.</div>`;
+    const lastNonce = localStorage.getItem("lustLastBurnNonce") || "";
+    box.innerHTML = lastNonce
+      ? `<div class="claim-summary">No ready release returned yet. Last local burn nonce saved in this browser</div><div class="claim-item"><div><strong>Local recovery hint</strong><small>${bridgeEscape(lastNonce)}</small></div><button class="mini-btn" type="button" data-copy-text="${bridgeEscape(lastNonce)}">Copy nonce</button></div>`
+      : `<div class="claim-item muted">No release found for this wallet yet. Click Find my release after confirmations.</div>`;
+    box.querySelectorAll('[data-copy-text]').forEach((btn) => btn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(btn.getAttribute('data-copy-text') || ''); btn.textContent='Copied'; setTimeout(()=>btn.textContent='Copy nonce',1200); } catch(_) {}
+    }));
     return;
   }
 
@@ -1555,17 +1621,23 @@ function wireLusdtBridge() {
         panel.classList.toggle("hidden", panel.getAttribute("data-bridge-panel") !== selected);
       });
       refreshBridgeUiLabels();
+      refreshBridgeWalletBalances().catch(() => {});
     });
   });
 
   document.querySelectorAll("[data-bridge-amount],[data-withdraw-amount]").forEach((input) => {
     input.addEventListener("input", updateBridgeQuote);
   });
-  document.querySelector("[data-bridge-source]")?.addEventListener("change", () => { refreshBridgeUiLabels(); refreshBridgeLiquidity(); updateBridgeQuote(); });
-  document.querySelector("[data-bridge-destination]")?.addEventListener("change", () => { refreshBridgeUiLabels(); updateDestinationLiquidityNotice(); updateBridgeQuote(); });
+  document.querySelector("[data-bridge-source]")?.addEventListener("change", () => { refreshBridgeUiLabels(); refreshBridgeLiquidity(); updateBridgeQuote(); refreshBridgeWalletBalances().catch(() => {}); });
+  document.querySelector("[data-bridge-destination]")?.addEventListener("change", () => { refreshBridgeUiLabels(); updateDestinationLiquidityNotice(); updateBridgeQuote(); refreshBridgeWalletBalances().catch(() => {}); });
 
   document.querySelector("[data-bridge-refresh]")?.addEventListener("click", refreshBridgeStatus);
   document.querySelectorAll("[data-bridge-refresh]").forEach((btn) => btn.addEventListener("click", refreshBridgeStatus));
+  document.querySelectorAll(".bridge-pro-status details").forEach((details) => details.addEventListener("toggle", () => {
+    if (details.open) {
+      refreshBridgeWalletUi();
+    }
+  }));
   document.querySelectorAll("[data-bridge-switch]").forEach((btn) => btn.addEventListener("click", () => {
     const depositTab = document.querySelector('[data-bridge-tab="deposit"]');
     const withdrawTab = document.querySelector('[data-bridge-tab="withdraw"]');
@@ -1582,7 +1654,36 @@ function wireLusdtBridge() {
     updateBridgeQuote();
     refreshBridgeLiquidity();
     updateDestinationLiquidityNotice();
+    refreshBridgeWalletBalances().catch(() => {});
   }));
+  document.querySelector("[data-bridge-max-deposit]")?.addEventListener("click", async () => {
+    try {
+      if (!walletState.connected || !walletState.address) throw new Error("Connect wallet first.");
+      const sourceKind = selectedSource();
+      const cfg = sourceToken(sourceKind);
+      const provider = new ethers.BrowserProvider(getInjectedEthereum());
+      const token = new ethers.Contract(cfg.address, ERC20_ABI, provider);
+      const bal = await token.balanceOf(walletState.address);
+      document.querySelector("[data-bridge-amount]").value = formatUnitsSafe(bal, cfg.decimals, 6);
+      updateBridgeQuote();
+      refreshBridgeWalletBalances().catch(() => {});
+    } catch (err) {
+      bridgeLog(err?.message || "Could not load source balance.", "warn");
+    }
+  });
+  document.querySelector("[data-bridge-max-withdraw]")?.addEventListener("click", async () => {
+    try {
+      if (!walletState.address) throw new Error("Connect wallet first.");
+      const provider = new ethers.JsonRpcProvider(BRIDGE_CHAINS.lust.rpcUrls[0]);
+      const token = new ethers.Contract(LUSDT_TOKEN_ADDRESS, ERC20_ABI, provider);
+      const bal = await token.balanceOf(walletState.address);
+      document.querySelector("[data-withdraw-amount]").value = formatUnitsSafe(bal, 6, 6);
+      updateBridgeQuote();
+      refreshBridgeWalletBalances().catch(() => {});
+    } catch (err) {
+      bridgeLog(err?.message || "Could not load LUSDT balance.", "warn");
+    }
+  });
   document.querySelector("[data-bridge-deposit]")?.addEventListener("click", depositToLusdt);
   document.querySelector("[data-bridge-find-claim]")?.addEventListener("click", findClaim);
   document.querySelector("[data-bridge-mint]")?.addEventListener("click", mintClaim);
@@ -1624,8 +1725,10 @@ function wireLusdtBridge() {
   refreshBridgeUiLabels();
   refreshBridgeStatus();
   refreshBridgeLiquidity();
+  refreshBridgeWalletUi();
   setInterval(refreshBridgeStatus, 30000);
   setInterval(refreshBridgeLiquidity, 45000);
+  setInterval(() => refreshBridgeWalletBalances().catch(() => {}), 12000);
   setInterval(() => findClaim({ silent: true }).catch(() => {}), 10000);
 }
 
