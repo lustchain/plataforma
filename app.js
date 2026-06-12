@@ -1693,11 +1693,30 @@ window.lustBridgeCycleNetwork = function(kind) {
   selectBridgeNetwork(kind, next, shouldSwitch);
 };
 
+async function autoSwitchWalletForActiveMode() {
+  if (!walletState.connected) return;
+  try {
+    if (activeBridgeMode() === "withdraw") {
+      bridgeLog("Switching wallet to LUST Chain...", "");
+      await ensureWalletChain(BRIDGE_CHAINS.lust);
+      bridgeLog("Wallet switched to LUST Chain.", "ok");
+    } else {
+      const chain = bridgeChainFor(selectedSource());
+      bridgeLog(`Switching wallet to ${chain.name}...`, "");
+      await ensureWalletChain(chain);
+      bridgeLog(`Wallet switched to ${chain.name}.`, "ok");
+    }
+    setTimeout(() => refreshBridgeWalletBalances().catch(() => {}), 600);
+  } catch (err) {
+    bridgeLog(err?.shortMessage || err?.message || "Could not switch wallet network automatically.", "warn");
+  }
+}
+
 function wireLusdtBridge() {
   if (!document.querySelector("[data-lusdt-bridge]")) return;
 
   document.querySelectorAll("[data-bridge-tab]").forEach((tab) => {
-    tab.addEventListener("click", () => {
+    tab.addEventListener("click", async () => {
       const selected = tab.getAttribute("data-bridge-tab");
       document.querySelectorAll("[data-bridge-tab]").forEach((t) => t.classList.toggle("active", t === tab));
       document.querySelectorAll("[data-bridge-panel]").forEach((panel) => {
@@ -1706,6 +1725,7 @@ function wireLusdtBridge() {
       refreshBridgeUiLabels();
       refreshBridgeWalletBalances().catch(() => {});
       updateDestinationLiquidityNotice();
+      await autoSwitchWalletForActiveMode();
     });
   });
 
