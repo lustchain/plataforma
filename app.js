@@ -213,27 +213,6 @@ async function openLustWallet(event) {
 
 window.openLustWallet = openLustWallet;
 
-try {
-  const injected = getInjectedEthereum();
-  injected?.on?.("chainChanged", () => {
-    setTimeout(readState, 150);
-    setTimeout(() => {
-      refreshBridgeUiLabels?.();
-      refreshBridgeLiquidity?.();
-      refreshWalletBalances?.();
-      updateBridgeQuote?.();
-    }, 650);
-  });
-  injected?.on?.("accountsChanged", () => {
-    setTimeout(readState, 150);
-    setTimeout(() => {
-      refreshWalletBalances?.();
-      refreshBridgeStatus?.();
-    }, 650);
-  });
-} catch (_) {}
-
-
 appKit.subscribeProvider?.((state) => {
   walletState = {
     address: state?.address || appKit.getAddress?.() || "",
@@ -1180,141 +1159,14 @@ function updateBridgeQuote() {
 function refreshBridgeUiLabels() {
   const source = selectedSource();
   const destination = selectedDestination();
-  setText("[data-bridge-source-label]", source === "bsc" ? "BSC" : "Polygon");
-  setText("[data-bridge-destination-label]", destination === "bsc" ? "BSC" : "Polygon");
+  setHtml("[data-bridge-source-label]", source === "bsc"
+    ? '<img class="chain-inline-logo" src="./assets/bsc-logo.svg" alt="BSC">BSC'
+    : '<img class="chain-inline-logo" src="./assets/polygon-logo.svg" alt="Polygon">Polygon');
+  setHtml("[data-bridge-destination-label]", destination === "bsc"
+    ? '<img class="chain-inline-logo" src="./assets/bsc-logo.svg" alt="BSC">BSC'
+    : '<img class="chain-inline-logo" src="./assets/polygon-logo.svg" alt="Polygon">Polygon');
   const activeTab = document.querySelector("[data-bridge-tab].active")?.getAttribute("data-bridge-tab") || "deposit";
   setText("[data-bridge-title-action]", activeTab === "withdraw" ? "Sell" : "Buy");
-}
-
-
-function currentBridgeAccount() {
-  return walletState.address || appKit.getAddress?.() || "";
-}
-
-async function tokenBalanceOf(kind, account) {
-  if (!account) return null;
-  const cfg = kind === "lusdt"
-    ? { chain: BRIDGE_CHAINS.lust, token: LUSDT_TOKEN_ADDRESS, decimals: 6 }
-    : { chain: bridgeChainFor(kind), token: sourceToken(kind).address, decimals: sourceToken(kind).decimals };
-  const provider = new ethers.JsonRpcProvider(cfg.chain.rpcUrls[0]);
-  const contract = new ethers.Contract(cfg.token, ERC20_ABI, provider);
-  const balance = await contract.balanceOf(account);
-  return { balance, decimals: cfg.decimals };
-}
-
-async function refreshWalletBalances() {
-  if (!document.querySelector("[data-lusdt-bridge]")) return;
-  const account = currentBridgeAccount();
-  if (!account) {
-    setText("[data-bridge-source-balance]", "-");
-    setText("[data-bridge-lusdt-balance]", "-");
-    return;
-  }
-
-  try {
-    const source = selectedSource();
-    const src = await tokenBalanceOf(source, account);
-    setText("[data-bridge-source-balance]", src ? `${formatUnitsSafe(src.balance, src.decimals, 6)} USDT` : "-");
-  } catch (_) {
-    setText("[data-bridge-source-balance]", "Refresh");
-  }
-
-  try {
-    const bal = await tokenBalanceOf("lusdt", account);
-    setText("[data-bridge-lusdt-balance]", bal ? `${formatUnitsSafe(bal.balance, 6, 6)} LUSDT` : "-");
-  } catch (_) {
-    setText("[data-bridge-lusdt-balance]", "Refresh");
-  }
-}
-
-async function setBridgeMaxDeposit() {
-  try {
-    const account = await getWalletAccount();
-    const source = selectedSource();
-    const src = await tokenBalanceOf(source, account);
-    if (!src) return;
-    document.querySelector("[data-bridge-amount]").value = ethers.formatUnits(src.balance, src.decimals);
-    updateBridgeQuote();
-    refreshWalletBalances();
-  } catch (err) {
-    bridgeLog(err?.message || "Could not read source balance.", "warn");
-  }
-}
-
-async function setBridgeMaxWithdraw() {
-  try {
-    const account = await getWalletAccount();
-    const bal = await tokenBalanceOf("lusdt", account);
-    if (!bal) return;
-    document.querySelector("[data-withdraw-amount]").value = ethers.formatUnits(bal.balance, 6);
-    updateBridgeQuote();
-    refreshWalletBalances();
-  } catch (err) {
-    bridgeLog(err?.message || "Could not read LUSDT balance.", "warn");
-  }
-}
-
-function releaseLocalKey(release) {
-  if (!release) return "";
-  return `${releaseDestinationKey(release)}:${String(release.recipient || "").toLowerCase()}:${String(release.nonce || "")}`.toLowerCase();
-}
-
-function isLocallyReleased(release) {
-  try {
-    const key = releaseLocalKey(release);
-    const used = JSON.parse(localStorage.getItem("lustReleasedNonces") || "[]");
-    return Boolean(key && used.map((x) => String(x).toLowerCase()).includes(key));
-  } catch (_) {
-    return false;
-  }
-}
-
-function markLocallyReleased(release) {
-  try {
-    const key = releaseLocalKey(release);
-    if (!key) return;
-    const used = JSON.parse(localStorage.getItem("lustReleasedNonces") || "[]");
-    const set = new Set(used.map((x) => String(x).toLowerCase()));
-    set.add(key);
-    localStorage.setItem("lustReleasedNonces", JSON.stringify([...set].slice(-80)));
-  } catch (_) {}
-}
-
-async function watchBridgeToken(kind) {
-  const eth = getInjectedEthereum();
-  if (!eth?.request) return false;
-  const origin = window.location.origin;
-  const isUsdt = kind === "polygon" || kind === "bsc" || kind === "usdt";
-  const selected = kind === "usdt" ? selectedDestination() : kind;
-  const address = isUsdt ? sourceToken(selected).address : LUSDT_TOKEN_ADDRESS;
-  const decimals = isUsdt ? sourceToken(selected).decimals : 6;
-  const symbol = isUsdt ? "USDT" : "LUSDT";
-  const image = isUsdt ? `${origin}/assets/usdt-logo.svg` : `${origin}/assets/lust-logo.png`;
-  try {
-    await eth.request({
-      method: "wallet_watchAsset",
-      params: {
-        type: "ERC20",
-        options: { address, symbol, decimals, image }
-      }
-    });
-    return true;
-  } catch (_) {
-    return false;
-  }
-}
-
-async function afterBridgeTransaction(kind, txHash = "") {
-  setTimeout(readState, 250);
-  setTimeout(readState, 1200);
-  setTimeout(refreshWalletBalances, 1200);
-  setTimeout(refreshBridgeLiquidity, 1200);
-  setTimeout(updateBridgeQuote, 1400);
-  setTimeout(() => {
-    if (kind === "claim") findClaim({ silent: true }).catch(() => {});
-    if (kind === "release") findRelease().catch(() => {});
-  }, 2800);
-  if (txHash) bridgeLog(`Transaction confirmed: ${txHash}. Wallet balances are refreshing. If MetaMask does not show the token, use Add token.`, "ok");
 }
 
 async function refreshBridgeStatus() {
@@ -1378,7 +1230,6 @@ async function depositToLusdt() {
       localStorage.setItem("lustLastDepositId", depositId);
       setText("[data-bridge-claim-state]", "Waiting confirmations");
       bridgeLog(`Deposit confirmed. DepositId: ${depositId}. I will auto-check for the claim.`, "ok");
-      afterBridgeTransaction("deposit", tx.hash);
       autoFindClaimSoon();
     } else {
       bridgeLog("Deposit confirmed. I will auto-check for the claim.", "ok");
@@ -1441,7 +1292,6 @@ function renderPendingReleases(entries = []) {
 
 async function isReleaseUsedOnChain(release) {
   if (!release || !release.recipient || release.nonce === undefined || release.nonce === null) return false;
-  if (isLocallyReleased(release)) return true;
   try {
     const destination = releaseDestinationKey(release);
     const chain = bridgeChainFor(destination);
@@ -1451,7 +1301,7 @@ async function isReleaseUsedOnChain(release) {
     const lockbox = new ethers.Contract(lockboxAddress, abi, provider);
     return Boolean(await lockbox.usedNonce(release.recipient, BigInt(release.nonce)));
   } catch (_) {
-    return isLocallyReleased(release);
+    return false;
   }
 }
 
@@ -1563,10 +1413,8 @@ async function mintClaim() {
     bridgeLog(`Mint sent: ${tx.hash}. Waiting confirmation...`, "");
     await tx.wait();
     markLocallyMinted(activeClaim.depositId);
-    await watchBridgeToken("lusdt");
     bridgeLog(`LUSDT minted successfully. Tx: ${tx.hash}`, "ok");
     setText("[data-bridge-claim-state]", "Minted successfully");
-    afterBridgeTransaction("claim", tx.hash);
     activeClaim = null;
     document.querySelector("[data-bridge-mint]")?.setAttribute("disabled", "disabled");
     setTimeout(() => findClaim({ silent: true }).catch(() => {}), 2500);
@@ -1606,8 +1454,7 @@ async function burnForRelease() {
     localStorage.setItem("lustLastBurnNonce", String(nonce));
     bridgeLog(`Burn sent: ${tx.hash}. Waiting confirmation...`, "");
     await tx.wait();
-    bridgeLog("Burn confirmed. Wait confirmations, then click Find / Refresh release.", "ok");
-    afterBridgeTransaction("burn", tx.hash);
+    bridgeLog("Burn confirmed. Wait confirmations, then click Find my release.", "ok");
   } catch (err) {
     console.error(err);
     bridgeLog(err?.shortMessage || err?.message || "Burn failed or rejected.", "warn");
@@ -1670,12 +1517,9 @@ async function executeRelease() {
     );
     bridgeLog(`Release sent: ${tx.hash}. Waiting confirmation...`, "");
     await tx.wait();
-    markLocallyReleased(activeRelease);
-    await watchBridgeToken(destination);
-    bridgeLog(`USDT released successfully on ${destination.toUpperCase()}. Tx: ${tx.hash}. Wallet refresh started.`, "ok");
+    bridgeLog(`USDT released successfully. Tx: ${tx.hash}`, "ok");
     activeRelease = null;
     document.querySelector("[data-bridge-release]")?.setAttribute("disabled", "disabled");
-    afterBridgeTransaction("release", tx.hash);
     setTimeout(() => findRelease().catch(() => {}), 2500);
   } catch (err) {
     console.error(err);
@@ -1700,12 +1544,8 @@ function wireLusdtBridge() {
   document.querySelectorAll("[data-bridge-amount],[data-withdraw-amount]").forEach((input) => {
     input.addEventListener("input", updateBridgeQuote);
   });
-  document.querySelector("[data-bridge-source]")?.addEventListener("change", () => { refreshBridgeUiLabels(); refreshBridgeLiquidity(); refreshWalletBalances(); });
-  document.querySelector("[data-bridge-destination]")?.addEventListener("change", () => { refreshBridgeUiLabels(); updateDestinationLiquidityNotice(); refreshWalletBalances(); });
-  document.querySelector("[data-bridge-max-deposit]")?.addEventListener("click", setBridgeMaxDeposit);
-  document.querySelector("[data-bridge-max-withdraw]")?.addEventListener("click", setBridgeMaxWithdraw);
-  document.querySelector("[data-watch-lusdt]")?.addEventListener("click", () => watchBridgeToken("lusdt"));
-  document.querySelector("[data-watch-usdt]")?.addEventListener("click", () => watchBridgeToken("usdt"));
+  document.querySelector("[data-bridge-source]")?.addEventListener("change", () => { refreshBridgeUiLabels(); refreshBridgeLiquidity(); });
+  document.querySelector("[data-bridge-destination]")?.addEventListener("change", () => { refreshBridgeUiLabels(); updateDestinationLiquidityNotice(); });
 
   document.querySelector("[data-bridge-refresh]")?.addEventListener("click", refreshBridgeStatus);
   document.querySelectorAll("[data-bridge-refresh]").forEach((btn) => btn.addEventListener("click", refreshBridgeStatus));
@@ -1750,10 +1590,8 @@ function wireLusdtBridge() {
   refreshBridgeUiLabels();
   refreshBridgeStatus();
   refreshBridgeLiquidity();
-  refreshWalletBalances();
   setInterval(refreshBridgeStatus, 30000);
   setInterval(refreshBridgeLiquidity, 45000);
-  setInterval(refreshWalletBalances, 25000);
   setInterval(() => findClaim({ silent: true }).catch(() => {}), 10000);
 }
 
