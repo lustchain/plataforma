@@ -980,3 +980,35 @@ select.input{appearance:none;background:#09020d;color:#fff}
   .network-select-pill{width:100%;margin-left:0;margin-top:10px;justify-content:center}
   .bridge-asset-main{flex-wrap:wrap}
 }
+
+
+/* v17 fixed icon-only network switch */
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.network-select-pill{
+  width:62px !important;
+  min-width:62px !important;
+  max-width:62px !important;
+  height:44px !important;
+  padding:0 !important;
+  margin-left:auto !important;
+  gap:5px !important;
+  border-radius:15px !important;
+  justify-content:center !important;
+  flex:0 0 62px !important;
+  background:linear-gradient(180deg,#12000c,#050004) !important;
+}
+.network-select-pill span{display:none!important}
+.network-select-pill img{width:23px!important;height:23px!important;border-radius:50%;object-fit:contain;display:block;flex:0 0 23px}
+.network-select-pill b{font-size:14px!important;color:#ff8cc7!important;line-height:1;transform:translateY(-1px)}
+.network-select-pill:hover{transform:translateY(-1px);background:linear-gradient(180deg,#220014,#080005)!important}
+.bridge-asset-main{display:grid!important;grid-template-columns:52px minmax(110px,1fr) 62px!important;align-items:center!important;gap:14px!important}
+.bridge-asset-main > div{min-width:0!important}
+.bridge-asset-main strong{white-space:nowrap}
+.bridge-asset-main em{min-height:18px;white-space:nowrap}
+.asset-logo{grid-column:1;justify-self:start}
+.network-select-pill{grid-column:3;justify-self:end}
+.bridge-mini-tag{grid-column:3;justify-self:end;margin-left:0!important;min-width:62px;text-align:center;display:inline-flex;justify-content:center;align-items:center;height:34px;box-sizing:border-box}
+@media (max-width:760px){
+  .network-select-pill{width:62px!important;min-width:62px!important;margin-left:auto!important;margin-top:0!important}
+  .bridge-asset-main{grid-template-columns:52px minmax(90px,1fr) 62px!important;flex-wrap:nowrap!important}
+}

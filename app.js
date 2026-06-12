@@ -1719,7 +1719,8 @@ function wireLusdtBridge() {
     selectBridgeNetwork("destination", event.target.value || "polygon", false);
     updateDestinationLiquidityNotice();
   });
-  document.querySelectorAll("[data-bridge-network-cycle]").forEach((btn) => btn.addEventListener("click", () => {
+  document.querySelectorAll("[data-bridge-network-cycle]").forEach((btn) => btn.addEventListener("click", (event) => {
+    if (btn.getAttribute("onclick")) return;
     const kind = btn.getAttribute("data-bridge-network-cycle") || "source";
     window.lustBridgeCycleNetwork(kind);
   }));
