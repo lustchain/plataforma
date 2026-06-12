@@ -713,8 +713,9 @@ setInterval(updateFaucetPanel, 20000);
 setInterval(updateMiningStatsPanel, 15000);
 
 
-// LUSDT Bridge app v20260611-lusdt-bridge-v1
+// LUSDT Bridge app v20260612-lusdt-bridge-v3-cors-bsc
 const LUSDT_BRIDGE_API_URL = "https://lusdt-bridge.lustchain.org";
+const LUSDT_BRIDGE_API_BACKUP_URLS = ["https://lusdt-bridge.lustchain.org"];
 const LUSDT_TOKEN_ADDRESS = "0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE";
 const LUSDT_EXECUTOR_ADDRESS = "0xbBC818f161D1B7190f85bE258CDB568a5A63f380";
 const LUSDT_POLYGON_LOCKBOX = "0x273cC6A72aF97381daa07332Df768a05cb30CE47";
@@ -887,10 +888,25 @@ async function approveIfNeeded(tokenAddress, spender, amount, signer) {
 }
 
 async function bridgeFetch(path) {
-  const url = `${LUSDT_BRIDGE_API_URL}${path}${path.includes("?") ? "&" : "?"}t=${Date.now()}`;
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error(`Bridge API ${res.status}`);
-  return res.json();
+  let lastErr = null;
+  const urls = [LUSDT_BRIDGE_API_URL, ...LUSDT_BRIDGE_API_BACKUP_URLS].filter(Boolean);
+  for (const base of [...new Set(urls)]) {
+    const url = `${base}${path}${path.includes("?") ? "&" : "?"}t=${Date.now()}`;
+    try {
+      const res = await fetch(url, {
+        method: "GET",
+        mode: "cors",
+        credentials: "omit",
+        cache: "no-store",
+        headers: { accept: "application/json" }
+      });
+      if (!res.ok) throw new Error(`Bridge API ${res.status}`);
+      return await res.json();
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  throw lastErr || new Error("Bridge API unavailable");
 }
 
 function normalizeApiItems(data, field) {
@@ -996,8 +1012,8 @@ async function refreshBridgeStatus() {
       findClaim({ silent: true }).catch(() => {});
     }
   } catch (err) {
-    bridgeLog(`Bridge API not reachable yet: ${err.message}. Check API/domain before public launch.`, "warn");
-    setText("[data-bridge-api-state]", "API offline");
+    bridgeLog(`Bridge API blocked/offline: ${err.message}. Open https://lusdt-bridge.lustchain.org/health and refresh Ctrl+F5.`, "warn");
+    setText("[data-bridge-api-state]", "API blocked");
   }
 }
 
@@ -1236,9 +1252,7 @@ function wireLusdtBridge() {
   updateBridgeQuote();
   refreshBridgeStatus();
   setInterval(refreshBridgeStatus, 30000);
-  setInterval(() => {
-    if (walletState.connected && walletState.address) findClaim({ silent: true }).catch(() => {});
-  }, 10000);
+  setInterval(() => findClaim({ silent: true }).catch(() => {}), 10000);
 }
 
 wireLusdtBridge();
