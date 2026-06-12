@@ -763,6 +763,7 @@ const ERC20_ABI = [
 
 const LOCKBOX_POLYGON_ABI = [
   "function depositsEnabled() view returns (bool)",
+  "function usedNonce(address,uint256) view returns (bool)",
   "function deposit(uint256 amount)",
   "function release(address recipient,uint256 amount,uint256 nonce,uint256 deadline,bytes[] signatures)",
   "event Deposited(address indexed user,uint256 amount,bytes32 indexed depositId,uint256 indexed sourceChainId,uint256 destinationChainId)"
@@ -770,6 +771,7 @@ const LOCKBOX_POLYGON_ABI = [
 
 const LOCKBOX_BSC_ABI = [
   "function depositsEnabled() view returns (bool)",
+  "function usedNonce(address,uint256) view returns (bool)",
   "function deposit(uint256 rawAmount18)",
   "function release(address recipient,uint256 amount6,uint256 nonce,uint256 deadline,bytes[] signatures)",
   "event Deposited(address indexed user,uint256 rawAmount18,uint256 normalizedAmount6,bytes32 indexed depositId,uint256 indexed sourceChainId,uint256 destinationChainId)"
@@ -786,6 +788,7 @@ const EXECUTOR_ABI = [
 let activeClaim = null;
 let activeRelease = null;
 let pendingBridgeClaims = [];
+let pendingBridgeReleases = [];
 
 function bridgeLog(message, tone = "") {
   document.querySelectorAll("[data-bridge-log]").forEach((el) => {
@@ -1130,6 +1133,103 @@ async function depositToLusdt() {
   }
 }
 
+
+function releaseDestinationLabel(release) {
+  const dest = String(release?.destination || "").toLowerCase();
+  const chainId = String(release?.destinationChainId || "");
+  if (dest === "bsc" || chainId === "56") return "BSC";
+  if (dest === "polygon" || chainId === "137") return "Polygon";
+  return dest || `Chain ${chainId}`;
+}
+
+function releaseDestinationKey(release) {
+  const dest = String(release?.destination || "").toLowerCase();
+  const chainId = String(release?.destinationChainId || "");
+  if (dest === "bsc" || chainId === "56") return "bsc";
+  return "polygon";
+}
+
+function renderPendingReleases(entries = []) {
+  const box = document.querySelector("[data-bridge-pending-releases]");
+  if (!box) return;
+
+  if (!walletState.connected) {
+    box.innerHTML = `<div class="claim-item muted">Connect wallet and click Find my release.</div>`;
+    return;
+  }
+
+  if (!entries.length) {
+    box.innerHTML = `<div class="claim-item muted">No release found for this wallet yet.</div>`;
+    return;
+  }
+
+  const pending = entries.filter((x) => !x.used);
+  box.innerHTML = `
+    <div class="claim-summary">${pending.length} pending / ${entries.length} total releases for this wallet</div>
+    ${entries.map(({ release, used }, idx) => {
+      const selected = activeRelease?.burnId && String(activeRelease.burnId).toLowerCase() === String(release.burnId).toLowerCase();
+      return `
+        <div class="claim-item ${used ? "is-used" : ""} ${selected ? "is-selected" : ""}">
+          <div>
+            <strong>${releaseDestinationLabel(release)} · ${formatUnitsSafe(release.amount)} USDT</strong>
+            <small>${bridgeShort(release.burnId)} · ${used ? "already released" : "ready to release"}</small>
+          </div>
+          ${used
+            ? `<span class="claim-badge done">Released</span>`
+            : `<button class="mini-btn" type="button" data-bridge-select-release="${idx}">Select</button>`}
+        </div>`;
+    }).join("")}
+  `;
+}
+
+async function isReleaseUsedOnChain(release) {
+  if (!release || !release.recipient || release.nonce === undefined || release.nonce === null) return false;
+  try {
+    const destination = releaseDestinationKey(release);
+    const chain = bridgeChainFor(destination);
+    const lockboxAddress = destination === "bsc" ? LUSDT_BSC_LOCKBOX : LUSDT_POLYGON_LOCKBOX;
+    const abi = destination === "bsc" ? LOCKBOX_BSC_ABI : LOCKBOX_POLYGON_ABI;
+    const provider = new ethers.JsonRpcProvider(chain.rpcUrls[0]);
+    const lockbox = new ethers.Contract(lockboxAddress, abi, provider);
+    return Boolean(await lockbox.usedNonce(release.recipient, BigInt(release.nonce)));
+  } catch (_) {
+    return false;
+  }
+}
+
+async function loadReleasesForAccount(account) {
+  const data = await bridgeFetch(`/api/releases/address/${account}`);
+  const releases = normalizeApiItems(data, "releases")
+    .filter((release) => sameAddress(release.recipient, account))
+    .filter((release) => release.status === "ready")
+    .sort((a, b) => String(a.createdAt || "").localeCompare(String(b.createdAt || "")));
+
+  const entries = [];
+  for (const release of releases) {
+    const used = await isReleaseUsedOnChain(release);
+    entries.push({ release, used });
+  }
+  pendingBridgeReleases = entries;
+  renderPendingReleases(entries);
+  return entries;
+}
+
+async function prepareActiveRelease(release, tone = "ok") {
+  if (!release) return false;
+  if (await isReleaseUsedOnChain(release)) {
+    setText("[data-bridge-release-state]", "Already released");
+    bridgeLog("This release was already used. Select another pending release.", "warn");
+    return false;
+  }
+  activeRelease = release;
+  const destination = releaseDestinationKey(release);
+  setText("[data-bridge-release-state]", `Ready · ${destination} · ${formatUnitsSafe(release.amount)} USDT`);
+  document.querySelector("[data-bridge-release]")?.removeAttribute("disabled");
+  renderPendingReleases(pendingBridgeReleases);
+  bridgeLog(`Release ready for ${destination}. Switch network and click Release USDT. Amount: ${formatUnitsSafe(release.amount)} USDT.`, tone);
+  return true;
+}
+
 function chooseLatestReady(items, filterFn = () => true) {
   return (items || [])
     .filter(filterFn)
@@ -1248,20 +1348,30 @@ async function findRelease() {
     const account = await getWalletAccount();
     const destination = selectedDestination();
     bridgeLog("Searching release signatures...", "");
-    const data = await bridgeFetch(`/api/releases/address/${account}`);
-    const release = chooseLatestReady(data.releases || [], (r) => r.destination === destination);
-    if (!release) {
-      setText("[data-bridge-release-state]", "Not ready yet");
-      bridgeLog("No ready release found yet. Wait confirmations and try again.", "warn");
-      return;
+
+    const entries = await loadReleasesForAccount(account);
+    const preferred = entries.find(({ release, used }) => !used && releaseDestinationKey(release) === destination);
+    const anyPending = entries.find(({ used }) => !used);
+    const picked = preferred || anyPending;
+
+    if (!picked) {
+      setText("[data-bridge-release-state]", entries.length ? "All releases used" : "Not ready yet");
+      document.querySelector("[data-bridge-release]")?.setAttribute("disabled", "disabled");
+      bridgeLog(
+        entries.length
+          ? "All ready releases for this wallet were already used."
+          : "No ready release found yet. Wait confirmations and try again.",
+        entries.length ? "ok" : "warn"
+      );
+      return null;
     }
-    activeRelease = release;
-    setText("[data-bridge-release-state]", `${release.destination} · ${formatUnitsSafe(release.amount)} USDT`);
-    document.querySelector("[data-bridge-release]")?.removeAttribute("disabled");
-    bridgeLog(`Release ready for ${release.destination}. Amount: ${formatUnitsSafe(release.amount)} USDT.`, "ok");
+
+    await prepareActiveRelease(picked.release, "ok");
+    return picked.release;
   } catch (err) {
     console.error(err);
     bridgeLog(err?.message || "Could not find release.", "warn");
+    return null;
   }
 }
 
@@ -1290,7 +1400,9 @@ async function executeRelease() {
     bridgeLog(`Release sent: ${tx.hash}. Waiting confirmation...`, "");
     await tx.wait();
     bridgeLog(`USDT released successfully. Tx: ${tx.hash}`, "ok");
+    activeRelease = null;
     document.querySelector("[data-bridge-release]")?.setAttribute("disabled", "disabled");
+    setTimeout(() => findRelease().catch(() => {}), 2500);
   } catch (err) {
     console.error(err);
     bridgeLog(err?.shortMessage || err?.message || "Release failed or rejected.", "warn");
