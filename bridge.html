@@ -8,7 +8,7 @@
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css?v20260612-lusdt-bridge-v10-tweaks" />
+  <link rel="stylesheet" href="./styles.css?v20260612-lusdt-bridge-v11-lust-final" />
 </head>
 <body>
 <div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
@@ -48,7 +48,9 @@
 
 <main class="bridge-pro-page" data-lusdt-bridge>
   <section class="bridge-pro-intro">
-    <div>
+    <div class="bridge-pro-intro-copy">
+      <small class="bridge-pro-kicker">Bridge</small>
+      <h1>Move stable liquidity.</h1>
       <p>Fast LUSDT transfers between Polygon, BSC and LUST. Choose a direction, confirm in your wallet, then finish the claim or release on the same screen.</p>
       <span>Buy on Polygon, sell on BSC — only when the destination reserve has enough USDT.</span>
     </div>
@@ -85,15 +87,15 @@
           <div class="bridge-asset-card">
             <small>From</small>
             <div class="bridge-asset-main">
-              <span class="asset-logo asset-logo-usdt"><img src="./assets/usdt-logo.svg" alt="USDT"></span>
-              <div><strong>USDT</strong><em data-bridge-source-label><img class="chain-inline-logo" src="./assets/polygon-logo.svg" alt="Polygon">Polygon</em></div>
+              <span class="asset-logo asset-logo-usdt"><img src="./assets/usdt-logo.png" alt="USDT"></span>
+              <div><strong>USDT</strong><em data-bridge-source-label><img class="chain-inline-logo" src="./assets/polygon-logo.png" alt="Polygon">Polygon</em></div>
               <select class="input compact-select" data-bridge-source>
                 <option value="polygon">Polygon</option>
                 <option value="bsc">BSC</option>
               </select>
             </div>
           </div>
-          <div class="bridge-arrow">↓</div>
+          <button class="bridge-arrow" type="button" data-bridge-switch aria-label="Switch direction">↓</button>
           <div class="bridge-asset-card">
             <small>To</small>
             <div class="bridge-asset-main">
@@ -108,7 +110,7 @@
           <div class="bridge-amount-head"><small>Amount</small><button type="button" data-bridge-max-deposit>MAX</button></div>
           <div class="bridge-amount-row">
             <input class="input" data-bridge-amount type="number" min="0" step="0.01" value="1" />
-            <span class="bridge-token-pill"><img src="./assets/usdt-logo.svg" alt="USDT">USDT</span>
+            <span class="bridge-token-pill"><img src="./assets/usdt-logo.png" alt="USDT">USDT</span>
           </div>
           <div class="bridge-quote-grid">
             <div class="result"><span>You receive</span><strong data-bridge-receive>0.998000 LUSDT</strong></div>
@@ -151,12 +153,12 @@
               <span class="bridge-mini-tag">Burn</span>
             </div>
           </div>
-          <div class="bridge-arrow">↓</div>
+          <button class="bridge-arrow" type="button" data-bridge-switch aria-label="Switch direction">↓</button>
           <div class="bridge-asset-card">
             <small>To</small>
             <div class="bridge-asset-main">
-              <span class="asset-logo asset-logo-usdt"><img src="./assets/usdt-logo.svg" alt="USDT"></span>
-              <div><strong>USDT</strong><em data-bridge-destination-label><img class="chain-inline-logo" src="./assets/polygon-logo.svg" alt="Polygon">Polygon</em></div>
+              <span class="asset-logo asset-logo-usdt"><img src="./assets/usdt-logo.png" alt="USDT"></span>
+              <div><strong>USDT</strong><em data-bridge-destination-label><img class="chain-inline-logo" src="./assets/polygon-logo.png" alt="Polygon">Polygon</em></div>
               <select class="input compact-select" data-bridge-destination>
                 <option value="polygon">Polygon</option>
                 <option value="bsc">BSC</option>
@@ -211,8 +213,8 @@
 
       <div class="bridge-side-card">
         <small>Liquidity reserves</small>
-        <div class="bridge-reserve-mini polygon"><span><img class="reserve-logo" src="./assets/polygon-logo.svg" alt="Polygon">Polygon USDT</span><strong data-liquidity-polygon>Loading...</strong></div>
-        <div class="bridge-reserve-mini bsc"><span><img class="reserve-logo" src="./assets/bsc-logo.svg" alt="BSC">BSC USDT</span><strong data-liquidity-bsc>Loading...</strong></div>
+        <div class="bridge-reserve-mini polygon"><span><img class="reserve-logo" src="./assets/polygon-logo.png" alt="Polygon">Polygon USDT</span><strong data-liquidity-polygon>Loading...</strong></div>
+        <div class="bridge-reserve-mini bsc"><span><img class="reserve-logo" src="./assets/bsc-logo.png" alt="BSC">BSC USDT</span><strong data-liquidity-bsc>Loading...</strong></div>
         <div class="bridge-liquidity-status" data-liquidity-polygon-status>Checking Polygon liquidity...</div>
         <div class="bridge-liquidity-status" data-liquidity-bsc-status>Checking BSC liquidity...</div>
       </div>
@@ -235,6 +237,6 @@
 </footer>
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
-<script type="module" src="./app.js?v20260612-lusdt-bridge-v10-tweaks"></script>
+<script type="module" src="./app.js?v20260612-lusdt-bridge-v11-lust-final"></script>
 </body>
 </html>

@@ -1160,11 +1160,11 @@ function refreshBridgeUiLabels() {
   const source = selectedSource();
   const destination = selectedDestination();
   setHtml("[data-bridge-source-label]", source === "bsc"
-    ? '<img class="chain-inline-logo" src="./assets/bsc-logo.svg" alt="BSC">BSC'
-    : '<img class="chain-inline-logo" src="./assets/polygon-logo.svg" alt="Polygon">Polygon');
+    ? '<img class="chain-inline-logo" src="./assets/bsc-logo.png" alt="BSC">BSC'
+    : '<img class="chain-inline-logo" src="./assets/polygon-logo.png" alt="Polygon">Polygon');
   setHtml("[data-bridge-destination-label]", destination === "bsc"
-    ? '<img class="chain-inline-logo" src="./assets/bsc-logo.svg" alt="BSC">BSC'
-    : '<img class="chain-inline-logo" src="./assets/polygon-logo.svg" alt="Polygon">Polygon');
+    ? '<img class="chain-inline-logo" src="./assets/bsc-logo.png" alt="BSC">BSC'
+    : '<img class="chain-inline-logo" src="./assets/polygon-logo.png" alt="Polygon">Polygon');
   const activeTab = document.querySelector("[data-bridge-tab].active")?.getAttribute("data-bridge-tab") || "deposit";
   setText("[data-bridge-title-action]", activeTab === "withdraw" ? "Sell" : "Buy");
 }
@@ -1549,6 +1549,23 @@ function wireLusdtBridge() {
 
   document.querySelector("[data-bridge-refresh]")?.addEventListener("click", refreshBridgeStatus);
   document.querySelectorAll("[data-bridge-refresh]").forEach((btn) => btn.addEventListener("click", refreshBridgeStatus));
+  document.querySelectorAll("[data-bridge-switch]").forEach((btn) => btn.addEventListener("click", () => {
+    const depositTab = document.querySelector('[data-bridge-tab="deposit"]');
+    const withdrawTab = document.querySelector('[data-bridge-tab="withdraw"]');
+    const depositVisible = !document.querySelector('[data-bridge-panel="deposit"]')?.classList.contains('hidden');
+    const sourceSelect = document.querySelector('[data-bridge-source]');
+    const destSelect = document.querySelector('[data-bridge-destination]');
+    if (depositVisible) {
+      if (sourceSelect && destSelect) destSelect.value = sourceSelect.value;
+      withdrawTab?.click();
+    } else {
+      if (sourceSelect && destSelect) sourceSelect.value = destSelect.value;
+      depositTab?.click();
+    }
+    updateBridgeQuote();
+    refreshBridgeLiquidity();
+    updateDestinationLiquidityNotice();
+  }));
   document.querySelector("[data-bridge-deposit]")?.addEventListener("click", depositToLusdt);
   document.querySelector("[data-bridge-find-claim]")?.addEventListener("click", findClaim);
   document.querySelector("[data-bridge-mint]")?.addEventListener("click", mintClaim);
