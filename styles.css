@@ -872,3 +872,26 @@ select.input{appearance:none;background:#09020d;color:#fff}
 .bridge-action-grid .btn{font-size:13px;padding:0 10px;white-space:nowrap;min-height:44px}
 
 .claim-item.muted{opacity:.9;color:#dcc7d2}
+
+
+/* v14 bridge network toggle + darker containers */
+.bridge-pro-card,.bridge-pro-side .bridge-side-card,.bridge-side-details,.bridge-asset-card,.bridge-amount-box,.bridge-pro-status,.bridge-pro-card-head,.bridge-pro-tabs,.bridge-pro-steps div,.bridge-quote-grid .result,.bridge-reserve-mini,.claim-item,.claim-summary,.bridge-inline-warning{
+  box-shadow: 0 24px 70px rgba(0,0,0,.45), inset 0 0 0 1px rgba(0,0,0,.78), inset 0 1px 0 rgba(255,255,255,.025);
+}
+.bridge-pro-card,.bridge-pro-side .bridge-side-card,.bridge-side-details,.bridge-asset-card,.bridge-amount-box,.bridge-pro-status,.bridge-quote-grid .result,.bridge-reserve-mini,.claim-item,.claim-summary,.bridge-inline-warning{
+  background: linear-gradient(180deg, rgba(10,0,9,.97), rgba(4,0,5,.99));
+}
+.bridge-pro-card-head{background:linear-gradient(135deg, rgba(44,0,24,.92), rgba(10,0,9,.98));}
+.bridge-pro-tabs{background:rgba(10,0,9,.95)}
+.bridge-pro-steps div{background:rgba(10,0,9,.95)}
+.bridge-side-card .row{border-bottom:2px solid rgba(255,255,255,.08)}
+.network-toggle{display:flex;align-items:center;gap:8px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
+.network-toggle-btn{display:inline-flex;align-items:center;gap:7px;height:38px;padding:0 12px;border-radius:13px;border:3px solid rgba(255,20,120,.34);background:#12010e;color:#ffddec;font-size:11px;font-weight:900;cursor:pointer;transition:all .18s ease}
+.network-toggle-btn img{width:16px;height:16px;border-radius:50%;display:block}
+.network-toggle-btn.active{background:linear-gradient(135deg,#ff1f8d,#c60064);color:#fff;border-color:rgba(255,124,191,.58);box-shadow:0 12px 28px rgba(255,19,111,.28)}
+.network-toggle-btn:not(.active):hover{border-color:rgba(255,124,191,.55);transform:translateY(-1px)}
+.bridge-network-select{display:none !important}
+@media (max-width: 780px){
+  .network-toggle{width:100%;margin-left:0;margin-top:10px;justify-content:flex-start}
+  .asset-row{align-items:flex-start;flex-wrap:wrap}
+}

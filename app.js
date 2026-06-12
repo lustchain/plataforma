@@ -1188,15 +1188,34 @@ function updateBridgeQuote() {
 function refreshBridgeUiLabels() {
   const source = selectedSource();
   const destination = selectedDestination();
-  setHtml("[data-bridge-source-label]", source === "bsc"
-    ? '<img class="chain-inline-logo" src="./assets/bsc-logo.png" alt="BSC">BSC'
-    : '<img class="chain-inline-logo" src="./assets/polygon-logo.png" alt="Polygon">Polygon');
-  setHtml("[data-bridge-destination-label]", destination === "bsc"
-    ? '<img class="chain-inline-logo" src="./assets/bsc-logo.png" alt="BSC">BSC'
-    : '<img class="chain-inline-logo" src="./assets/polygon-logo.png" alt="Polygon">Polygon');
+  const sourceLogo = document.querySelector("[data-bridge-source-logo]");
+  const sourceName = document.querySelector("[data-bridge-source-name]");
+  const destinationLogo = document.querySelector("[data-bridge-destination-logo]");
+  const destinationName = document.querySelector("[data-bridge-destination-name]");
+
+  const sourceMeta = source === "bsc"
+    ? { src: "./assets/bsc-logo.png", alt: "BSC", name: "BSC" }
+    : { src: "./assets/polygon-logo.png", alt: "Polygon", name: "Polygon" };
+  const destinationMeta = destination === "bsc"
+    ? { src: "./assets/bsc-logo.png", alt: "BSC", name: "BSC" }
+    : { src: "./assets/polygon-logo.png", alt: "Polygon", name: "Polygon" };
+
+  if (sourceLogo) { sourceLogo.src = sourceMeta.src; sourceLogo.alt = sourceMeta.alt; }
+  if (sourceName) sourceName.textContent = sourceMeta.name;
+  if (destinationLogo) { destinationLogo.src = destinationMeta.src; destinationLogo.alt = destinationMeta.alt; }
+  if (destinationName) destinationName.textContent = destinationMeta.name;
+
+  document.querySelectorAll("[data-bridge-source-toggle] .network-toggle-btn").forEach((btn) => {
+    btn.classList.toggle("active", btn.getAttribute("data-network") === source);
+  });
+  document.querySelectorAll("[data-bridge-destination-toggle] .network-toggle-btn").forEach((btn) => {
+    btn.classList.toggle("active", btn.getAttribute("data-network") === destination);
+  });
+
   const activeTab = document.querySelector("[data-bridge-tab].active")?.getAttribute("data-bridge-tab") || "deposit";
   setText("[data-bridge-title-action]", activeTab === "withdraw" ? "Sell" : "Buy");
 }
+
 
 async function refreshBridgeWalletBalances() {
   if (!document.querySelector("[data-lusdt-bridge]")) return;
@@ -1630,6 +1649,24 @@ function wireLusdtBridge() {
   });
   document.querySelector("[data-bridge-source]")?.addEventListener("change", () => { refreshBridgeUiLabels(); refreshBridgeLiquidity(); updateBridgeQuote(); refreshBridgeWalletBalances().catch(() => {}); });
   document.querySelector("[data-bridge-destination]")?.addEventListener("change", () => { refreshBridgeUiLabels(); updateDestinationLiquidityNotice(); updateBridgeQuote(); refreshBridgeWalletBalances().catch(() => {}); });
+  document.querySelectorAll("[data-bridge-source-toggle] .network-toggle-btn").forEach((btn) => btn.addEventListener("click", () => {
+    const network = btn.getAttribute("data-network") || "polygon";
+    const select = document.querySelector("[data-bridge-source]");
+    if (select) select.value = network;
+    refreshBridgeUiLabels();
+    refreshBridgeLiquidity();
+    updateBridgeQuote();
+    refreshBridgeWalletBalances().catch(() => {});
+  }));
+  document.querySelectorAll("[data-bridge-destination-toggle] .network-toggle-btn").forEach((btn) => btn.addEventListener("click", () => {
+    const network = btn.getAttribute("data-network") || "polygon";
+    const select = document.querySelector("[data-bridge-destination]");
+    if (select) select.value = network;
+    refreshBridgeUiLabels();
+    updateDestinationLiquidityNotice();
+    updateBridgeQuote();
+    refreshBridgeWalletBalances().catch(() => {});
+  }));
 
   document.querySelector("[data-bridge-refresh]")?.addEventListener("click", refreshBridgeStatus);
   document.querySelectorAll("[data-bridge-refresh]").forEach((btn) => btn.addEventListener("click", refreshBridgeStatus));
