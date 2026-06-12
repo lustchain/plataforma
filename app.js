@@ -999,8 +999,8 @@ function hardRefreshBridgeState() {
       refreshBridgeWalletBalances().catch(() => {});
       refreshBridgeLiquidity().catch(() => {});
       if (walletState.connected && walletState.address) {
-        findClaim({ silent: true }).catch(() => {});
-        findRelease({ silent: true }).catch(() => {});
+        if (activeBridgeMode() === "withdraw") findRelease({ silent: true }).catch(() => {});
+        else findClaim({ silent: true }).catch(() => {});
       }
     }, ms);
   });
@@ -1261,7 +1261,7 @@ async function prepareActiveClaim(claim, tone = "ok") {
   if (!claim) return false;
   if (await isMintedOnChain(claim.depositId)) {
     setText("[data-bridge-claim-state]", "Already minted");
-    if (tone !== "silent") bridgeLog("This deposit was already minted. Use another ready claim or make a new deposit.", "warn");
+    bridgeLog("This deposit was already minted. Use another ready claim or make a new deposit.", "warn");
     return false;
   }
   activeClaim = claim;
@@ -1269,13 +1269,14 @@ async function prepareActiveClaim(claim, tone = "ok") {
   setText("[data-bridge-claim-state]", `Ready · ${source} · ${formatUnitsSafe(claim.amount)} LUSDT`);
   setBridgeActionReady("[data-bridge-mint]", true);
   renderPendingClaims(pendingBridgeClaims);
-  if (tone !== "silent") bridgeLog(`Claim ready. Switching to LUST Chain so you can mint. Amount: ${formatUnitsSafe(claim.amount)} LUSDT.`, tone);
+  bridgeLog(`Claim ready. Switching to LUST Chain so you can mint. Amount: ${formatUnitsSafe(claim.amount)} LUSDT.`, tone);
   if (walletState.connected && activeBridgeMode() === "deposit") {
     try {
       await ensureWalletChain(BRIDGE_CHAINS.lust);
+      await manualAddBridgeAsset("lust");
       hardRefreshBridgeState();
     } catch (err) {
-      if (tone !== "silent") bridgeLog(err?.shortMessage || err?.message || "Claim is ready, but wallet network switch needs manual confirmation.", "warn");
+      bridgeLog(err?.shortMessage || err?.message || "Claim is ready, but wallet network switch needs manual confirmation.", "warn");
     }
   }
   return true;
@@ -1438,8 +1439,11 @@ async function refreshBridgeStatus() {
     bridgeLog(`Bridge API online. Claims: ${stats.claims || 0}. Releases: ${stats.releases || 0}.`, "ok");
     refreshBridgeLiquidity().catch(() => {});
     if (walletState.connected && walletState.address) {
-      if (Number(stats.claims || 0) > 0) findClaim({ silent: true }).catch(() => {});
-      if (Number(stats.releases || 0) > 0) findRelease({ silent: true }).catch(() => {});
+      if (activeBridgeMode() === "withdraw") {
+        if (Number(stats.releases || 0) > 0) findRelease({ silent: true }).catch(() => {});
+      } else {
+        if (Number(stats.claims || 0) > 0) findClaim({ silent: true }).catch(() => {});
+      }
     }
   } catch (err) {
     bridgeLog(`Bridge API blocked/offline: ${err.message}. Open https://lusdt-bridge.lustchain.org/health and refresh Ctrl+F5.`, "warn");
@@ -1600,7 +1604,7 @@ async function prepareActiveRelease(release, tone = "ok") {
   if (!release) return false;
   if (await isReleaseUsedOnChain(release)) {
     setText("[data-bridge-release-state]", "Already released");
-    if (tone !== "silent") bridgeLog("This release was already used. Select another pending release.", "warn");
+    bridgeLog("This release was already used. Select another pending release.", "warn");
     return false;
   }
   activeRelease = release;
@@ -1608,13 +1612,14 @@ async function prepareActiveRelease(release, tone = "ok") {
   setText("[data-bridge-release-state]", `Ready · ${destination} · ${formatUnitsSafe(release.amount)} USDT`);
   setBridgeActionReady("[data-bridge-release]", true);
   renderPendingReleases(pendingBridgeReleases);
-  if (tone !== "silent") bridgeLog(`Release ready for ${destination}. Switching wallet to release network. Amount: ${formatUnitsSafe(release.amount)} USDT.`, tone);
+  bridgeLog(`Release ready for ${destination}. Switching wallet to release network. Amount: ${formatUnitsSafe(release.amount)} USDT.`, tone);
   if (walletState.connected && activeBridgeMode() === "withdraw") {
     try {
       await ensureWalletChain(bridgeChainFor(destination));
+      await watchBridgeAssetForCurrentChain(destination);
       hardRefreshBridgeState();
     } catch (err) {
-      if (tone !== "silent") bridgeLog(err?.shortMessage || err?.message || "Release is ready, but wallet network switch needs manual confirmation.", "warn");
+      bridgeLog(err?.shortMessage || err?.message || "Release is ready, but wallet network switch needs manual confirmation.", "warn");
     }
   }
   return true;
@@ -1885,24 +1890,9 @@ window.lustBridgeCycleNetwork = function(kind) {
 };
 
 async function autoSwitchWalletForActiveMode() {
-  if (!walletState.connected) return;
-  try {
-    if (activeBridgeMode() === "withdraw") {
-      bridgeLog("Switching wallet to LUST Chain...", "");
-      await ensureWalletChain(BRIDGE_CHAINS.lust);
-      await manualAddBridgeAsset("lust");
-      bridgeLog("Wallet switched to LUST Chain.", "ok");
-    } else {
-      const chain = bridgeChainFor(selectedSource());
-      bridgeLog(`Switching wallet to ${chain.name}...`, "");
-      await ensureWalletChain(chain);
-      await manualAddBridgeAsset(selectedSource());
-      bridgeLog(`Wallet switched to ${chain.name}.`, "ok");
-    }
-    setTimeout(() => refreshBridgeWalletBalances().catch(() => {}), 600);
-  } catch (err) {
-    bridgeLog(err?.shortMessage || err?.message || "Could not switch wallet network automatically.", "warn");
-  }
+  // INRI-style safe mode: do not auto-switch networks on tab changes.
+  // The action buttons switch to the required chain at the exact moment of execution.
+  refreshBridgeWalletBalances().catch(() => {});
 }
 
 function wireLusdtBridge() {
@@ -1918,6 +1908,14 @@ function wireLusdtBridge() {
       refreshBridgeUiLabels();
       refreshBridgeWalletBalances().catch(() => {});
       updateDestinationLiquidityNotice();
+      if (selected === "withdraw") {
+        setText("[data-bridge-release-state]", "Waiting");
+        findRelease({ silent: true }).catch(() => {});
+      } else {
+        setText("[data-bridge-claim-state]", "Waiting");
+        findClaim({ silent: true }).catch(() => {});
+      }
+      // INRI-style: do not force token-add or change assets until the user presses the next action.
       await autoSwitchWalletForActiveMode();
     });
   });
@@ -2037,8 +2035,12 @@ function wireLusdtBridge() {
   setInterval(refreshBridgeStatus, 30000);
   setInterval(refreshBridgeLiquidity, 45000);
   setInterval(() => refreshBridgeWalletBalances().catch(() => {}), 12000);
-  setInterval(() => findClaim({ silent: true }).catch(() => {}), 10000);
-  setInterval(() => findRelease({ silent: true }).catch(() => {}), 10000);
+  setInterval(() => {
+    if (walletState.connected && walletState.address) {
+      if (activeBridgeMode() === "withdraw") findRelease({ silent: true }).catch(() => {});
+      else findClaim({ silent: true }).catch(() => {});
+    }
+  }, 10000);
 }
 
 wireLusdtBridge();
