@@ -999,35 +999,40 @@ function hardRefreshBridgeState() {
       refreshBridgeWalletBalances().catch(() => {});
       refreshBridgeLiquidity().catch(() => {});
       if (walletState.connected && walletState.address) {
-        if (activeBridgeMode() === "withdraw") findRelease({ silent: true }).catch(() => {});
-        else findClaim({ silent: true }).catch(() => {});
+        findClaim({ silent: true }).catch(() => {});
+        findRelease({ silent: true }).catch(() => {});
       }
     }, ms);
   });
 }
 
 async function watchWalletAsset({ address, symbol, decimals, image }) {
-  // Disabled on purpose: automatic wallet_watchAsset was causing repeated
-  // MetaMask "Add token" popups and stale token state. Keep token add as a
-  // manual user action only, like the INRI bridge.
-  return false;
+  const eth = getInjectedEthereum();
+  if (!eth || !address || !symbol) return false;
+  try {
+    return Boolean(await eth.request({
+      method: "wallet_watchAsset",
+      params: {
+        type: "ERC20",
+        options: { address, symbol, decimals, image }
+      }
+    }));
+  } catch (_) {
+    return false;
+  }
 }
 
 async function watchBridgeAssetForCurrentChain(kind) {
-  // No automatic token-add popup. Just refresh local UI state.
-  hardRefreshBridgeState();
-  return false;
-}
-
-async function manualAddBridgeAsset(kind) {
   const key = typeof kind === "string" ? kind : "lust";
-  const eth = getInjectedEthereum();
-  if (!eth) throw new Error("MetaMask or injected wallet not found.");
-  let asset;
-  if (key === "lust") asset = { address: LUSDT_TOKEN_ADDRESS, symbol: "LUSDT", decimals: 6, image: `${location.origin}/assets/lusdt-logo.png` };
-  else if (key === "bsc") asset = { address: BSC_USDT_ADDRESS, symbol: "USDT", decimals: 18, image: `${location.origin}/assets/usdt-logo.png` };
-  else asset = { address: POLYGON_USDT_ADDRESS, symbol: "USDT", decimals: 6, image: `${location.origin}/assets/usdt-logo.png` };
-  return Boolean(await eth.request({ method: "wallet_watchAsset", params: { type: "ERC20", options: asset } }));
+  if (key === "lust") {
+    await watchWalletAsset({ address: LUSDT_TOKEN_ADDRESS, symbol: "LUSDT", decimals: 6, image: `${location.origin}/assets/lusdt-logo.png` });
+    return;
+  }
+  if (key === "bsc") {
+    await watchWalletAsset({ address: BSC_USDT_ADDRESS, symbol: "USDT", decimals: 18, image: `${location.origin}/assets/usdt-logo.png` });
+    return;
+  }
+  await watchWalletAsset({ address: POLYGON_USDT_ADDRESS, symbol: "USDT", decimals: 6, image: `${location.origin}/assets/usdt-logo.png` });
 }
 
 async function ensureWalletChain(kind) {
@@ -1273,7 +1278,7 @@ async function prepareActiveClaim(claim, tone = "ok") {
   if (walletState.connected && activeBridgeMode() === "deposit") {
     try {
       await ensureWalletChain(BRIDGE_CHAINS.lust);
-      await manualAddBridgeAsset("lust");
+      await watchBridgeAssetForCurrentChain("lust");
       hardRefreshBridgeState();
     } catch (err) {
       bridgeLog(err?.shortMessage || err?.message || "Claim is ready, but wallet network switch needs manual confirmation.", "warn");
@@ -1439,11 +1444,8 @@ async function refreshBridgeStatus() {
     bridgeLog(`Bridge API online. Claims: ${stats.claims || 0}. Releases: ${stats.releases || 0}.`, "ok");
     refreshBridgeLiquidity().catch(() => {});
     if (walletState.connected && walletState.address) {
-      if (activeBridgeMode() === "withdraw") {
-        if (Number(stats.releases || 0) > 0) findRelease({ silent: true }).catch(() => {});
-      } else {
-        if (Number(stats.claims || 0) > 0) findClaim({ silent: true }).catch(() => {});
-      }
+      if (Number(stats.claims || 0) > 0) findClaim({ silent: true }).catch(() => {});
+      if (Number(stats.releases || 0) > 0) findRelease({ silent: true }).catch(() => {});
     }
   } catch (err) {
     bridgeLog(`Bridge API blocked/offline: ${err.message}. Open https://lusdt-bridge.lustchain.org/health and refresh Ctrl+F5.`, "warn");
@@ -1645,14 +1647,14 @@ async function findClaim(options = {}) {
         !used && String(claim.depositId).toLowerCase() === String(lastDepositId).toLowerCase()
       );
       if (exact) {
-        await prepareActiveClaim(exact.claim, options.silent ? "silent" : "ok");
+        await prepareActiveClaim(exact.claim, "ok");
         return exact.claim;
       }
     }
 
     const firstPending = entries.find(({ used }) => !used);
     if (firstPending) {
-      await prepareActiveClaim(firstPending.claim, options.silent ? "silent" : "ok");
+      await prepareActiveClaim(firstPending.claim, "ok");
       return firstPending.claim;
     }
 
@@ -1799,7 +1801,7 @@ async function findRelease(options = {}) {
       return null;
     }
 
-    await prepareActiveRelease(picked.release, options.silent ? "silent" : "ok");
+    await prepareActiveRelease(picked.release, "ok");
     return picked.release;
   } catch (err) {
     console.error(err);
@@ -1872,7 +1874,7 @@ async function selectBridgeNetwork(kind, network, shouldSwitchWallet = false) {
       const chain = bridgeChainFor(clean);
       bridgeLog(`Switching wallet to ${chain.name}...`, "");
       await ensureWalletChain(chain);
-      await manualAddBridgeAsset(selectedSource());
+      await watchBridgeAssetForCurrentChain(selectedSource());
       bridgeLog(`Wallet switched to ${chain.name}.`, "ok");
       setTimeout(refreshBridgeWalletBalances, 700);
     } catch (err) {
@@ -1890,9 +1892,24 @@ window.lustBridgeCycleNetwork = function(kind) {
 };
 
 async function autoSwitchWalletForActiveMode() {
-  // INRI-style safe mode: do not auto-switch networks on tab changes.
-  // The action buttons switch to the required chain at the exact moment of execution.
-  refreshBridgeWalletBalances().catch(() => {});
+  if (!walletState.connected) return;
+  try {
+    if (activeBridgeMode() === "withdraw") {
+      bridgeLog("Switching wallet to LUST Chain...", "");
+      await ensureWalletChain(BRIDGE_CHAINS.lust);
+      await watchBridgeAssetForCurrentChain("lust");
+      bridgeLog("Wallet switched to LUST Chain.", "ok");
+    } else {
+      const chain = bridgeChainFor(selectedSource());
+      bridgeLog(`Switching wallet to ${chain.name}...`, "");
+      await ensureWalletChain(chain);
+      await watchBridgeAssetForCurrentChain(selectedSource());
+      bridgeLog(`Wallet switched to ${chain.name}.`, "ok");
+    }
+    setTimeout(() => refreshBridgeWalletBalances().catch(() => {}), 600);
+  } catch (err) {
+    bridgeLog(err?.shortMessage || err?.message || "Could not switch wallet network automatically.", "warn");
+  }
 }
 
 function wireLusdtBridge() {
@@ -1908,14 +1925,6 @@ function wireLusdtBridge() {
       refreshBridgeUiLabels();
       refreshBridgeWalletBalances().catch(() => {});
       updateDestinationLiquidityNotice();
-      if (selected === "withdraw") {
-        setText("[data-bridge-release-state]", "Waiting");
-        findRelease({ silent: true }).catch(() => {});
-      } else {
-        setText("[data-bridge-claim-state]", "Waiting");
-        findClaim({ silent: true }).catch(() => {});
-      }
-      // INRI-style: do not force token-add or change assets until the user presses the next action.
       await autoSwitchWalletForActiveMode();
     });
   });
@@ -2035,12 +2044,8 @@ function wireLusdtBridge() {
   setInterval(refreshBridgeStatus, 30000);
   setInterval(refreshBridgeLiquidity, 45000);
   setInterval(() => refreshBridgeWalletBalances().catch(() => {}), 12000);
-  setInterval(() => {
-    if (walletState.connected && walletState.address) {
-      if (activeBridgeMode() === "withdraw") findRelease({ silent: true }).catch(() => {});
-      else findClaim({ silent: true }).catch(() => {});
-    }
-  }, 10000);
+  setInterval(() => findClaim({ silent: true }).catch(() => {}), 10000);
+  setInterval(() => findRelease({ silent: true }).catch(() => {}), 10000);
 }
 
 wireLusdtBridge();
