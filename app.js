@@ -1117,6 +1117,45 @@ function bridgeEscape(value) {
     .replaceAll("'", "&#039;");
 }
 
+
+const BRIDGE_PENDING_TTL_MS = 20 * 60 * 1000;
+
+function bridgePendingKey(kind) {
+  return `lustBridgePending_${kind}`;
+}
+
+function setBridgePending(kind, value) {
+  try {
+    sessionStorage.setItem(bridgePendingKey(kind), JSON.stringify({ value: String(value || "pending"), ts: Date.now() }));
+  } catch (_) {}
+}
+
+function clearBridgePending(kind) {
+  try {
+    sessionStorage.removeItem(bridgePendingKey(kind));
+  } catch (_) {}
+}
+
+function bridgePendingValue(kind) {
+  try {
+    const raw = sessionStorage.getItem(bridgePendingKey(kind));
+    if (!raw) return "";
+    const item = JSON.parse(raw);
+    if (!item?.ts || Date.now() - Number(item.ts) > BRIDGE_PENDING_TTL_MS) {
+      clearBridgePending(kind);
+      return "";
+    }
+    return String(item.value || "");
+  } catch (_) {
+    clearBridgePending(kind);
+    return "";
+  }
+}
+
+function bridgeHasPending(kind) {
+  return Boolean(bridgePendingValue(kind));
+}
+
 function claimSourceLabel(claim) {
   const source = String(claim?.source || "").toLowerCase();
   const chainId = String(claim?.sourceChainId || "");
@@ -1213,6 +1252,7 @@ async function prepareActiveClaim(claim, tone = "ok") {
   if (!claim) return false;
   if (await isMintedOnChain(claim.depositId)) {
     setText("[data-bridge-claim-state]", "Already minted");
+    clearBridgePending("claim");
     bridgeClaimLog("This deposit was already minted. Use another ready claim or make a new deposit.", "warn");
     return false;
   }
@@ -1393,6 +1433,8 @@ async function depositToLusdt() {
 
     if (depositId) {
       localStorage.setItem("lustLastDepositId", depositId);
+      setBridgePending("claim", depositId);
+      setBridgePending("claim", "pending");
       setText("[data-bridge-claim-state]", "Preparing claim");
       setBridgeButtonState("[data-bridge-deposit]", "default", "⚡ Approve + Deposit");
       setBridgeButtonState("[data-bridge-mint]", "waiting", "Preparing claim...");
@@ -1510,6 +1552,7 @@ async function prepareActiveRelease(release, tone = "ok") {
   if (!release) return false;
   if (await isReleaseUsedOnChain(release)) {
     setText("[data-bridge-release-state]", "Already released");
+    clearBridgePending("release");
     bridgeReleaseLog("This release was already used. Select another pending release.", "warn");
     return false;
   }
@@ -1536,8 +1579,8 @@ async function findClaim(options = {}) {
 
     const entries = await loadClaimsForAccount(account);
 
-    const lastDepositId = localStorage.getItem("lustLastDepositId") || "";
-    if (lastDepositId) {
+    const lastDepositId = bridgePendingValue("claim");
+    if (lastDepositId && lastDepositId !== "pending") {
       const exact = entries.find(({ claim, used }) =>
         !used && String(claim.depositId).toLowerCase() === String(lastDepositId).toLowerCase()
       );
@@ -1553,9 +1596,9 @@ async function findClaim(options = {}) {
       return firstPending.claim;
     }
 
-    const hasRecentDeposit = Boolean(localStorage.getItem("lustLastDepositId") || "");
-    setText("[data-bridge-claim-state]", entries.length ? "All claims minted" : (hasRecentDeposit ? "Preparing claim" : "Not ready yet"));
-    if (!entries.length && hasRecentDeposit) setBridgeButtonState("[data-bridge-mint]", "waiting", "Preparing claim...");
+    const hasPendingClaim = bridgeHasPending("claim");
+    setText("[data-bridge-claim-state]", entries.length ? "All claims minted" : (hasPendingClaim ? "Preparing claim" : "Not ready yet"));
+    if (!entries.length && hasPendingClaim) setBridgeButtonState("[data-bridge-mint]", "waiting", "Preparing claim...");
     else setBridgeActionReady("[data-bridge-mint]", false);
     if (!options.silent) {
       bridgeLog(
@@ -1652,6 +1695,7 @@ async function burnForRelease() {
     setBridgeButtonState("[data-bridge-burn]", "loading", "Waiting burn...");
     setText("[data-bridge-last-burn]", bridgeShort(tx.hash));
     localStorage.setItem("lustLastBurnNonce", String(nonce));
+    setBridgePending("release", String(nonce));
     bridgeReleaseLog(`Burn sent: ${tx.hash}. Waiting confirmation...`, "");
     await tx.wait();
     setText("[data-bridge-release-state]", "Waiting confirmations");
@@ -1677,9 +1721,9 @@ async function findRelease(options = {}) {
     const picked = preferred || anyPending;
 
     if (!picked) {
-      const hasRecentBurn = Boolean(localStorage.getItem("lustLastBurnNonce") || "");
-      setText("[data-bridge-release-state]", entries.length ? "All releases used" : (hasRecentBurn ? "Preparing release" : "Not ready yet"));
-      if (!entries.length && hasRecentBurn) setBridgeButtonState("[data-bridge-release]", "waiting", "Preparing release...");
+      const hasPendingRelease = bridgeHasPending("release");
+      setText("[data-bridge-release-state]", entries.length ? "All releases used" : (hasPendingRelease ? "Preparing release" : "Not ready yet"));
+      if (!entries.length && hasPendingRelease) setBridgeButtonState("[data-bridge-release]", "waiting", "Preparing release...");
       else setBridgeActionReady("[data-bridge-release]", false);
       if (!options.silent) {
         bridgeLog(
@@ -1930,12 +1974,12 @@ function wireLusdtBridge() {
   setInterval(refreshBridgeLiquidity, 18000);
   setInterval(() => refreshBridgeWalletBalances().catch(() => {}), 6000);
   setInterval(() => {
-    if (activeBridgeMode() === "deposit" || localStorage.getItem("lustLastDepositId")) {
+    if (activeBridgeMode() === "deposit" || bridgeHasPending("claim")) {
       findClaim({ silent: true }).catch(() => {});
     }
   }, 10000);
   setInterval(() => {
-    if (activeBridgeMode() === "withdraw" || localStorage.getItem("lustLastBurnNonce")) {
+    if (activeBridgeMode() === "withdraw" || bridgeHasPending("release")) {
       findRelease({ silent: true }).catch(() => {});
     }
   }, 10000);
