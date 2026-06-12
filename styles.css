@@ -594,6 +594,31 @@ pre{
   color:#fff;
 }
 .bridge-step span{color:var(--muted);line-height:1.55}
+
+.bridge-liquidity-grid{margin:0 0 26px}
+.bridge-liquidity-card{display:flex;flex-direction:column;gap:12px;min-height:100%;background:#08010b;border:2px solid rgba(247,3,117,.28);box-shadow:0 0 30px rgba(247,3,117,.06)}
+.bridge-liquidity-head{display:flex;align-items:center;gap:12px}
+.bridge-liquidity-head h3{margin:0;font-size:22px}
+.chain-dot{width:42px;height:42px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,.18);position:relative;overflow:hidden}
+.chain-dot::after{font-size:12px;font-weight:950;letter-spacing:.06em}
+.chain-dot.polygon{background:linear-gradient(135deg,#7b3cff,#b284ff)}
+.chain-dot.polygon::after{content:"POL"}
+.chain-dot.bsc{background:linear-gradient(135deg,#f0b90b,#ffe07a);color:#1b1200}
+.chain-dot.bsc::after{content:"BSC"}
+.chain-dot.lust{background:linear-gradient(135deg,#f70375,#ff6db2)}
+.chain-dot.lust::after{content:"LST"}
+.bridge-liquidity-amount{font-size:clamp(28px,3vw,40px);font-weight:1000;line-height:1;color:#fff;word-break:break-word}
+.bridge-liquidity-status{margin-top:auto;padding:12px 14px;border-radius:16px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#e9d6ee;font-size:13px;line-height:1.5}
+.bridge-liquidity-status.ok{border-color:rgba(78,255,190,.40);background:rgba(78,255,190,.08);color:#ddfff5}
+.bridge-liquidity-status.warn{border-color:rgba(255,190,80,.44);background:rgba(255,190,80,.10);color:#fff1d8}
+.bridge-liquidity-status.bad{border-color:rgba(255,106,136,.46);background:rgba(255,106,136,.10);color:#ffe0e6}
+.bridge-liquidity-status.info{border-color:rgba(255,255,255,.16)}
+.bridge-liquidity-inline{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}
+.bridge-inline-warning{margin-top:12px;padding:12px 14px;border-radius:16px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);font-size:13px;line-height:1.5;color:#e9d6ee}
+.bridge-inline-warning.ok{border-color:rgba(78,255,190,.40);background:rgba(78,255,190,.08);color:#ddfff5}
+.bridge-inline-warning.warn{border-color:rgba(255,190,80,.44);background:rgba(255,190,80,.10);color:#fff1d8}
+.bridge-inline-warning.bad{border-color:rgba(255,106,136,.46);background:rgba(255,106,136,.10);color:#ffe0e6}
+
 .bridge-contract-grid{margin-top:26px}
 .bridge-contract-grid .box{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
 .bridge-contract-grid .box p{font-size:15px;margin:0 0 8px}
@@ -611,7 +636,7 @@ select.input{appearance:none;background:#09020d;color:#fff}
   .bridge-live-strip{grid-template-columns:1fr}
 }
 @media(max-width:640px){
-  .bridge-quote-grid{grid-template-columns:1fr}
+  .bridge-quote-grid,.bridge-liquidity-inline{grid-template-columns:1fr}
   .bridge-tabs,.hero-buttons{display:grid;grid-template-columns:1fr}
   .bridge-tab,.bridge-form .btn{width:100%}
 }

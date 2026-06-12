@@ -74,6 +74,47 @@
     </div>
   </section>
 
+  <section class="bridge-liquidity-grid grid three" aria-label="Bridge liquidity overview">
+    <div class="box bridge-liquidity-card">
+      <div class="bridge-liquidity-head">
+        <span class="chain-dot polygon"></span>
+        <div>
+          <small>Polygon reserve</small>
+          <h3>USDT available</h3>
+        </div>
+      </div>
+      <div class="bridge-liquidity-amount" data-liquidity-polygon>Loading...</div>
+      <p data-liquidity-polygon-copy>The Polygon lockbox reserve is used when users withdraw from LUST back to Polygon.</p>
+      <div class="bridge-liquidity-status" data-liquidity-polygon-status>Checking Polygon liquidity...</div>
+    </div>
+
+    <div class="box bridge-liquidity-card">
+      <div class="bridge-liquidity-head">
+        <span class="chain-dot bsc"></span>
+        <div>
+          <small>BSC reserve</small>
+          <h3>USDT available</h3>
+        </div>
+      </div>
+      <div class="bridge-liquidity-amount" data-liquidity-bsc>Loading...</div>
+      <p data-liquidity-bsc-copy>The BSC lockbox reserve is used when users withdraw from LUST back to BNB Smart Chain.</p>
+      <div class="bridge-liquidity-status" data-liquidity-bsc-status>Checking BSC liquidity...</div>
+    </div>
+
+    <div class="box bridge-liquidity-card bridge-liquidity-card--rules">
+      <div class="bridge-liquidity-head">
+        <span class="chain-dot lust"></span>
+        <div>
+          <small>Bridge protection</small>
+          <h3>Practical routing</h3>
+        </div>
+      </div>
+      <div class="bridge-liquidity-amount" data-liquidity-route>Auto check</div>
+      <p>Before burning LUSDT, the page checks whether the destination lockbox currently has enough USDT. This helps users avoid burning to a network with low available liquidity.</p>
+      <div class="bridge-liquidity-status info">Users can buy on Polygon and sell on BSC only when that BSC reserve is available.</div>
+    </div>
+  </section>
+
   <section class="bridge-shell" aria-label="LUSDT bridge app">
     <div class="bridge-tabs">
       <button class="bridge-tab active" type="button" data-bridge-tab="deposit">Deposit USDT → LUSDT</button>
@@ -159,6 +200,12 @@
             <div class="result"><span>Bridge fee</span><strong data-withdraw-fee>0.002000 LUSDT</strong></div>
             <div class="result"><span>USDT release amount</span><strong data-withdraw-receive>0.998000 USDT</strong></div>
           </div>
+
+          <div class="bridge-liquidity-inline">
+            <div class="result"><span>Available on destination</span><strong data-bridge-destination-balance>Loading...</strong></div>
+            <div class="result"><span>Liquidity status</span><strong data-bridge-destination-liquidity-status>Checking...</strong></div>
+          </div>
+          <div class="bridge-inline-warning" data-bridge-destination-warning>Choose a destination network to check whether there is enough USDT available for release.</div>
 
           <div class="hero-buttons">
             <button class="btn primary" type="button" data-bridge-burn>Approve + Burn LUSDT</button>

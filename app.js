@@ -789,12 +789,101 @@ let activeClaim = null;
 let activeRelease = null;
 let pendingBridgeClaims = [];
 let pendingBridgeReleases = [];
+let bridgeLiquidity = { polygon: null, bsc: null };
 
 function bridgeLog(message, tone = "") {
   document.querySelectorAll("[data-bridge-log]").forEach((el) => {
     el.textContent = message;
     el.dataset.tone = tone;
   });
+}
+
+function setLiquidityStatus(selector, message, tone = "") {
+  document.querySelectorAll(selector).forEach((el) => {
+    el.textContent = message;
+    el.classList.remove("ok", "warn", "bad", "info");
+    if (tone) el.classList.add(tone);
+  });
+}
+
+function amount6ToDestinationUnits(amount6, destination) {
+  const raw = BigInt(amount6 || 0);
+  return destination === "bsc" ? raw * 1000000000000n : raw;
+}
+
+async function fetchLockboxLiquidity(kind) {
+  const tokenCfg = sourceToken(kind);
+  const chain = bridgeChainFor(kind);
+  const provider = new ethers.JsonRpcProvider(chain.rpcUrls[0]);
+  const token = new ethers.Contract(tokenCfg.address, ERC20_ABI, provider);
+  const balance = await token.balanceOf(tokenCfg.lockbox);
+  return { kind, balance, decimals: tokenCfg.decimals };
+}
+
+function describeLiquidity(kind, balance) {
+  const decimals = kind === "bsc" ? 18 : 6;
+  const formatted = formatUnitsSafe(balance, decimals, 6);
+  const numeric = Number(ethers.formatUnits(balance, decimals));
+  const tone = numeric <= 0 ? "bad" : numeric < 100 ? "warn" : "ok";
+  const message = numeric <= 0
+    ? "No USDT currently available for releases on this network."
+    : numeric < 100
+      ? `Low available reserve on ${kind.toUpperCase()}. Large withdrawals may fail until more USDT is added.`
+      : `Reserve available on ${kind.toUpperCase()} for normal bridge releases.`;
+  return { formatted: `${formatted} USDT`, tone, message };
+}
+
+function updateDestinationLiquidityNotice() {
+  const destination = selectedDestination();
+  const amountText = document.querySelector("[data-withdraw-amount]")?.value || "0";
+  const q = bridgeQuote(amountText);
+  const liq = bridgeLiquidity[destination];
+  if (!liq) {
+    setText("[data-bridge-destination-balance]", "Loading...");
+    setText("[data-bridge-destination-liquidity-status]", "Checking...");
+    setLiquidityStatus("[data-bridge-destination-warning]", "Checking destination reserve before burn...", "info");
+    return;
+  }
+  const desc = describeLiquidity(destination, liq.balance);
+  const enough = liq.balance >= amount6ToDestinationUnits(q.net, destination);
+  setText("[data-bridge-destination-balance]", desc.formatted);
+  setText("[data-bridge-destination-liquidity-status]", enough ? "Enough available" : "Insufficient now");
+  setLiquidityStatus(
+    "[data-bridge-destination-warning]",
+    enough
+      ? `Destination reserve looks sufficient for about ${formatUnitsSafe(q.net)} USDT net.`
+      : `Warning: destination reserve is below the current net amount (${formatUnitsSafe(q.net)} USDT). Burning now may leave the release waiting until more USDT is added.`,
+    enough ? "ok" : "bad"
+  );
+}
+
+async function refreshBridgeLiquidity() {
+  if (!document.querySelector("[data-lusdt-bridge]")) return;
+  try {
+    const [polygon, bsc] = await Promise.all([
+      fetchLockboxLiquidity("polygon"),
+      fetchLockboxLiquidity("bsc")
+    ]);
+    bridgeLiquidity = { polygon, bsc };
+
+    const p = describeLiquidity("polygon", polygon.balance);
+    const b = describeLiquidity("bsc", bsc.balance);
+
+    setText("[data-liquidity-polygon]", p.formatted);
+    setText("[data-liquidity-bsc]", b.formatted);
+    setLiquidityStatus("[data-liquidity-polygon-status]", p.message, p.tone);
+    setLiquidityStatus("[data-liquidity-bsc-status]", b.message, b.tone);
+    setText("[data-liquidity-route]", `${p.formatted} / ${b.formatted}`);
+    updateDestinationLiquidityNotice();
+  } catch (err) {
+    console.warn(err);
+    setText("[data-liquidity-polygon]", "Unavailable");
+    setText("[data-liquidity-bsc]", "Unavailable");
+    setText("[data-liquidity-route]", "Refresh needed");
+    setLiquidityStatus("[data-liquidity-polygon-status]", "Could not read Polygon reserve right now.", "warn");
+    setLiquidityStatus("[data-liquidity-bsc-status]", "Could not read BSC reserve right now.", "warn");
+    setLiquidityStatus("[data-bridge-destination-warning]", "Could not verify destination liquidity right now. Try refresh before burning.", "warn");
+  }
 }
 
 function bridgeShort(value) {
@@ -1064,6 +1153,7 @@ function updateBridgeQuote() {
   setText("[data-bridge-receive]", `${formatUnitsSafe(d.net)} LUSDT`);
   setText("[data-withdraw-fee]", `${formatUnitsSafe(w.fee)} LUSDT`);
   setText("[data-withdraw-receive]", `${formatUnitsSafe(w.net)} USDT`);
+  updateDestinationLiquidityNotice();
 }
 
 async function refreshBridgeStatus() {
@@ -1080,6 +1170,7 @@ async function refreshBridgeStatus() {
     setText("[data-bridge-executor-short]", bridgeShort(stats?.config?.contracts?.lustExecutor || LUSDT_EXECUTOR_ADDRESS));
     setText("[data-bridge-fee-recipient]", bridgeShort(stats?.config?.fee?.recipient || ""));
     bridgeLog(`Bridge API online. Claims: ${stats.claims || 0}. Releases: ${stats.releases || 0}.`, "ok");
+    refreshBridgeLiquidity().catch(() => {});
     if (walletState.connected && walletState.address && Number(stats.claims || 0) > 0) {
       findClaim({ silent: true }).catch(() => {});
     }
@@ -1324,6 +1415,16 @@ async function burnForRelease() {
     const nonce = BigInt(Date.now());
     const deadline = BigInt(Math.floor(Date.now() / 1000) + 2592000);
 
+    await refreshBridgeLiquidity();
+    const liq = bridgeLiquidity[destination];
+    if (liq) {
+      const { net } = bridgeQuote(document.querySelector("[data-withdraw-amount]")?.value || "0");
+      const needed = amount6ToDestinationUnits(net, destination);
+      if (liq.balance < needed) {
+        throw new Error(`Destination reserve on ${destination.toUpperCase()} is lower than the net withdrawal amount. Wait for more USDT liquidity or choose the other route.`);
+      }
+    }
+
     await ensureWalletChain(BRIDGE_CHAINS.lust);
     const signer = await browserSigner();
     await approveIfNeeded(LUSDT_TOKEN_ADDRESS, LUSDT_EXECUTOR_ADDRESS, amount, signer);
@@ -1425,6 +1526,8 @@ function wireLusdtBridge() {
   document.querySelectorAll("[data-bridge-amount],[data-withdraw-amount]").forEach((input) => {
     input.addEventListener("input", updateBridgeQuote);
   });
+  document.querySelector("[data-bridge-source]")?.addEventListener("change", refreshBridgeLiquidity);
+  document.querySelector("[data-bridge-destination]")?.addEventListener("change", updateDestinationLiquidityNotice);
 
   document.querySelector("[data-bridge-refresh]")?.addEventListener("click", refreshBridgeStatus);
   document.querySelectorAll("[data-bridge-refresh]").forEach((btn) => btn.addEventListener("click", refreshBridgeStatus));
@@ -1443,7 +1546,9 @@ function wireLusdtBridge() {
 
   updateBridgeQuote();
   refreshBridgeStatus();
+  refreshBridgeLiquidity();
   setInterval(refreshBridgeStatus, 30000);
+  setInterval(refreshBridgeLiquidity, 45000);
   setInterval(() => findClaim({ silent: true }).catch(() => {}), 10000);
 }
 
