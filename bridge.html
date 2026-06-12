@@ -125,10 +125,9 @@
           </div>
         </div>
 
-        <div class="bridge-action-grid">
+        <div class="bridge-action-grid two-actions">
           <button class="btn primary" type="button" data-bridge-deposit>⚡ Approve + Deposit</button>
-          <button class="btn" type="button" data-bridge-find-claim>Find / Refresh</button>
-          <button class="btn primary" type="button" data-bridge-mint disabled>Mint claim</button>
+          <button class="btn" type="button" data-bridge-mint disabled>Mint claim</button>
         </div>
 
         <div class="bridge-pro-status">
@@ -136,7 +135,7 @@
           <p data-bridge-log>Ready. Connect wallet and choose an amount.</p>
           <details>
             <summary>Need manual recovery?</summary>
-            <div class="bridge-inline-warning" data-bridge-manual-help>Use Find / Refresh to reload recent claims. If your wallet is disconnected, the panel will still show your latest local deposit ID for quick recovery.</div>
+            <div class="bridge-inline-warning" data-bridge-manual-help>The bridge checks your claim automatically after the deposit confirms. If needed, this area also shows recent local recovery hints from your browser.</div>
             <div class="claim-list" data-bridge-pending-claims>
               <div class="claim-item muted">Open this section to review recent claims and local recovery hints.</div>
             </div>
@@ -194,19 +193,18 @@
           <div class="bridge-inline-warning" data-bridge-destination-warning>Checking destination liquidity before burn...</div>
         </div>
 
-        <div class="bridge-action-grid">
+        <div class="bridge-action-grid two-actions">
           <button class="btn primary" type="button" data-bridge-burn>⚡ Approve + Burn</button>
-          <button class="btn" type="button" data-bridge-find-release>Find / Refresh</button>
-          <button class="btn primary" type="button" data-bridge-release disabled>Release USDT</button>
+          <button class="btn" type="button" data-bridge-release disabled>Release USDT</button>
         </div>
 
         <div class="bridge-pro-status">
           <div class="bridge-status-title"><strong>Release status</strong><span data-bridge-release-state>Waiting</span></div>
-          <p>After your burn, the bridge unlocks the USDT release automatically. Select the correct pending release below, especially for BSC.</p>
+          <p>After your burn, the bridge unlocks the USDT release automatically. When it is ready, the Release USDT button becomes available.</p>
           <details open>
             <summary>Ready releases</summary>
             <div class="claim-list" data-bridge-pending-releases>
-              <div class="claim-item muted">Burn LUSDT, wait confirmations, then click Find / Refresh release.</div>
+              <div class="claim-item muted">Burn LUSDT and wait. The bridge checks the release automatically after confirmations.</div>
             </div>
           </details>
         </div>
@@ -250,6 +248,6 @@
 </footer>
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
-<script type="module" src="./app.js?v20260612-lusdt-bridge-v24-rollback"></script>
+<script type="module" src="./app.js?v20260612-lusdt-bridge-v25-auto"></script>
 </body>
 </html>

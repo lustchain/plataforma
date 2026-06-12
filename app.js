@@ -1173,7 +1173,7 @@ async function prepareActiveClaim(claim, tone = "ok") {
   activeClaim = claim;
   const source = claim.source || (String(claim.sourceChainId) === "56" ? "bsc" : "polygon");
   setText("[data-bridge-claim-state]", `Ready · ${source} · ${formatUnitsSafe(claim.amount)} LUSDT`);
-  document.querySelector("[data-bridge-mint]")?.removeAttribute("disabled");
+  setBridgeActionReady("[data-bridge-mint]", true);
   renderPendingClaims(pendingBridgeClaims);
   bridgeLog(`Claim ready. Switch to LUST Chain and click Mint LUSDT. Amount: ${formatUnitsSafe(claim.amount)} LUSDT.`, tone);
   return true;
@@ -1225,6 +1225,15 @@ function updateBridgeNetworkView(prefix, meta) {
   document.querySelectorAll(`[data-bridge-${prefix}-pill-name]`).forEach((el) => {
     el.textContent = meta.name;
   });
+}
+
+
+function setBridgeActionReady(selector, ready) {
+  const btn = document.querySelector(selector);
+  if (!btn) return;
+  btn.classList.toggle("is-ready", Boolean(ready));
+  if (ready) btn.removeAttribute("disabled");
+  else btn.setAttribute("disabled", "disabled");
 }
 
 function refreshBridgeUiLabels() {
@@ -1301,8 +1310,9 @@ async function refreshBridgeStatus() {
     setText("[data-bridge-validator-summary]", `${health.threshold || "2"} / ${health.validatorCount || "4"}`);
     bridgeLog(`Bridge API online. Claims: ${stats.claims || 0}. Releases: ${stats.releases || 0}.`, "ok");
     refreshBridgeLiquidity().catch(() => {});
-    if (walletState.connected && walletState.address && Number(stats.claims || 0) > 0) {
-      findClaim({ silent: true }).catch(() => {});
+    if (walletState.connected && walletState.address) {
+      if (Number(stats.claims || 0) > 0) findClaim({ silent: true }).catch(() => {});
+      if (Number(stats.releases || 0) > 0) findRelease({ silent: true }).catch(() => {});
     }
   } catch (err) {
     bridgeLog(`Bridge API blocked/offline: ${err.message}. Open https://lusdt-bridge.lustchain.org/health and refresh Ctrl+F5.`, "warn");
@@ -1457,7 +1467,7 @@ async function prepareActiveRelease(release, tone = "ok") {
   activeRelease = release;
   const destination = releaseDestinationKey(release);
   setText("[data-bridge-release-state]", `Ready · ${destination} · ${formatUnitsSafe(release.amount)} USDT`);
-  document.querySelector("[data-bridge-release]")?.removeAttribute("disabled");
+  setBridgeActionReady("[data-bridge-release]", true);
   renderPendingReleases(pendingBridgeReleases);
   bridgeLog(`Release ready for ${destination}. Switch network and click Release USDT. Amount: ${formatUnitsSafe(release.amount)} USDT.`, tone);
   return true;
@@ -1495,7 +1505,7 @@ async function findClaim(options = {}) {
     }
 
     setText("[data-bridge-claim-state]", entries.length ? "All claims minted" : "Not ready yet");
-    document.querySelector("[data-bridge-mint]")?.setAttribute("disabled", "disabled");
+    setBridgeActionReady("[data-bridge-mint]", false);
     if (!options.silent) {
       bridgeLog(
         entries.length
@@ -1516,6 +1526,13 @@ async function autoFindClaimSoon() {
   const attempts = [6000, 12000, 20000, 35000, 55000, 80000];
   for (const ms of attempts) {
     setTimeout(() => findClaim({ silent: true }).catch(() => {}), ms);
+  }
+}
+
+async function autoFindReleaseSoon() {
+  const attempts = [6000, 12000, 20000, 35000, 55000, 80000];
+  for (const ms of attempts) {
+    setTimeout(() => findRelease({ silent: true }).catch(() => {}), ms);
   }
 }
 
@@ -1541,7 +1558,7 @@ async function mintClaim() {
     bridgeLog(`LUSDT minted successfully. Tx: ${tx.hash}`, "ok");
     setText("[data-bridge-claim-state]", "Minted successfully");
     activeClaim = null;
-    document.querySelector("[data-bridge-mint]")?.setAttribute("disabled", "disabled");
+    setBridgeActionReady("[data-bridge-mint]", false);
     setTimeout(() => findClaim({ silent: true }).catch(() => {}), 2500);
   } catch (err) {
     console.error(err);
@@ -1579,18 +1596,20 @@ async function burnForRelease() {
     localStorage.setItem("lustLastBurnNonce", String(nonce));
     bridgeLog(`Burn sent: ${tx.hash}. Waiting confirmation...`, "");
     await tx.wait();
-    bridgeLog("Burn confirmed. Wait confirmations, then click Find my release.", "ok");
+    setText("[data-bridge-release-state]", "Waiting confirmations");
+    bridgeLog("Burn confirmed. The bridge will now check for your release automatically.", "ok");
+    autoFindReleaseSoon();
   } catch (err) {
     console.error(err);
     bridgeLog(err?.shortMessage || err?.message || "Burn failed or rejected.", "warn");
   }
 }
 
-async function findRelease() {
+async function findRelease(options = {}) {
   try {
     const account = await getWalletAccount();
     const destination = selectedDestination();
-    bridgeLog("Searching release signatures...", "");
+    if (!options.silent) bridgeLog("Searching release signatures...", "");
 
     const entries = await loadReleasesForAccount(account);
     const preferred = entries.find(({ release, used }) => !used && releaseDestinationKey(release) === destination);
@@ -1599,13 +1618,15 @@ async function findRelease() {
 
     if (!picked) {
       setText("[data-bridge-release-state]", entries.length ? "All releases used" : "Not ready yet");
-      document.querySelector("[data-bridge-release]")?.setAttribute("disabled", "disabled");
-      bridgeLog(
-        entries.length
-          ? "All ready releases for this wallet were already used."
-          : "No ready release found yet. Wait confirmations and try again.",
-        entries.length ? "ok" : "warn"
-      );
+      setBridgeActionReady("[data-bridge-release]", false);
+      if (!options.silent) {
+        bridgeLog(
+          entries.length
+            ? "All ready releases for this wallet were already used."
+            : "No ready release found yet. The bridge is still checking automatically.",
+          entries.length ? "ok" : "warn"
+        );
+      }
       return null;
     }
 
@@ -1613,7 +1634,7 @@ async function findRelease() {
     return picked.release;
   } catch (err) {
     console.error(err);
-    bridgeLog(err?.message || "Could not find release.", "warn");
+    if (!options.silent) bridgeLog(err?.message || "Could not find release.", "warn");
     return null;
   }
 }
@@ -1644,7 +1665,7 @@ async function executeRelease() {
     await tx.wait();
     bridgeLog(`USDT released successfully. Tx: ${tx.hash}`, "ok");
     activeRelease = null;
-    document.querySelector("[data-bridge-release]")?.setAttribute("disabled", "disabled");
+    setBridgeActionReady("[data-bridge-release]", false);
     setTimeout(() => findRelease().catch(() => {}), 2500);
   } catch (err) {
     console.error(err);
@@ -1800,7 +1821,6 @@ function wireLusdtBridge() {
     }
   });
   document.querySelector("[data-bridge-deposit]")?.addEventListener("click", depositToLusdt);
-  document.querySelector("[data-bridge-find-claim]")?.addEventListener("click", findClaim);
   document.querySelector("[data-bridge-mint]")?.addEventListener("click", mintClaim);
   document.addEventListener("click", async (event) => {
     const btn = event.target.closest("[data-bridge-select-claim]");
@@ -1818,7 +1838,6 @@ function wireLusdtBridge() {
     }
   });
   document.querySelector("[data-bridge-burn]")?.addEventListener("click", burnForRelease);
-  document.querySelector("[data-bridge-find-release]")?.addEventListener("click", findRelease);
   document.querySelector("[data-bridge-release]")?.addEventListener("click", executeRelease);
   document.addEventListener("click", async (event) => {
     const btn = event.target.closest("[data-bridge-select-release]");
@@ -1836,6 +1855,8 @@ function wireLusdtBridge() {
     }
   });
 
+  setBridgeActionReady("[data-bridge-mint]", false);
+  setBridgeActionReady("[data-bridge-release]", false);
   updateBridgeQuote();
   refreshBridgeUiLabels();
   refreshBridgeStatus();
@@ -1845,6 +1866,7 @@ function wireLusdtBridge() {
   setInterval(refreshBridgeLiquidity, 45000);
   setInterval(() => refreshBridgeWalletBalances().catch(() => {}), 12000);
   setInterval(() => findClaim({ silent: true }).catch(() => {}), 10000);
+  setInterval(() => findRelease({ silent: true }).catch(() => {}), 10000);
 }
 
 wireLusdtBridge();
