@@ -1119,3 +1119,23 @@ select.input{appearance:none;background:#09020d;color:#fff}
   .bridge-arrow{margin:auto!important;}
   .bridge-asset-main{grid-template-columns:48px minmax(0,1fr) 58px!important;}
 }
+
+
+/* v20: align Chain with From/To and keep token row standard */
+.bridge-asset-card{position:relative!important;padding:18px!important;min-height:112px!important;}
+.bridge-asset-card > small{position:absolute!important;top:16px!important;left:18px!important;margin:0!important;line-height:1!important;}
+.bridge-asset-main{height:76px!important;grid-template-columns:48px minmax(0,1fr) 58px!important;align-items:center!important;padding-top:14px!important;}
+.asset-chain-box{align-self:center!important;justify-self:end!important;margin-top:0!important;}
+.asset-chain-box small{position:absolute!important;top:16px!important;right:18px!important;width:auto!important;min-width:58px!important;text-align:center!important;margin:0!important;line-height:1!important;}
+.network-select-pill{align-self:center!important;margin-top:8px!important;}
+.bridge-mini-tag{align-self:center!important;margin-top:8px!important;}
+.bridge-asset-main .asset-copy{align-self:center!important;}
+.bridge-asset-main strong{font-size:19px!important;line-height:1.1!important;}
+.bridge-asset-main em{font-size:11px!important;margin-top:4px!important;}
+.asset-logo{align-self:center!important;}
+.bridge-route-box{align-items:center!important;}
+@media (max-width:760px){
+  .bridge-asset-card{min-height:112px!important;}
+  .bridge-asset-main{height:76px!important;padding-top:14px!important;}
+  .asset-chain-box small{right:18px!important;}
+}
