@@ -1054,12 +1054,29 @@ function claimSourceLabel(claim) {
   return source || `Chain ${chainId}`;
 }
 
+function recentLocalDepositIds() {
+  const ids = [];
+  const last = localStorage.getItem("lustLastDepositId") || "";
+  if (last) ids.push(last);
+  const minted = JSON.parse(localStorage.getItem("lustMintedDepositIds") || "[]");
+  minted.slice(-3).forEach((id) => {
+    if (id && !ids.includes(id)) ids.push(id);
+  });
+  return ids.filter(Boolean);
+}
+
 function renderPendingClaims(entries = []) {
   const box = document.querySelector("[data-bridge-pending-claims]");
   if (!box) return;
 
   if (!walletState.connected) {
-    box.innerHTML = `<div class="claim-item muted">Connect wallet and click Find / Refresh claims.</div>`;
+    const localIds = recentLocalDepositIds();
+    box.innerHTML = localIds.length
+      ? `<div class="claim-summary">Recent local deposit IDs saved in this browser</div>${localIds.map((id) => `<div class="claim-item"><div><strong>Local recovery hint</strong><small>${bridgeEscape(id)}</small></div><button class="mini-btn" type="button" data-copy-text="${bridgeEscape(id)}">Copy ID</button></div>`).join("")}`
+      : `<div class="claim-item muted">No wallet connected yet. You can still reconnect later and use Find / Refresh to reload claims automatically.</div>`;
+    box.querySelectorAll('[data-copy-text]').forEach((btn) => btn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(btn.getAttribute('data-copy-text') || ''); btn.textContent='Copied'; setTimeout(()=>btn.textContent='Copy ID',1200); } catch(_) {}
+    }));
     return;
   }
 
@@ -1544,8 +1561,8 @@ function wireLusdtBridge() {
   document.querySelectorAll("[data-bridge-amount],[data-withdraw-amount]").forEach((input) => {
     input.addEventListener("input", updateBridgeQuote);
   });
-  document.querySelector("[data-bridge-source]")?.addEventListener("change", () => { refreshBridgeUiLabels(); refreshBridgeLiquidity(); });
-  document.querySelector("[data-bridge-destination]")?.addEventListener("change", () => { refreshBridgeUiLabels(); updateDestinationLiquidityNotice(); });
+  document.querySelector("[data-bridge-source]")?.addEventListener("change", () => { refreshBridgeUiLabels(); refreshBridgeLiquidity(); updateBridgeQuote(); });
+  document.querySelector("[data-bridge-destination]")?.addEventListener("change", () => { refreshBridgeUiLabels(); updateDestinationLiquidityNotice(); updateBridgeQuote(); });
 
   document.querySelector("[data-bridge-refresh]")?.addEventListener("click", refreshBridgeStatus);
   document.querySelectorAll("[data-bridge-refresh]").forEach((btn) => btn.addEventListener("click", refreshBridgeStatus));
