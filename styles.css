@@ -1270,3 +1270,43 @@ select.input{appearance:none;background:#09020d;color:#fff}
   .asset-chain-box{right:16px!important;}
   .bridge-asset-main{grid-template-columns:48px minmax(0,1fr) 72px!important;}
 }
+
+/* v32 functional: INRI-like waiting/ready states without wallet popups */
+.bridge-action-grid.two-actions .btn.is-waiting{
+  position:relative!important;
+  background:linear-gradient(90deg,rgba(255,13,122,.20),rgba(255,94,176,.14))!important;
+  border-color:rgba(255,110,189,.46)!important;
+  color:#ffd9eb!important;
+  opacity:1!important;
+  cursor:wait!important;
+}
+.bridge-action-grid.two-actions .btn.is-loading{
+  position:relative!important;
+  background:linear-gradient(90deg,#ff0d7a,#ff5eb0)!important;
+  border-color:rgba(255,110,189,.72)!important;
+  color:#fff!important;
+  opacity:1!important;
+  cursor:wait!important;
+  box-shadow:0 14px 34px rgba(247,3,117,.24)!important;
+}
+.bridge-action-grid.two-actions .btn.is-loading::before,
+.bridge-action-grid.two-actions .btn.is-waiting::before{
+  content:"";
+  width:13px;
+  height:13px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.42);
+  border-top-color:#fff;
+  display:inline-block;
+  margin-right:8px;
+  vertical-align:-2px;
+  animation:bridgeSpin .85s linear infinite;
+}
+.bridge-action-grid.two-actions .btn.is-ready{
+  background:linear-gradient(90deg,#ff0d7a,#ff5eb0)!important;
+  border-color:rgba(255,110,189,.72)!important;
+  color:#fff!important;
+  animation:bridgeReadyPulse 1.2s ease-in-out infinite;
+}
+@keyframes bridgeSpin{to{transform:rotate(360deg)}}
+@keyframes bridgeReadyPulse{0%,100%{box-shadow:0 14px 34px rgba(247,3,117,.24)}50%{box-shadow:0 0 0 4px rgba(255,19,133,.14),0 18px 42px rgba(247,3,117,.34)}}
