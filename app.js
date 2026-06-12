@@ -939,31 +939,50 @@ function sourceToken(kind) {
 }
 
 async function ensureWalletChain(kind) {
-  const eth = getInjectedEthereum();
-  if (!eth) throw new Error("MetaMask or injected wallet not found.");
   const chain = typeof kind === "string" ? BRIDGE_CHAINS[kind] : kind;
-  const current = normalizeChainId(await eth.request({ method: "eth_chainId" }));
-  if (current === chain.chainIdHex) return;
-  try {
-    await eth.request({ method: "wallet_switchEthereumChain", params: [{ chainId: chain.chainIdHex }] });
-  } catch (err) {
-    if (err?.code === 4902 || String(err?.message || "").includes("Unrecognized chain")) {
-      await eth.request({
-        method: "wallet_addEthereumChain",
-        params: [{
-          chainId: chain.chainIdHex,
-          chainName: chain.name,
-          nativeCurrency: chain.nativeCurrency,
-          rpcUrls: chain.rpcUrls,
-          blockExplorerUrls: chain.blockExplorerUrls
-        }]
-      });
+  const appkitNetworkByHex = {
+    [LUST_CHAIN_ID_HEX]: lustNetwork,
+    "0x89": polygonNetwork,
+    "0x38": bscNetwork
+  };
+
+  const eth = getInjectedEthereum();
+  if (eth) {
+    const current = normalizeChainId(await eth.request({ method: "eth_chainId" }));
+    if (current === chain.chainIdHex) return;
+    try {
       await eth.request({ method: "wallet_switchEthereumChain", params: [{ chainId: chain.chainIdHex }] });
-    } else {
-      throw err;
+    } catch (err) {
+      if (err?.code === 4902 || String(err?.message || "").includes("Unrecognized chain")) {
+        await eth.request({
+          method: "wallet_addEthereumChain",
+          params: [{
+            chainId: chain.chainIdHex,
+            chainName: chain.name,
+            nativeCurrency: chain.nativeCurrency,
+            rpcUrls: chain.rpcUrls,
+            blockExplorerUrls: chain.blockExplorerUrls
+          }]
+        });
+        await eth.request({ method: "wallet_switchEthereumChain", params: [{ chainId: chain.chainIdHex }] });
+      } else {
+        throw err;
+      }
     }
+    setTimeout(readState, 250);
+    setTimeout(readState, 900);
+    return;
   }
-  setTimeout(readState, 300);
+
+  const appkitChain = appkitNetworkByHex[chain.chainIdHex];
+  if (appKit?.switchNetwork && appkitChain) {
+    await appKit.switchNetwork(appkitChain);
+    setTimeout(readState, 250);
+    setTimeout(readState, 900);
+    return;
+  }
+
+  throw new Error("No injected wallet available to switch network automatically.");
 }
 
 async function browserSigner() {
@@ -1187,12 +1206,25 @@ function updateBridgeQuote() {
 
 function bridgeNetworkMeta(kind) {
   return kind === "bsc"
-    ? { src: "./assets/bsc-logo.png", alt: "BSC", name: "BSC" }
-    : { src: "./assets/polygon-logo.png", alt: "Polygon", name: "Polygon" };
+    ? { src: "./assets/bsc-logo.png", alt: "BSC", name: "BSC", short: "BSC" }
+    : { src: "./assets/polygon-logo.png", alt: "Polygon", name: "Polygon", short: "Polygon" };
 }
 
-function setBridgeNetworkLabel(selector, meta) {
-  setHtml(selector, `<img class="chain-inline-logo" src="${meta.src}" alt="${meta.alt}">${meta.name}`);
+function updateBridgeNetworkView(prefix, meta) {
+  document.querySelectorAll(`[data-bridge-${prefix}-logo]`).forEach((img) => {
+    img.setAttribute("src", meta.src);
+    img.setAttribute("alt", meta.alt);
+  });
+  document.querySelectorAll(`[data-bridge-${prefix}-name]`).forEach((el) => {
+    el.textContent = meta.name;
+  });
+  document.querySelectorAll(`[data-bridge-${prefix}-pill-logo]`).forEach((img) => {
+    img.setAttribute("src", meta.src);
+    img.setAttribute("alt", meta.alt);
+  });
+  document.querySelectorAll(`[data-bridge-${prefix}-pill-name]`).forEach((el) => {
+    el.textContent = meta.name;
+  });
 }
 
 function refreshBridgeUiLabels() {
@@ -1200,22 +1232,12 @@ function refreshBridgeUiLabels() {
   const destination = selectedDestination();
   const sourceMeta = bridgeNetworkMeta(source);
   const destinationMeta = bridgeNetworkMeta(destination);
-
-  setBridgeNetworkLabel("[data-bridge-source-label]", sourceMeta);
-  setBridgeNetworkLabel("[data-bridge-destination-label]", destinationMeta);
-
-  document.querySelectorAll("[data-bridge-source-toggle] .network-toggle-btn").forEach((btn) => {
-    btn.classList.toggle("active", btn.getAttribute("data-network") === source);
-  });
-  document.querySelectorAll("[data-bridge-destination-toggle] .network-toggle-btn").forEach((btn) => {
-    btn.classList.toggle("active", btn.getAttribute("data-network") === destination);
-  });
+  updateBridgeNetworkView("source", sourceMeta);
+  updateBridgeNetworkView("destination", destinationMeta);
 
   const activeTab = document.querySelector("[data-bridge-tab].active")?.getAttribute("data-bridge-tab") || "deposit";
   setText("[data-bridge-title-action]", activeTab === "withdraw" ? "Sell" : "Buy");
 }
-
-
 
 async function refreshBridgeWalletBalances() {
   if (!document.querySelector("[data-lusdt-bridge]")) return;
@@ -1634,17 +1656,26 @@ function activeBridgeMode() {
   return document.querySelector("[data-bridge-tab].active")?.getAttribute("data-bridge-tab") || "deposit";
 }
 
+function bridgeOppositeNetwork(network) {
+  return network === "bsc" ? "polygon" : "bsc";
+}
+
 async function selectBridgeNetwork(kind, network, shouldSwitchWallet = false) {
+  const clean = network === "bsc" ? "bsc" : "polygon";
   const selector = kind === "destination" ? "[data-bridge-destination]" : "[data-bridge-source]";
   const select = document.querySelector(selector);
-  if (select) select.value = network;
+  if (select) select.value = clean;
+
   refreshBridgeUiLabels();
   updateBridgeQuote();
   refreshBridgeLiquidity();
+  updateDestinationLiquidityNotice();
   refreshBridgeWalletBalances().catch(() => {});
-  if (shouldSwitchWallet) {
+
+  if (shouldSwitchWallet && walletState.connected) {
     try {
-      const chain = kind === "source" ? bridgeChainFor(network) : bridgeChainFor(network);
+      const chain = bridgeChainFor(clean);
+      bridgeLog(`Switching wallet to ${chain.name}...`, "");
       await ensureWalletChain(chain);
       bridgeLog(`Wallet switched to ${chain.name}.`, "ok");
       setTimeout(refreshBridgeWalletBalances, 700);
@@ -1653,6 +1684,14 @@ async function selectBridgeNetwork(kind, network, shouldSwitchWallet = false) {
     }
   }
 }
+
+window.lustBridgeSelectNetwork = selectBridgeNetwork;
+window.lustBridgeCycleNetwork = function(kind) {
+  const current = kind === "destination" ? selectedDestination() : selectedSource();
+  const next = bridgeOppositeNetwork(current);
+  const shouldSwitch = kind === "source" && activeBridgeMode() === "deposit";
+  selectBridgeNetwork(kind, next, shouldSwitch);
+};
 
 function wireLusdtBridge() {
   if (!document.querySelector("[data-lusdt-bridge]")) return;
@@ -1680,12 +1719,9 @@ function wireLusdtBridge() {
     selectBridgeNetwork("destination", event.target.value || "polygon", false);
     updateDestinationLiquidityNotice();
   });
-  document.querySelectorAll("[data-bridge-source-toggle] .network-toggle-btn").forEach((btn) => btn.addEventListener("click", () => {
-    selectBridgeNetwork("source", btn.getAttribute("data-network") || "polygon", activeBridgeMode() === "deposit");
-  }));
-  document.querySelectorAll("[data-bridge-destination-toggle] .network-toggle-btn").forEach((btn) => btn.addEventListener("click", () => {
-    selectBridgeNetwork("destination", btn.getAttribute("data-network") || "polygon", false);
-    updateDestinationLiquidityNotice();
+  document.querySelectorAll("[data-bridge-network-cycle]").forEach((btn) => btn.addEventListener("click", () => {
+    const kind = btn.getAttribute("data-bridge-network-cycle") || "source";
+    window.lustBridgeCycleNetwork(kind);
   }));
 
   document.querySelector("[data-bridge-refresh]")?.addEventListener("click", refreshBridgeStatus);
