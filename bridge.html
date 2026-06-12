@@ -8,7 +8,7 @@
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css?v20260611-lusdt-bridge-v1" />
+  <link rel="stylesheet" href="./styles.css?v20260612-lusdt-bridge-v2" />
 </head>
 <body>
 <div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
@@ -108,8 +108,8 @@
 
           <div class="hero-buttons">
             <button class="btn primary" type="button" data-bridge-deposit>Approve + Deposit USDT</button>
-            <button class="btn" type="button" data-bridge-find-claim>Find my claim</button>
-            <button class="btn primary" type="button" data-bridge-mint disabled>Mint LUSDT on LUST</button>
+            <button class="btn" type="button" data-bridge-find-claim>Find / Refresh claim</button>
+            <button class="btn primary" type="button" data-bridge-mint disabled>Mint ready claim on LUST</button>
           </div>
         </div>
 
@@ -117,7 +117,7 @@
           <small>Deposit flow</small>
           <div class="bridge-step"><b>1</b><span>Approve USDT to the selected lockbox.</span></div>
           <div class="bridge-step"><b>2</b><span>Deposit USDT. The watcher waits confirmations and creates a claim.</span></div>
-          <div class="bridge-step"><b>3</b><span>Switch to LUST Chain and mint LUSDT using the claim signatures.</span></div>
+          <div class="bridge-step"><b>3</b><span>The page auto-checks the API. When ready, switch to LUST Chain and mint LUSDT.</span></div>
           <div class="row"><span>Last deposit tx</span><strong data-bridge-last-deposit>--</strong></div>
           <div class="row"><span>Claim status</span><strong data-bridge-claim-state>Not checked</strong></div>
         </div>
@@ -183,6 +183,6 @@
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
-<script type="module" src="./app.js?v20260611-lusdt-bridge-v1"></script>
+<script type="module" src="./app.js?v20260612-lusdt-bridge-v2"></script>
 </body>
 </html>

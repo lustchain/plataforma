@@ -778,6 +778,7 @@ const EXECUTOR_ABI = [
   "function mintFromExternalDeposit(address recipient,uint256 amount,bytes32 depositId,uint256 sourceChainId,uint256 deadline,bytes[] signatures)",
   "function burnForExternalRelease(address recipientExternal,uint256 amount,uint256 destinationChainId,uint256 nonce,uint256 deadline)",
   "function quoteNetAmount(uint256 amount) view returns (uint256 fee,uint256 net)",
+  "function mintIdUsed(bytes32 depositId) view returns (bool)",
   "event BurnRequested(address indexed burner,address indexed recipientExternal,uint256 grossAmount,uint256 netAmount,uint256 feeAmount,uint256 nonce,uint256 indexed destinationChainId,uint256 sourceChainId)"
 ];
 
@@ -892,6 +893,78 @@ async function bridgeFetch(path) {
   return res.json();
 }
 
+function normalizeApiItems(data, field) {
+  if (!data) return [];
+  if (Array.isArray(data)) return data;
+  if (Array.isArray(data[field])) return data[field];
+  if (data[field] && typeof data[field] === "object") return Object.values(data[field]);
+  if (data.status || data.depositId || data.burnId) return [data];
+  if (data.claim && typeof data.claim === "object") return [data.claim];
+  if (data.release && typeof data.release === "object") return [data.release];
+  return [];
+}
+
+function sameAddress(a, b) {
+  return String(a || "").toLowerCase() === String(b || "").toLowerCase();
+}
+
+function isLocallyMinted(depositId) {
+  if (!depositId) return false;
+  try {
+    const used = JSON.parse(localStorage.getItem("lustMintedDepositIds") || "[]");
+    return used.map((x) => String(x).toLowerCase()).includes(String(depositId).toLowerCase());
+  } catch (_) {
+    return false;
+  }
+}
+
+function markLocallyMinted(depositId) {
+  if (!depositId) return;
+  try {
+    const used = JSON.parse(localStorage.getItem("lustMintedDepositIds") || "[]");
+    const set = new Set(used.map((x) => String(x).toLowerCase()));
+    set.add(String(depositId).toLowerCase());
+    localStorage.setItem("lustMintedDepositIds", JSON.stringify([...set].slice(-50)));
+  } catch (_) {}
+}
+
+async function isMintedOnChain(depositId) {
+  if (!depositId) return false;
+  try {
+    const provider = new ethers.JsonRpcProvider(BRIDGE_CHAINS.lust.rpcUrls[0]);
+    const exec = new ethers.Contract(LUSDT_EXECUTOR_ADDRESS, EXECUTOR_ABI, provider);
+    return Boolean(await exec.mintIdUsed(depositId));
+  } catch (_) {
+    return isLocallyMinted(depositId);
+  }
+}
+
+async function prepareActiveClaim(claim, tone = "ok") {
+  if (!claim) return false;
+  if (await isMintedOnChain(claim.depositId)) {
+    setText("[data-bridge-claim-state]", "Already minted");
+    bridgeLog("This deposit was already minted. Use another ready claim or make a new deposit.", "warn");
+    return false;
+  }
+  activeClaim = claim;
+  const source = claim.source || (String(claim.sourceChainId) === "56" ? "bsc" : "polygon");
+  setText("[data-bridge-claim-state]", `Ready · ${source} · ${formatUnitsSafe(claim.amount)} LUSDT`);
+  document.querySelector("[data-bridge-mint]")?.removeAttribute("disabled");
+  bridgeLog(`Claim ready. Switch to LUST Chain and click Mint LUSDT. Amount: ${formatUnitsSafe(claim.amount)} LUSDT.`, tone);
+  return true;
+}
+
+async function findClaimByDepositId(depositId) {
+  if (!depositId) return null;
+  try {
+    const data = await bridgeFetch(`/api/claim/${depositId}`);
+    const claims = normalizeApiItems(data, "claims");
+    const claim = claims[0] || data.claim || data;
+    if (claim?.status === "ready") return claim;
+  } catch (_) {}
+  return null;
+}
+
 function updateBridgeQuote() {
   const depositAmount = document.querySelector("[data-bridge-amount]")?.value || "0";
   const withdrawAmount = document.querySelector("[data-withdraw-amount]")?.value || "0";
@@ -919,6 +992,9 @@ async function refreshBridgeStatus() {
     setText("[data-bridge-executor-short]", bridgeShort(stats?.config?.contracts?.lustExecutor || LUSDT_EXECUTOR_ADDRESS));
     setText("[data-bridge-fee-recipient]", bridgeShort(stats?.config?.fee?.recipient || ""));
     bridgeLog(`Bridge API online. Claims: ${stats.claims || 0}. Releases: ${stats.releases || 0}.`, "ok");
+    if (walletState.connected && walletState.address && Number(stats.claims || 0) > 0) {
+      findClaim({ silent: true }).catch(() => {});
+    }
   } catch (err) {
     bridgeLog(`Bridge API not reachable yet: ${err.message}. Check API/domain before public launch.`, "warn");
     setText("[data-bridge-api-state]", "API offline");
@@ -957,9 +1033,11 @@ async function depositToLusdt() {
     if (depositId) {
       localStorage.setItem("lustLastDepositId", depositId);
       setText("[data-bridge-claim-state]", "Waiting confirmations");
-      bridgeLog(`Deposit confirmed. DepositId: ${depositId}. Wait confirmations, then click Find my claim.`, "ok");
+      bridgeLog(`Deposit confirmed. DepositId: ${depositId}. I will auto-check for the claim.`, "ok");
+      autoFindClaimSoon();
     } else {
-      bridgeLog("Deposit confirmed. Wait confirmations, then click Find my claim.", "ok");
+      bridgeLog("Deposit confirmed. I will auto-check for the claim.", "ok");
+      autoFindClaimSoon();
     }
   } catch (err) {
     console.error(err);
@@ -974,24 +1052,48 @@ function chooseLatestReady(items, filterFn = () => true) {
     .sort((a, b) => String(b.createdAt || "").localeCompare(String(a.createdAt || "")))[0] || null;
 }
 
-async function findClaim() {
+async function findClaim(options = {}) {
   try {
     const account = await getWalletAccount();
-    bridgeLog("Searching claim signatures...", "");
-    const data = await bridgeFetch(`/api/claims/address/${account}`);
-    const claim = chooseLatestReady(data.claims || []);
-    if (!claim) {
-      setText("[data-bridge-claim-state]", "Not ready yet");
-      bridgeLog("No ready claim found yet. Wait confirmations and try again.", "warn");
-      return;
+    if (!options.silent) bridgeLog("Searching claim signatures...", "");
+
+    const lastDepositId = localStorage.getItem("lustLastDepositId") || "";
+    const exactClaim = await findClaimByDepositId(lastDepositId);
+    if (exactClaim && sameAddress(exactClaim.recipient, account)) {
+      await prepareActiveClaim(exactClaim, "ok");
+      return exactClaim;
     }
-    activeClaim = claim;
-    setText("[data-bridge-claim-state]", `${claim.source || "source"} · ${formatUnitsSafe(claim.amount)} LUSDT`);
-    document.querySelector("[data-bridge-mint]")?.removeAttribute("disabled");
-    bridgeLog(`Claim ready from ${claim.source}. Mint amount: ${formatUnitsSafe(claim.amount)} LUSDT.`, "ok");
+
+    const data = await bridgeFetch(`/api/claims/address/${account}`);
+    let claims = normalizeApiItems(data, "claims")
+      .filter((claim) => sameAddress(claim.recipient, account))
+      .filter((claim) => claim.status === "ready")
+      .filter((claim) => !isLocallyMinted(claim.depositId));
+
+    claims = claims.sort((a, b) => String(b.createdAt || "").localeCompare(String(a.createdAt || "")));
+
+    for (const claim of claims) {
+      if (!(await isMintedOnChain(claim.depositId))) {
+        await prepareActiveClaim(claim, "ok");
+        return claim;
+      }
+    }
+
+    setText("[data-bridge-claim-state]", "Not ready yet");
+    document.querySelector("[data-bridge-mint]")?.setAttribute("disabled", "disabled");
+    if (!options.silent) bridgeLog("No ready claim found yet. The bridge may still be waiting confirmations. Try again in a few seconds.", "warn");
+    return null;
   } catch (err) {
     console.error(err);
-    bridgeLog(err?.message || "Could not find claim.", "warn");
+    if (!options.silent) bridgeLog(err?.message || "Could not find claim.", "warn");
+    return null;
+  }
+}
+
+async function autoFindClaimSoon() {
+  const attempts = [6000, 12000, 20000, 35000, 55000, 80000];
+  for (const ms of attempts) {
+    setTimeout(() => findClaim({ silent: true }).catch(() => {}), ms);
   }
 }
 
@@ -1013,7 +1115,10 @@ async function mintClaim() {
     );
     bridgeLog(`Mint sent: ${tx.hash}. Waiting confirmation...`, "");
     await tx.wait();
+    markLocallyMinted(activeClaim.depositId);
     bridgeLog(`LUSDT minted successfully. Tx: ${tx.hash}`, "ok");
+    setText("[data-bridge-claim-state]", "Minted successfully");
+    activeClaim = null;
     document.querySelector("[data-bridge-mint]")?.setAttribute("disabled", "disabled");
   } catch (err) {
     console.error(err);
@@ -1131,6 +1236,9 @@ function wireLusdtBridge() {
   updateBridgeQuote();
   refreshBridgeStatus();
   setInterval(refreshBridgeStatus, 30000);
+  setInterval(() => {
+    if (walletState.connected && walletState.address) findClaim({ silent: true }).catch(() => {});
+  }, 10000);
 }
 
 wireLusdtBridge();
