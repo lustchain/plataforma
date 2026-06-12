@@ -163,40 +163,9 @@ function connectedHtml() {
 }
 
 function renderWalletButton() {
-  
-const injectedForBridgeEvents = getInjectedEthereum();
-if (injectedForBridgeEvents?.on) {
-  injectedForBridgeEvents.on("chainChanged", () => hardRefreshBridgeState());
-  injectedForBridgeEvents.on("accountsChanged", () => hardRefreshBridgeState());
-}
-
-document.querySelectorAll("[data-connect-wallet]").forEach((btn) => {
+  document.querySelectorAll("[data-connect-wallet]").forEach((btn) => {
     btn.innerHTML = walletState.connected && walletState.address ? connectedHtml() : disconnectedHtml();
   });
-}
-
-async function readInjectedWalletState() {
-  const eth = getInjectedEthereum();
-  if (!eth) return null;
-  try {
-    const [accounts, chainId] = await Promise.all([
-      eth.request({ method: "eth_accounts" }),
-      eth.request({ method: "eth_chainId" })
-    ]);
-    const address = Array.isArray(accounts) ? accounts[0] || "" : "";
-    return { address, chainId: normalizeChainId(chainId || ""), connected: Boolean(address) };
-  } catch (_) {
-    return null;
-  }
-}
-
-function refreshBridgeAfterWalletChange() {
-  renderWalletButton();
-  if (document.querySelector("[data-lusdt-bridge]")) {
-    setTimeout(() => refreshBridgeWalletUi(), 60);
-    setTimeout(() => refreshBridgeWalletBalances().catch(() => {}), 350);
-    setTimeout(() => refreshBridgeLiquidity().catch(() => {}), 500);
-  }
 }
 
 function readState() {
@@ -208,17 +177,10 @@ function readState() {
   } catch (err) {
     console.warn(err);
   }
-
-  readInjectedWalletState().then((state) => {
-    if (state?.address || state?.chainId) {
-      walletState = {
-        address: state.address || walletState.address || "",
-        chainId: state.chainId || walletState.chainId || "",
-        connected: Boolean(state.address || walletState.connected)
-      };
-    }
-    refreshBridgeAfterWalletChange();
-  }).catch(() => refreshBridgeAfterWalletChange());
+  renderWalletButton();
+  if (document.querySelector("[data-lusdt-bridge]")) {
+    setTimeout(refreshBridgeWalletUi, 60);
+  }
 }
 
 async function switchToLust() {
@@ -976,65 +938,6 @@ function sourceToken(kind) {
     : { address: POLYGON_USDT_ADDRESS, decimals: 6, lockbox: LUSDT_POLYGON_LOCKBOX, lockboxAbi: LOCKBOX_POLYGON_ABI, chainId: 137 };
 }
 
-function sleep(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
-
-async function waitForWalletChain(chainIdHex, timeoutMs = 6500) {
-  const eth = getInjectedEthereum();
-  if (!eth) return;
-  const expected = normalizeChainId(chainIdHex);
-  const start = Date.now();
-  while (Date.now() - start < timeoutMs) {
-    try {
-      const current = normalizeChainId(await eth.request({ method: "eth_chainId" }));
-      if (current === expected) return;
-    } catch (_) {}
-    await sleep(250);
-  }
-}
-
-function hardRefreshBridgeState() {
-  [80, 350, 900, 1600, 2600].forEach((ms) => {
-    setTimeout(() => {
-      readState();
-      refreshBridgeWalletBalances().catch(() => {});
-      refreshBridgeLiquidity().catch(() => {});
-      if (walletState.connected && walletState.address) {
-        findClaim({ silent: true }).catch(() => {});
-        findRelease({ silent: true }).catch(() => {});
-      }
-    }, ms);
-  });
-}
-
-async function watchWalletAsset({ address, symbol, decimals, image }) {
-  const eth = getInjectedEthereum();
-  if (!eth || !address || !symbol) return false;
-  try {
-    return Boolean(await eth.request({
-      method: "wallet_watchAsset",
-      params: {
-        type: "ERC20",
-        options: { address, symbol, decimals, image }
-      }
-    }));
-  } catch (_) {
-    return false;
-  }
-}
-
-async function watchBridgeAssetForCurrentChain(kind) {
-  const key = typeof kind === "string" ? kind : "lust";
-  if (key === "lust") {
-    await watchWalletAsset({ address: LUSDT_TOKEN_ADDRESS, symbol: "LUSDT", decimals: 6, image: `${location.origin}/assets/lusdt-logo.png` });
-    return;
-  }
-  if (key === "bsc") {
-    await watchWalletAsset({ address: BSC_USDT_ADDRESS, symbol: "USDT", decimals: 18, image: `${location.origin}/assets/usdt-logo.png` });
-    return;
-  }
-  await watchWalletAsset({ address: POLYGON_USDT_ADDRESS, symbol: "USDT", decimals: 6, image: `${location.origin}/assets/usdt-logo.png` });
-}
-
 async function ensureWalletChain(kind) {
   const chain = typeof kind === "string" ? BRIDGE_CHAINS[kind] : kind;
   const appkitNetworkByHex = {
@@ -1066,18 +969,16 @@ async function ensureWalletChain(kind) {
         throw err;
       }
     }
-    await waitForWalletChain(chain.chainIdHex);
-    readState();
-    hardRefreshBridgeState();
+    setTimeout(readState, 250);
+    setTimeout(readState, 900);
     return;
   }
 
   const appkitChain = appkitNetworkByHex[chain.chainIdHex];
   if (appKit?.switchNetwork && appkitChain) {
     await appKit.switchNetwork(appkitChain);
-    await waitForWalletChain(chain.chainIdHex);
-    readState();
-    hardRefreshBridgeState();
+    setTimeout(readState, 250);
+    setTimeout(readState, 900);
     return;
   }
 
@@ -1274,16 +1175,7 @@ async function prepareActiveClaim(claim, tone = "ok") {
   setText("[data-bridge-claim-state]", `Ready · ${source} · ${formatUnitsSafe(claim.amount)} LUSDT`);
   setBridgeActionReady("[data-bridge-mint]", true);
   renderPendingClaims(pendingBridgeClaims);
-  bridgeLog(`Claim ready. Switching to LUST Chain so you can mint. Amount: ${formatUnitsSafe(claim.amount)} LUSDT.`, tone);
-  if (walletState.connected && activeBridgeMode() === "deposit") {
-    try {
-      await ensureWalletChain(BRIDGE_CHAINS.lust);
-      await watchBridgeAssetForCurrentChain("lust");
-      hardRefreshBridgeState();
-    } catch (err) {
-      bridgeLog(err?.shortMessage || err?.message || "Claim is ready, but wallet network switch needs manual confirmation.", "warn");
-    }
-  }
+  bridgeLog(`Claim ready. Switch to LUST Chain and click Mint LUSDT. Amount: ${formatUnitsSafe(claim.amount)} LUSDT.`, tone);
   return true;
 }
 
@@ -1336,37 +1228,12 @@ function updateBridgeNetworkView(prefix, meta) {
 }
 
 
-function setBridgeButtonState(selector, state = "default", label = "") {
+function setBridgeActionReady(selector, ready) {
   const btn = document.querySelector(selector);
   if (!btn) return;
-  if (!btn.dataset.defaultText) btn.dataset.defaultText = btn.textContent.trim();
-  btn.classList.remove("is-ready", "is-waiting", "is-loading");
-  if (state === "ready") {
-    btn.classList.add("is-ready");
-    btn.removeAttribute("disabled");
-  } else if (state === "waiting") {
-    btn.classList.add("is-waiting");
-    btn.setAttribute("disabled", "disabled");
-  } else if (state === "loading") {
-    btn.classList.add("is-loading");
-    btn.setAttribute("disabled", "disabled");
-  } else if (state === "disabled") {
-    btn.setAttribute("disabled", "disabled");
-  } else {
-    btn.removeAttribute("disabled");
-  }
-  if (label) btn.textContent = label;
-  else if (state === "default" || state === "disabled") btn.textContent = btn.dataset.defaultText;
-}
-
-function setBridgeActionReady(selector, ready) {
-  if (ready) {
-    const label = selector.includes("mint") ? "Mint LUSDT" : "Release USDT";
-    setBridgeButtonState(selector, "ready", label);
-  } else {
-    const label = selector.includes("mint") ? "Mint claim" : "Release USDT";
-    setBridgeButtonState(selector, "disabled", label);
-  }
+  btn.classList.toggle("is-ready", Boolean(ready));
+  if (ready) btn.removeAttribute("disabled");
+  else btn.setAttribute("disabled", "disabled");
 }
 
 function refreshBridgeUiLabels() {
@@ -1460,8 +1327,6 @@ async function depositToLusdt() {
     const chain = bridgeChainFor(kind);
     const amount = parseAmount(document.querySelector("[data-bridge-amount]")?.value, token.decimals);
 
-    setBridgeButtonState("[data-bridge-deposit]", "loading", "Confirm in wallet...");
-    setBridgeActionReady("[data-bridge-mint]", false);
     await ensureWalletChain(chain);
     const signer = await browserSigner();
     await approveIfNeeded(token.address, token.lockbox, amount, signer);
@@ -1470,7 +1335,6 @@ async function depositToLusdt() {
     bridgeLog(`Opening ${chain.name} deposit confirmation...`, "");
     const tx = await lockbox.deposit(amount);
     setText("[data-bridge-last-deposit]", bridgeShort(tx.hash));
-    setBridgeButtonState("[data-bridge-deposit]", "loading", "Waiting deposit...");
     bridgeLog(`Deposit sent: ${tx.hash}. Waiting confirmation...`, "");
     const receipt = await tx.wait();
 
@@ -1487,24 +1351,15 @@ async function depositToLusdt() {
 
     if (depositId) {
       localStorage.setItem("lustLastDepositId", depositId);
-      setText("[data-bridge-claim-state]", "Preparing claim");
-      setBridgeButtonState("[data-bridge-deposit]", "default", "⚡ Approve + Deposit");
-      setBridgeButtonState("[data-bridge-mint]", "waiting", "Preparing claim...");
-      bridgeLog(`Deposit confirmed. DepositId: ${depositId}. Waiting for bridge signatures automatically.`, "ok");
-      hardRefreshBridgeState();
+      setText("[data-bridge-claim-state]", "Waiting confirmations");
+      bridgeLog(`Deposit confirmed. DepositId: ${depositId}. I will auto-check for the claim.`, "ok");
       autoFindClaimSoon();
     } else {
-      setText("[data-bridge-claim-state]", "Preparing claim");
-      setBridgeButtonState("[data-bridge-deposit]", "default", "⚡ Approve + Deposit");
-      setBridgeButtonState("[data-bridge-mint]", "waiting", "Preparing claim...");
-      bridgeLog("Deposit confirmed. Waiting for bridge signatures automatically.", "ok");
-      hardRefreshBridgeState();
+      bridgeLog("Deposit confirmed. I will auto-check for the claim.", "ok");
       autoFindClaimSoon();
     }
   } catch (err) {
     console.error(err);
-    setBridgeButtonState("[data-bridge-deposit]", "default", "⚡ Approve + Deposit");
-    if (activeClaim) setBridgeActionReady("[data-bridge-mint]", true);
     bridgeLog(err?.shortMessage || err?.message || "Deposit failed or rejected.", "warn");
   }
 }
@@ -1614,16 +1469,7 @@ async function prepareActiveRelease(release, tone = "ok") {
   setText("[data-bridge-release-state]", `Ready · ${destination} · ${formatUnitsSafe(release.amount)} USDT`);
   setBridgeActionReady("[data-bridge-release]", true);
   renderPendingReleases(pendingBridgeReleases);
-  bridgeLog(`Release ready for ${destination}. Switching wallet to release network. Amount: ${formatUnitsSafe(release.amount)} USDT.`, tone);
-  if (walletState.connected && activeBridgeMode() === "withdraw") {
-    try {
-      await ensureWalletChain(bridgeChainFor(destination));
-      await watchBridgeAssetForCurrentChain(destination);
-      hardRefreshBridgeState();
-    } catch (err) {
-      bridgeLog(err?.shortMessage || err?.message || "Release is ready, but wallet network switch needs manual confirmation.", "warn");
-    }
-  }
+  bridgeLog(`Release ready for ${destination}. Switch network and click Release USDT. Amount: ${formatUnitsSafe(release.amount)} USDT.`, tone);
   return true;
 }
 
@@ -1658,15 +1504,13 @@ async function findClaim(options = {}) {
       return firstPending.claim;
     }
 
-    const hasRecentDeposit = Boolean(localStorage.getItem("lustLastDepositId") || "");
-    setText("[data-bridge-claim-state]", entries.length ? "All claims minted" : (hasRecentDeposit ? "Preparing claim" : "Not ready yet"));
-    if (!entries.length && hasRecentDeposit) setBridgeButtonState("[data-bridge-mint]", "waiting", "Preparing claim...");
-    else setBridgeActionReady("[data-bridge-mint]", false);
+    setText("[data-bridge-claim-state]", entries.length ? "All claims minted" : "Not ready yet");
+    setBridgeActionReady("[data-bridge-mint]", false);
     if (!options.silent) {
       bridgeLog(
         entries.length
           ? "All ready claims for this wallet were already minted."
-          : "No ready claim found yet. The bridge may still be waiting confirmations. It will keep checking automatically.",
+          : "No ready claim found yet. The bridge may still be waiting confirmations. Try again in a few seconds.",
         entries.length ? "ok" : "warn"
       );
     }
@@ -1696,7 +1540,6 @@ async function mintClaim() {
   try {
     if (!activeClaim) await findClaim();
     if (!activeClaim) return;
-    setBridgeButtonState("[data-bridge-mint]", "loading", "Minting...");
     await ensureWalletChain(BRIDGE_CHAINS.lust);
     const signer = await browserSigner();
     const exec = new ethers.Contract(LUSDT_EXECUTOR_ADDRESS, EXECUTOR_ABI, signer);
@@ -1712,9 +1555,6 @@ async function mintClaim() {
     bridgeLog(`Mint sent: ${tx.hash}. Waiting confirmation...`, "");
     await tx.wait();
     markLocallyMinted(activeClaim.depositId);
-    setBridgeButtonState("[data-bridge-mint]", "loading", "Updating wallet...");
-    await watchBridgeAssetForCurrentChain("lust");
-    hardRefreshBridgeState();
     bridgeLog(`LUSDT minted successfully. Tx: ${tx.hash}`, "ok");
     setText("[data-bridge-claim-state]", "Minted successfully");
     activeClaim = null;
@@ -1722,15 +1562,12 @@ async function mintClaim() {
     setTimeout(() => findClaim({ silent: true }).catch(() => {}), 2500);
   } catch (err) {
     console.error(err);
-    if (activeClaim) setBridgeActionReady("[data-bridge-mint]", true);
     bridgeLog(err?.shortMessage || err?.message || "Mint failed or rejected.", "warn");
   }
 }
 
 async function burnForRelease() {
   try {
-    setBridgeButtonState("[data-bridge-burn]", "loading", "Confirm in wallet...");
-    setBridgeActionReady("[data-bridge-release]", false);
     const destination = selectedDestination();
     const chainId = destination === "bsc" ? 56 : 137;
     const amount = parseAmount(document.querySelector("[data-withdraw-amount]")?.value, 6);
@@ -1755,21 +1592,15 @@ async function burnForRelease() {
     const account = await signer.getAddress();
     bridgeLog("Opening LUST burn confirmation...", "");
     const tx = await exec.burnForExternalRelease(account, amount, BigInt(chainId), nonce, deadline);
-    setBridgeButtonState("[data-bridge-burn]", "loading", "Waiting burn...");
     setText("[data-bridge-last-burn]", bridgeShort(tx.hash));
     localStorage.setItem("lustLastBurnNonce", String(nonce));
     bridgeLog(`Burn sent: ${tx.hash}. Waiting confirmation...`, "");
     await tx.wait();
-    setText("[data-bridge-release-state]", "Preparing release");
-    setBridgeButtonState("[data-bridge-burn]", "default", "⚡ Approve + Burn");
-    setBridgeButtonState("[data-bridge-release]", "waiting", "Preparing release...");
-    hardRefreshBridgeState();
-    bridgeLog("Burn confirmed. Waiting for bridge signatures automatically.", "ok");
+    setText("[data-bridge-release-state]", "Waiting confirmations");
+    bridgeLog("Burn confirmed. The bridge will now check for your release automatically.", "ok");
     autoFindReleaseSoon();
   } catch (err) {
     console.error(err);
-    setBridgeButtonState("[data-bridge-burn]", "default", "⚡ Approve + Burn");
-    if (activeRelease) setBridgeActionReady("[data-bridge-release]", true);
     bridgeLog(err?.shortMessage || err?.message || "Burn failed or rejected.", "warn");
   }
 }
@@ -1786,10 +1617,8 @@ async function findRelease(options = {}) {
     const picked = preferred || anyPending;
 
     if (!picked) {
-      const hasRecentBurn = Boolean(localStorage.getItem("lustLastBurnNonce") || "");
-      setText("[data-bridge-release-state]", entries.length ? "All releases used" : (hasRecentBurn ? "Preparing release" : "Not ready yet"));
-      if (!entries.length && hasRecentBurn) setBridgeButtonState("[data-bridge-release]", "waiting", "Preparing release...");
-      else setBridgeActionReady("[data-bridge-release]", false);
+      setText("[data-bridge-release-state]", entries.length ? "All releases used" : "Not ready yet");
+      setBridgeActionReady("[data-bridge-release]", false);
       if (!options.silent) {
         bridgeLog(
           entries.length
@@ -1815,7 +1644,6 @@ async function executeRelease() {
     if (!activeRelease) await findRelease();
     if (!activeRelease) return;
 
-    setBridgeButtonState("[data-bridge-release]", "loading", "Releasing...");
     const destination = releaseDestinationKey(activeRelease);
     const chain = bridgeChainFor(destination);
     const lockboxAddress = destination === "bsc" ? LUSDT_BSC_LOCKBOX : LUSDT_POLYGON_LOCKBOX;
@@ -1835,16 +1663,12 @@ async function executeRelease() {
     );
     bridgeLog(`Release sent: ${tx.hash}. Waiting confirmation...`, "");
     await tx.wait();
-    setBridgeButtonState("[data-bridge-release]", "loading", "Updating wallet...");
-    await watchBridgeAssetForCurrentChain(destination);
-    hardRefreshBridgeState();
     bridgeLog(`USDT released successfully. Tx: ${tx.hash}`, "ok");
     activeRelease = null;
     setBridgeActionReady("[data-bridge-release]", false);
     setTimeout(() => findRelease().catch(() => {}), 2500);
   } catch (err) {
     console.error(err);
-    if (activeRelease) setBridgeActionReady("[data-bridge-release]", true);
     bridgeLog(err?.shortMessage || err?.message || "Release failed or rejected.", "warn");
   }
 }
@@ -1874,7 +1698,6 @@ async function selectBridgeNetwork(kind, network, shouldSwitchWallet = false) {
       const chain = bridgeChainFor(clean);
       bridgeLog(`Switching wallet to ${chain.name}...`, "");
       await ensureWalletChain(chain);
-      await watchBridgeAssetForCurrentChain(selectedSource());
       bridgeLog(`Wallet switched to ${chain.name}.`, "ok");
       setTimeout(refreshBridgeWalletBalances, 700);
     } catch (err) {
@@ -1897,13 +1720,11 @@ async function autoSwitchWalletForActiveMode() {
     if (activeBridgeMode() === "withdraw") {
       bridgeLog("Switching wallet to LUST Chain...", "");
       await ensureWalletChain(BRIDGE_CHAINS.lust);
-      await watchBridgeAssetForCurrentChain("lust");
       bridgeLog("Wallet switched to LUST Chain.", "ok");
     } else {
       const chain = bridgeChainFor(selectedSource());
       bridgeLog(`Switching wallet to ${chain.name}...`, "");
       await ensureWalletChain(chain);
-      await watchBridgeAssetForCurrentChain(selectedSource());
       bridgeLog(`Wallet switched to ${chain.name}.`, "ok");
     }
     setTimeout(() => refreshBridgeWalletBalances().catch(() => {}), 600);
