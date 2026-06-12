@@ -1185,25 +1185,24 @@ function updateBridgeQuote() {
   updateDestinationLiquidityNotice();
 }
 
+function bridgeNetworkMeta(kind) {
+  return kind === "bsc"
+    ? { src: "./assets/bsc-logo.png", alt: "BSC", name: "BSC" }
+    : { src: "./assets/polygon-logo.png", alt: "Polygon", name: "Polygon" };
+}
+
+function setBridgeNetworkLabel(selector, meta) {
+  setHtml(selector, `<img class="chain-inline-logo" src="${meta.src}" alt="${meta.alt}">${meta.name}`);
+}
+
 function refreshBridgeUiLabels() {
   const source = selectedSource();
   const destination = selectedDestination();
-  const sourceLogo = document.querySelector("[data-bridge-source-logo]");
-  const sourceName = document.querySelector("[data-bridge-source-name]");
-  const destinationLogo = document.querySelector("[data-bridge-destination-logo]");
-  const destinationName = document.querySelector("[data-bridge-destination-name]");
+  const sourceMeta = bridgeNetworkMeta(source);
+  const destinationMeta = bridgeNetworkMeta(destination);
 
-  const sourceMeta = source === "bsc"
-    ? { src: "./assets/bsc-logo.png", alt: "BSC", name: "BSC" }
-    : { src: "./assets/polygon-logo.png", alt: "Polygon", name: "Polygon" };
-  const destinationMeta = destination === "bsc"
-    ? { src: "./assets/bsc-logo.png", alt: "BSC", name: "BSC" }
-    : { src: "./assets/polygon-logo.png", alt: "Polygon", name: "Polygon" };
-
-  if (sourceLogo) { sourceLogo.src = sourceMeta.src; sourceLogo.alt = sourceMeta.alt; }
-  if (sourceName) sourceName.textContent = sourceMeta.name;
-  if (destinationLogo) { destinationLogo.src = destinationMeta.src; destinationLogo.alt = destinationMeta.alt; }
-  if (destinationName) destinationName.textContent = destinationMeta.name;
+  setBridgeNetworkLabel("[data-bridge-source-label]", sourceMeta);
+  setBridgeNetworkLabel("[data-bridge-destination-label]", destinationMeta);
 
   document.querySelectorAll("[data-bridge-source-toggle] .network-toggle-btn").forEach((btn) => {
     btn.classList.toggle("active", btn.getAttribute("data-network") === source);
@@ -1215,6 +1214,7 @@ function refreshBridgeUiLabels() {
   const activeTab = document.querySelector("[data-bridge-tab].active")?.getAttribute("data-bridge-tab") || "deposit";
   setText("[data-bridge-title-action]", activeTab === "withdraw" ? "Sell" : "Buy");
 }
+
 
 
 async function refreshBridgeWalletBalances() {
@@ -1230,7 +1230,8 @@ async function refreshBridgeWalletBalances() {
   try {
     const sourceKind = selectedSource();
     const srcCfg = sourceToken(sourceKind);
-    const sourceProvider = new ethers.BrowserProvider(getInjectedEthereum());
+    const chain = bridgeChainFor(sourceKind);
+    const sourceProvider = new ethers.JsonRpcProvider(chain.rpcUrls[0]);
     const sourceTokenContract = new ethers.Contract(srcCfg.address, ERC20_ABI, sourceProvider);
     const srcBal = await sourceTokenContract.balanceOf(account);
     setText("[data-bridge-source-balance]", `${formatUnitsSafe(srcBal, srcCfg.decimals)} USDT`);
@@ -1629,6 +1630,30 @@ async function executeRelease() {
   }
 }
 
+function activeBridgeMode() {
+  return document.querySelector("[data-bridge-tab].active")?.getAttribute("data-bridge-tab") || "deposit";
+}
+
+async function selectBridgeNetwork(kind, network, shouldSwitchWallet = false) {
+  const selector = kind === "destination" ? "[data-bridge-destination]" : "[data-bridge-source]";
+  const select = document.querySelector(selector);
+  if (select) select.value = network;
+  refreshBridgeUiLabels();
+  updateBridgeQuote();
+  refreshBridgeLiquidity();
+  refreshBridgeWalletBalances().catch(() => {});
+  if (shouldSwitchWallet) {
+    try {
+      const chain = kind === "source" ? bridgeChainFor(network) : bridgeChainFor(network);
+      await ensureWalletChain(chain);
+      bridgeLog(`Wallet switched to ${chain.name}.`, "ok");
+      setTimeout(refreshBridgeWalletBalances, 700);
+    } catch (err) {
+      bridgeLog(err?.shortMessage || err?.message || "Could not switch wallet network automatically.", "warn");
+    }
+  }
+}
+
 function wireLusdtBridge() {
   if (!document.querySelector("[data-lusdt-bridge]")) return;
 
@@ -1641,31 +1666,26 @@ function wireLusdtBridge() {
       });
       refreshBridgeUiLabels();
       refreshBridgeWalletBalances().catch(() => {});
+      updateDestinationLiquidityNotice();
     });
   });
 
   document.querySelectorAll("[data-bridge-amount],[data-withdraw-amount]").forEach((input) => {
     input.addEventListener("input", updateBridgeQuote);
   });
-  document.querySelector("[data-bridge-source]")?.addEventListener("change", () => { refreshBridgeUiLabels(); refreshBridgeLiquidity(); updateBridgeQuote(); refreshBridgeWalletBalances().catch(() => {}); });
-  document.querySelector("[data-bridge-destination]")?.addEventListener("change", () => { refreshBridgeUiLabels(); updateDestinationLiquidityNotice(); updateBridgeQuote(); refreshBridgeWalletBalances().catch(() => {}); });
+  document.querySelector("[data-bridge-source]")?.addEventListener("change", (event) => {
+    selectBridgeNetwork("source", event.target.value || "polygon", activeBridgeMode() === "deposit");
+  });
+  document.querySelector("[data-bridge-destination]")?.addEventListener("change", (event) => {
+    selectBridgeNetwork("destination", event.target.value || "polygon", false);
+    updateDestinationLiquidityNotice();
+  });
   document.querySelectorAll("[data-bridge-source-toggle] .network-toggle-btn").forEach((btn) => btn.addEventListener("click", () => {
-    const network = btn.getAttribute("data-network") || "polygon";
-    const select = document.querySelector("[data-bridge-source]");
-    if (select) select.value = network;
-    refreshBridgeUiLabels();
-    refreshBridgeLiquidity();
-    updateBridgeQuote();
-    refreshBridgeWalletBalances().catch(() => {});
+    selectBridgeNetwork("source", btn.getAttribute("data-network") || "polygon", activeBridgeMode() === "deposit");
   }));
   document.querySelectorAll("[data-bridge-destination-toggle] .network-toggle-btn").forEach((btn) => btn.addEventListener("click", () => {
-    const network = btn.getAttribute("data-network") || "polygon";
-    const select = document.querySelector("[data-bridge-destination]");
-    if (select) select.value = network;
-    refreshBridgeUiLabels();
+    selectBridgeNetwork("destination", btn.getAttribute("data-network") || "polygon", false);
     updateDestinationLiquidityNotice();
-    updateBridgeQuote();
-    refreshBridgeWalletBalances().catch(() => {});
   }));
 
   document.querySelector("[data-bridge-refresh]")?.addEventListener("click", refreshBridgeStatus);
@@ -1698,7 +1718,8 @@ function wireLusdtBridge() {
       if (!walletState.connected || !walletState.address) throw new Error("Connect wallet first.");
       const sourceKind = selectedSource();
       const cfg = sourceToken(sourceKind);
-      const provider = new ethers.BrowserProvider(getInjectedEthereum());
+      const chain = bridgeChainFor(sourceKind);
+      const provider = new ethers.JsonRpcProvider(chain.rpcUrls[0]);
       const token = new ethers.Contract(cfg.address, ERC20_ABI, provider);
       const bal = await token.balanceOf(walletState.address);
       document.querySelector("[data-bridge-amount]").value = formatUnitsSafe(bal, cfg.decimals, 6);

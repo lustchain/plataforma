@@ -89,7 +89,11 @@
             <div class="bridge-asset-main">
               <span class="asset-logo asset-logo-usdt"><img src="./assets/usdt-logo.png" alt="USDT"></span>
               <div><strong>USDT</strong><em data-bridge-source-label><img class="chain-inline-logo" src="./assets/polygon-logo.png" alt="Polygon">Polygon</em></div>
-              <select class="input compact-select" data-bridge-source>
+              <div class="network-toggle" data-bridge-source-toggle aria-label="Source network">
+                <button type="button" class="network-toggle-btn active" data-network="polygon"><img src="./assets/polygon-logo.png" alt="Polygon">Polygon</button>
+                <button type="button" class="network-toggle-btn" data-network="bsc"><img src="./assets/bsc-logo.png" alt="BSC">BSC</button>
+              </div>
+              <select class="input compact-select bridge-network-select" data-bridge-source>
                 <option value="polygon">Polygon</option>
                 <option value="bsc">BSC</option>
               </select>
@@ -160,7 +164,11 @@
             <div class="bridge-asset-main">
               <span class="asset-logo asset-logo-usdt"><img src="./assets/usdt-logo.png" alt="USDT"></span>
               <div><strong>USDT</strong><em data-bridge-destination-label><img class="chain-inline-logo" src="./assets/polygon-logo.png" alt="Polygon">Polygon</em></div>
-              <select class="input compact-select" data-bridge-destination>
+              <div class="network-toggle" data-bridge-destination-toggle aria-label="Destination network">
+                <button type="button" class="network-toggle-btn active" data-network="polygon"><img src="./assets/polygon-logo.png" alt="Polygon">Polygon</button>
+                <button type="button" class="network-toggle-btn" data-network="bsc"><img src="./assets/bsc-logo.png" alt="BSC">BSC</button>
+              </div>
+              <select class="input compact-select bridge-network-select" data-bridge-destination>
                 <option value="polygon">Polygon</option>
                 <option value="bsc">BSC</option>
               </select>
@@ -238,6 +246,6 @@
 </footer>
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
-<script type="module" src="./app.js?v20260612-lusdt-bridge-v14-network-ui"></script>
+<script type="module" src="./app.js?v20260612-lusdt-bridge-v15-full-fix"></script>
 </body>
 </html>

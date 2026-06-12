@@ -895,3 +895,18 @@ select.input{appearance:none;background:#09020d;color:#fff}
   .network-toggle{width:100%;margin-left:0;margin-top:10px;justify-content:flex-start}
   .asset-row{align-items:flex-start;flex-wrap:wrap}
 }
+
+
+/* v15 final functional fixes */
+.bridge-pro-card,.bridge-pro-side .bridge-side-card,.bridge-side-details,.bridge-asset-card,.bridge-amount-box,.bridge-pro-status,.bridge-quote-grid .result,.bridge-reserve-mini,.claim-item,.claim-summary,.bridge-inline-warning{
+  background:#050005 !important;
+}
+.bridge-pro-card-head,.bridge-pro-tabs,.bridge-pro-steps div{
+  background:#070006 !important;
+}
+.bridge-network-select{display:none !important;}
+.network-toggle{display:flex !important;align-items:center;gap:8px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
+.network-toggle-btn{display:inline-flex;align-items:center;gap:7px;height:38px;padding:0 12px;border-radius:13px;border:3px solid rgba(255,20,120,.36);background:#070006;color:#ffddec;font-size:11px;font-weight:900;cursor:pointer;transition:all .18s ease}
+.network-toggle-btn img{width:16px;height:16px;border-radius:50%;display:block}
+.network-toggle-btn.active{background:linear-gradient(135deg,#ff1f8d,#c60064);color:#fff;border-color:rgba(255,124,191,.62);box-shadow:0 12px 28px rgba(255,19,111,.30)}
+.network-toggle-btn:not(.active):hover{border-color:rgba(255,124,191,.58);transform:translateY(-1px)}
