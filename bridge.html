@@ -89,11 +89,16 @@
             <div class="bridge-asset-main">
               <span class="asset-logo asset-logo-usdt"><img src="./assets/usdt-logo.png" alt="USDT"></span>
               <div class="asset-copy"><strong>USDT</strong><em><img class="chain-inline-logo" data-bridge-source-logo src="./assets/polygon-logo.png" alt="Polygon"><span data-bridge-source-name>Polygon</span></em></div>
-              <div class="asset-chain-box">
+              <div class="asset-chain-box asset-chain-box--tabs">
                 <small>Chain</small>
-                <button class="network-select-pill" type="button" data-bridge-network-cycle="source" onclick="window.lustBridgeCycleNetwork && window.lustBridgeCycleNetwork('source')" aria-label="Change source network">
-                  <img data-bridge-source-pill-logo src="./assets/polygon-logo.png" alt="Polygon"><span class="sr-only" data-bridge-source-pill-name>Polygon</span><b>⌄</b>
-                </button>
+                <div class="network-toggle-tabs" data-bridge-network-group="source">
+                  <button class="network-toggle-tab active" type="button" data-bridge-network-option="source" data-network="polygon" aria-label="Use Polygon">
+                    <img src="./assets/polygon-logo.png" alt="Polygon">
+                  </button>
+                  <button class="network-toggle-tab" type="button" data-bridge-network-option="source" data-network="bsc" aria-label="Use BSC">
+                    <img src="./assets/bsc-logo.png" alt="BSC">
+                  </button>
+                </div>
               </div>
               <select class="input compact-select bridge-network-select" data-bridge-source>
                 <option value="polygon">Polygon</option>
@@ -166,11 +171,16 @@
             <div class="bridge-asset-main">
               <span class="asset-logo asset-logo-usdt"><img src="./assets/usdt-logo.png" alt="USDT"></span>
               <div class="asset-copy"><strong>USDT</strong><em><img class="chain-inline-logo" data-bridge-destination-logo src="./assets/polygon-logo.png" alt="Polygon"><span data-bridge-destination-name>Polygon</span></em></div>
-              <div class="asset-chain-box">
+              <div class="asset-chain-box asset-chain-box--tabs">
                 <small>Chain</small>
-                <button class="network-select-pill" type="button" data-bridge-network-cycle="destination" onclick="window.lustBridgeCycleNetwork && window.lustBridgeCycleNetwork('destination')" aria-label="Change destination network">
-                  <img data-bridge-destination-pill-logo src="./assets/polygon-logo.png" alt="Polygon"><span class="sr-only" data-bridge-destination-pill-name>Polygon</span><b>⌄</b>
-                </button>
+                <div class="network-toggle-tabs" data-bridge-network-group="destination">
+                  <button class="network-toggle-tab active" type="button" data-bridge-network-option="destination" data-network="polygon" aria-label="Use Polygon">
+                    <img src="./assets/polygon-logo.png" alt="Polygon">
+                  </button>
+                  <button class="network-toggle-tab" type="button" data-bridge-network-option="destination" data-network="bsc" aria-label="Use BSC">
+                    <img src="./assets/bsc-logo.png" alt="BSC">
+                  </button>
+                </div>
               </div>
               <select class="input compact-select bridge-network-select" data-bridge-destination>
                 <option value="polygon">Polygon</option>
