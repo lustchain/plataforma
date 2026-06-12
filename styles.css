@@ -804,3 +804,240 @@ select.input{appearance:none;background:#09020d;color:#fff}
 .bridge-pro-side{display:grid;gap:14px}.bridge-side-card,.bridge-side-details{padding:18px}.bridge-side-card .row{border-bottom:1px solid rgba(255,255,255,.08);padding:11px 0}.bridge-side-card .row:last-child{border-bottom:0}.bridge-reserve-mini{border:1px solid rgba(75,178,255,.20);border-radius:16px;padding:13px;margin:10px 0;background:rgba(0,8,18,.55)}.bridge-reserve-mini span{display:block;color:#9eb7d2;font-size:12px;font-weight:800;margin-bottom:6px}.bridge-reserve-mini strong{font-size:18px}.bridge-reserve-mini.polygon{border-color:rgba(130,95,255,.3)}.bridge-reserve-mini.bsc{border-color:rgba(240,185,11,.34)}.bridge-liquidity-status{font-size:12px;margin-top:8px}.bridge-side-details summary{display:flex;justify-content:space-between;align-items:center}.bridge-side-details summary span{border:1px solid rgba(75,178,255,.25);border-radius:999px;padding:5px 8px;color:#a8bfd8;font-size:9px;text-transform:uppercase;letter-spacing:.12em}.bridge-helper-grid{display:grid;gap:8px;margin-top:12px}.bridge-helper-grid .btn{width:100%;justify-content:center}.claim-list{display:grid;gap:10px}.claim-summary{padding:11px 12px;border-radius:14px;background:rgba(88,223,255,.06);border:1px solid rgba(88,223,255,.18);font-size:12px;color:#dff8ff}.claim-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:13px;border:1px solid rgba(75,178,255,.18);border-radius:16px;background:rgba(2,16,31,.72)}.claim-item strong{font-size:14px}.claim-item small{font-size:11px;color:#a9c1dc;word-break:break-all}.claim-item.is-selected{border-color:rgba(247,3,117,.55);box-shadow:0 0 0 1px rgba(247,3,117,.18)}.claim-item.is-used{opacity:.65}.mini-btn,.claim-direct-btn{border:0;border-radius:999px;padding:10px 12px;background:linear-gradient(90deg,#ff0d7a,#ff5eb0);color:#fff;font-size:12px;font-weight:1000;cursor:pointer;white-space:nowrap}.claim-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.claim-badge.done{border:1px solid rgba(78,255,190,.35);background:rgba(78,255,190,.10);color:#dffff6;border-radius:999px;padding:10px 12px;font-size:11px;font-weight:1000;text-transform:uppercase}.hidden{display:none!important}
 @media(max-width:1100px){.bridge-pro-shell{grid-template-columns:1fr}.bridge-pro-page{width:min(760px,94vw)}}
 @media(max-width:720px){.bridge-pro-intro{display:block}.bridge-pro-pills{justify-content:flex-start;margin-top:14px}.bridge-pro-card{padding:14px}.bridge-pro-card-head{display:block}.bridge-wallet-pill{width:100%;text-align:left;margin-top:12px}.bridge-pro-steps,.bridge-route-box,.bridge-quote-grid,.bridge-action-grid{grid-template-columns:1fr}.bridge-arrow{margin:auto;transform:rotate(0deg)}.bridge-amount-row{grid-template-columns:1fr}.bridge-token-pill{height:44px;justify-content:center}}
+
+
+/* LUSDT Bridge v9 — LUST premium skin + practical bridge UX */
+body{
+  background:
+    radial-gradient(circle at 50% -10%, rgba(247,3,117,.30), transparent 34rem),
+    radial-gradient(circle at 85% 12%, rgba(255,64,168,.18), transparent 24rem),
+    radial-gradient(circle at 12% 22%, rgba(120,24,120,.18), transparent 26rem),
+    #050007 !important;
+}
+.bridge-pro-page{
+  width:min(1120px,94vw)!important;
+  padding:36px 0 64px!important;
+}
+.bridge-pro-intro{
+  position:relative;
+  align-items:center!important;
+  padding:18px 20px!important;
+  border:1px solid rgba(247,3,117,.20);
+  border-radius:28px;
+  background:linear-gradient(135deg,rgba(247,3,117,.10),rgba(255,255,255,.035) 45%,rgba(80,0,48,.22));
+  box-shadow:0 28px 90px rgba(0,0,0,.38), 0 0 60px rgba(247,3,117,.10);
+  overflow:hidden;
+}
+.bridge-pro-intro::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  background:linear-gradient(90deg,transparent,rgba(247,3,117,.35),transparent);
+  height:1px;
+}
+.bridge-pro-intro p{color:#fff!important;font-size:15px}
+.bridge-pro-intro span{color:#ff8cc1!important}
+.bridge-pro-pills div{
+  border:1px solid rgba(247,3,117,.36)!important;
+  background:linear-gradient(180deg,rgba(247,3,117,.12),rgba(255,255,255,.045))!important;
+}
+.bridge-pro-pills small,
+.bridge-pro-card-head small,
+.bridge-pro-steps small,
+.bridge-asset-card small,
+.bridge-amount-head small,
+.bridge-pro-side small{
+  color:#ff67ad!important;
+}
+.bridge-pro-shell{
+  grid-template-columns:minmax(0,1fr) 360px!important;
+  gap:22px!important;
+}
+.bridge-pro-card,
+.bridge-pro-side .bridge-side-card,
+.bridge-side-details{
+  border:1px solid rgba(247,3,117,.28)!important;
+  background:
+    linear-gradient(180deg,rgba(21,0,16,.96),rgba(6,0,10,.985))!important;
+  box-shadow:
+    0 34px 100px rgba(0,0,0,.48),
+    0 0 0 1px rgba(255,255,255,.025) inset,
+    0 0 70px rgba(247,3,117,.09)!important;
+}
+.bridge-pro-card{
+  position:relative;
+  padding:24px!important;
+  overflow:hidden;
+}
+.bridge-pro-card::before{
+  content:"";
+  position:absolute;
+  top:-160px;
+  right:-120px;
+  width:340px;
+  height:340px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(247,3,117,.28),rgba(247,3,117,.04) 48%,transparent 70%);
+  pointer-events:none;
+}
+.bridge-pro-card-head{
+  position:relative;
+  border:1px solid rgba(247,3,117,.22)!important;
+  background:linear-gradient(135deg,rgba(247,3,117,.12),rgba(255,255,255,.045))!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 20px 50px rgba(247,3,117,.05);
+}
+.lust-bridge-mark{
+  width:56px;
+  height:56px;
+  border-radius:20px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,rgba(247,3,117,.25),rgba(255,93,177,.12));
+  border:1px solid rgba(247,3,117,.32);
+  box-shadow:0 18px 44px rgba(247,3,117,.18);
+  padding:8px;
+}
+.lust-bridge-mark img{width:100%;height:100%;object-fit:contain}
+.bridge-pro-card-head h1{
+  text-shadow:0 0 28px rgba(247,3,117,.24);
+}
+.bridge-wallet-pill{
+  border-color:rgba(247,3,117,.42)!important;
+  background:rgba(247,3,117,.08)!important;
+}
+.bridge-pro-tabs{
+  border:1px solid rgba(247,3,117,.25)!important;
+  background:rgba(255,255,255,.035)!important;
+}
+.bridge-pro-tabs .bridge-tab{
+  border:none!important;
+  background:transparent!important;
+}
+.bridge-pro-tabs .bridge-tab.active{
+  background:linear-gradient(135deg,#ff2f93,#f70375)!important;
+  color:#fff!important;
+  box-shadow:0 14px 40px rgba(247,3,117,.28)!important;
+}
+.bridge-pro-steps div{
+  border-color:rgba(247,3,117,.18)!important;
+  background:rgba(255,255,255,.035)!important;
+}
+.bridge-pro-steps div.active{
+  border-color:rgba(247,3,117,.36)!important;
+  background:linear-gradient(180deg,rgba(247,3,117,.12),rgba(255,255,255,.035))!important;
+}
+.bridge-pro-steps b{
+  background:linear-gradient(135deg,#ff2f93,#f70375)!important;
+  color:#fff!important;
+  box-shadow:0 0 0 4px rgba(247,3,117,.12);
+}
+.bridge-route-box{
+  border-color:rgba(247,3,117,.22)!important;
+  background:rgba(255,255,255,.032)!important;
+}
+.bridge-asset-card{
+  border-color:rgba(247,3,117,.22)!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.025))!important;
+}
+.bridge-arrow{
+  background:linear-gradient(135deg,#ff2f93,#f70375)!important;
+  box-shadow:0 16px 40px rgba(247,3,117,.24)!important;
+}
+.asset-logo-lust{
+  background:linear-gradient(135deg,rgba(247,3,117,.24),rgba(255,255,255,.06))!important;
+}
+.compact-select,
+select.input{
+  border-color:rgba(247,3,117,.25)!important;
+}
+.bridge-amount-box{
+  border-color:rgba(247,3,117,.24)!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.025))!important;
+}
+.bridge-amount-row{
+  border-color:rgba(247,3,117,.22)!important;
+  background:#09000d!important;
+}
+.bridge-token-pill{
+  border-color:rgba(247,3,117,.25)!important;
+  background:rgba(247,3,117,.08)!important;
+}
+.bridge-quote-grid .result{
+  border-color:rgba(247,3,117,.20)!important;
+  background:rgba(255,255,255,.035)!important;
+}
+.bridge-action-grid .btn.primary,
+.btn.primary{
+  background:linear-gradient(135deg,#ff3296,#f70375)!important;
+  color:#fff!important;
+  border-color:#ff3296!important;
+  box-shadow:0 18px 44px rgba(247,3,117,.25)!important;
+}
+.bridge-action-grid .btn:not(.primary),
+.bridge-helper-grid .btn{
+  border-color:rgba(247,3,117,.24)!important;
+  background:rgba(247,3,117,.06)!important;
+  color:#fff!important;
+}
+.bridge-pro-status{
+  border-color:rgba(247,3,117,.26)!important;
+  background:linear-gradient(180deg,rgba(247,3,117,.07),rgba(255,255,255,.025))!important;
+}
+.bridge-status-title span{
+  border-color:rgba(247,3,117,.38)!important;
+  color:#ffd8ea!important;
+  background:rgba(247,3,117,.08)!important;
+}
+.bridge-inline-warning{
+  border-color:rgba(247,3,117,.24)!important;
+  background:rgba(247,3,117,.07)!important;
+  color:#ffe9f3!important;
+}
+.bridge-inline-warning.ok{border-color:rgba(78,255,190,.42)!important;background:rgba(78,255,190,.08)!important;color:#e5fff8!important}
+.bridge-inline-warning.warn{border-color:rgba(255,196,87,.46)!important;background:rgba(255,196,87,.08)!important;color:#fff3d8!important}
+.bridge-inline-warning.bad{border-color:rgba(255,89,130,.5)!important;background:rgba(255,89,130,.10)!important;color:#ffe4eb!important}
+.bridge-reserve-mini{
+  border:1px solid rgba(247,3,117,.20)!important;
+  background:rgba(255,255,255,.035)!important;
+}
+.bridge-liquidity-status{
+  border-color:rgba(247,3,117,.18)!important;
+  background:rgba(255,255,255,.035)!important;
+}
+.claim-summary{
+  border-color:rgba(247,3,117,.24)!important;
+  background:rgba(247,3,117,.07)!important;
+  color:#ffeaf4!important;
+}
+.claim-item{
+  border-color:rgba(247,3,117,.20)!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.025))!important;
+}
+.claim-item.is-selected{
+  border-color:rgba(247,3,117,.58)!important;
+  box-shadow:0 0 0 1px rgba(247,3,117,.18),0 16px 44px rgba(247,3,117,.12)!important;
+}
+.claim-direct-btn,
+.mini-btn{
+  background:linear-gradient(135deg,#ff3296,#f70375)!important;
+  color:#fff!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+}
+.claim-badge.done{
+  color:#dffef4!important;
+}
+.bridge-side-details summary{
+  color:#ffe5f2!important;
+}
+@media(max-width:1080px){
+  .bridge-pro-shell{grid-template-columns:1fr!important}
+}
+@media(max-width:720px){
+  .bridge-pro-intro{display:block!important}
+  .bridge-pro-pills{margin-top:14px;justify-content:flex-start!important}
+  .bridge-pro-card-head{display:grid!important;grid-template-columns:56px 1fr!important}
+  .bridge-wallet-pill{grid-column:1/-1;text-align:left!important}
+  .bridge-action-grid{grid-template-columns:1fr!important}
+}
+
+.bridge-quote-grid-four{grid-template-columns:repeat(4,minmax(0,1fr))!important}@media(max-width:760px){.bridge-quote-grid-four{grid-template-columns:1fr 1fr!important}}@media(max-width:480px){.bridge-quote-grid-four{grid-template-columns:1fr!important}}
