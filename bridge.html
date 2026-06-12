@@ -8,7 +8,7 @@
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css?v20260612-lusdt-bridge-v7-premium" />
+  <link rel="stylesheet" href="./styles.css?v20260612-lusdt-bridge-v8-pro-inri-flow" />
 </head>
 <body>
 <div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
@@ -23,15 +23,15 @@
 
   <nav class="nav">
       <a class="active" href="./bridge.html">Bridge</a>
-      <a class="" href="./mining.html">Mining</a>
-      <a class="" href="./swap.html">Swap</a>
-      <a class="" href="./staking.html">Staking</a>
-      <a class="" href="./liquidity.html">Liquidity</a>
-      <a class="" href="./p2p.html">P2P</a>
-      <a class="" href="./nfts.html">NFTs</a>
-      <a class="" href="./factory.html">Factory</a>
-      <a class="" href="./explorer.html">Explorer</a>
-      <a class="" href="./docs.html">Docs</a>
+      <a href="./mining.html">Mining</a>
+      <a href="./swap.html">Swap</a>
+      <a href="./staking.html">Staking</a>
+      <a href="./liquidity.html">Liquidity</a>
+      <a href="./p2p.html">P2P</a>
+      <a href="./nfts.html">NFTs</a>
+      <a href="./factory.html">Factory</a>
+      <a href="./explorer.html">Explorer</a>
+      <a href="./docs.html">Docs</a>
   </nav>
 
   <div class="actions">
@@ -46,264 +46,189 @@
   </div>
 </header>
 
-<main class="wrap page bridge-page" data-lusdt-bridge>
-  <section class="bridge-hero">
-    <div class="bridge-hero-copy">
-      <div class="kicker">LUSDT Bridge</div>
-      <h1>USDT liquidity for LUST Chain.</h1>
-      <p>Bridge Polygon USDT or BNB Smart Chain USDT into LUSDT on LUST. Users pay gas directly in their own wallet, the same operational model used on INRI.</p>
-      <div class="bridge-badges">
-        <span>Polygon → LUST</span>
-        <span>BSC → LUST</span>
-        <span>LUST → Polygon/BSC</span>
-        <span>Fee 0.20%</span>
-      </div>
-      <div class="bridge-live-strip">
-        <div><small>API</small><strong data-bridge-api-state>Checking...</strong></div>
-        <div><small>Validator threshold</small><strong data-bridge-threshold>2 of 4</strong></div>
-        <div><small>Deposits</small><strong data-bridge-deposits-state>Controlled</strong></div>
-      </div>
+<main class="bridge-pro-page" data-lusdt-bridge>
+  <section class="bridge-pro-intro">
+    <div>
+      <p>Fast LUSDT transfers between Polygon, BSC and LUST. Choose a direction, confirm in your wallet, then finish the claim or release on the same screen.</p>
+      <span>Buy on Polygon, sell on BSC — only when the destination reserve has enough USDT.</span>
     </div>
-
-    <div class="bridge-status-card">
-      <small>Live contracts</small>
-      <div class="row"><span>LUSDT</span><strong data-bridge-lusdt-short>0x1E86...C19AE</strong></div>
-      <div class="row"><span>Executor</span><strong data-bridge-executor-short>0xbBC8...f380</strong></div>
-      <div class="row"><span>Fee treasury</span><strong data-bridge-fee-recipient>0x5feb...f9D7</strong></div>
-      <div class="bridge-status-log" data-bridge-log>Connect your wallet to start. API data loads automatically.</div>
+    <div class="bridge-pro-pills">
+      <div><small>Fee</small><strong data-bridge-fee-percent>0.20%</strong></div>
+      <div><small>Security</small><strong data-bridge-validator-summary>2/4</strong></div>
+      <div><small>Chain</small><strong>6923</strong></div>
     </div>
   </section>
 
-  <section class="bridge-overview-shell" aria-label="Bridge overview and routing">
-    <div class="bridge-route-showcase box">
-      <div class="bridge-section-head">
+  <section class="bridge-pro-shell" aria-label="LUSDT bridge app">
+    <div class="bridge-pro-card">
+      <div class="bridge-pro-card-head">
         <div>
-          <small>Bridge routes</small>
-          <h2>One premium page, all practical actions</h2>
-          <p>Use the same operational logic as the INRI bridge, adapted for LUST with Polygon and BSC liquidity routes.</p>
+          <small>Transfer</small>
+          <h1><span data-bridge-title-action>Buy</span> LUSDT</h1>
         </div>
+        <button class="bridge-wallet-pill" type="button" data-connect-wallet>
+          <strong>Connect wallet</strong>
+          <span>Wallet not connected</span>
+        </button>
       </div>
 
-      <div class="bridge-route-grid">
-        <article class="bridge-route-card">
-          <div class="bridge-route-icon"><img src="./assets/polygon-logo.svg" alt="Polygon" /></div>
-          <div>
-            <small>Deposit route</small>
-            <h3>Polygon USDT</h3>
-            <p>Deposit canonical Polygon USDT and mint LUSDT on LUST.</p>
+      <div class="bridge-tabs bridge-pro-tabs">
+        <button class="bridge-tab active" type="button" data-bridge-tab="deposit">Buy LUSDT</button>
+        <button class="bridge-tab" type="button" data-bridge-tab="withdraw">Sell LUSDT</button>
+      </div>
+
+      <div class="bridge-panel" data-bridge-panel="deposit">
+        <div class="bridge-pro-steps">
+          <div class="active"><b>1</b><span><strong>Approve & deposit</strong><small>Send USDT from Polygon or BSC.</small></span></div>
+          <div><b>2</b><span><strong>Wait for claim</strong><small>The bridge prepares the claim automatically.</small></span></div>
+          <div><b>3</b><span><strong>Mint on LUST</strong><small>Confirm the LUSDT claim in your wallet.</small></span></div>
+        </div>
+
+        <div class="bridge-route-box">
+          <div class="bridge-asset-card">
+            <small>From</small>
+            <div class="bridge-asset-main">
+              <span class="asset-logo asset-logo-usdt"><img src="./assets/usdt-logo.svg" alt="USDT"></span>
+              <div><strong>USDT</strong><em data-bridge-source-label>Polygon</em></div>
+              <select class="input compact-select" data-bridge-source>
+                <option value="polygon">Polygon</option>
+                <option value="bsc">BSC</option>
+              </select>
+            </div>
           </div>
-        </article>
-
-        <article class="bridge-route-card bridge-route-card--center">
-          <div class="bridge-route-icon bridge-route-icon--lust"><img src="./assets/lust-logo.png" alt="LUST" /></div>
-          <div>
-            <small>Settlement layer</small>
-            <h3>LUST Chain</h3>
-            <p>LUSDT is minted and burned on LUST. Fees stay in LUSDT on the treasury wallet.</p>
+          <div class="bridge-arrow">↓</div>
+          <div class="bridge-asset-card">
+            <small>To</small>
+            <div class="bridge-asset-main">
+              <span class="asset-logo asset-logo-lust"><img src="./assets/lust-logo.png" alt="LUST"></span>
+              <div><strong>LUSDT</strong><em>LUST Chain</em></div>
+              <span class="bridge-mini-tag">Claim</span>
+            </div>
           </div>
-        </article>
+        </div>
 
-        <article class="bridge-route-card">
-          <div class="bridge-route-icon bridge-route-icon--bsc">BSC</div>
-          <div>
-            <small>Cross route</small>
-            <h3>BNB Smart Chain</h3>
-            <p>Users can exit to BSC when the destination reserve has enough available USDT.</p>
+        <div class="bridge-amount-box">
+          <div class="bridge-amount-head"><small>Amount</small><button type="button" data-bridge-max-deposit>MAX</button></div>
+          <div class="bridge-amount-row">
+            <input class="input" data-bridge-amount type="number" min="0" step="0.01" value="1" />
+            <span class="bridge-token-pill"><img src="./assets/usdt-logo.svg" alt="USDT">USDT</span>
           </div>
-        </article>
-      </div>
-    </div>
-
-    <div class="bridge-metrics-grid grid four">
-      <div class="box bridge-metric-card">
-        <small>Ready claims</small>
-        <strong data-bridge-claims-count>0</strong>
-        <span>Deposits already signed and waiting for mint.</span>
-      </div>
-      <div class="box bridge-metric-card">
-        <small>Ready releases</small>
-        <strong data-bridge-releases-count>0</strong>
-        <span>Burns already signed and waiting for USDT release.</span>
-      </div>
-      <div class="box bridge-metric-card">
-        <small>Bridge fee</small>
-        <strong data-bridge-fee-percent>0.20%</strong>
-        <span>Charged on the bridge flow and retained in LUSDT.</span>
-      </div>
-      <div class="box bridge-metric-card">
-        <small>Security</small>
-        <strong data-bridge-validator-summary>2 / 4</strong>
-        <span>Validator threshold used by the bridge contracts.</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="bridge-liquidity-grid grid three" aria-label="Bridge liquidity overview">
-    <div class="box bridge-liquidity-card">
-      <div class="bridge-liquidity-head">
-        <span class="chain-dot polygon"></span>
-        <div>
-          <small>Polygon reserve</small>
-          <h3>USDT available</h3>
-        </div>
-      </div>
-      <div class="bridge-liquidity-amount" data-liquidity-polygon>Loading...</div>
-      <p data-liquidity-polygon-copy>The Polygon lockbox reserve is used when users withdraw from LUST back to Polygon.</p>
-      <div class="bridge-liquidity-status" data-liquidity-polygon-status>Checking Polygon liquidity...</div>
-    </div>
-
-    <div class="box bridge-liquidity-card">
-      <div class="bridge-liquidity-head">
-        <span class="chain-dot bsc"></span>
-        <div>
-          <small>BSC reserve</small>
-          <h3>USDT available</h3>
-        </div>
-      </div>
-      <div class="bridge-liquidity-amount" data-liquidity-bsc>Loading...</div>
-      <p data-liquidity-bsc-copy>The BSC lockbox reserve is used when users withdraw from LUST back to BNB Smart Chain.</p>
-      <div class="bridge-liquidity-status" data-liquidity-bsc-status>Checking BSC liquidity...</div>
-    </div>
-
-    <div class="box bridge-liquidity-card bridge-liquidity-card--rules">
-      <div class="bridge-liquidity-head">
-        <span class="chain-dot lust"></span>
-        <div>
-          <small>Bridge protection</small>
-          <h3>Practical routing</h3>
-        </div>
-      </div>
-      <div class="bridge-liquidity-amount" data-liquidity-route>Auto check</div>
-      <p>Before burning LUSDT, the page checks whether the destination lockbox currently has enough USDT. This helps users avoid burning to a network with low available liquidity.</p>
-      <div class="bridge-liquidity-status info">Users can buy on Polygon and sell on BSC only when that BSC reserve is available.</div>
-    </div>
-  </section>
-
-  <section class="bridge-shell" aria-label="LUSDT bridge app">
-    <div class="bridge-tabs">
-      <button class="bridge-tab active" type="button" data-bridge-tab="deposit">Deposit USDT → LUSDT</button>
-      <button class="bridge-tab" type="button" data-bridge-tab="withdraw">Withdraw LUSDT → USDT</button>
-    </div>
-
-    <div class="bridge-panel" data-bridge-panel="deposit">
-      <div class="bridge-panel-head">
-        <div>
-          <small>Step 1</small>
-          <h2>Deposit from Polygon or BSC</h2>
-          <p>The lockbox holds USDT. After confirmations, the bridge signs a claim so you can mint LUSDT on LUST Chain.</p>
-        </div>
-        <button class="btn" type="button" data-bridge-refresh>Refresh status</button>
-      </div>
-
-      <div class="grid two bridge-form-grid">
-        <div class="form bridge-form">
-          <label>Source network</label>
-          <select class="input" data-bridge-source>
-            <option value="polygon">Polygon USDT · 6 decimals</option>
-            <option value="bsc">BNB Smart Chain USDT · 18 decimals</option>
-          </select>
-
-          <label>Amount</label>
-          <input class="input" data-bridge-amount type="number" min="0" step="0.01" value="1" />
-
           <div class="bridge-quote-grid">
-            <div class="result"><span>Bridge fee</span><strong data-bridge-fee>0.002000 LUSDT</strong></div>
             <div class="result"><span>You receive</span><strong data-bridge-receive>0.998000 LUSDT</strong></div>
-          </div>
-
-          <div class="hero-buttons">
-            <button class="btn primary" type="button" data-bridge-deposit>Approve + Deposit USDT</button>
-            <button class="btn" type="button" data-bridge-find-claim>Find / Refresh claim</button>
-            <button class="btn primary" type="button" data-bridge-mint disabled>Mint ready claim on LUST</button>
+            <div class="result"><span>Fee</span><strong data-bridge-fee>0.002000 LUSDT</strong></div>
+            <div class="result"><span>Balance</span><strong data-bridge-source-balance>-</strong></div>
           </div>
         </div>
 
-        <div class="box bridge-info-box">
-          <small>Deposit flow</small>
-          <div class="bridge-step"><b>1</b><span>Approve USDT to the selected lockbox.</span></div>
-          <div class="bridge-step"><b>2</b><span>Deposit USDT. The watcher waits confirmations and creates a claim.</span></div>
-          <div class="bridge-step"><b>3</b><span>The page auto-checks the API. When ready, switch to LUST Chain and mint LUSDT.</span></div>
-          <div class="row"><span>Last deposit tx</span><strong data-bridge-last-deposit>--</strong></div>
-          <div class="row"><span>Claim status</span><strong data-bridge-claim-state>Not checked</strong></div>
+        <div class="bridge-action-grid">
+          <button class="btn primary" type="button" data-bridge-deposit>⚡ Approve + Deposit USDT</button>
+          <button class="btn" type="button" data-bridge-find-claim>Find / Refresh claim</button>
+          <button class="btn primary" type="button" data-bridge-mint disabled>Mint selected claim</button>
+        </div>
+
+        <div class="bridge-pro-status">
+          <div class="bridge-status-title"><strong>Claim status</strong><span data-bridge-claim-state>Waiting</span></div>
+          <p data-bridge-log>Ready. Connect wallet and choose an amount.</p>
+          <details>
+            <summary>Need manual recovery?</summary>
+            <div class="claim-list" data-bridge-pending-claims>
+              <div class="claim-item muted">Connect wallet and click Find / Refresh claims.</div>
+            </div>
+          </details>
         </div>
       </div>
 
-      <div class="bridge-list-card">
-        <div class="bridge-list-head">
-          <small>Ready claims</small>
-          <strong>Mint one by one on LUST</strong>
+      <div class="bridge-panel hidden" data-bridge-panel="withdraw">
+        <div class="bridge-pro-steps">
+          <div class="active"><b>1</b><span><strong>Approve & burn</strong><small>Burn LUSDT on LUST Chain.</small></span></div>
+          <div><b>2</b><span><strong>Wait for release</strong><small>The bridge prepares the release automatically.</small></span></div>
+          <div><b>3</b><span><strong>Release USDT</strong><small>Confirm on Polygon or BSC.</small></span></div>
         </div>
-        <div class="claim-list" data-bridge-pending-claims>
-          <div class="claim-item muted">Connect wallet and click Find / Refresh claims.</div>
+
+        <div class="bridge-route-box">
+          <div class="bridge-asset-card">
+            <small>From</small>
+            <div class="bridge-asset-main">
+              <span class="asset-logo asset-logo-lust"><img src="./assets/lust-logo.png" alt="LUST"></span>
+              <div><strong>LUSDT</strong><em>LUST Chain</em></div>
+              <span class="bridge-mini-tag">Burn</span>
+            </div>
+          </div>
+          <div class="bridge-arrow">↓</div>
+          <div class="bridge-asset-card">
+            <small>To</small>
+            <div class="bridge-asset-main">
+              <span class="asset-logo asset-logo-usdt"><img src="./assets/usdt-logo.svg" alt="USDT"></span>
+              <div><strong>USDT</strong><em data-bridge-destination-label>Polygon</em></div>
+              <select class="input compact-select" data-bridge-destination>
+                <option value="polygon">Polygon</option>
+                <option value="bsc">BSC</option>
+              </select>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <div class="bridge-panel hidden" data-bridge-panel="withdraw">
-      <div class="bridge-panel-head">
-        <div>
-          <small>Step 2</small>
-          <h2>Withdraw to Polygon or BSC</h2>
-          <p>Burn LUSDT on LUST. After confirmations, use the signed release to unlock USDT on the selected destination chain.</p>
-        </div>
-        <button class="btn" type="button" data-bridge-refresh>Refresh status</button>
-      </div>
-
-      <div class="grid two bridge-form-grid">
-        <div class="form bridge-form">
-          <label>Destination network</label>
-          <select class="input" data-bridge-destination>
-            <option value="polygon">Polygon USDT · 6 decimals</option>
-            <option value="bsc">BNB Smart Chain USDT · 18 decimals</option>
-          </select>
-
-          <label>Amount</label>
-          <input class="input" data-withdraw-amount type="number" min="0" step="0.01" value="1" />
-
+        <div class="bridge-amount-box">
+          <div class="bridge-amount-head"><small>Amount</small><button type="button" data-bridge-max-withdraw>MAX</button></div>
+          <div class="bridge-amount-row">
+            <input class="input" data-withdraw-amount type="number" min="0" step="0.01" value="1" />
+            <span class="bridge-token-pill"><img src="./assets/lust-logo.png" alt="LUSDT">LUSDT</span>
+          </div>
           <div class="bridge-quote-grid">
-            <div class="result"><span>Bridge fee</span><strong data-withdraw-fee>0.002000 LUSDT</strong></div>
-            <div class="result"><span>USDT release amount</span><strong data-withdraw-receive>0.998000 USDT</strong></div>
+            <div class="result"><span>You receive</span><strong data-withdraw-receive>0.998000 USDT</strong></div>
+            <div class="result"><span>Fee</span><strong data-withdraw-fee>0.002000 LUSDT</strong></div>
+            <div class="result"><span>Destination balance</span><strong data-bridge-destination-balance>Loading...</strong></div>
           </div>
-
-          <div class="bridge-liquidity-inline">
-            <div class="result"><span>Available on destination</span><strong data-bridge-destination-balance>Loading...</strong></div>
-            <div class="result"><span>Liquidity status</span><strong data-bridge-destination-liquidity-status>Checking...</strong></div>
-          </div>
-          <div class="bridge-inline-warning" data-bridge-destination-warning>Choose a destination network to check whether there is enough USDT available for release.</div>
-
-          <div class="hero-buttons">
-            <button class="btn primary" type="button" data-bridge-burn>Approve + Burn LUSDT</button>
-            <button class="btn" type="button" data-bridge-find-release>Find my release</button>
-            <button class="btn primary" type="button" data-bridge-release disabled>Release USDT</button>
-          </div>
+          <div class="bridge-inline-warning" data-bridge-destination-warning>Checking destination liquidity before burn...</div>
         </div>
 
-        <div class="box bridge-info-box">
-          <small>Withdraw flow</small>
-          <div class="bridge-step"><b>1</b><span>Approve LUSDT to the LUST executor.</span></div>
-          <div class="bridge-step"><b>2</b><span>Burn LUSDT for Polygon or BSC. The watcher creates a signed release.</span></div>
-          <div class="bridge-step"><b>3</b><span>Switch to the destination network and release USDT from the lockbox.</span></div>
-          <div class="row"><span>Last burn tx</span><strong data-bridge-last-burn>--</strong></div>
-          <div class="row"><span>Release status</span><strong data-bridge-release-state>Not checked</strong></div>
+        <div class="bridge-action-grid">
+          <button class="btn primary" type="button" data-bridge-burn>⚡ Approve + Burn LUSDT</button>
+          <button class="btn" type="button" data-bridge-find-release>Find / Refresh release</button>
+          <button class="btn primary" type="button" data-bridge-release disabled>Release selected USDT</button>
         </div>
-      </div>
 
-      <div class="bridge-list-card">
-        <div class="bridge-list-head">
-          <small>Ready releases</small>
-          <strong>Release one by one on Polygon or BSC</strong>
-        </div>
-        <div class="claim-list" data-bridge-pending-releases>
-          <div class="claim-item muted">Burn LUSDT, wait confirmations, then click Find my release.</div>
+        <div class="bridge-pro-status">
+          <div class="bridge-status-title"><strong>Release status</strong><span data-bridge-release-state>Waiting</span></div>
+          <p>After your burn, the bridge unlocks the USDT release automatically. Select the correct pending release below, especially for BSC.</p>
+          <details open>
+            <summary>Ready releases</summary>
+            <div class="claim-list" data-bridge-pending-releases>
+              <div class="claim-item muted">Burn LUSDT, wait confirmations, then click Find / Refresh release.</div>
+            </div>
+          </details>
         </div>
       </div>
     </div>
-  </section>
 
-  <section class="bridge-contract-grid grid three">
-    <div class="box"><small>Polygon lockbox</small><h3>USDT 6 decimals</h3><p>Deposits use the canonical Polygon USDT contract and mint LUSDT 1:1 using 6-decimal amounts.</p><a class="btn" href="https://polygonscan.com/address/0x273cC6A72aF97381daa07332Df768a05cb30CE47" target="_blank" rel="noreferrer">View PolygonScan</a></div>
-    <div class="box"><small>BSC lockbox</small><h3>USDT 18 → 6</h3><p>BSC USDT is normalized from 18 decimals to 6 decimals before LUSDT is minted on LUST.</p><a class="btn" href="https://bscscan.com/address/0x273cC6A72aF97381daa07332Df768a05cb30CE47" target="_blank" rel="noreferrer">View BscScan</a></div>
-    <div class="box"><small>LUST executor</small><h3>2-of-4 validators</h3><p>The executor mints LUSDT only with validator signatures and charges the 0.20% bridge fee.</p><a class="btn" href="https://explorer.lustchain.org/address/0xbBC818f161D1B7190f85bE258CDB568a5A63f380" target="_blank" rel="noreferrer">View Explorer</a></div>
+    <aside class="bridge-pro-side">
+      <div class="bridge-side-card">
+        <small>Live bridge</small>
+        <div class="row"><span>API</span><strong data-bridge-api-state>Checking...</strong></div>
+        <div class="row"><span>Threshold</span><strong data-bridge-threshold>2 of 4</strong></div>
+        <div class="row"><span>Deposits</span><strong data-bridge-deposits-state>Controlled</strong></div>
+        <div class="row"><span>LUSDT</span><strong data-bridge-lusdt-short>0x1E86...C19AE</strong></div>
+        <div class="row"><span>Executor</span><strong data-bridge-executor-short>0xbBC8...f380</strong></div>
+        <div class="row"><span>Fee treasury</span><strong data-bridge-fee-recipient>0x5feb...f9D7</strong></div>
+      </div>
+
+      <div class="bridge-side-card">
+        <small>Liquidity reserves</small>
+        <div class="bridge-reserve-mini polygon"><span>Polygon USDT</span><strong data-liquidity-polygon>Loading...</strong></div>
+        <div class="bridge-reserve-mini bsc"><span>BSC USDT</span><strong data-liquidity-bsc>Loading...</strong></div>
+        <div class="bridge-liquidity-status" data-liquidity-polygon-status>Checking Polygon liquidity...</div>
+        <div class="bridge-liquidity-status" data-liquidity-bsc-status>Checking BSC liquidity...</div>
+      </div>
+
+      <details class="bridge-side-details">
+        <summary>Details & helpers <span>optional</span></summary>
+        <div class="bridge-helper-grid">
+          <a class="btn" href="https://polygonscan.com/address/0x273cC6A72aF97381daa07332Df768a05cb30CE47" target="_blank" rel="noreferrer">Polygon lockbox</a>
+          <a class="btn" href="https://bscscan.com/address/0x273cC6A72aF97381daa07332Df768a05cb30CE47" target="_blank" rel="noreferrer">BSC lockbox</a>
+          <a class="btn" href="https://explorer.lustchain.org/address/0xbBC818f161D1B7190f85bE258CDB568a5A63f380" target="_blank" rel="noreferrer">LUST executor</a>
+        </div>
+      </details>
+    </aside>
   </section>
 </main>
 
@@ -313,7 +238,6 @@
 </footer>
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
-
-<script type="module" src="./app.js?v20260612-lusdt-bridge-v7-premium"></script>
+<script type="module" src="./app.js?v20260612-lusdt-bridge-v8-pro-inri-flow"></script>
 </body>
 </html>

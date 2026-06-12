@@ -1081,7 +1081,7 @@ function renderPendingClaims(entries = []) {
           </div>
           ${used
             ? `<span class="claim-badge done">Minted</span>`
-            : `<button class="mini-btn" type="button" data-bridge-select-claim="${idx}">Select</button>`}
+            : `<div class="claim-actions"><button class="mini-btn" type="button" data-bridge-select-claim="${idx}">Select</button><button class="claim-direct-btn" type="button" data-bridge-mint-direct="${idx}">Mint</button></div>`}
         </div>`;
     }).join("")}
   `;
@@ -1154,6 +1154,15 @@ function updateBridgeQuote() {
   setText("[data-withdraw-fee]", `${formatUnitsSafe(w.fee)} LUSDT`);
   setText("[data-withdraw-receive]", `${formatUnitsSafe(w.net)} USDT`);
   updateDestinationLiquidityNotice();
+}
+
+function refreshBridgeUiLabels() {
+  const source = selectedSource();
+  const destination = selectedDestination();
+  setText("[data-bridge-source-label]", source === "bsc" ? "BSC" : "Polygon");
+  setText("[data-bridge-destination-label]", destination === "bsc" ? "BSC" : "Polygon");
+  const activeTab = document.querySelector("[data-bridge-tab].active")?.getAttribute("data-bridge-tab") || "deposit";
+  setText("[data-bridge-title-action]", activeTab === "withdraw" ? "Sell" : "Buy");
 }
 
 async function refreshBridgeStatus() {
@@ -1271,7 +1280,7 @@ function renderPendingReleases(entries = []) {
           </div>
           ${used
             ? `<span class="claim-badge done">Released</span>`
-            : `<button class="mini-btn" type="button" data-bridge-select-release="${idx}">Select</button>`}
+            : `<div class="claim-actions"><button class="mini-btn" type="button" data-bridge-select-release="${idx}">Select</button><button class="claim-direct-btn" type="button" data-bridge-release-direct="${idx}">Release ${releaseDestinationLabel(release)}</button></div>`}
         </div>`;
     }).join("")}
   `;
@@ -1485,7 +1494,7 @@ async function executeRelease() {
     if (!activeRelease) await findRelease();
     if (!activeRelease) return;
 
-    const destination = activeRelease.destination === "bsc" ? "bsc" : "polygon";
+    const destination = releaseDestinationKey(activeRelease);
     const chain = bridgeChainFor(destination);
     const lockboxAddress = destination === "bsc" ? LUSDT_BSC_LOCKBOX : LUSDT_POLYGON_LOCKBOX;
     const abi = destination === "bsc" ? LOCKBOX_BSC_ABI : LOCKBOX_POLYGON_ABI;
@@ -1524,14 +1533,15 @@ function wireLusdtBridge() {
       document.querySelectorAll("[data-bridge-panel]").forEach((panel) => {
         panel.classList.toggle("hidden", panel.getAttribute("data-bridge-panel") !== selected);
       });
+      refreshBridgeUiLabels();
     });
   });
 
   document.querySelectorAll("[data-bridge-amount],[data-withdraw-amount]").forEach((input) => {
     input.addEventListener("input", updateBridgeQuote);
   });
-  document.querySelector("[data-bridge-source]")?.addEventListener("change", refreshBridgeLiquidity);
-  document.querySelector("[data-bridge-destination]")?.addEventListener("change", updateDestinationLiquidityNotice);
+  document.querySelector("[data-bridge-source]")?.addEventListener("change", () => { refreshBridgeUiLabels(); refreshBridgeLiquidity(); });
+  document.querySelector("[data-bridge-destination]")?.addEventListener("change", () => { refreshBridgeUiLabels(); updateDestinationLiquidityNotice(); });
 
   document.querySelector("[data-bridge-refresh]")?.addEventListener("click", refreshBridgeStatus);
   document.querySelectorAll("[data-bridge-refresh]").forEach((btn) => btn.addEventListener("click", refreshBridgeStatus));
@@ -1544,11 +1554,36 @@ function wireLusdtBridge() {
     const entry = pendingBridgeClaims[Number(btn.getAttribute("data-bridge-select-claim"))];
     if (entry && !entry.used) await prepareActiveClaim(entry.claim, "ok");
   });
+  document.addEventListener("click", async (event) => {
+    const btn = event.target.closest("[data-bridge-mint-direct]");
+    if (!btn) return;
+    const entry = pendingBridgeClaims[Number(btn.getAttribute("data-bridge-mint-direct"))];
+    if (entry && !entry.used) {
+      await prepareActiveClaim(entry.claim, "ok");
+      await mintClaim();
+    }
+  });
   document.querySelector("[data-bridge-burn]")?.addEventListener("click", burnForRelease);
   document.querySelector("[data-bridge-find-release]")?.addEventListener("click", findRelease);
   document.querySelector("[data-bridge-release]")?.addEventListener("click", executeRelease);
+  document.addEventListener("click", async (event) => {
+    const btn = event.target.closest("[data-bridge-select-release]");
+    if (!btn) return;
+    const entry = pendingBridgeReleases[Number(btn.getAttribute("data-bridge-select-release"))];
+    if (entry && !entry.used) await prepareActiveRelease(entry.release, "ok");
+  });
+  document.addEventListener("click", async (event) => {
+    const btn = event.target.closest("[data-bridge-release-direct]");
+    if (!btn) return;
+    const entry = pendingBridgeReleases[Number(btn.getAttribute("data-bridge-release-direct"))];
+    if (entry && !entry.used) {
+      await prepareActiveRelease(entry.release, "ok");
+      await executeRelease();
+    }
+  });
 
   updateBridgeQuote();
+  refreshBridgeUiLabels();
   refreshBridgeStatus();
   refreshBridgeLiquidity();
   setInterval(refreshBridgeStatus, 30000);
