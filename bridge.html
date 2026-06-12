@@ -8,7 +8,7 @@
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css?v20260612-lusdt-bridge-v3-cors-bsc" />
+  <link rel="stylesheet" href="./styles.css?v20260612-lusdt-bridge-v7-premium" />
 </head>
 <body>
 <div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
@@ -71,6 +71,70 @@
       <div class="row"><span>Executor</span><strong data-bridge-executor-short>0xbBC8...f380</strong></div>
       <div class="row"><span>Fee treasury</span><strong data-bridge-fee-recipient>0x5feb...f9D7</strong></div>
       <div class="bridge-status-log" data-bridge-log>Connect your wallet to start. API data loads automatically.</div>
+    </div>
+  </section>
+
+  <section class="bridge-overview-shell" aria-label="Bridge overview and routing">
+    <div class="bridge-route-showcase box">
+      <div class="bridge-section-head">
+        <div>
+          <small>Bridge routes</small>
+          <h2>One premium page, all practical actions</h2>
+          <p>Use the same operational logic as the INRI bridge, adapted for LUST with Polygon and BSC liquidity routes.</p>
+        </div>
+      </div>
+
+      <div class="bridge-route-grid">
+        <article class="bridge-route-card">
+          <div class="bridge-route-icon"><img src="./assets/polygon-logo.svg" alt="Polygon" /></div>
+          <div>
+            <small>Deposit route</small>
+            <h3>Polygon USDT</h3>
+            <p>Deposit canonical Polygon USDT and mint LUSDT on LUST.</p>
+          </div>
+        </article>
+
+        <article class="bridge-route-card bridge-route-card--center">
+          <div class="bridge-route-icon bridge-route-icon--lust"><img src="./assets/lust-logo.png" alt="LUST" /></div>
+          <div>
+            <small>Settlement layer</small>
+            <h3>LUST Chain</h3>
+            <p>LUSDT is minted and burned on LUST. Fees stay in LUSDT on the treasury wallet.</p>
+          </div>
+        </article>
+
+        <article class="bridge-route-card">
+          <div class="bridge-route-icon bridge-route-icon--bsc">BSC</div>
+          <div>
+            <small>Cross route</small>
+            <h3>BNB Smart Chain</h3>
+            <p>Users can exit to BSC when the destination reserve has enough available USDT.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="bridge-metrics-grid grid four">
+      <div class="box bridge-metric-card">
+        <small>Ready claims</small>
+        <strong data-bridge-claims-count>0</strong>
+        <span>Deposits already signed and waiting for mint.</span>
+      </div>
+      <div class="box bridge-metric-card">
+        <small>Ready releases</small>
+        <strong data-bridge-releases-count>0</strong>
+        <span>Burns already signed and waiting for USDT release.</span>
+      </div>
+      <div class="box bridge-metric-card">
+        <small>Bridge fee</small>
+        <strong data-bridge-fee-percent>0.20%</strong>
+        <span>Charged on the bridge flow and retained in LUSDT.</span>
+      </div>
+      <div class="box bridge-metric-card">
+        <small>Security</small>
+        <strong data-bridge-validator-summary>2 / 4</strong>
+        <span>Validator threshold used by the bridge contracts.</span>
+      </div>
     </div>
   </section>
 
@@ -250,6 +314,6 @@
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
-<script type="module" src="./app.js?v20260612-lusdt-bridge-v3-cors-bsc"></script>
+<script type="module" src="./app.js?v20260612-lusdt-bridge-v7-premium"></script>
 </body>
 </html>

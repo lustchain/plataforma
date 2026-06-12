@@ -1169,6 +1169,10 @@ async function refreshBridgeStatus() {
     setText("[data-bridge-lusdt-short]", bridgeShort(stats?.config?.token?.address || LUSDT_TOKEN_ADDRESS));
     setText("[data-bridge-executor-short]", bridgeShort(stats?.config?.contracts?.lustExecutor || LUSDT_EXECUTOR_ADDRESS));
     setText("[data-bridge-fee-recipient]", bridgeShort(stats?.config?.fee?.recipient || ""));
+    setText("[data-bridge-claims-count]", String(stats?.claims ?? 0));
+    setText("[data-bridge-releases-count]", String(stats?.releases ?? 0));
+    setText("[data-bridge-fee-percent]", `${Number(stats?.config?.fee?.feePercent ?? 0.2).toFixed(2)}%`);
+    setText("[data-bridge-validator-summary]", `${health.threshold || "2"} / ${health.validatorCount || "4"}`);
     bridgeLog(`Bridge API online. Claims: ${stats.claims || 0}. Releases: ${stats.releases || 0}.`, "ok");
     refreshBridgeLiquidity().catch(() => {});
     if (walletState.connected && walletState.address && Number(stats.claims || 0) > 0) {
