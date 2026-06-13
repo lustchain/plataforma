@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Swap | LUST Platform</title>
-  <meta name="description" content="LUST Chain platform." />
-    <link rel="icon" href="./assets/favicon.ico">
+  <title>LUSTSwap | LUST Platform</title>
+  <meta name="description" content="Swap, create pools and manage liquidity on LUST Chain." />
+  <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-<link rel="stylesheet" href="./styles.css?v20260610-miner-launch-v1" />
+  <link rel="stylesheet" href="./styles.css?v20260613-lustswap-v1" />
 </head>
 <body>
 <div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
@@ -46,8 +46,173 @@
   </div>
 </header>
 
-<main class="wrap page">
-<section class="hero"><div class="kicker">Swap</div><h1>Swap LST and LUSDT.</h1><p>Simple swap page reserved for WLST/LST/LUSDT trading. Keep only swap information here.</p><div class="form"><label>From</label><div class="input">LST</div><label>To</label><div class="input">LUSDT</div><div class="notice">Swap contracts/liquidity links can be added here when the router is ready.</div><div class="hero-buttons"><a class="btn primary" href="#">Open Swap</a></div></div></section>
+<main class="wrap page dex-page" data-lustswap-page>
+  <section class="dex-hero hero">
+    <div class="kicker">LUSTSwap</div>
+    <h1>Swap, create pools and grow LUST liquidity.</h1>
+    <p>Professional LUST Chain DEX interface for LST, WLST, LUSDT and community tokens. The swap uses tax-token safe functions by default.</p>
+
+    <div class="dex-contract-strip">
+      <a href="https://explorer.lustchain.org/address/0x62883a46b045cf1811dfdbec3fe0eadc78f888f0" target="_blank" rel="noreferrer">
+        <small>Router</small><strong data-lustswap-router-short>0x6288...88f0</strong>
+      </a>
+      <a href="https://explorer.lustchain.org/address/0x97e0b70fc246bf98db90d94c10b3409a809319bd" target="_blank" rel="noreferrer">
+        <small>Factory</small><strong data-lustswap-factory-short>0x97e0...19bD</strong>
+      </a>
+      <a href="https://explorer.lustchain.org/address/0xf8e57f2ee77b13f6673155308c9c431ce9f90d86" target="_blank" rel="noreferrer">
+        <small>WLST</small><strong data-lustswap-wlst-short>0xf8E5...0D86</strong>
+      </a>
+      <div>
+        <small>Status</small><strong data-lustswap-status-short>Launch setup</strong>
+      </div>
+    </div>
+  </section>
+
+  <section class="dex-layout">
+    <section class="dex-card swap-card" id="swap">
+      <div class="dex-card-head">
+        <div>
+          <small>Trade</small>
+          <h2>Swap</h2>
+        </div>
+        <button class="btn ghost small" type="button" data-swap-refresh>Refresh</button>
+      </div>
+
+      <div class="token-box">
+        <div class="token-box-top">
+          <label>From</label>
+          <button class="mini-link" type="button" data-swap-max>Max</button>
+        </div>
+        <div class="token-input-row">
+          <input class="dex-amount" data-swap-from-amount inputmode="decimal" placeholder="0.0" />
+          <select class="token-select" data-lustswap-token-select data-swap-from-token></select>
+        </div>
+        <div class="token-meta"><span>Balance</span><strong data-swap-from-balance>--</strong></div>
+      </div>
+
+      <div class="swap-flip-wrap">
+        <button class="swap-flip" type="button" data-swap-flip aria-label="Flip tokens">↓</button>
+      </div>
+
+      <div class="token-box">
+        <div class="token-box-top">
+          <label>To</label>
+          <span class="mini-label">Estimated</span>
+        </div>
+        <div class="token-input-row">
+          <input class="dex-amount" data-swap-to-amount inputmode="decimal" placeholder="0.0" readonly />
+          <select class="token-select" data-lustswap-token-select data-swap-to-token></select>
+        </div>
+        <div class="token-meta"><span>Balance</span><strong data-swap-to-balance>--</strong></div>
+      </div>
+
+      <div class="dex-settings two-cols">
+        <label>Slippage %<input class="input" data-swap-slippage value="1.0" inputmode="decimal"></label>
+        <label>Deadline min<input class="input" data-swap-deadline value="20" inputmode="numeric"></label>
+      </div>
+
+      <div class="quote-box">
+        <div><span>Route</span><strong data-swap-route>--</strong></div>
+        <div><span>Minimum received</span><strong data-swap-min>--</strong></div>
+        <div><span>Pair</span><strong data-swap-pair>--</strong></div>
+      </div>
+
+      <button class="btn primary dex-main-btn" type="button" data-swap-execute>Connect wallet / Swap</button>
+      <div class="dex-log" data-swap-log>Ready. Add liquidity first if a pair does not exist.</div>
+    </section>
+
+    <aside class="dex-side">
+      <section class="dex-card import-card">
+        <div class="dex-card-head compact">
+          <div>
+            <small>Tokens</small>
+            <h3>Import token</h3>
+          </div>
+        </div>
+        <p>Add any ERC-20 on LUST Chain by address. Imported tokens appear in Swap and Pool Manager.</p>
+        <input class="input mono" data-token-import-address placeholder="0x token address" />
+        <button class="btn primary full" type="button" data-token-import>Import token</button>
+        <div class="dex-log compact" data-token-import-log>Default list: LST, WLST and LUSDT.</div>
+      </section>
+
+      <section class="dex-card info-card">
+        <small>Safe by default</small>
+        <h3>Tax-token compatible</h3>
+        <p>The interface uses the supporting fee-on-transfer swap calls and smart liquidity functions. For tokens with transfer tax, increase slippage enough to cover the token fee.</p>
+        <div class="mini-grid">
+          <div><span>Swap fee</span><strong>0.30%</strong></div>
+          <div><span>Native</span><strong>LST</strong></div>
+          <div><span>Wrapped</span><strong>WLST</strong></div>
+          <div><span>Stable</span><strong>LUSDT</strong></div>
+        </div>
+      </section>
+    </aside>
+  </section>
+
+  <section class="dex-card pool-card" id="pools">
+    <div class="dex-card-head">
+      <div>
+        <small>Liquidity</small>
+        <h2>Pool Manager</h2>
+      </div>
+      <a class="btn ghost small" href="https://explorer.lustchain.org/address/0x97e0b70fc246bf98db90d94c10b3409a809319bd" target="_blank" rel="noreferrer">Open Factory</a>
+    </div>
+
+    <div class="pool-grid">
+      <div class="pool-panel">
+        <h3>Create or add liquidity</h3>
+        <p>Create pools for LST/token, LUSDT/token or token/token. If the pool does not exist, the router creates it automatically.</p>
+
+        <div class="token-box slim">
+          <div class="token-box-top"><label>Token A</label><span class="mini-label" data-pool-balance-a>Balance --</span></div>
+          <div class="token-input-row">
+            <input class="dex-amount" data-pool-amount-a inputmode="decimal" placeholder="0.0" />
+            <select class="token-select" data-lustswap-token-select data-pool-token-a></select>
+          </div>
+        </div>
+
+        <div class="token-box slim">
+          <div class="token-box-top"><label>Token B</label><span class="mini-label" data-pool-balance-b>Balance --</span></div>
+          <div class="token-input-row">
+            <input class="dex-amount" data-pool-amount-b inputmode="decimal" placeholder="0.0" />
+            <select class="token-select" data-lustswap-token-select data-pool-token-b></select>
+          </div>
+        </div>
+
+        <div class="dex-settings two-cols">
+          <label>Pool slippage %<input class="input" data-pool-slippage value="5.0" inputmode="decimal"></label>
+          <label>Deadline min<input class="input" data-pool-deadline value="20" inputmode="numeric"></label>
+        </div>
+
+        <div class="quote-box">
+          <div><span>Pair status</span><strong data-pool-pair-status>--</strong></div>
+          <div><span>Pair address</span><strong data-pool-pair-address>--</strong></div>
+          <div><span>Total pools</span><strong data-pool-count>--</strong></div>
+        </div>
+
+        <div class="hero-buttons compact-buttons">
+          <button class="btn ghost" type="button" data-pool-check>Check pair</button>
+          <button class="btn primary" type="button" data-pool-add>Add liquidity</button>
+        </div>
+        <div class="dex-log" data-pool-log>Use small amounts first while the public launch is being prepared.</div>
+      </div>
+
+      <div class="pool-panel remove-panel">
+        <h3>Remove liquidity</h3>
+        <p>Select the same pair, enter your LP amount and receive the underlying assets back. Choose LST instead of WLST if you want native LST returned.</p>
+        <input class="input" data-remove-lp-amount inputmode="decimal" placeholder="LP amount to remove" />
+        <div class="quote-box">
+          <div><span>Your LP balance</span><strong data-remove-lp-balance>--</strong></div>
+          <div><span>Estimated output</span><strong data-remove-estimate>--</strong></div>
+        </div>
+        <div class="hero-buttons compact-buttons">
+          <button class="btn ghost" type="button" data-remove-refresh>Refresh LP</button>
+          <button class="btn primary" type="button" data-remove-liquidity>Remove liquidity</button>
+        </div>
+        <div class="dex-log" data-remove-log>LP token is the pair contract created by the Factory.</div>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer class="footer">
@@ -57,6 +222,6 @@
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
-<script type="module" src="./app.js?v20260610-miner-launch-v1"></script>
+<script type="module" src="./app.js?v20260613-lustswap-v1"></script>
 </body>
 </html>

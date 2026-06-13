@@ -3118,3 +3118,654 @@ window.lustP2P = {
 };
 
 wireLustP2P();
+
+// LUSTSwap frontend v20260613-complete-dex-v1
+const LUSTSWAP_FACTORY_ADDRESS = "0x97e0b70fc246bf98db90d94c10b3409a809319bd";
+const LUSTSWAP_ROUTER_ADDRESS = "0x62883a46b045cf1811dfdbec3fe0eadc78f888f0";
+const LUSTSWAP_WLST_ADDRESS = "0xf8e57f2ee77b13f6673155308c9c431ce9f90d86";
+const LUSTSWAP_LUSDT_ADDRESS = "0x1e8636066d7e86de0a8bd6acb1e54be129ac19ae";
+const LUSTSWAP_NATIVE = "LST_NATIVE";
+const LUSTSWAP_ZERO = "0x0000000000000000000000000000000000000000";
+const LUSTSWAP_TOKEN_STORAGE_KEY = "lustswapImportedTokens:v1";
+
+const LUSTSWAP_ERC20_ABI = [
+  "function name() view returns (string)",
+  "function symbol() view returns (string)",
+  "function decimals() view returns (uint8)",
+  "function totalSupply() view returns (uint256)",
+  "function balanceOf(address) view returns (uint256)",
+  "function allowance(address owner,address spender) view returns (uint256)",
+  "function approve(address spender,uint256 amount) returns (bool)"
+];
+
+const LUSTSWAP_FACTORY_ABI = [
+  "function getPair(address tokenA,address tokenB) view returns (address pair)",
+  "function allPairsLength() view returns (uint256)",
+  "function feeTo() view returns (address)",
+  "function feeToSetter() view returns (address)"
+];
+
+const LUSTSWAP_ROUTER_ABI = [
+  "function factory() view returns (address)",
+  "function WLST() view returns (address)",
+  "function wrapLST(address to) payable returns (uint256)",
+  "function unwrapLST(uint256 amountWLST,address to) returns (uint256)",
+  "function getAmountsOut(uint256 amountIn,address[] path) view returns (uint256[] amounts)",
+  "function addLiquiditySmart(address tokenA,address tokenB,uint256 amountADesired,uint256 amountBDesired,uint256 amountAMin,uint256 amountBMin,address to,uint256 deadline) returns (uint256 amountA,uint256 amountB,uint256 liquidity)",
+  "function addLiquidityLSTSmart(address token,uint256 amountTokenDesired,uint256 amountTokenMin,uint256 amountLSTMin,address to,uint256 deadline) payable returns (uint256 amountToken,uint256 amountLST,uint256 liquidity)",
+  "function removeLiquiditySmart(address tokenA,address tokenB,uint256 liquidity,uint256 amountAMin,uint256 amountBMin,address to,uint256 deadline) returns (uint256 amountA,uint256 amountB)",
+  "function removeLiquidityLSTSmart(address token,uint256 liquidity,uint256 amountTokenMin,uint256 amountLSTMin,address to,uint256 deadline) returns (uint256 amountToken,uint256 amountLST)",
+  "function swapExactTokensForTokensSupportingFeeOnTransferTokens(uint256 amountIn,uint256 amountOutMin,address[] path,address to,uint256 deadline)",
+  "function swapExactLSTForTokensSupportingFeeOnTransferTokens(uint256 amountOutMin,address[] path,address to,uint256 deadline) payable",
+  "function swapExactTokensForLSTSupportingFeeOnTransferTokens(uint256 amountIn,uint256 amountOutMin,address[] path,address to,uint256 deadline)"
+];
+
+const LUSTSWAP_PAIR_ABI = [
+  "function token0() view returns (address)",
+  "function token1() view returns (address)",
+  "function getReserves() view returns (uint112 reserve0,uint112 reserve1,uint32 blockTimestampLast)",
+  "function totalSupply() view returns (uint256)",
+  "function balanceOf(address) view returns (uint256)",
+  "function allowance(address owner,address spender) view returns (uint256)",
+  "function approve(address spender,uint256 amount) returns (bool)",
+  "function symbol() view returns (string)"
+];
+
+function lustswapHasPage() {
+  return Boolean(document.querySelector("[data-lustswap-page]"));
+}
+
+function lustswapShort(value) {
+  return value ? `${value.slice(0, 6)}...${value.slice(-4)}` : "--";
+}
+
+function lustswapLog(selector, message, tone = "") {
+  const el = document.querySelector(selector);
+  if (!el) return;
+  el.textContent = message;
+  el.dataset.tone = tone;
+}
+
+function lustswapSet(selector, message) {
+  const el = document.querySelector(selector);
+  if (el) el.textContent = message;
+}
+
+function lustswapProvider() {
+  return new ethers.JsonRpcProvider("https://rpc.lustchain.org", LUST_CHAIN_ID_DECIMAL);
+}
+
+function lustswapDefaultTokens() {
+  return [
+    { key: LUSTSWAP_NATIVE, address: LUSTSWAP_NATIVE, symbol: "LST", name: "LUST Native", decimals: 18, native: true },
+    { key: LUSTSWAP_WLST_ADDRESS, address: LUSTSWAP_WLST_ADDRESS, symbol: "WLST", name: "Wrapped LST", decimals: 18, native: false },
+    { key: LUSTSWAP_LUSDT_ADDRESS, address: LUSTSWAP_LUSDT_ADDRESS, symbol: "LUSDT", name: "LUST USD", decimals: 6, native: false }
+  ];
+}
+
+function lustswapLoadImportedTokens() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(LUSTSWAP_TOKEN_STORAGE_KEY) || "[]");
+    return Array.isArray(raw) ? raw.filter((t) => t?.address && t?.symbol) : [];
+  } catch (_) {
+    return [];
+  }
+}
+
+let lustswapTokens = [...lustswapDefaultTokens(), ...lustswapLoadImportedTokens()];
+
+function lustswapSaveImportedTokens() {
+  const defaults = new Set(lustswapDefaultTokens().map((t) => String(t.address).toLowerCase()));
+  const custom = lustswapTokens.filter((t) => !t.native && !defaults.has(String(t.address).toLowerCase()));
+  localStorage.setItem(LUSTSWAP_TOKEN_STORAGE_KEY, JSON.stringify(custom));
+}
+
+function lustswapFindToken(value) {
+  const key = String(value || "").toLowerCase();
+  return lustswapTokens.find((t) => String(t.address).toLowerCase() === key || String(t.key).toLowerCase() === key) || null;
+}
+
+function lustswapTokenSymbol(value) {
+  return lustswapFindToken(value)?.symbol || "TOKEN";
+}
+
+function lustswapTokenDecimals(value) {
+  return Number(lustswapFindToken(value)?.decimals ?? 18);
+}
+
+function lustswapIsNative(value) {
+  return String(value || "") === LUSTSWAP_NATIVE;
+}
+
+function lustswapPairAddressOf(value) {
+  if (lustswapIsNative(value)) return LUSTSWAP_WLST_ADDRESS;
+  return String(value || "").toLowerCase();
+}
+
+function lustswapFormat(value, decimals = 18, precision = 6) {
+  try {
+    const text = ethers.formatUnits(BigInt(value || 0), decimals);
+    const [a, b = ""] = text.split(".");
+    const cut = b.padEnd(precision, "0").slice(0, precision);
+    return precision > 0 ? `${a}.${cut}` : a;
+  } catch (_) {
+    return precision > 0 ? `0.${"0".repeat(precision)}` : "0";
+  }
+}
+
+function lustswapParseAmount(raw, decimals, label = "amount") {
+  const value = String(raw || "").trim().replace(",", ".");
+  if (!value || Number(value) <= 0 || !Number.isFinite(Number(value))) throw new Error(`Enter a valid ${label}.`);
+  return ethers.parseUnits(value, decimals);
+}
+
+function lustswapBpsFromInput(selector, fallback = 100) {
+  const n = Number(String(document.querySelector(selector)?.value || "").replace(",", "."));
+  if (!Number.isFinite(n) || n < 0) return BigInt(fallback);
+  return BigInt(Math.min(Math.floor(n * 100), 9500));
+}
+
+function lustswapDeadline(selector) {
+  const minutes = Math.max(1, Math.min(180, Number(document.querySelector(selector)?.value || 20) || 20));
+  return BigInt(Math.floor(Date.now() / 1000) + Math.floor(minutes * 60));
+}
+
+function lustswapApplySlippage(amount, bps) {
+  return BigInt(amount || 0) * (10000n - BigInt(bps || 0)) / 10000n;
+}
+
+async function lustswapSwitchToLust() {
+  const eth = getInjectedEthereum();
+  if (!eth) throw new Error("MetaMask or injected wallet not found.");
+  const current = normalizeChainId(await eth.request({ method: "eth_chainId" }).catch(() => ""));
+  if (current === LUST_CHAIN_ID_HEX) return;
+  try {
+    await eth.request({ method: "wallet_switchEthereumChain", params: [{ chainId: LUST_CHAIN_ID_HEX }] });
+  } catch (err) {
+    await eth.request({
+      method: "wallet_addEthereumChain",
+      params: [{
+        chainId: LUST_CHAIN_ID_HEX,
+        chainName: "LUST Chain",
+        nativeCurrency: { name: "LST", symbol: "LST", decimals: 18 },
+        rpcUrls: ["https://rpc.lustchain.org"],
+        blockExplorerUrls: ["https://explorer.lustchain.org"]
+      }]
+    });
+    await eth.request({ method: "wallet_switchEthereumChain", params: [{ chainId: LUST_CHAIN_ID_HEX }] });
+  }
+}
+
+async function lustswapSigner() {
+  const eth = getInjectedEthereum();
+  if (!eth) throw new Error("MetaMask or injected wallet not found.");
+  await eth.request({ method: "eth_requestAccounts" });
+  await lustswapSwitchToLust();
+  const provider = new ethers.BrowserProvider(eth);
+  return provider.getSigner();
+}
+
+async function lustswapApproveIfNeeded(tokenAddress, spender, amount, signer, logSelector) {
+  const token = new ethers.Contract(tokenAddress, LUSTSWAP_ERC20_ABI, signer);
+  const owner = await signer.getAddress();
+  const allowance = await token.allowance(owner, spender);
+  if (allowance >= amount) return null;
+  lustswapLog(logSelector, `Approval needed for ${lustswapShort(tokenAddress)}. Confirm in wallet...`);
+  const tx = await token.approve(spender, amount);
+  lustswapLog(logSelector, `Approval sent: ${tx.hash}. Waiting confirmation...`);
+  await tx.wait();
+  return tx.hash;
+}
+
+async function lustswapBalance(value, account, provider) {
+  if (!account) return 0n;
+  if (lustswapIsNative(value)) return await provider.getBalance(account);
+  const token = new ethers.Contract(lustswapPairAddressOf(value), LUSTSWAP_ERC20_ABI, provider);
+  return await token.balanceOf(account);
+}
+
+function lustswapRenderTokenOptions() {
+  if (!lustswapHasPage()) return;
+  const unique = [];
+  const seen = new Set();
+  for (const token of lustswapTokens) {
+    const id = String(token.address).toLowerCase();
+    if (seen.has(id)) continue;
+    seen.add(id);
+    unique.push(token);
+  }
+  lustswapTokens = unique;
+
+  document.querySelectorAll("[data-lustswap-token-select]").forEach((select) => {
+    const prev = select.value;
+    const defaultValue = select.hasAttribute("data-swap-from-token") ? LUSTSWAP_NATIVE
+      : select.hasAttribute("data-swap-to-token") ? LUSTSWAP_LUSDT_ADDRESS
+      : select.hasAttribute("data-pool-token-a") ? LUSTSWAP_NATIVE
+      : select.hasAttribute("data-pool-token-b") ? LUSTSWAP_LUSDT_ADDRESS
+      : LUSTSWAP_NATIVE;
+    select.innerHTML = lustswapTokens.map((token) => {
+      const value = token.native ? LUSTSWAP_NATIVE : token.address;
+      return `<option value="${value}">${token.symbol}</option>`;
+    }).join("");
+    select.value = prev && [...select.options].some((o) => o.value === prev) ? prev : defaultValue;
+  });
+}
+
+async function lustswapImportToken() {
+  const input = document.querySelector("[data-token-import-address]");
+  const raw = String(input?.value || "").trim();
+  try {
+    const address = ethers.getAddress(raw).toLowerCase();
+    if (address === LUSTSWAP_WLST_ADDRESS || address === LUSTSWAP_LUSDT_ADDRESS) {
+      lustswapLog("[data-token-import-log]", "This token is already in the default list.", "ok");
+      return;
+    }
+    if (lustswapFindToken(address)) {
+      lustswapLog("[data-token-import-log]", "This token is already imported.", "ok");
+      return;
+    }
+    const provider = lustswapProvider();
+    const token = new ethers.Contract(address, LUSTSWAP_ERC20_ABI, provider);
+    const [decimals, symbolResult, nameResult] = await Promise.all([
+      token.decimals(),
+      token.symbol().catch(() => "TOKEN"),
+      token.name().catch(() => "Imported Token")
+    ]);
+    const symbol = String(symbolResult || "TOKEN").slice(0, 18).replace(/[^a-zA-Z0-9_$.-]/g, "") || "TOKEN";
+    const name = String(nameResult || "Imported Token").slice(0, 64);
+    lustswapTokens.push({ key: address, address, symbol, name, decimals: Number(decimals), native: false });
+    lustswapSaveImportedTokens();
+    lustswapRenderTokenOptions();
+    document.querySelectorAll("[data-swap-to-token], [data-pool-token-b]").forEach((el) => { el.value = address; });
+    lustswapLog("[data-token-import-log]", `${symbol} imported successfully.`, "ok");
+    input.value = "";
+    lustswapUpdateAll();
+  } catch (err) {
+    console.error(err);
+    lustswapLog("[data-token-import-log]", err?.message || "Could not import token.", "warn");
+  }
+}
+
+async function lustswapGetPair(addrA, addrB, provider = lustswapProvider()) {
+  if (!addrA || !addrB || addrA.toLowerCase() === addrB.toLowerCase()) return LUSTSWAP_ZERO;
+  const factory = new ethers.Contract(LUSTSWAP_FACTORY_ADDRESS, LUSTSWAP_FACTORY_ABI, provider);
+  return await factory.getPair(addrA, addrB);
+}
+
+async function lustswapBuildRoute(fromValue, toValue, amountIn = 0n) {
+  const fromAddr = lustswapPairAddressOf(fromValue);
+  const toAddr = lustswapPairAddressOf(toValue);
+  if (fromAddr === toAddr) {
+    if (lustswapIsNative(fromValue) && !lustswapIsNative(toValue)) return { special: "wrap", path: [fromAddr], route: "Wrap LST → WLST", pair: "1:1" };
+    if (!lustswapIsNative(fromValue) && lustswapIsNative(toValue)) return { special: "unwrap", path: [fromAddr], route: "Unwrap WLST → LST", pair: "1:1" };
+    throw new Error("Choose two different assets.");
+  }
+
+  const provider = lustswapProvider();
+  const direct = await lustswapGetPair(fromAddr, toAddr, provider);
+  if (String(direct).toLowerCase() !== LUSTSWAP_ZERO) {
+    return { special: "swap", path: [fromAddr, toAddr], route: "Direct pool", pair: direct };
+  }
+
+  if (fromAddr !== LUSTSWAP_WLST_ADDRESS && toAddr !== LUSTSWAP_WLST_ADDRESS) {
+    const p1 = await lustswapGetPair(fromAddr, LUSTSWAP_WLST_ADDRESS, provider);
+    const p2 = await lustswapGetPair(LUSTSWAP_WLST_ADDRESS, toAddr, provider);
+    if (String(p1).toLowerCase() !== LUSTSWAP_ZERO && String(p2).toLowerCase() !== LUSTSWAP_ZERO) {
+      return { special: "swap", path: [fromAddr, LUSTSWAP_WLST_ADDRESS, toAddr], route: "Via WLST", pair: `${lustswapShort(p1)} + ${lustswapShort(p2)}` };
+    }
+  }
+
+  return { special: "missing", path: [fromAddr, toAddr], route: "No pool found", pair: LUSTSWAP_ZERO, amountIn };
+}
+
+async function lustswapUpdateSwap() {
+  if (!lustswapHasPage()) return;
+  const from = document.querySelector("[data-swap-from-token]")?.value || LUSTSWAP_NATIVE;
+  const to = document.querySelector("[data-swap-to-token]")?.value || LUSTSWAP_LUSDT_ADDRESS;
+  const amountText = document.querySelector("[data-swap-from-amount]")?.value || "";
+  const provider = lustswapProvider();
+  const account = walletState.address || appKit.getAddress?.() || "";
+
+  try {
+    const [fromBal, toBal] = await Promise.all([
+      lustswapBalance(from, account, provider).catch(() => 0n),
+      lustswapBalance(to, account, provider).catch(() => 0n)
+    ]);
+    lustswapSet("[data-swap-from-balance]", `${lustswapFormat(fromBal, lustswapTokenDecimals(from), 6)} ${lustswapTokenSymbol(from)}`);
+    lustswapSet("[data-swap-to-balance]", `${lustswapFormat(toBal, lustswapTokenDecimals(to), 6)} ${lustswapTokenSymbol(to)}`);
+  } catch (_) {
+    lustswapSet("[data-swap-from-balance]", "--");
+    lustswapSet("[data-swap-to-balance]", "--");
+  }
+
+  if (!amountText) {
+    lustswapSet("[data-swap-to-amount]", "");
+    lustswapSet("[data-swap-route]", "--");
+    lustswapSet("[data-swap-min]", "--");
+    lustswapSet("[data-swap-pair]", "--");
+    return;
+  }
+
+  try {
+    const amountIn = lustswapParseAmount(amountText, lustswapTokenDecimals(from), "swap amount");
+    const route = await lustswapBuildRoute(from, to, amountIn);
+    lustswapSet("[data-swap-route]", route.route);
+    lustswapSet("[data-swap-pair]", route.pair === "1:1" ? "WLST wrapper" : route.pair === LUSTSWAP_ZERO ? "Create pool first" : route.pair);
+
+    if (route.special === "wrap" || route.special === "unwrap") {
+      lustswapSet("[data-swap-to-amount]", lustswapFormat(amountIn, 18, 6));
+      lustswapSet("[data-swap-min]", `${lustswapFormat(amountIn, 18, 6)} ${lustswapTokenSymbol(to)}`);
+      lustswapLog("[data-swap-log]", "Ready for 1:1 wrap/unwrap.", "ok");
+      return;
+    }
+
+    if (route.special === "missing") {
+      lustswapSet("[data-swap-to-amount]", "");
+      lustswapSet("[data-swap-min]", "No liquidity");
+      lustswapLog("[data-swap-log]", "No pool exists yet. Create it in Pool Manager below.", "warn");
+      return;
+    }
+
+    const router = new ethers.Contract(LUSTSWAP_ROUTER_ADDRESS, LUSTSWAP_ROUTER_ABI, provider);
+    const amounts = await router.getAmountsOut(amountIn, route.path);
+    const out = amounts[amounts.length - 1];
+    const minOut = lustswapApplySlippage(out, lustswapBpsFromInput("[data-swap-slippage]", 100));
+    lustswapSet("[data-swap-to-amount]", lustswapFormat(out, lustswapTokenDecimals(to), 6));
+    lustswapSet("[data-swap-min]", `${lustswapFormat(minOut, lustswapTokenDecimals(to), 6)} ${lustswapTokenSymbol(to)}`);
+    lustswapLog("[data-swap-log]", "Quote ready. For tax tokens, use higher slippage if the token charges transfer fees.", "ok");
+  } catch (err) {
+    lustswapSet("[data-swap-to-amount]", "");
+    lustswapSet("[data-swap-route]", "--");
+    lustswapSet("[data-swap-min]", "--");
+    lustswapSet("[data-swap-pair]", "--");
+    lustswapLog("[data-swap-log]", err?.message || "Could not quote swap.", "warn");
+  }
+}
+
+async function lustswapExecuteSwap() {
+  try {
+    const from = document.querySelector("[data-swap-from-token]")?.value || LUSTSWAP_NATIVE;
+    const to = document.querySelector("[data-swap-to-token]")?.value || LUSTSWAP_LUSDT_ADDRESS;
+    const amountText = document.querySelector("[data-swap-from-amount]")?.value || "";
+    const amountIn = lustswapParseAmount(amountText, lustswapTokenDecimals(from), "swap amount");
+    const signer = await lustswapSigner();
+    const account = await signer.getAddress();
+    const router = new ethers.Contract(LUSTSWAP_ROUTER_ADDRESS, LUSTSWAP_ROUTER_ABI, signer);
+    const route = await lustswapBuildRoute(from, to, amountIn);
+
+    let tx;
+    if (route.special === "wrap") {
+      lustswapLog("[data-swap-log]", "Wrapping LST into WLST. Confirm in wallet...");
+      tx = await router.wrapLST(account, { value: amountIn });
+    } else if (route.special === "unwrap") {
+      await lustswapApproveIfNeeded(LUSTSWAP_WLST_ADDRESS, LUSTSWAP_ROUTER_ADDRESS, amountIn, signer, "[data-swap-log]");
+      lustswapLog("[data-swap-log]", "Unwrapping WLST into LST. Confirm in wallet...");
+      tx = await router.unwrapLST(amountIn, account);
+    } else if (route.special === "missing") {
+      throw new Error("No pool exists for this route. Create liquidity first.");
+    } else {
+      const provider = lustswapProvider();
+      const readRouter = new ethers.Contract(LUSTSWAP_ROUTER_ADDRESS, LUSTSWAP_ROUTER_ABI, provider);
+      const amounts = await readRouter.getAmountsOut(amountIn, route.path);
+      const minOut = lustswapApplySlippage(amounts[amounts.length - 1], lustswapBpsFromInput("[data-swap-slippage]", 100));
+      const deadline = lustswapDeadline("[data-swap-deadline]");
+
+      if (!lustswapIsNative(from)) {
+        await lustswapApproveIfNeeded(route.path[0], LUSTSWAP_ROUTER_ADDRESS, amountIn, signer, "[data-swap-log]");
+      }
+
+      lustswapLog("[data-swap-log]", "Opening swap confirmation in wallet...");
+      if (lustswapIsNative(from)) {
+        tx = await router.swapExactLSTForTokensSupportingFeeOnTransferTokens(minOut, route.path, account, deadline, { value: amountIn });
+      } else if (lustswapIsNative(to)) {
+        tx = await router.swapExactTokensForLSTSupportingFeeOnTransferTokens(amountIn, minOut, route.path, account, deadline);
+      } else {
+        tx = await router.swapExactTokensForTokensSupportingFeeOnTransferTokens(amountIn, minOut, route.path, account, deadline);
+      }
+    }
+
+    lustswapLog("[data-swap-log]", `Transaction sent: ${tx.hash}. Waiting confirmation...`);
+    await tx.wait();
+    lustswapLog("[data-swap-log]", `Swap confirmed: ${tx.hash}`, "ok");
+    setTimeout(lustswapUpdateAll, 1200);
+  } catch (err) {
+    console.error(err);
+    lustswapLog("[data-swap-log]", err?.shortMessage || err?.message || "Swap failed or was rejected.", "warn");
+  }
+}
+
+async function lustswapUpdatePool() {
+  if (!lustswapHasPage()) return;
+  const a = document.querySelector("[data-pool-token-a]")?.value || LUSTSWAP_NATIVE;
+  const b = document.querySelector("[data-pool-token-b]")?.value || LUSTSWAP_LUSDT_ADDRESS;
+  const addrA = lustswapPairAddressOf(a);
+  const addrB = lustswapPairAddressOf(b);
+  const provider = lustswapProvider();
+  const account = walletState.address || appKit.getAddress?.() || "";
+
+  try {
+    const factory = new ethers.Contract(LUSTSWAP_FACTORY_ADDRESS, LUSTSWAP_FACTORY_ABI, provider);
+    const count = await factory.allPairsLength().catch(() => null);
+    if (count !== null) lustswapSet("[data-pool-count]", String(count));
+
+    const [balA, balB] = await Promise.all([
+      lustswapBalance(a, account, provider).catch(() => 0n),
+      lustswapBalance(b, account, provider).catch(() => 0n)
+    ]);
+    lustswapSet("[data-pool-balance-a]", `Balance ${lustswapFormat(balA, lustswapTokenDecimals(a), 6)}`);
+    lustswapSet("[data-pool-balance-b]", `Balance ${lustswapFormat(balB, lustswapTokenDecimals(b), 6)}`);
+
+    if (addrA === addrB) {
+      lustswapSet("[data-pool-pair-status]", "Invalid pair");
+      lustswapSet("[data-pool-pair-address]", "Choose different assets");
+      lustswapSet("[data-remove-lp-balance]", "--");
+      lustswapSet("[data-remove-estimate]", "--");
+      return;
+    }
+
+    const pair = await factory.getPair(addrA, addrB);
+    if (String(pair).toLowerCase() === LUSTSWAP_ZERO) {
+      lustswapSet("[data-pool-pair-status]", "New pool");
+      lustswapSet("[data-pool-pair-address]", "Will be created on add liquidity");
+      lustswapSet("[data-remove-lp-balance]", "No LP yet");
+      lustswapSet("[data-remove-estimate]", "--");
+      return;
+    }
+
+    lustswapSet("[data-pool-pair-status]", "Pool exists");
+    lustswapSet("[data-pool-pair-address]", pair);
+
+    const pairContract = new ethers.Contract(pair, LUSTSWAP_PAIR_ABI, provider);
+    const lpBal = account ? await pairContract.balanceOf(account).catch(() => 0n) : 0n;
+    lustswapSet("[data-remove-lp-balance]", `${lustswapFormat(lpBal, 18, 6)} LUST-LP`);
+    await lustswapUpdateRemoveEstimate(pair, a, b, provider);
+  } catch (err) {
+    console.error(err);
+    lustswapLog("[data-pool-log]", err?.message || "Could not refresh pool data.", "warn");
+  }
+}
+
+async function lustswapUpdateRemoveEstimate(pair, a, b, provider = lustswapProvider()) {
+  const raw = document.querySelector("[data-remove-lp-amount]")?.value || "";
+  if (!raw) {
+    lustswapSet("[data-remove-estimate]", "Enter LP amount");
+    return null;
+  }
+  try {
+    const lp = lustswapParseAmount(raw, 18, "LP amount");
+    const pairContract = new ethers.Contract(pair, LUSTSWAP_PAIR_ABI, provider);
+    const [token0, reserves, totalSupply] = await Promise.all([
+      pairContract.token0(),
+      pairContract.getReserves(),
+      pairContract.totalSupply()
+    ]);
+    if (BigInt(totalSupply) <= 0n) throw new Error("Empty LP supply.");
+    const addrA = lustswapPairAddressOf(a).toLowerCase();
+    const reserveA = token0.toLowerCase() === addrA ? BigInt(reserves[0]) : BigInt(reserves[1]);
+    const reserveB = token0.toLowerCase() === addrA ? BigInt(reserves[1]) : BigInt(reserves[0]);
+    const amountA = lp * reserveA / BigInt(totalSupply);
+    const amountB = lp * reserveB / BigInt(totalSupply);
+    lustswapSet("[data-remove-estimate]", `${lustswapFormat(amountA, lustswapTokenDecimals(a), 6)} ${lustswapTokenSymbol(a)} + ${lustswapFormat(amountB, lustswapTokenDecimals(b), 6)} ${lustswapTokenSymbol(b)}`);
+    return { amountA, amountB };
+  } catch (err) {
+    lustswapSet("[data-remove-estimate]", "--");
+    return null;
+  }
+}
+
+async function lustswapAddLiquidity() {
+  try {
+    const a = document.querySelector("[data-pool-token-a]")?.value || LUSTSWAP_NATIVE;
+    const b = document.querySelector("[data-pool-token-b]")?.value || LUSTSWAP_LUSDT_ADDRESS;
+    const addrA = lustswapPairAddressOf(a);
+    const addrB = lustswapPairAddressOf(b);
+    if (addrA === addrB) throw new Error("Choose two different assets.");
+    const amountA = lustswapParseAmount(document.querySelector("[data-pool-amount-a]")?.value, lustswapTokenDecimals(a), "Token A amount");
+    const amountB = lustswapParseAmount(document.querySelector("[data-pool-amount-b]")?.value, lustswapTokenDecimals(b), "Token B amount");
+    const minA = lustswapApplySlippage(amountA, lustswapBpsFromInput("[data-pool-slippage]", 500));
+    const minB = lustswapApplySlippage(amountB, lustswapBpsFromInput("[data-pool-slippage]", 500));
+    const signer = await lustswapSigner();
+    const account = await signer.getAddress();
+    const router = new ethers.Contract(LUSTSWAP_ROUTER_ADDRESS, LUSTSWAP_ROUTER_ABI, signer);
+    const deadline = lustswapDeadline("[data-pool-deadline]");
+    let tx;
+
+    if (lustswapIsNative(a) || lustswapIsNative(b)) {
+      const nativeAmount = lustswapIsNative(a) ? amountA : amountB;
+      const nativeMin = lustswapIsNative(a) ? minA : minB;
+      const tokenValue = lustswapIsNative(a) ? b : a;
+      const tokenAmount = lustswapIsNative(a) ? amountB : amountA;
+      const tokenMin = lustswapIsNative(a) ? minB : minA;
+      const tokenAddress = lustswapPairAddressOf(tokenValue);
+      await lustswapApproveIfNeeded(tokenAddress, LUSTSWAP_ROUTER_ADDRESS, tokenAmount, signer, "[data-pool-log]");
+      lustswapLog("[data-pool-log]", "Opening add liquidity confirmation in wallet...");
+      tx = await router.addLiquidityLSTSmart(tokenAddress, tokenAmount, tokenMin, nativeMin, account, deadline, { value: nativeAmount });
+    } else {
+      await lustswapApproveIfNeeded(addrA, LUSTSWAP_ROUTER_ADDRESS, amountA, signer, "[data-pool-log]");
+      await lustswapApproveIfNeeded(addrB, LUSTSWAP_ROUTER_ADDRESS, amountB, signer, "[data-pool-log]");
+      lustswapLog("[data-pool-log]", "Opening add liquidity confirmation in wallet...");
+      tx = await router.addLiquiditySmart(addrA, addrB, amountA, amountB, minA, minB, account, deadline);
+    }
+
+    lustswapLog("[data-pool-log]", `Liquidity transaction sent: ${tx.hash}. Waiting confirmation...`);
+    await tx.wait();
+    lustswapLog("[data-pool-log]", `Liquidity added: ${tx.hash}`, "ok");
+    setTimeout(lustswapUpdateAll, 1200);
+  } catch (err) {
+    console.error(err);
+    lustswapLog("[data-pool-log]", err?.shortMessage || err?.message || "Add liquidity failed or was rejected.", "warn");
+  }
+}
+
+async function lustswapRemoveLiquidity() {
+  try {
+    const a = document.querySelector("[data-pool-token-a]")?.value || LUSTSWAP_NATIVE;
+    const b = document.querySelector("[data-pool-token-b]")?.value || LUSTSWAP_LUSDT_ADDRESS;
+    const addrA = lustswapPairAddressOf(a);
+    const addrB = lustswapPairAddressOf(b);
+    if (addrA === addrB) throw new Error("Choose two different assets.");
+    const liquidity = lustswapParseAmount(document.querySelector("[data-remove-lp-amount]")?.value, 18, "LP amount");
+    const provider = lustswapProvider();
+    const pair = await lustswapGetPair(addrA, addrB, provider);
+    if (String(pair).toLowerCase() === LUSTSWAP_ZERO) throw new Error("This pair does not exist.");
+    const estimates = await lustswapUpdateRemoveEstimate(pair, a, b, provider);
+    if (!estimates) throw new Error("Could not estimate LP output.");
+    const minA = lustswapApplySlippage(estimates.amountA, lustswapBpsFromInput("[data-pool-slippage]", 500));
+    const minB = lustswapApplySlippage(estimates.amountB, lustswapBpsFromInput("[data-pool-slippage]", 500));
+    const signer = await lustswapSigner();
+    const account = await signer.getAddress();
+    const router = new ethers.Contract(LUSTSWAP_ROUTER_ADDRESS, LUSTSWAP_ROUTER_ABI, signer);
+    const deadline = lustswapDeadline("[data-pool-deadline]");
+    await lustswapApproveIfNeeded(pair, LUSTSWAP_ROUTER_ADDRESS, liquidity, signer, "[data-remove-log]");
+
+    let tx;
+    lustswapLog("[data-remove-log]", "Opening remove liquidity confirmation in wallet...");
+    if (lustswapIsNative(a) || lustswapIsNative(b)) {
+      const tokenValue = lustswapIsNative(a) ? b : a;
+      const tokenAddress = lustswapPairAddressOf(tokenValue);
+      const tokenMin = lustswapIsNative(a) ? minB : minA;
+      const nativeMin = lustswapIsNative(a) ? minA : minB;
+      tx = await router.removeLiquidityLSTSmart(tokenAddress, liquidity, tokenMin, nativeMin, account, deadline);
+    } else {
+      tx = await router.removeLiquiditySmart(addrA, addrB, liquidity, minA, minB, account, deadline);
+    }
+
+    lustswapLog("[data-remove-log]", `Remove liquidity sent: ${tx.hash}. Waiting confirmation...`);
+    await tx.wait();
+    lustswapLog("[data-remove-log]", `Liquidity removed: ${tx.hash}`, "ok");
+    setTimeout(lustswapUpdateAll, 1200);
+  } catch (err) {
+    console.error(err);
+    lustswapLog("[data-remove-log]", err?.shortMessage || err?.message || "Remove liquidity failed or was rejected.", "warn");
+  }
+}
+
+async function lustswapUseMax() {
+  try {
+    const from = document.querySelector("[data-swap-from-token]")?.value || LUSTSWAP_NATIVE;
+    const account = walletState.address || appKit.getAddress?.() || await getWalletAccount();
+    const bal = await lustswapBalance(from, account, lustswapProvider());
+    const safe = lustswapIsNative(from) && bal > ethers.parseEther("0.02") ? bal - ethers.parseEther("0.01") : bal;
+    document.querySelector("[data-swap-from-amount]").value = lustswapFormat(safe, lustswapTokenDecimals(from), 8).replace(/0+$/, "").replace(/\.$/, "");
+    lustswapUpdateSwap();
+  } catch (err) {
+    lustswapLog("[data-swap-log]", err?.message || "Could not set max amount.", "warn");
+  }
+}
+
+function lustswapFlip() {
+  const from = document.querySelector("[data-swap-from-token]");
+  const to = document.querySelector("[data-swap-to-token]");
+  const fromAmount = document.querySelector("[data-swap-from-amount]");
+  const toAmount = document.querySelector("[data-swap-to-amount]");
+  if (!from || !to) return;
+  const oldFrom = from.value;
+  from.value = to.value;
+  to.value = oldFrom;
+  if (toAmount?.value) fromAmount.value = toAmount.value;
+  if (toAmount) toAmount.value = "";
+  lustswapUpdateSwap();
+}
+
+async function lustswapUpdateAll() {
+  if (!lustswapHasPage()) return;
+  lustswapSet("[data-lustswap-router-short]", lustswapShort(LUSTSWAP_ROUTER_ADDRESS));
+  lustswapSet("[data-lustswap-factory-short]", lustswapShort(LUSTSWAP_FACTORY_ADDRESS));
+  lustswapSet("[data-lustswap-wlst-short]", lustswapShort(LUSTSWAP_WLST_ADDRESS));
+  await Promise.allSettled([lustswapUpdateSwap(), lustswapUpdatePool()]);
+}
+
+function wireLUSTSwap() {
+  if (!lustswapHasPage()) return;
+  lustswapRenderTokenOptions();
+  document.querySelector("[data-token-import]")?.addEventListener("click", lustswapImportToken);
+  document.querySelector("[data-swap-refresh]")?.addEventListener("click", lustswapUpdateAll);
+  document.querySelector("[data-swap-execute]")?.addEventListener("click", lustswapExecuteSwap);
+  document.querySelector("[data-swap-max]")?.addEventListener("click", lustswapUseMax);
+  document.querySelector("[data-swap-flip]")?.addEventListener("click", lustswapFlip);
+  document.querySelector("[data-pool-check]")?.addEventListener("click", lustswapUpdatePool);
+  document.querySelector("[data-pool-add]")?.addEventListener("click", lustswapAddLiquidity);
+  document.querySelector("[data-remove-refresh]")?.addEventListener("click", lustswapUpdatePool);
+  document.querySelector("[data-remove-liquidity]")?.addEventListener("click", lustswapRemoveLiquidity);
+  document.querySelectorAll("[data-swap-from-amount], [data-swap-from-token], [data-swap-to-token], [data-swap-slippage], [data-pool-token-a], [data-pool-token-b], [data-pool-amount-a], [data-pool-amount-b], [data-pool-slippage], [data-remove-lp-amount]").forEach((el) => {
+    el.addEventListener("input", () => setTimeout(lustswapUpdateAll, 80));
+    el.addEventListener("change", () => setTimeout(lustswapUpdateAll, 80));
+  });
+  document.addEventListener("click", (event) => {
+    if (event.target.closest("[data-connect-wallet]")) {
+      setTimeout(lustswapUpdateAll, 1200);
+      setTimeout(lustswapUpdateAll, 2500);
+    }
+  });
+  lustswapUpdateAll();
+  setInterval(lustswapUpdateAll, 25000);
+}
+
+window.lustSwap = {
+  router: LUSTSWAP_ROUTER_ADDRESS,
+  factory: LUSTSWAP_FACTORY_ADDRESS,
+  wlst: LUSTSWAP_WLST_ADDRESS,
+  refresh: lustswapUpdateAll
+};
+
+wireLUSTSwap();
