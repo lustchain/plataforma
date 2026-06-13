@@ -2100,3 +2100,492 @@ function wireLusdtBridge() {
 }
 
 wireLusdtBridge();
+
+// LUST Community Staking Vault page v20260613-staking-v1
+const LUST_STAKING_ADDRESS = "0x300D30d1585BE7865dC5005Eb3C08dd6Ec1C73f1";
+const LUST_STAKING_ABI = [
+  "function owner() view returns (address)",
+  "function funded() view returns (bool)",
+  "function stakingOpen() view returns (bool)",
+  "function rewardReserve() view returns (uint256)",
+  "function totalPrincipal() view returns (uint256)",
+  "function totalRateWeight() view returns (uint256)",
+  "function totalRewardsClaimed() view returns (uint256)",
+  "function totalPenaltiesToReserve() view returns (uint256)",
+  "function totalStakeTransactions() view returns (uint256)",
+  "function totalPrincipalOf(address user) view returns (uint256)",
+  "function userSummary(address user) view returns (uint256 activePrincipal,uint256 maxWalletPrincipal,uint256 walletRemainingCapacity,uint256 claimableRewards,uint256 nextClaimTime,bool canClaimNow)",
+  "function positionOf(address user,uint8 planId) view returns (uint256 principal,uint256 rateWeight,uint256 unlockAt,uint256 rewardDebt,uint256 storedPendingRewards,uint256 livePendingRewards,uint256 claimedDuringLock,bool active,bool unlocked)",
+  "function pendingRewardsOf(address user) view returns (uint256)",
+  "function nextClaimAt(address user) view returns (uint256)",
+  "function canAcceptNewStakeFor(address user,uint8 planId,uint256 amount) view returns (bool)",
+  "function reserveStatus() view returns (uint256 currentRewardReserve,uint256 projectedDailyRewards,uint256 runwaySeconds,bool reserveLow,bool acceptsNewStakesNow)",
+  "function vaultAccounting() view returns (uint256 nativeBalance,uint256 activeUserPrincipal,uint256 simulatedUnallocatedRewardReserve,uint256 allocatedOrUnclaimedRewards,uint256 activeRateWeight)",
+  "function preLaunchWithdrawAvailable() view returns (bool available,uint256 amount)",
+  "function previewUnstake(address user,uint8 planId,uint256 amount) view returns (uint256 principalOut,uint256 penaltyToReserve,uint256 pendingRewardsForfeited,uint256 claimedRewardsClawedBack,uint256 netAmount,bool earlyExit)",
+  "function stake(uint8 planId) payable",
+  "function claimAll()",
+  "function compound(uint8 planId)",
+  "function unstake(uint8 planId,uint256 amount)",
+  "function unstakeAll(uint8 planId)",
+  "function openStaking()"
+];
+
+const STAKING_PLANS = [
+  { id: 0, name: "LUST Spark", apr: "6% APR", lock: "30 days", penalty: "3%" },
+  { id: 1, name: "LUST Flame", apr: "10% APR", lock: "90 days", penalty: "5%" },
+  { id: 2, name: "LUST Diamond", apr: "15% APR", lock: "180 days", penalty: "8%" },
+  { id: 3, name: "LUST Eternal", apr: "20% APR", lock: "360 days", penalty: "12%" }
+];
+
+let stakingSelectedPlan = 3;
+let stakingLastSnapshot = null;
+let stakingRefreshBusy = false;
+
+function hasStakingPage() {
+  return Boolean(document.querySelector("[data-lust-staking]"));
+}
+
+function stakingSetText(selector, text) {
+  document.querySelectorAll(selector).forEach((el) => { el.textContent = text; });
+}
+
+function stakingSetHtml(selector, html) {
+  document.querySelectorAll(selector).forEach((el) => { el.innerHTML = html; });
+}
+
+function stakingLog(message, tone = "") {
+  document.querySelectorAll("[data-staking-log]").forEach((el) => {
+    el.textContent = message;
+    el.dataset.tone = tone;
+  });
+}
+
+function stakingFormatLst(value, maxFraction = 4) {
+  try {
+    const formatted = ethers.formatEther(value || 0n);
+    const n = Number(formatted);
+    if (!Number.isFinite(n)) return `${formatted} LST`;
+    return `${new Intl.NumberFormat("en-US", {
+      maximumFractionDigits: maxFraction,
+      minimumFractionDigits: n > 0 && n < 1 ? Math.min(maxFraction, 2) : 0
+    }).format(n)} LST`;
+  } catch (_) {
+    return "--";
+  }
+}
+
+function stakingFormatCompactLst(value) {
+  try {
+    const n = Number(ethers.formatEther(value || 0n));
+    if (!Number.isFinite(n)) return "--";
+    if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(2)}M LST`;
+    if (n >= 1_000) return `${(n / 1_000).toFixed(2)}K LST`;
+    return `${n.toFixed(n >= 100 ? 0 : 2)} LST`;
+  } catch (_) {
+    return "--";
+  }
+}
+
+function stakingParseAmount(input) {
+  const raw = String(input || "").trim().replace(/,/g, ".");
+  if (!raw || Number(raw) <= 0) return 0n;
+  return ethers.parseEther(raw);
+}
+
+function stakingSecondsToText(secondsLike) {
+  try {
+    const seconds = Number(secondsLike || 0n);
+    if (!Number.isFinite(seconds)) return "Long runway";
+    if (seconds > 3650 * 86400) return "Very strong";
+    if (seconds <= 0) return "0 days";
+    const days = Math.floor(seconds / 86400);
+    if (days >= 365) return `${Math.floor(days / 365)}y ${days % 365}d`;
+    if (days >= 1) return `${days} days`;
+    const hours = Math.floor(seconds / 3600);
+    if (hours >= 1) return `${hours} hours`;
+    return `${Math.max(0, Math.floor(seconds / 60))} min`;
+  } catch (_) {
+    return "--";
+  }
+}
+
+function stakingTimeUntil(timestampLike) {
+  const ts = Number(timestampLike || 0n);
+  if (!ts) return "No stake yet";
+  const diff = ts - Math.floor(Date.now() / 1000);
+  if (diff <= 0) return "Available now";
+  return stakingSecondsToText(diff);
+}
+
+function stakingDateText(timestampLike) {
+  const ts = Number(timestampLike || 0n);
+  if (!ts) return "--";
+  return new Date(ts * 1000).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
+}
+
+function stakingReadContract() {
+  const provider = new ethers.JsonRpcProvider(LUST_RPC_URL);
+  return new ethers.Contract(LUST_STAKING_ADDRESS, LUST_STAKING_ABI, provider);
+}
+
+async function stakingEnsureLustNetwork() {
+  const eth = getInjectedEthereum();
+  if (!eth) throw new Error("MetaMask or injected wallet not found.");
+  const current = normalizeChainId(await eth.request({ method: "eth_chainId" }));
+  if (current === LUST_CHAIN_ID_HEX) return;
+  try {
+    await eth.request({ method: "wallet_switchEthereumChain", params: [{ chainId: LUST_CHAIN_ID_HEX }] });
+  } catch (_) {
+    await eth.request({
+      method: "wallet_addEthereumChain",
+      params: [{
+        chainId: LUST_CHAIN_ID_HEX,
+        chainName: "LUST Chain",
+        nativeCurrency: { name: "LST", symbol: "LST", decimals: 18 },
+        rpcUrls: ["https://rpc.lustchain.org"],
+        blockExplorerUrls: ["https://explorer.lustchain.org"]
+      }]
+    });
+  }
+  setTimeout(readState, 300);
+}
+
+async function stakingSignerContract() {
+  const eth = getInjectedEthereum();
+  if (!eth) throw new Error("MetaMask or injected wallet not found.");
+  await getWalletAccount();
+  await stakingEnsureLustNetwork();
+  const provider = new ethers.BrowserProvider(eth);
+  const signer = await provider.getSigner();
+  return new ethers.Contract(LUST_STAKING_ADDRESS, LUST_STAKING_ABI, signer);
+}
+
+function stakingSelectedPlanData() {
+  return STAKING_PLANS.find((p) => p.id === stakingSelectedPlan) || STAKING_PLANS[3];
+}
+
+function renderStakingSelectedPlan() {
+  const selected = stakingSelectedPlanData();
+  document.querySelectorAll("[data-select-plan]").forEach((card) => {
+    card.classList.toggle("active", Number(card.getAttribute("data-select-plan")) === stakingSelectedPlan);
+  });
+  stakingSetText("[data-staking-selected-plan]", selected.name);
+  refreshStakingStakeAvailability().catch(() => {});
+  refreshStakingUnstakePreview().catch(() => {});
+}
+
+function setStakingActionState(selector, ready, labelWhenReady = null) {
+  document.querySelectorAll(selector).forEach((btn) => {
+    btn.disabled = !ready;
+    btn.classList.toggle("is-ready", ready);
+    if (labelWhenReady) btn.textContent = labelWhenReady;
+  });
+}
+
+async function refreshStakingStakeAvailability() {
+  if (!hasStakingPage() || !stakingLastSnapshot) return;
+  const amountRaw = document.querySelector("[data-stake-amount]")?.value || "";
+  let canAccept = false;
+  let label = "--";
+  try {
+    const amount = stakingParseAmount(amountRaw);
+    if (!walletState.address) {
+      label = "Connect wallet";
+    } else if (!stakingLastSnapshot.stakingOpen) {
+      label = "Not open yet";
+    } else if (amount <= 0n) {
+      label = "Enter amount";
+    } else {
+      const c = stakingReadContract();
+      canAccept = await c.canAcceptNewStakeFor(walletState.address, stakingSelectedPlan, amount);
+      label = canAccept ? "Yes" : "No / reserve or limit";
+    }
+  } catch (err) {
+    label = "Check failed";
+  }
+  stakingSetText("[data-staking-can-accept]", label);
+  setStakingActionState("[data-stake-submit]", Boolean(canAccept), "Stake LST");
+}
+
+async function refreshStakingUnstakePreview() {
+  if (!hasStakingPage()) return;
+  const amountRaw = document.querySelector("[data-unstake-amount]")?.value || "";
+  if (!walletState.address || !amountRaw) {
+    stakingSetText("[data-preview-principal]", "--");
+    stakingSetText("[data-preview-penalty]", "--");
+    stakingSetText("[data-preview-forfeit]", "--");
+    stakingSetText("[data-preview-clawback]", "--");
+    stakingSetText("[data-preview-net]", "--");
+    return;
+  }
+  try {
+    const amount = stakingParseAmount(amountRaw);
+    if (amount <= 0n) throw new Error("Invalid amount");
+    const c = stakingReadContract();
+    const preview = await c.previewUnstake(walletState.address, stakingSelectedPlan, amount);
+    stakingSetText("[data-preview-principal]", stakingFormatLst(preview.principalOut));
+    stakingSetText("[data-preview-penalty]", stakingFormatLst(preview.penaltyToReserve));
+    stakingSetText("[data-preview-forfeit]", stakingFormatLst(preview.pendingRewardsForfeited));
+    stakingSetText("[data-preview-clawback]", stakingFormatLst(preview.claimedRewardsClawedBack));
+    stakingSetText("[data-preview-net]", stakingFormatLst(preview.netAmount));
+  } catch (_) {
+    stakingSetText("[data-preview-principal]", "--");
+    stakingSetText("[data-preview-penalty]", "--");
+    stakingSetText("[data-preview-forfeit]", "--");
+    stakingSetText("[data-preview-clawback]", "--");
+    stakingSetText("[data-preview-net]", "Invalid amount");
+  }
+}
+
+async function refreshLustStaking() {
+  if (!hasStakingPage() || stakingRefreshBusy) return;
+  stakingRefreshBusy = true;
+  try {
+    readState();
+    const c = stakingReadContract();
+    const [ownerAddress, funded, stakingOpen, reserve, totalPrincipalValue, reserveStatus, accounting, stakeTxs] = await Promise.all([
+      c.owner(),
+      c.funded(),
+      c.stakingOpen(),
+      c.rewardReserve(),
+      c.totalPrincipal(),
+      c.reserveStatus(),
+      c.vaultAccounting(),
+      c.totalStakeTransactions().catch(() => 0n)
+    ]);
+
+    stakingLastSnapshot = { ownerAddress, funded, stakingOpen, reserve, totalPrincipalValue, reserveStatus, accounting, stakeTxs };
+
+    const currentReserve = reserveStatus.currentRewardReserve ?? reserveStatus[0];
+    const dailyRewards = reserveStatus.projectedDailyRewards ?? reserveStatus[1];
+    const runwaySeconds = reserveStatus.runwaySeconds ?? reserveStatus[2];
+    const reserveLow = reserveStatus.reserveLow ?? reserveStatus[3];
+    const acceptsNew = reserveStatus.acceptsNewStakesNow ?? reserveStatus[4];
+
+    stakingSetText("[data-staking-reserve]", stakingFormatCompactLst(currentReserve));
+    stakingSetText("[data-staking-total-principal]", stakingFormatCompactLst(totalPrincipalValue));
+    stakingSetText("[data-staking-daily-rewards]", stakingFormatLst(dailyRewards, 3));
+    stakingSetText("[data-staking-runway]", stakingSecondsToText(runwaySeconds));
+
+    if (!funded) {
+      stakingSetText("[data-staking-status]", "Not funded");
+      stakingSetText("[data-staking-status-note]", "The staking reserve has not been funded yet.");
+    } else if (!stakingOpen) {
+      stakingSetText("[data-staking-status]", "Funded · Waiting launch");
+      stakingSetText("[data-staking-status-note]", "The 5,000,000 LST reserve is funded. Staking opens after public mining/community launch.");
+    } else if (reserveLow || !acceptsNew) {
+      stakingSetText("[data-staking-status]", "Reserve protection active");
+      stakingSetText("[data-staking-status-note]", "New stakes are blocked automatically while claim and unstake remain available.");
+    } else {
+      stakingSetText("[data-staking-status]", "Open for staking");
+      stakingSetText("[data-staking-status-note]", "Stake LST, claim daily and track your lock from this page.");
+    }
+
+    const isOwner = walletState.address && ownerAddress && walletState.address.toLowerCase() === ownerAddress.toLowerCase();
+    document.querySelectorAll("[data-owner-panel]").forEach((el) => { el.hidden = !isOwner; });
+    setStakingActionState("[data-open-staking]", Boolean(isOwner && funded && !stakingOpen), "Open staking");
+
+    if (walletState.address) {
+      const provider = new ethers.JsonRpcProvider(LUST_RPC_URL);
+      const [balance, summary, positions] = await Promise.all([
+        provider.getBalance(walletState.address),
+        c.userSummary(walletState.address),
+        Promise.all([0, 1, 2, 3].map((id) => c.positionOf(walletState.address, id)))
+      ]);
+
+      stakingSetText("[data-staking-wallet-balance]", stakingFormatLst(balance, 4));
+      stakingSetText("[data-staking-wallet-capacity]", stakingFormatLst(summary.walletRemainingCapacity ?? summary[2], 2));
+      stakingSetText("[data-staking-claimable]", stakingFormatLst(summary.claimableRewards ?? summary[3], 6));
+      const canClaimNow = Boolean(summary.canClaimNow ?? summary[5]);
+      const nextClaimTime = summary.nextClaimTime ?? summary[4];
+      stakingSetText("[data-staking-next-claim]", canClaimNow ? "Claim available now." : `Next claim: ${stakingTimeUntil(nextClaimTime)} · ${stakingDateText(nextClaimTime)}`);
+      setStakingActionState("[data-claim-submit]", canClaimNow, "Claim rewards");
+      setStakingActionState("[data-compound-submit]", canClaimNow, "Compound to selected plan");
+
+      positions.forEach((p, index) => {
+        const principal = p.principal ?? p[0];
+        const unlockAt = p.unlockAt ?? p[2];
+        const livePending = p.livePendingRewards ?? p[5];
+        const active = Boolean(p.active ?? p[7]);
+        const unlocked = Boolean(p.unlocked ?? p[8]);
+        stakingSetText(`[data-pos-principal="${index}"]`, stakingFormatLst(principal, 4));
+        let stateText = active ? `${unlocked ? "Unlocked" : `Unlocks in ${stakingTimeUntil(unlockAt)}`} · pending ${stakingFormatLst(livePending, 4)}` : "No active stake";
+        stakingSetText(`[data-pos-state="${index}"]`, stateText);
+        document.querySelectorAll(`[data-position-card="${index}"]`).forEach((el) => {
+          el.classList.toggle("selected", index === stakingSelectedPlan);
+          el.classList.toggle("empty", !active);
+        });
+      });
+    } else {
+      stakingSetText("[data-staking-wallet-balance]", "Connect wallet");
+      stakingSetText("[data-staking-wallet-capacity]", "Connect wallet");
+      stakingSetText("[data-staking-claimable]", "--");
+      stakingSetText("[data-staking-next-claim]", "Connect wallet to check claim time.");
+      setStakingActionState("[data-claim-submit]", false, "Claim rewards");
+      setStakingActionState("[data-compound-submit]", false, "Compound to selected plan");
+      [0, 1, 2, 3].forEach((index) => {
+        stakingSetText(`[data-pos-principal="${index}"]`, "--");
+        stakingSetText(`[data-pos-state="${index}"]`, "Connect wallet");
+      });
+    }
+
+    await refreshStakingStakeAvailability();
+    await refreshStakingUnstakePreview();
+    if (funded && !stakingOpen) {
+      stakingLog("Vault funded and safely closed. Do not open staking until public mining/community launch is ready.", "ok");
+    } else if (stakingOpen) {
+      stakingLog("Vault live. Daily claims are available every 24 hours for active stakers.", "ok");
+    }
+  } catch (err) {
+    console.error(err);
+    stakingLog(err?.message || "Could not load staking vault.", "warn");
+  } finally {
+    stakingRefreshBusy = false;
+  }
+}
+
+async function stakingSend(actionName, callback) {
+  try {
+    stakingLog(`${actionName}: waiting wallet confirmation...`, "");
+    const tx = await callback();
+    stakingLog(`${actionName}: transaction sent ${tx.hash}. Waiting confirmation...`, "");
+    const receipt = await tx.wait();
+    if (receipt?.status === 1) {
+      stakingLog(`${actionName}: confirmed successfully.`, "ok");
+    } else {
+      stakingLog(`${actionName}: transaction finished but may have failed.`, "warn");
+    }
+    setTimeout(refreshLustStaking, 800);
+  } catch (err) {
+    console.error(err);
+    stakingLog(err?.shortMessage || err?.reason || err?.message || `${actionName} failed.`, "warn");
+  }
+}
+
+async function stakeLSTFromPage() {
+  if (!walletState.address) {
+    await openLustWallet();
+    return;
+  }
+  const amount = stakingParseAmount(document.querySelector("[data-stake-amount]")?.value || "");
+  if (amount <= 0n) {
+    stakingLog("Enter a valid LST amount to stake.", "warn");
+    return;
+  }
+  await stakingSend("Stake", async () => {
+    const c = await stakingSignerContract();
+    return await c.stake(stakingSelectedPlan, { value: amount });
+  });
+}
+
+async function claimLSTFromPage() {
+  if (!walletState.address) {
+    await openLustWallet();
+    return;
+  }
+  await stakingSend("Claim", async () => {
+    const c = await stakingSignerContract();
+    return await c.claimAll();
+  });
+}
+
+async function compoundLSTFromPage() {
+  if (!walletState.address) {
+    await openLustWallet();
+    return;
+  }
+  await stakingSend("Compound", async () => {
+    const c = await stakingSignerContract();
+    return await c.compound(stakingSelectedPlan);
+  });
+}
+
+async function unstakeLSTFromPage(all = false) {
+  if (!walletState.address) {
+    await openLustWallet();
+    return;
+  }
+  const amount = stakingParseAmount(document.querySelector("[data-unstake-amount]")?.value || "");
+  await stakingSend(all ? "Unstake all" : "Unstake", async () => {
+    const c = await stakingSignerContract();
+    if (all) return await c.unstakeAll(stakingSelectedPlan);
+    if (amount <= 0n) throw new Error("Enter a valid unstake amount.");
+    return await c.unstake(stakingSelectedPlan, amount);
+  });
+}
+
+async function openStakingFromPage() {
+  if (!confirm("Open staking only when public mining/community launch is ready. After opening, native owner withdrawal is impossible. Continue?")) return;
+  await stakingSend("Open staking", async () => {
+    const c = await stakingSignerContract();
+    return await c.openStaking();
+  });
+}
+
+function wireLustStaking() {
+  if (!hasStakingPage()) return;
+
+  document.querySelectorAll("[data-select-plan], [data-position-card]").forEach((el) => {
+    el.addEventListener("click", () => {
+      const raw = el.getAttribute("data-select-plan") ?? el.getAttribute("data-position-card");
+      stakingSelectedPlan = Number(raw || 0);
+      renderStakingSelectedPlan();
+    });
+  });
+
+  document.querySelector("[data-staking-scroll]")?.addEventListener("click", () => {
+    document.querySelector("#stake")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  document.querySelector("[data-stake-amount]")?.addEventListener("input", () => refreshStakingStakeAvailability().catch(() => {}));
+  document.querySelector("[data-unstake-amount]")?.addEventListener("input", () => refreshStakingUnstakePreview().catch(() => {}));
+
+  document.querySelector("[data-stake-max]")?.addEventListener("click", () => {
+    const capacityText = document.querySelector("[data-staking-wallet-capacity]")?.textContent || "";
+    const n = Number(capacityText.replace(/[^0-9.]/g, ""));
+    if (Number.isFinite(n) && n > 0) {
+      document.querySelector("[data-stake-amount]").value = String(Math.min(n, 10000));
+      refreshStakingStakeAvailability().catch(() => {});
+    }
+  });
+
+  document.querySelector("[data-unstake-max]")?.addEventListener("click", () => {
+    const principalText = document.querySelector(`[data-pos-principal="${stakingSelectedPlan}"]`)?.textContent || "";
+    const n = Number(principalText.replace(/[^0-9.]/g, ""));
+    if (Number.isFinite(n) && n > 0) {
+      document.querySelector("[data-unstake-amount]").value = String(n);
+      refreshStakingUnstakePreview().catch(() => {});
+    }
+  });
+
+  document.querySelector("[data-stake-submit]")?.addEventListener("click", stakeLSTFromPage);
+  document.querySelector("[data-claim-submit]")?.addEventListener("click", claimLSTFromPage);
+  document.querySelector("[data-compound-submit]")?.addEventListener("click", compoundLSTFromPage);
+  document.querySelector("[data-unstake-submit]")?.addEventListener("click", () => unstakeLSTFromPage(false));
+  document.querySelector("[data-unstake-all]")?.addEventListener("click", () => unstakeLSTFromPage(true));
+  document.querySelector("[data-open-staking]")?.addEventListener("click", openStakingFromPage);
+
+  document.addEventListener("click", (event) => {
+    if (!event.target.closest("[data-connect-wallet]")) return;
+    setTimeout(refreshLustStaking, 900);
+    setTimeout(refreshLustStaking, 2500);
+  });
+
+  document.addEventListener("click", async (event) => {
+    const btn = event.target.closest("[data-copy]");
+    if (!btn) return;
+    try {
+      await navigator.clipboard.writeText(btn.getAttribute("data-copy") || "");
+      stakingLog("Contract address copied.", "ok");
+    } catch (_) {
+      stakingLog("Could not copy address.", "warn");
+    }
+  });
+
+  renderStakingSelectedPlan();
+  refreshLustStaking();
+  setInterval(refreshLustStaking, 12000);
+}
+
+wireLustStaking();

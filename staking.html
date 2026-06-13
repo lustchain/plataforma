@@ -4,11 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Staking | LUST Platform</title>
-  <meta name="description" content="LUST Chain platform." />
-    <link rel="icon" href="./assets/favicon.ico">
+  <meta name="description" content="Stake native LST on the LUST Community Staking Vault. Daily claims, fixed community reserve and no team withdrawals after launch." />
+  <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-<link rel="stylesheet" href="./styles.css?v20260610-miner-launch-v1" />
+  <link rel="stylesheet" href="./styles.css?v20260613-staking-v1" />
 </head>
 <body>
 <div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
@@ -46,8 +46,226 @@
   </div>
 </header>
 
-<main class="wrap page">
-<section class="hero"><div class="kicker">Staking</div><h1>Stake LST.</h1><p>Simple staking page. Only staking status, pool details and launch information stay here.</p><div class="grid two"><div class="box"><small>Pool</small><div class="row"><span>Asset</span><strong>LST / WLST</strong></div><div class="row"><span>Status</span><strong>Preparing</strong></div><div class="row"><span>Rewards</span><strong>LST</strong></div></div><div class="box"><small>Action</small><p>Staking opens after the final contracts are connected.</p><a class="btn primary" href="#">Open Staking</a></div></div></section>
+<main class="wrap page staking-page" data-lust-staking>
+  <section class="staking-hero">
+    <div class="staking-hero-copy">
+      <div class="kicker">LUST Community Staking Vault</div>
+      <h1>Stake LST. Earn daily.</h1>
+      <p>
+        A fixed 5,000,000 LST community reserve powers daily staking rewards. No infinite minting,
+        no reward top-up and no native team withdrawal after launch.
+      </p>
+      <div class="staking-hero-actions">
+        <button class="btn primary" type="button" data-staking-scroll="stake">Start staking</button>
+        <a class="btn" href="https://explorer.lustchain.org/address/0x300D30d1585BE7865dC5005Eb3C08dd6Ec1C73f1?tab=contract" target="_blank" rel="noopener">View contract</a>
+      </div>
+      <div class="staking-pill-row">
+        <span>Daily claim every 24h</span>
+        <span>Max 10,000 LST per wallet</span>
+        <span>Early exit feeds the reserve</span>
+      </div>
+    </div>
+
+    <aside class="staking-status-card">
+      <small>Vault status</small>
+      <strong data-staking-status>Loading...</strong>
+      <p data-staking-status-note>Reading LUST Chain...</p>
+      <div class="staking-contract-line">
+        <span>Contract</span>
+        <button type="button" data-copy="0x300D30d1585BE7865dC5005Eb3C08dd6Ec1C73f1">0x300D...73f1</button>
+      </div>
+      <div class="staking-status-log" data-staking-log>Connect wallet or refresh to load live staking data.</div>
+    </aside>
+  </section>
+
+  <section class="staking-metrics-grid" aria-label="Staking metrics">
+    <div class="staking-metric-card">
+      <small>Reward reserve</small>
+      <strong data-staking-reserve>--</strong>
+      <span>Unallocated LST remaining for rewards.</span>
+    </div>
+    <div class="staking-metric-card">
+      <small>Total staked</small>
+      <strong data-staking-total-principal>--</strong>
+      <span>Active user principal protected by the vault.</span>
+    </div>
+    <div class="staking-metric-card">
+      <small>Daily rewards</small>
+      <strong data-staking-daily-rewards>--</strong>
+      <span>Projected daily payout at current active stake.</span>
+    </div>
+    <div class="staking-metric-card">
+      <small>Reserve runway</small>
+      <strong data-staking-runway>--</strong>
+      <span>New stakes auto-block if the reserve becomes low.</span>
+    </div>
+  </section>
+
+  <section class="staking-section" id="stake">
+    <div class="section-head staking-section-head">
+      <div>
+        <div class="kicker">Choose your lock</div>
+        <h2>Four plans. One community reserve.</h2>
+      </div>
+      <p>Rewards are calculated by amount, time and plan APR. Longer commitment gives higher APR, but early exit has stronger protection for the community.</p>
+    </div>
+
+    <div class="staking-plan-grid" data-staking-plans>
+      <button class="staking-plan-card" type="button" data-select-plan="0">
+        <span>LUST Spark</span>
+        <strong>6% APR</strong>
+        <em>30 days lock · 3% early exit</em>
+      </button>
+      <button class="staking-plan-card" type="button" data-select-plan="1">
+        <span>LUST Flame</span>
+        <strong>10% APR</strong>
+        <em>90 days lock · 5% early exit</em>
+      </button>
+      <button class="staking-plan-card" type="button" data-select-plan="2">
+        <span>LUST Diamond</span>
+        <strong>15% APR</strong>
+        <em>180 days lock · 8% early exit</em>
+      </button>
+      <button class="staking-plan-card active" type="button" data-select-plan="3">
+        <span>LUST Eternal</span>
+        <strong>20% APR</strong>
+        <em>360 days lock · 12% early exit</em>
+      </button>
+    </div>
+  </section>
+
+  <section class="staking-app-grid">
+    <div class="staking-shell">
+      <div class="staking-panel-head">
+        <small>Stake native LST</small>
+        <h2>Enter the vault</h2>
+        <p>Minimum stake is 100 LST. Maximum active principal is 10,000 LST per wallet across all plans.</p>
+      </div>
+
+      <label class="staking-label" for="stakeAmount">Amount</label>
+      <div class="staking-input-row">
+        <input class="input staking-input" id="stakeAmount" data-stake-amount inputmode="decimal" placeholder="100.00" autocomplete="off">
+        <button class="btn" type="button" data-stake-max>Max allowed</button>
+      </div>
+
+      <div class="staking-mini-grid">
+        <div><span>Your LST balance</span><strong data-staking-wallet-balance>--</strong></div>
+        <div><span>Wallet capacity left</span><strong data-staking-wallet-capacity>--</strong></div>
+        <div><span>Selected plan</span><strong data-staking-selected-plan>LUST Eternal</strong></div>
+        <div><span>New stake accepted</span><strong data-staking-can-accept>--</strong></div>
+      </div>
+
+      <button class="btn primary staking-main-action" type="button" data-stake-submit>Stake LST</button>
+    </div>
+
+    <div class="staking-shell">
+      <div class="staking-panel-head">
+        <small>Your rewards</small>
+        <h2>Claim every 24h</h2>
+        <p>Daily claim is available, but if you exit before your lock, rewards claimed during that active lock are clawed back to the reserve.</p>
+      </div>
+
+      <div class="staking-reward-display">
+        <span>Claimable rewards</span>
+        <strong data-staking-claimable>--</strong>
+        <em data-staking-next-claim>Connect wallet to check claim time.</em>
+      </div>
+
+      <div class="staking-action-row">
+        <button class="btn primary" type="button" data-claim-submit>Claim rewards</button>
+        <button class="btn" type="button" data-compound-submit>Compound to selected plan</button>
+      </div>
+
+      <div class="staking-warning-box">
+        Early exits are protected: penalty, pending rewards and clawback stay in the community reserve.
+      </div>
+    </div>
+  </section>
+
+  <section class="staking-section">
+    <div class="section-head staking-section-head">
+      <div>
+        <div class="kicker">Your positions</div>
+        <h2>Track, preview and exit safely.</h2>
+      </div>
+      <p>Preview your net amount before unstaking. After the lock ends, exit is penalty-free.</p>
+    </div>
+
+    <div class="staking-positions-grid" data-staking-positions>
+      <div class="staking-position-card" data-position-card="0">
+        <small>LUST Spark</small>
+        <strong data-pos-principal="0">--</strong>
+        <span data-pos-state="0">--</span>
+      </div>
+      <div class="staking-position-card" data-position-card="1">
+        <small>LUST Flame</small>
+        <strong data-pos-principal="1">--</strong>
+        <span data-pos-state="1">--</span>
+      </div>
+      <div class="staking-position-card" data-position-card="2">
+        <small>LUST Diamond</small>
+        <strong data-pos-principal="2">--</strong>
+        <span data-pos-state="2">--</span>
+      </div>
+      <div class="staking-position-card" data-position-card="3">
+        <small>LUST Eternal</small>
+        <strong data-pos-principal="3">--</strong>
+        <span data-pos-state="3">--</span>
+      </div>
+    </div>
+
+    <div class="staking-shell staking-unstake-shell">
+      <div class="staking-panel-head">
+        <small>Exit preview</small>
+        <h2>Unstake from selected plan</h2>
+      </div>
+      <div class="staking-input-row">
+        <input class="input staking-input" data-unstake-amount inputmode="decimal" placeholder="Amount to unstake" autocomplete="off">
+        <button class="btn" type="button" data-unstake-max>Max plan</button>
+      </div>
+      <div class="staking-preview-grid">
+        <div><span>Principal out</span><strong data-preview-principal>--</strong></div>
+        <div><span>Penalty</span><strong data-preview-penalty>--</strong></div>
+        <div><span>Forfeited rewards</span><strong data-preview-forfeit>--</strong></div>
+        <div><span>Claim clawback</span><strong data-preview-clawback>--</strong></div>
+        <div class="wide"><span>Estimated net received</span><strong data-preview-net>--</strong></div>
+      </div>
+      <div class="staking-action-row">
+        <button class="btn" type="button" data-unstake-submit>Unstake amount</button>
+        <button class="btn" type="button" data-unstake-all>Unstake all selected plan</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="staking-info-grid">
+    <div class="box">
+      <small>Fixed reserve</small>
+      <h3>5,000,000 LST funded once</h3>
+      <p>No reward top-up exists in the contract. The reserve only decreases through legitimate rewards and grows with early-exit protections.</p>
+    </div>
+    <div class="box">
+      <small>Auto protection</small>
+      <h3>Reserve low = no new stakes</h3>
+      <p>The vault automatically rejects new stakes when the reserve runway becomes low. Claims and unstake remain available.</p>
+    </div>
+    <div class="box">
+      <small>Community aligned</small>
+      <h3>Early exits support stakers</h3>
+      <p>Penalty, forfeited rewards and claim clawback stay inside the vault as community reward reserve.</p>
+    </div>
+  </section>
+
+  <section class="staking-owner-panel" data-owner-panel hidden>
+    <div class="staking-panel-head">
+      <small>Owner panel</small>
+      <h2>Pre-launch controls</h2>
+      <p>This panel appears only for the current owner. Use Open Staking only when public mining/community launch is ready.</p>
+    </div>
+    <div class="staking-action-row">
+      <button class="btn primary" type="button" data-open-staking>Open staking</button>
+      <a class="btn" href="https://explorer.lustchain.org/address/0x300D30d1585BE7865dC5005Eb3C08dd6Ec1C73f1?tab=write_contract" target="_blank" rel="noopener">Advanced owner actions</a>
+    </div>
+  </section>
 </main>
 
 <footer class="footer">
@@ -57,6 +275,6 @@
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
-<script type="module" src="./app.js?v20260610-miner-launch-v1"></script>
+<script type="module" src="./app.js?v20260613-staking-v1"></script>
 </body>
 </html>

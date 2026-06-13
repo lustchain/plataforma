@@ -1310,3 +1310,233 @@ select.input{appearance:none;background:#09020d;color:#fff}
 }
 @keyframes bridgeSpin{to{transform:rotate(360deg)}}
 @keyframes bridgeReadyPulse{0%,100%{box-shadow:0 14px 34px rgba(247,3,117,.24)}50%{box-shadow:0 0 0 4px rgba(255,19,133,.14),0 18px 42px rgba(247,3,117,.34)}}
+
+/* LUST staking page v20260613-staking-v1 */
+.staking-page{width:min(1220px,94vw)}
+.staking-hero{
+  display:grid;
+  grid-template-columns:minmax(0,1.18fr) minmax(330px,.82fr);
+  gap:22px;
+  align-items:stretch;
+  padding:12px 0 22px;
+}
+.staking-hero-copy,
+.staking-status-card,
+.staking-shell,
+.staking-owner-panel{
+  border:2px solid rgba(247,3,117,.38);
+  border-radius:28px;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(247,3,117,.22), transparent 34%),
+    radial-gradient(circle at 100% 8%, rgba(143,53,255,.14), transparent 42%),
+    rgba(255,255,255,.035);
+  box-shadow:0 0 42px rgba(247,3,117,.08);
+}
+.staking-hero-copy{padding:clamp(24px,4vw,46px)}
+.staking-hero-copy h1{max-width:850px}
+.staking-hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.staking-pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.staking-pill-row span{
+  border:1px solid rgba(247,3,117,.40);
+  background:rgba(247,3,117,.08);
+  color:#ffe6f3;
+  border-radius:999px;
+  padding:8px 12px;
+  font-size:13px;
+  font-weight:900;
+}
+.staking-status-card{padding:24px;background:#08010b;display:flex;flex-direction:column;gap:12px}
+.staking-status-card small,
+.staking-panel-head small,
+.staking-metric-card small,
+.staking-position-card small{
+  display:block;
+  color:var(--pink2);
+  font-size:11px;
+  font-weight:950;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin-bottom:7px;
+}
+.staking-status-card > strong{font-size:clamp(26px,3vw,40px);line-height:1;color:#fff;letter-spacing:-.04em}
+.staking-status-card p{margin:0;font-size:15px;line-height:1.55}
+.staking-contract-line{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+  border:2px solid rgba(255,255,255,.14);
+  border-radius:16px;
+  padding:13px;
+  background:rgba(255,255,255,.035);
+}
+.staking-contract-line span{color:var(--muted);font-weight:900;font-size:13px}
+.staking-contract-line button{
+  color:#fff;
+  background:transparent;
+  border:0;
+  cursor:pointer;
+  font-weight:950;
+}
+.staking-status-log{
+  margin-top:auto;
+  border:2px solid rgba(255,255,255,.15);
+  border-radius:18px;
+  background:rgba(255,255,255,.04);
+  color:#e9d6ee;
+  padding:15px;
+  line-height:1.55;
+  word-break:break-word;
+}
+.staking-status-log[data-tone="ok"]{border-color:rgba(78,255,190,.40);background:rgba(78,255,190,.07);color:#ddfff5}
+.staking-status-log[data-tone="warn"]{border-color:rgba(255,190,80,.48);background:rgba(255,190,80,.08);color:#fff0d5}
+.staking-metrics-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  margin:8px 0 42px;
+}
+.staking-metric-card{
+  border:2px solid rgba(255,255,255,.17);
+  border-radius:22px;
+  background:#08010b;
+  padding:20px;
+  min-height:150px;
+}
+.staking-metric-card strong{
+  display:block;
+  color:#fff;
+  font-size:clamp(23px,2.4vw,34px);
+  line-height:1;
+  margin:10px 0 9px;
+  word-break:break-word;
+}
+.staking-metric-card span{color:var(--muted);font-size:13px;line-height:1.45}
+.staking-section{margin-top:38px}
+.staking-section-head{align-items:flex-end}
+.staking-plan-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  margin:18px 0 26px;
+}
+.staking-plan-card{
+  min-height:178px;
+  text-align:left;
+  border:2px solid rgba(255,255,255,.18);
+  border-radius:24px;
+  background:rgba(255,255,255,.035);
+  color:#fff;
+  padding:22px;
+  cursor:pointer;
+  transition:transform .18s ease,border-color .18s ease,background .18s ease;
+}
+.staking-plan-card:hover{transform:translateY(-2px);border-color:rgba(247,3,117,.50)}
+.staking-plan-card.active{
+  border-color:rgba(247,3,117,.88);
+  background:rgba(247,3,117,.13);
+  box-shadow:0 0 0 4px rgba(247,3,117,.08),0 20px 36px rgba(247,3,117,.08);
+}
+.staking-plan-card span{display:block;color:#ffd8eb;font-weight:950;letter-spacing:.04em;text-transform:uppercase;font-size:12px}
+.staking-plan-card strong{display:block;font-size:clamp(30px,3vw,42px);line-height:1;margin:18px 0 10px;letter-spacing:-.05em}
+.staking-plan-card em{display:block;color:var(--muted);font-style:normal;font-weight:800;font-size:13px;line-height:1.45}
+.staking-app-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:20px;
+  align-items:stretch;
+  margin:34px 0 46px;
+}
+.staking-shell{padding:clamp(20px,3vw,28px);background:#08010b}
+.staking-panel-head h2{margin-bottom:8px}
+.staking-panel-head p{font-size:15px;margin:0;max-width:780px}
+.staking-label{display:block;color:var(--muted);font-weight:900;margin:18px 0 8px}
+.staking-input-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center}
+.staking-input{min-height:58px;font-size:20px;font-weight:900}
+.staking-mini-grid,
+.staking-preview-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin:16px 0;
+}
+.staking-mini-grid div,
+.staking-preview-grid div{
+  border:2px solid rgba(255,255,255,.14);
+  border-radius:16px;
+  padding:14px;
+  background:rgba(255,255,255,.035);
+}
+.staking-mini-grid span,
+.staking-preview-grid span,
+.staking-reward-display span{
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.10em;
+  margin-bottom:7px;
+}
+.staking-mini-grid strong,
+.staking-preview-grid strong{display:block;color:#fff;word-break:break-word}
+.staking-preview-grid .wide{grid-column:1 / -1;border-color:rgba(247,3,117,.32);background:rgba(247,3,117,.07)}
+.staking-preview-grid .wide strong{font-size:24px}
+.staking-main-action{width:100%;min-height:58px;border-radius:17px;font-size:17px}
+.staking-reward-display{
+  border:2px solid rgba(247,3,117,.32);
+  border-radius:22px;
+  background:rgba(247,3,117,.07);
+  padding:22px;
+  margin-top:18px;
+}
+.staking-reward-display strong{display:block;font-size:clamp(34px,4vw,52px);line-height:1;margin:12px 0;color:#fff;word-break:break-word}
+.staking-reward-display em{display:block;color:#ffd8eb;font-style:normal;font-size:14px;line-height:1.45}
+.staking-action-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}
+.staking-action-row .btn{min-height:54px;border-radius:16px}
+.staking-warning-box{
+  margin-top:16px;
+  border:2px solid rgba(255,190,80,.28);
+  background:rgba(255,190,80,.07);
+  border-radius:16px;
+  color:#fff0d5;
+  padding:14px;
+  line-height:1.55;
+  font-size:14px;
+}
+.staking-positions-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  margin:18px 0 20px;
+}
+.staking-position-card{
+  border:2px solid rgba(255,255,255,.16);
+  border-radius:22px;
+  background:#08010b;
+  padding:18px;
+  cursor:pointer;
+  min-height:150px;
+}
+.staking-position-card.selected{border-color:rgba(247,3,117,.78);background:rgba(247,3,117,.08)}
+.staking-position-card.empty{opacity:.78}
+.staking-position-card strong{display:block;font-size:24px;line-height:1.1;margin:8px 0;color:#fff;word-break:break-word}
+.staking-position-card span{display:block;color:var(--muted);font-size:13px;line-height:1.45}
+.staking-unstake-shell{margin-top:20px}
+.staking-info-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:42px}
+.staking-owner-panel{margin-top:36px;padding:clamp(20px,3vw,28px);background:#08010b;border-color:rgba(255,190,80,.38)}
+.staking-owner-panel[hidden]{display:none!important}
+.btn:disabled,
+.btn[disabled]{opacity:.55;cursor:not-allowed;box-shadow:none!important}
+.staking-page .btn.is-ready.primary,
+.staking-page .btn.primary.is-ready{background:var(--pink);border-color:rgba(255,110,189,.72)}
+@media(max-width:1100px){
+  .staking-metrics-grid,.staking-plan-grid,.staking-positions-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .staking-hero,.staking-app-grid{grid-template-columns:1fr}
+}
+@media(max-width:720px){
+  .staking-metrics-grid,.staking-plan-grid,.staking-positions-grid,.staking-info-grid{grid-template-columns:1fr}
+  .staking-input-row,.staking-action-row,.staking-mini-grid,.staking-preview-grid{grid-template-columns:1fr}
+  .staking-preview-grid .wide{grid-column:auto}
+  .staking-hero-actions .btn{width:100%}
+}
