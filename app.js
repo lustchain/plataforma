@@ -2589,3 +2589,532 @@ function wireLustStaking() {
 }
 
 wireLustStaking();
+
+// LUST P2P LST/LUSDT market v20260613-p2p-lusdt-v1
+const LUST_P2P_MARKET_ADDRESS = "0xcd821ede23048f8fea777eeec3948135758e4926";
+const P2P_FEE_BPS = 2n;
+const P2P_BPS_DENOM = 10000n;
+const P2P_ABI = [
+  "function LUSDT() view returns (address)",
+  "function treasury() view returns (address)",
+  "function nextOrderId() view returns (uint256)",
+  "function orders(uint256) view returns (uint8 side,address maker,uint256 priceLusdtPer1e18Lst,uint256 remainingLst,uint256 remainingLusdt,uint64 deadline,bool active)",
+  "function quoteLusdtGross(uint256 lstAmount,uint256 priceLusdtPer1e18Lst) pure returns (uint256)",
+  "function feeOf(uint256 lusdtGross) pure returns (uint256)",
+  "function createSellOrder(uint256 priceLusdtPer1e18Lst,uint64 deadline) payable returns (uint256 orderId)",
+  "function createBuyOrder(uint256 lstWanted,uint256 priceLusdtPer1e18Lst,uint64 deadline) returns (uint256 orderId)",
+  "function fillSellOrder(uint256 orderId,uint256 lstToBuy,uint256 maxLusdtGross)",
+  "function fillBuyOrder(uint256 orderId,uint256 lstToSell,uint256 minLusdtNet) payable",
+  "function updatePrice(uint256 orderId,uint256 newPriceLusdtPer1e18Lst)",
+  "function updateDeadline(uint256 orderId,uint64 newDeadline)",
+  "function addLstToSellOrder(uint256 orderId) payable",
+  "function removeLstFromSellOrder(uint256 orderId,uint256 lstToRemove)",
+  "function addLusdtToBuyOrder(uint256 orderId,uint256 lusdtToAdd)",
+  "function reduceBuyOrder(uint256 orderId,uint256 lstToReduce)",
+  "function cancelOrder(uint256 orderId)",
+  "event OrderCreated(uint256 indexed orderId,uint8 side,address indexed maker,uint256 priceLusdtPer1e18Lst,uint256 lstAmount,uint256 lusdtAmount,uint64 deadline)",
+  "event OrderFilled(uint256 indexed orderId,address indexed maker,address indexed taker,uint256 lstFilled,uint256 lusdtGross,uint256 feeLusdt,uint256 lusdtNetToMakerOrTaker)",
+  "event OrderCancelled(uint256 indexed orderId,address indexed maker,uint256 refundLst,uint256 refundLusdt)"
+];
+
+function hasP2PPage() {
+  return Boolean(document.querySelector("[data-p2p-market]"));
+}
+
+function p2pSetText(selector, value) {
+  document.querySelectorAll(selector).forEach((el) => { el.textContent = value; });
+}
+
+function p2pLog(message, tone = "") {
+  document.querySelectorAll("[data-p2p-log]").forEach((el) => {
+    el.textContent = message;
+    el.dataset.tone = tone;
+  });
+}
+
+function p2pShort(value) {
+  return value ? `${String(value).slice(0, 6)}...${String(value).slice(-4)}` : "--";
+}
+
+function p2pEsc(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function p2pTrimNumber(text, minDecimals = 2, maxDecimals = 6) {
+  const [whole, frac = ""] = String(text || "0").split(".");
+  const cleaned = frac.padEnd(minDecimals, "0").slice(0, maxDecimals).replace(/0+$/, "");
+  const finalFrac = cleaned.padEnd(minDecimals, "0");
+  return finalFrac ? `${whole}.${finalFrac}` : whole;
+}
+
+function p2pFormatToken(value, decimals = 18, symbol = "", precision = 6) {
+  try {
+    const formatted = ethers.formatUnits(BigInt(value || 0), decimals);
+    return `${p2pTrimNumber(formatted, decimals === 6 ? 2 : 2, precision)}${symbol ? ` ${symbol}` : ""}`;
+  } catch (_) {
+    return `0.00${symbol ? ` ${symbol}` : ""}`;
+  }
+}
+
+function p2pFormatLst(value) {
+  return p2pFormatToken(value, 18, "LST", 6);
+}
+
+function p2pFormatLusdt(value) {
+  return p2pFormatToken(value, 6, "LUSDT", 6);
+}
+
+function p2pFormatPrice(value) {
+  return `${p2pTrimNumber(ethers.formatUnits(BigInt(value || 0), 6), 2, 6)} LUSDT`;
+}
+
+function p2pParseLst(selectorOrValue) {
+  const raw = selectorOrValue instanceof Element ? selectorOrValue.value : String(selectorOrValue || "");
+  const value = String(raw || "").trim();
+  if (!value || Number(value) <= 0) throw new Error("Enter a valid LST amount.");
+  return ethers.parseUnits(value, 18);
+}
+
+function p2pParseLusdt(selectorOrValue, allowZero = false) {
+  const raw = selectorOrValue instanceof Element ? selectorOrValue.value : String(selectorOrValue || "");
+  const value = String(raw || "").trim();
+  if (!value) return allowZero ? 0n : (() => { throw new Error("Enter a valid LUSDT amount."); })();
+  if (Number(value) < 0 || (!allowZero && Number(value) <= 0)) throw new Error("Enter a valid LUSDT amount.");
+  return ethers.parseUnits(value, 6);
+}
+
+function p2pParsePrice(selectorOrValue) {
+  const raw = selectorOrValue instanceof Element ? selectorOrValue.value : String(selectorOrValue || "");
+  const value = String(raw || "").trim();
+  if (!value || Number(value) <= 0) throw new Error("Enter a valid price.");
+  return ethers.parseUnits(value, 6);
+}
+
+function p2pDeadlineFromDays(selector) {
+  const el = document.querySelector(selector);
+  const raw = String(el?.value || "").trim();
+  if (!raw || Number(raw) <= 0) return 0;
+  const days = Math.floor(Number(raw));
+  if (!Number.isFinite(days) || days < 0) throw new Error("Enter a valid deadline in days.");
+  return Math.floor(Date.now() / 1000) + days * 86400;
+}
+
+function p2pQuoteLocal(lstAmount, priceLusdtPer1e18Lst) {
+  return BigInt(lstAmount) * BigInt(priceLusdtPer1e18Lst) / 1000000000000000000n;
+}
+
+function p2pFeeOf(lusdtGross) {
+  return BigInt(lusdtGross || 0) * P2P_FEE_BPS / P2P_BPS_DENOM;
+}
+
+function p2pProviderContract() {
+  const provider = new ethers.JsonRpcProvider(LUST_RPC_URL, { chainId: LUST_CHAIN_ID_DECIMAL, name: "LUST Chain" });
+  return new ethers.Contract(LUST_P2P_MARKET_ADDRESS, P2P_ABI, provider);
+}
+
+async function p2pSignerContract() {
+  await ensureWalletChain("lust");
+  const signer = await browserSigner();
+  return { signer, contract: new ethers.Contract(LUST_P2P_MARKET_ADDRESS, P2P_ABI, signer) };
+}
+
+async function p2pApproveIfNeeded(signer, amount) {
+  if (BigInt(amount || 0) <= 0n) return null;
+  const owner = await signer.getAddress();
+  const token = new ethers.Contract(LUSDT_TOKEN_ADDRESS, ERC20_ABI, signer);
+  const allowance = await token.allowance(owner, LUST_P2P_MARKET_ADDRESS);
+  if (allowance >= amount) return null;
+  p2pLog(`Opening LUSDT approval for ${p2pFormatLusdt(amount)}...`, "");
+  const tx = await token.approve(LUST_P2P_MARKET_ADDRESS, amount);
+  p2pLog(`Approval sent: ${tx.hash}. Waiting confirmation...`, "");
+  await tx.wait();
+  return tx.hash;
+}
+
+async function p2pReadOrder(orderId, contract = null) {
+  const c = contract || p2pProviderContract();
+  const raw = await c.orders(orderId);
+  return {
+    id: Number(orderId),
+    side: Number(raw.side ?? raw[0]),
+    maker: raw.maker ?? raw[1],
+    price: BigInt(raw.priceLusdtPer1e18Lst ?? raw[2]),
+    remainingLst: BigInt(raw.remainingLst ?? raw[3]),
+    remainingLusdt: BigInt(raw.remainingLusdt ?? raw[4]),
+    deadline: Number(raw.deadline ?? raw[5]),
+    active: Boolean(raw.active ?? raw[6])
+  };
+}
+
+function p2pDeadlineLabel(deadline) {
+  if (!deadline) return "No deadline";
+  const ms = Number(deadline) * 1000;
+  if (Date.now() > ms) return "Expired";
+  return new Date(ms).toLocaleString();
+}
+
+function p2pRenderOrderCard(order, isMine = false) {
+  const isSell = order.side === 0;
+  const quote = p2pQuoteLocal(order.remainingLst, order.price);
+  const fee = p2pFeeOf(quote);
+  const net = quote > fee ? quote - fee : 0n;
+  const sideLabel = isSell ? "SELL LST" : "BUY LST";
+  const sideClass = isSell ? "sell" : "buy";
+  const actionLabel = isSell ? "Buy this LST" : "Sell into order";
+  const expired = order.deadline && Date.now() > order.deadline * 1000;
+
+  return `
+    <article class="p2p-order-card ${expired ? "is-expired" : ""}">
+      <div class="p2p-order-top">
+        <div class="p2p-order-id">
+          <span class="p2p-side ${sideClass}">${sideLabel}${expired ? " · EXPIRED" : ""}</span>
+          <strong>#${order.id}</strong>
+        </div>
+        <a class="btn" href="https://explorer.lustchain.org/address/${LUST_P2P_MARKET_ADDRESS}" target="_blank" rel="noreferrer">Contract</a>
+      </div>
+      <div class="p2p-order-grid">
+        <div><span>Maker</span><strong title="${p2pEsc(order.maker)}">${p2pEsc(p2pShort(order.maker))}</strong></div>
+        <div><span>Price</span><strong>${p2pEsc(p2pFormatPrice(order.price))}</strong></div>
+        <div><span>Remaining LST</span><strong>${p2pEsc(p2pFormatLst(order.remainingLst))}</strong></div>
+        <div><span>${isSell ? "Buyer gross" : "Seller net"}</span><strong>${p2pEsc(isSell ? p2pFormatLusdt(quote) : p2pFormatLusdt(net))}</strong></div>
+        <div><span>Fee est.</span><strong>${p2pEsc(p2pFormatLusdt(fee))}</strong></div>
+        <div><span>Deadline</span><strong>${p2pEsc(p2pDeadlineLabel(order.deadline))}</strong></div>
+      </div>
+      <div class="p2p-order-actions">
+        ${!expired ? `<button class="btn primary" type="button" data-p2p-use-order data-side="${order.side}" data-id="${order.id}" data-amount="${ethers.formatUnits(order.remainingLst, 18)}">${actionLabel}</button>` : ""}
+        ${isMine ? `<button class="btn" type="button" data-p2p-manage-order data-id="${order.id}">Manage</button>` : ""}
+      </div>
+    </article>
+  `;
+}
+
+function p2pRenderOrderLists(orders) {
+  const wallet = String(walletState.address || "").toLowerCase();
+  const now = Math.floor(Date.now() / 1000);
+  const openOrders = orders.filter((o) => o.active && (!o.deadline || o.deadline >= now) && o.remainingLst > 0n);
+  const sells = openOrders.filter((o) => o.side === 0);
+  const buys = openOrders.filter((o) => o.side === 1);
+  const mine = orders.filter((o) => o.active && wallet && String(o.maker).toLowerCase() === wallet);
+
+  const sellHtml = sells.length ? sells.map((o) => p2pRenderOrderCard(o, wallet && String(o.maker).toLowerCase() === wallet)).join("") : `<div class="notice compact">No open sell orders yet.</div>`;
+  const buyHtml = buys.length ? buys.map((o) => p2pRenderOrderCard(o, wallet && String(o.maker).toLowerCase() === wallet)).join("") : `<div class="notice compact">No open buy orders yet.</div>`;
+  const myHtml = wallet
+    ? (mine.length ? mine.map((o) => p2pRenderOrderCard(o, true)).join("") : `<div class="notice compact">No active orders from this wallet.</div>`)
+    : `<div class="notice compact">Connect wallet to see your active orders.</div>`;
+
+  document.querySelectorAll("[data-p2p-sell-orders]").forEach((el) => { el.innerHTML = sellHtml; });
+  document.querySelectorAll("[data-p2p-buy-orders]").forEach((el) => { el.innerHTML = buyHtml; });
+  document.querySelectorAll("[data-p2p-my-orders]").forEach((el) => { el.innerHTML = myHtml; });
+}
+
+async function p2pRefreshBalances() {
+  if (!hasP2PPage()) return;
+  readState();
+  p2pSetText("[data-p2p-contract-short]", p2pShort(LUST_P2P_MARKET_ADDRESS));
+
+  const address = walletState.address || "";
+  if (!address) {
+    p2pSetText("[data-p2p-lst-balance]", "Connect wallet");
+    p2pSetText("[data-p2p-lusdt-balance]", "Connect wallet");
+    p2pSetText("[data-p2p-lusdt-allowance]", "Connect wallet");
+    return;
+  }
+
+  try {
+    const provider = new ethers.JsonRpcProvider(LUST_RPC_URL, { chainId: LUST_CHAIN_ID_DECIMAL, name: "LUST Chain" });
+    const token = new ethers.Contract(LUSDT_TOKEN_ADDRESS, ERC20_ABI, provider);
+    const [lstBalance, lusdtBalance, allowance] = await Promise.all([
+      provider.getBalance(address),
+      token.balanceOf(address),
+      token.allowance(address, LUST_P2P_MARKET_ADDRESS)
+    ]);
+    p2pSetText("[data-p2p-lst-balance]", p2pFormatLst(lstBalance));
+    p2pSetText("[data-p2p-lusdt-balance]", p2pFormatLusdt(lusdtBalance));
+    p2pSetText("[data-p2p-lusdt-allowance]", p2pFormatLusdt(allowance));
+  } catch (err) {
+    console.warn(err);
+    p2pSetText("[data-p2p-lst-balance]", "--");
+    p2pSetText("[data-p2p-lusdt-balance]", "--");
+    p2pSetText("[data-p2p-lusdt-allowance]", "--");
+  }
+}
+
+async function p2pRefreshOrders() {
+  if (!hasP2PPage()) return;
+  try {
+    p2pLog("Loading live P2P order book...", "");
+    const c = p2pProviderContract();
+    const next = await c.nextOrderId();
+    const latest = Number(next > 1n ? next - 1n : 0n);
+    if (!latest) {
+      p2pRenderOrderLists([]);
+      p2pLog("P2P market is ready. No orders yet.", "ok");
+      return;
+    }
+
+    const start = Math.max(1, latest - 79);
+    const orders = [];
+    for (let i = latest; i >= start; i -= 1) {
+      try {
+        const o = await p2pReadOrder(i, c);
+        if (o.maker && o.maker !== ethers.ZeroAddress) orders.push(o);
+      } catch (err) {
+        console.warn("Could not read P2P order", i, err);
+      }
+    }
+
+    p2pRenderOrderLists(orders);
+    const openCount = orders.filter((o) => o.active && (!o.deadline || Date.now() <= o.deadline * 1000)).length;
+    p2pLog(`Market refreshed. Latest order #${latest}. Open active orders shown: ${openCount}.`, "ok");
+  } catch (err) {
+    console.error(err);
+    p2pLog(err?.message || "Could not load P2P orders.", "warn");
+  }
+}
+
+function p2pUpdateQuotes() {
+  try {
+    const sellAmountEl = document.querySelector("[data-p2p-sell-amount]");
+    const sellPriceEl = document.querySelector("[data-p2p-sell-price]");
+    if (sellAmountEl && sellPriceEl) {
+      const amount = sellAmountEl.value ? ethers.parseUnits(String(sellAmountEl.value), 18) : 0n;
+      const price = sellPriceEl.value ? ethers.parseUnits(String(sellPriceEl.value), 6) : 0n;
+      p2pSetText("[data-p2p-sell-quote]", p2pFormatLusdt(p2pQuoteLocal(amount, price)));
+    }
+  } catch (_) {
+    p2pSetText("[data-p2p-sell-quote]", "0.000000 LUSDT");
+  }
+
+  try {
+    const buyAmountEl = document.querySelector("[data-p2p-buy-amount]");
+    const buyPriceEl = document.querySelector("[data-p2p-buy-price]");
+    if (buyAmountEl && buyPriceEl) {
+      const amount = buyAmountEl.value ? ethers.parseUnits(String(buyAmountEl.value), 18) : 0n;
+      const price = buyPriceEl.value ? ethers.parseUnits(String(buyPriceEl.value), 6) : 0n;
+      p2pSetText("[data-p2p-buy-quote]", p2pFormatLusdt(p2pQuoteLocal(amount, price)));
+    }
+  } catch (_) {
+    p2pSetText("[data-p2p-buy-quote]", "0.000000 LUSDT");
+  }
+}
+
+async function p2pAfterTx(message) {
+  p2pLog(message, "ok");
+  setTimeout(p2pRefreshBalances, 1400);
+  setTimeout(p2pRefreshOrders, 1800);
+}
+
+async function p2pSend(label, callback) {
+  try {
+    p2pLog(`${label}: preparing wallet confirmation...`, "");
+    const tx = await callback();
+    p2pLog(`${label}: transaction sent ${tx.hash}. Waiting confirmation...`, "");
+    await tx.wait();
+    await p2pAfterTx(`${label}: confirmed successfully.`);
+  } catch (err) {
+    console.error(err);
+    p2pLog(err?.shortMessage || err?.reason || err?.message || `${label} failed.`, "warn");
+  }
+}
+
+async function p2pCreateSellOrder() {
+  await p2pSend("Create sell order", async () => {
+    const amount = p2pParseLst(document.querySelector("[data-p2p-sell-amount]"));
+    const price = p2pParsePrice(document.querySelector("[data-p2p-sell-price]"));
+    const deadline = p2pDeadlineFromDays("[data-p2p-sell-deadline]");
+    const { contract } = await p2pSignerContract();
+    return await contract.createSellOrder(price, deadline, { value: amount });
+  });
+}
+
+async function p2pCreateBuyOrder() {
+  await p2pSend("Create buy order", async () => {
+    const amount = p2pParseLst(document.querySelector("[data-p2p-buy-amount]"));
+    const price = p2pParsePrice(document.querySelector("[data-p2p-buy-price]"));
+    const deadline = p2pDeadlineFromDays("[data-p2p-buy-deadline]");
+    const requiredLusdt = p2pQuoteLocal(amount, price);
+    const { signer, contract } = await p2pSignerContract();
+    await p2pApproveIfNeeded(signer, requiredLusdt);
+    return await contract.createBuyOrder(amount, price, deadline);
+  });
+}
+
+function p2pFillInputs() {
+  const id = Number(document.querySelector("[data-p2p-fill-id]")?.value || 0);
+  const amount = p2pParseLst(document.querySelector("[data-p2p-fill-amount]"));
+  const protectionEl = document.querySelector("[data-p2p-fill-protection]");
+  const protection = p2pParseLusdt(protectionEl, true);
+  if (!id || id < 1) throw new Error("Enter a valid order ID.");
+  return { id, amount, protection };
+}
+
+async function p2pFillSellOrder() {
+  await p2pSend("Buy LST from sell order", async () => {
+    const { id, amount, protection } = p2pFillInputs();
+    const { signer, contract } = await p2pSignerContract();
+    const order = await p2pReadOrder(id, contract);
+    if (order.side !== 0) throw new Error("This is not a sell order.");
+    const gross = p2pQuoteLocal(amount, order.price);
+    await p2pApproveIfNeeded(signer, gross);
+    return await contract.fillSellOrder(id, amount, protection);
+  });
+}
+
+async function p2pFillBuyOrder() {
+  await p2pSend("Sell LST into buy order", async () => {
+    const { id, amount, protection } = p2pFillInputs();
+    const { contract } = await p2pSignerContract();
+    const order = await p2pReadOrder(id, contract);
+    if (order.side !== 1) throw new Error("This is not a buy order.");
+    return await contract.fillBuyOrder(id, amount, protection, { value: amount });
+  });
+}
+
+function p2pManageOrderId() {
+  const id = Number(document.querySelector("[data-p2p-manage-id]")?.value || 0);
+  if (!id || id < 1) throw new Error("Enter a valid order ID to manage.");
+  return id;
+}
+
+async function p2pUpdatePrice() {
+  await p2pSend("Update price", async () => {
+    const id = p2pManageOrderId();
+    const price = p2pParsePrice(document.querySelector("[data-p2p-new-price]"));
+    const { signer, contract } = await p2pSignerContract();
+    const order = await p2pReadOrder(id, contract);
+    if (order.side === 1) {
+      const required = p2pQuoteLocal(order.remainingLst, price);
+      if (required > order.remainingLusdt) {
+        await p2pApproveIfNeeded(signer, required - order.remainingLusdt);
+      }
+    }
+    return await contract.updatePrice(id, price);
+  });
+}
+
+async function p2pUpdateDeadline() {
+  await p2pSend("Update deadline", async () => {
+    const id = p2pManageOrderId();
+    const deadline = p2pDeadlineFromDays("[data-p2p-new-deadline]");
+    const { contract } = await p2pSignerContract();
+    return await contract.updateDeadline(id, deadline);
+  });
+}
+
+async function p2pCancelOrder() {
+  const id = p2pManageOrderId();
+  if (!confirm(`Cancel P2P order #${id}?`)) return;
+  await p2pSend("Cancel order", async () => {
+    const { contract } = await p2pSignerContract();
+    return await contract.cancelOrder(id);
+  });
+}
+
+async function p2pAddSellLst() {
+  await p2pSend("Add LST to sell order", async () => {
+    const id = p2pManageOrderId();
+    const amount = p2pParseLst(document.querySelector("[data-p2p-sell-edit-amount]"));
+    const { contract } = await p2pSignerContract();
+    return await contract.addLstToSellOrder(id, { value: amount });
+  });
+}
+
+async function p2pRemoveSellLst() {
+  await p2pSend("Remove LST from sell order", async () => {
+    const id = p2pManageOrderId();
+    const amount = p2pParseLst(document.querySelector("[data-p2p-sell-edit-amount]"));
+    const { contract } = await p2pSignerContract();
+    return await contract.removeLstFromSellOrder(id, amount);
+  });
+}
+
+async function p2pAddBuyLusdt() {
+  await p2pSend("Add LUSDT to buy order", async () => {
+    const id = p2pManageOrderId();
+    const amount = p2pParseLusdt(document.querySelector("[data-p2p-buy-edit-amount]"));
+    const { signer, contract } = await p2pSignerContract();
+    await p2pApproveIfNeeded(signer, amount);
+    return await contract.addLusdtToBuyOrder(id, amount);
+  });
+}
+
+async function p2pReduceBuyLst() {
+  await p2pSend("Reduce buy order", async () => {
+    const id = p2pManageOrderId();
+    const amount = p2pParseLst(document.querySelector("[data-p2p-buy-edit-amount]"));
+    const { contract } = await p2pSignerContract();
+    return await contract.reduceBuyOrder(id, amount);
+  });
+}
+
+function wireLustP2P() {
+  if (!hasP2PPage()) return;
+
+  p2pSetText("[data-p2p-contract-short]", p2pShort(LUST_P2P_MARKET_ADDRESS));
+  document.querySelectorAll("[data-p2p-sell-amount], [data-p2p-sell-price], [data-p2p-buy-amount], [data-p2p-buy-price]").forEach((el) => {
+    el.addEventListener("input", p2pUpdateQuotes);
+  });
+
+  document.querySelectorAll("[data-p2p-refresh]").forEach((el) => {
+    el.addEventListener("click", () => {
+      p2pRefreshBalances();
+      p2pRefreshOrders();
+    });
+  });
+
+  document.querySelector("[data-p2p-scroll-create]")?.addEventListener("click", () => {
+    document.querySelector("#create-order")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  document.querySelector("[data-p2p-create-sell]")?.addEventListener("click", p2pCreateSellOrder);
+  document.querySelector("[data-p2p-create-buy]")?.addEventListener("click", p2pCreateBuyOrder);
+  document.querySelector("[data-p2p-fill-sell]")?.addEventListener("click", p2pFillSellOrder);
+  document.querySelector("[data-p2p-fill-buy]")?.addEventListener("click", p2pFillBuyOrder);
+  document.querySelector("[data-p2p-update-price]")?.addEventListener("click", p2pUpdatePrice);
+  document.querySelector("[data-p2p-update-deadline]")?.addEventListener("click", p2pUpdateDeadline);
+  document.querySelector("[data-p2p-cancel]")?.addEventListener("click", p2pCancelOrder);
+  document.querySelector("[data-p2p-add-sell-lst]")?.addEventListener("click", p2pAddSellLst);
+  document.querySelector("[data-p2p-remove-sell-lst]")?.addEventListener("click", p2pRemoveSellLst);
+  document.querySelector("[data-p2p-add-buy-lusdt]")?.addEventListener("click", p2pAddBuyLusdt);
+  document.querySelector("[data-p2p-reduce-buy-lst]")?.addEventListener("click", p2pReduceBuyLst);
+
+  document.addEventListener("click", (event) => {
+    const useBtn = event.target.closest("[data-p2p-use-order]");
+    if (useBtn) {
+      document.querySelector("[data-p2p-fill-id]").value = useBtn.getAttribute("data-id") || "";
+      document.querySelector("[data-p2p-fill-amount]").value = useBtn.getAttribute("data-amount") || "";
+      document.querySelector("[data-p2p-fill-protection]").value = "";
+      document.querySelector("[data-p2p-fill-id]")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    const manageBtn = event.target.closest("[data-p2p-manage-order]");
+    if (manageBtn) {
+      document.querySelector("[data-p2p-manage-id]").value = manageBtn.getAttribute("data-id") || "";
+      document.querySelector("[data-p2p-manage-id]")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    if (event.target.closest("[data-connect-wallet]")) {
+      setTimeout(p2pRefreshBalances, 900);
+      setTimeout(p2pRefreshOrders, 1400);
+    }
+  });
+
+  p2pUpdateQuotes();
+  p2pRefreshBalances();
+  p2pRefreshOrders();
+  setInterval(p2pRefreshBalances, 15000);
+  setInterval(p2pRefreshOrders, 30000);
+}
+
+window.lustP2P = {
+  refresh: () => { p2pRefreshBalances(); p2pRefreshOrders(); },
+  contract: LUST_P2P_MARKET_ADDRESS,
+  token: LUSDT_TOKEN_ADDRESS
+};
+
+wireLustP2P();

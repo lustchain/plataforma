@@ -71,3 +71,12 @@ Ubuntu/Linux TGZ:
 Windows is the recommended/easy public miner at launch. Ubuntu/Linux is advanced/beta. TX-FEED V3 checks the public pending transaction feed every 0.5 seconds and injects raw pending transactions into the local miner node.
 
 Snapshot server note: latest snapshot is rebuilt automatically when the public snapshot is behind by about 1000 blocks.
+
+
+Update v20260613-p2p-lusdt-v1:
+- Página P2P recriada com visual LUST/INRI premium.
+- Contrato P2P conectado: `0xcd821ede23048f8fea777eeec3948135758e4926`.
+- Par nativo: `LST / LUSDT`.
+- LUSDT: `0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE`.
+- Funções adicionadas no site: criar ordem de venda, criar ordem de compra, approve automático de LUSDT, preencher ordem, editar preço, editar deadline, cancelar, adicionar/remover tamanho e listar ordens abertas.
+- Cache busting atualizado em `p2p.html`.

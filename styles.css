@@ -1540,3 +1540,88 @@ select.input{appearance:none;background:#09020d;color:#fff}
   .staking-preview-grid .wide{grid-column:auto}
   .staking-hero-actions .btn{width:100%}
 }
+
+/* LUST P2P LST/LUSDT market v20260613-p2p-lusdt-v1 */
+.p2p-page{width:min(1180px,92vw)}
+.p2p-hero{
+  display:grid;
+  grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr);
+  gap:22px;
+  align-items:stretch;
+  padding:14px 0 18px;
+}
+.p2p-hero-copy,
+.p2p-market-card{
+  border:2px solid rgba(247,3,117,.38);
+  border-radius:28px;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(247,3,117,.28), transparent 34%),
+    radial-gradient(circle at 100% 18%, rgba(143,53,255,.18), transparent 38%),
+    rgba(255,255,255,.035);
+  padding:clamp(24px,4vw,42px);
+  box-shadow:0 0 44px rgba(247,3,117,.08);
+}
+.p2p-hero-copy h1{max-width:850px}
+.p2p-market-card{background:#08010b;padding:24px;display:flex;flex-direction:column;justify-content:center}
+.p2p-pair{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.p2p-pair img{width:56px;height:56px;object-fit:contain}
+.p2p-pair span{display:block;color:var(--muted);font-size:12px;font-weight:950;text-transform:uppercase;letter-spacing:.12em}
+.p2p-pair strong{display:block;font-size:26px;letter-spacing:-.03em}
+.p2p-section{margin-top:42px}
+.p2p-stats .card strong{display:block;font-size:28px;letter-spacing:-.04em;word-break:break-word}
+.p2p-form small,
+.p2p-help-card small,
+.p2p-my-orders small{display:block;color:var(--pink2);font-weight:950;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.p2p-form h3{font-size:25px;margin-top:0}
+.p2p-form .result span{display:block;color:var(--muted);font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.08em}
+.p2p-form .result strong{font-size:25px;word-break:break-word}
+.wide{width:100%;margin-top:18px}
+.muted-inline{color:var(--muted);font-weight:700;font-size:12px}
+.p2p-actions-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.p2p-actions-row .btn{flex:1 1 190px}
+.btn.danger{border-color:rgba(255,88,88,.62);background:rgba(255,88,88,.10)}
+.btn.danger:hover{background:#ff3b52;border-color:#ff3b52}
+.p2p-help-line{border-bottom:2px solid rgba(255,255,255,.13);padding:16px 0}
+.p2p-help-line:last-child{border-bottom:0}
+.p2p-help-line strong{display:block;margin-bottom:4px}
+.p2p-help-line span{color:var(--muted);line-height:1.55}
+.p2p-inline-fields{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center}
+.p2p-book-actions{display:flex;gap:10px;align-items:center}
+.p2p-my-orders{margin-top:18px}
+.p2p-order-list{display:grid;gap:12px}
+.p2p-order-card{
+  border:2px solid rgba(255,255,255,.16);
+  border-radius:18px;
+  background:#08010b;
+  padding:16px;
+  display:grid;
+  gap:12px;
+}
+.p2p-order-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.p2p-order-id{display:flex;flex-direction:column;gap:4px}
+.p2p-order-id strong{font-size:20px}
+.p2p-side{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:max-content;border-radius:999px;padding:6px 10px;
+  font-size:12px;font-weight:950;letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid rgba(247,3,117,.45);background:rgba(247,3,117,.11);color:#ffd8ef;
+}
+.p2p-side.buy{border-color:rgba(78,255,190,.42);background:rgba(78,255,190,.08);color:#d8fff1}
+.p2p-order-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.p2p-order-grid div{border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px;background:rgba(255,255,255,.035)}
+.p2p-order-grid span{display:block;color:var(--muted);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.p2p-order-grid strong{display:block;word-break:break-word}
+.p2p-order-actions{display:flex;flex-wrap:wrap;gap:8px}
+.p2p-order-actions .btn{padding:9px 12px;font-size:13px}
+.notice.compact{font-size:14px;margin-top:12px;padding:13px 14px;line-height:1.5;word-break:break-word}
+.notice[data-tone="ok"], .p2p-page [data-tone="ok"]{border-color:rgba(78,255,190,.45);background:rgba(78,255,190,.08);color:#d8fff1}
+.notice[data-tone="warn"], .p2p-page [data-tone="warn"]{border-color:rgba(255,204,102,.45);background:rgba(255,204,102,.08);color:#ffe7a8}
+.notice[data-tone="bad"], .p2p-page [data-tone="bad"]{border-color:rgba(255,88,88,.52);background:rgba(255,88,88,.08);color:#ffd1d8}
+@media(max-width:980px){
+  .p2p-hero{grid-template-columns:1fr}
+  .p2p-inline-fields{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .p2p-order-grid{grid-template-columns:1fr}
+  .p2p-hero-copy,.p2p-market-card{border-radius:22px;padding:22px}
+}
