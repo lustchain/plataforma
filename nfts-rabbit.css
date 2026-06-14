@@ -344,3 +344,149 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* LUST Rabbit Club whitelist registration form */
+.rabbit-waitlist-panel p {
+  color: #ffd8ec;
+  line-height: 1.7;
+  max-width: 980px;
+}
+
+.rabbit-waitlist-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.rabbit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rabbit-field-wide {
+  grid-column: 1 / -1;
+}
+
+.rabbit-field label {
+  color: #fff;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-weight: 800;
+}
+
+.rabbit-input {
+  width: 100%;
+  border: 1px solid rgba(247, 3, 117, .36);
+  background: rgba(10, 0, 10, .58);
+  color: #fff;
+  border-radius: 16px;
+  padding: 14px 15px;
+  outline: none;
+  font: inherit;
+}
+
+.rabbit-input:focus {
+  border-color: rgba(247, 3, 117, .92);
+  box-shadow: 0 0 0 3px rgba(247, 3, 117, .14);
+}
+
+.rabbit-waitlist-actions {
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.rabbit-waitlist-status {
+  margin-top: 14px;
+}
+
+.rabbit-whitelist-note {
+  margin-top: 14px;
+}
+
+@media (max-width: 720px) {
+  .rabbit-waitlist-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* LUST Rabbit Club on-chain registry + transparency */
+.rabbit-transparency-panel p,
+.rabbit-waitlist-panel p {
+  max-width: 1050px;
+  color: #ffd8ec;
+  line-height: 1.75;
+}
+
+.rabbit-transparency-grid,
+.rabbit-funds-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.rabbit-transparency-grid div,
+.rabbit-fund-card {
+  border: 1px solid rgba(247, 3, 117, .28);
+  border-radius: 18px;
+  padding: 16px;
+  background: rgba(247, 3, 117, .06);
+  overflow-wrap: anywhere;
+}
+
+.rabbit-transparency-grid b,
+.rabbit-fund-card strong {
+  display: block;
+  color: #fff;
+  font-size: 12px;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.rabbit-transparency-grid span,
+.rabbit-fund-card span {
+  display: block;
+  color: #ffd8ec;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.rabbit-fund-card em {
+  display: block;
+  font-style: normal;
+  font-size: clamp(24px, 4vw, 36px);
+  color: #fff;
+  font-weight: 900;
+  margin-bottom: 8px;
+  text-shadow: 0 0 24px rgba(247, 3, 117, .38);
+}
+
+@media (max-width: 1050px) {
+  .rabbit-transparency-grid,
+  .rabbit-funds-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .rabbit-transparency-grid,
+  .rabbit-funds-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Corrected transparency detail */
+.rabbit-funds-grid-secondary {
+  margin-top: 12px;
+}
+
+.rabbit-transparency-panel .rabbit-link-box code {
+  line-height: 1.65;
+}

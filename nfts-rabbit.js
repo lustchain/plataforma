@@ -4,6 +4,9 @@ const LUST_CHAIN_ID_HEX = "0x1b0b";
 const LUST_RPC_URL = "https://rpc.lustchain.org";
 const LUSDT_ADDRESS = "0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE";
 const RABBIT_CONTRACT_ADDRESS = "0x81b9a5bB109919CFF3eE4C92B2372ABCd73614e6";
+const RABBIT_REGISTRY_ADDRESS = "0xA16DE59e5F13edf51464EdF807d0B23175cecfA6";
+
+
 
 const LUSDT_ABI = [
   "function allowance(address owner, address spender) view returns (uint256)",
@@ -225,6 +228,88 @@ async function mintRabbit() {
     setStatus(error?.shortMessage || error?.message || "Mint failed.");
   }
 }
+
+
+
+
+
+const RABBIT_REGISTRY_ABI = [
+  "function register() external payable",
+  "function registrationOpen() view returns (bool)",
+  "function locked() view returns (bool)",
+  "function registrationFee() view returns (uint256)",
+  "function maxRegistrations() view returns (uint256)",
+  "function registeredCount() view returns (uint256)",
+  "function isRegistered(address wallet) view returns (bool)"
+];
+
+const registryStatusEl = document.querySelector("[data-registry-status]");
+const onchainRegisterBtn = document.querySelector("[data-onchain-register]");
+
+async function readRegistryStatus() {
+  if (!registryStatusEl || !window.ethereum || !ethers) return;
+
+  try {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const registry = new ethers.Contract(RABBIT_REGISTRY_ADDRESS, RABBIT_REGISTRY_ABI, provider);
+
+    const [open, locked, fee, count, max] = await Promise.all([
+      registry.registrationOpen(),
+      registry.locked(),
+      registry.registrationFee(),
+      registry.registeredCount(),
+      registry.maxRegistrations()
+    ]);
+
+    const feeText = fee === 0n ? "free" : `${ethers.formatEther(fee)} LST`;
+    registryStatusEl.textContent = locked
+      ? `Closed · ${count.toString()} / ${max.toString()} registered`
+      : `${open ? "Open" : "Closed"} · ${count.toString()} / ${max.toString()} registered · ${feeText}`;
+  } catch (error) {
+    registryStatusEl.textContent = "Unable to read registry";
+  }
+}
+
+async function joinWhitelistOnChain() {
+  try {
+    const { signer, address } = await getProviderAndSigner();
+    const registry = new ethers.Contract(RABBIT_REGISTRY_ADDRESS, RABBIT_REGISTRY_ABI, signer);
+
+    const [open, locked, fee, alreadyRegistered] = await Promise.all([
+      registry.registrationOpen(),
+      registry.locked(),
+      registry.registrationFee(),
+      registry.isRegistered(address)
+    ]);
+
+    if (locked) {
+      setWhitelistStatus("Whitelist registry is locked.");
+      return;
+    }
+
+    if (!open) {
+      setWhitelistStatus("Whitelist registry is not open yet.");
+      return;
+    }
+
+    if (alreadyRegistered) {
+      setWhitelistStatus(`Wallet already registered: ${shortAddress(address)}.`);
+      return;
+    }
+
+    setWhitelistStatus("Sending on-chain whitelist registration...");
+    const tx = await registry.register({ value: fee });
+    setWhitelistStatus(`Registration sent: ${tx.hash}`);
+    await tx.wait();
+    setWhitelistStatus(`Registered successfully: ${shortAddress(address)}. This does not mint a Rabbit yet.`);
+    await readRegistryStatus();
+  } catch (error) {
+    setWhitelistStatus(error?.shortMessage || error?.message || "On-chain registration failed.");
+  }
+}
+
+onchainRegisterBtn?.addEventListener("click", joinWhitelistOnChain);
+readRegistryStatus();
 
 approveBtn?.addEventListener("click", approveLusdt);
 mintBtn?.addEventListener("click", mintRabbit);

@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
   <link rel="stylesheet" href="./styles.css?v20260613-lustswap-v1" />
-  <link rel="stylesheet" href="./nfts-rabbit.css?v20260614-rabbit-launch-ready" />
+  <link rel="stylesheet" href="./nfts-rabbit.css?v20260614-transparency-corrected" />
 </head>
 <body>
 <div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
@@ -65,7 +65,7 @@
           <span class="rabbit-badge">Paid in LUSDT</span>
         </div>
         <div class="hero-buttons">
-          <a class="btn primary" href="#mint">Join the waitlist</a>
+          <a class="btn primary" href="#waitlist">Join the waitlist</a>
           <a class="btn" href="./contracts/LUSTRabbitClub.sol" target="_blank" rel="noopener">View contract source</a>
         </div>
       </div>
@@ -77,6 +77,39 @@
           <span>LRC</span>
         </div>
       </div>
+    </div>
+  </section>
+
+
+  
+  <section class="rabbit-panel rabbit-waitlist-panel" id="waitlist" style="margin-top:18px">
+    <small>On-chain whitelist registry</small>
+    <h2>Join the early mint list on-chain.</h2>
+    <p>
+      Whitelist registration is free. It does not mint an NFT and it does not charge LUSDT.
+      Your wallet is recorded on-chain in the Whitelist Registry so the LUST team can review and approve wallets for early mint.
+      You only pay the normal LUST network gas fee.
+    </p>
+
+    <div class="rabbit-statement-grid">
+      <div><b>Registry contract</b><span>0xA16DE59e5F13edf51464EdF807d0B23175cecfA6</span></div>
+      <div><b>Registration fee</b><span>0 LST / 0 LUSDT</span></div>
+      <div><b>Max registrations</b><span>9,700 wallets</span></div>
+      <div><b>Status</b><span data-registry-status>Checking on-chain...</span></div>
+    </div>
+
+    <div class="rabbit-actions rabbit-waitlist-actions">
+      <button class="btn" type="button" data-whitelist-fill-wallet>Use connected wallet</button>
+      <button class="btn primary" type="button" data-onchain-register>Join Whitelist On-Chain</button>
+    </div>
+
+    <div class="rabbit-status rabbit-waitlist-status" data-whitelist-status>
+      Connect your wallet and register on-chain. Registration does not guarantee approval and does not mint a Rabbit.
+    </div>
+
+    <div class="rabbit-link-box rabbit-whitelist-note">
+      <small>How it works</small>
+      <code>1) Register wallet on-chain → 2) Team reviews wallets → 3) Approved wallets are added to the official NFT contract → 4) Whitelist sale opens → 5) Approved wallets mint for 50 LUSDT.</code>
     </div>
   </section>
 
@@ -124,7 +157,7 @@
         <div class="row"><span>Contract</span><strong data-rabbit-contract>0x81b9a5bB109919CFF3eE4C92B2372ABCd73614e6</strong></div>
         <div class="row"><span>Wallet</span><strong data-rabbit-wallet>Not connected</strong></div>
         <div class="row"><span>Royalty</span><strong>5%</strong></div>
-        <div class="row"><span>Reserve</span><strong>300 max</strong></div>
+        <div class="row"><span>Reserve</span><strong>300 max · community reserve</strong></div>
       </div>
 
       <div class="rabbit-link-box">
@@ -169,7 +202,87 @@
     </div>
   </section>
 
-  <section class="rabbit-panel" style="margin-top:18px">
+  <section class="rabbit-panel rabbit-transparency-panel" id="transparency" style="margin-top:18px">
+    <small>Transparency</small>
+    <h2>Clear fund allocation. No hidden destination.</h2>
+    <p>
+      LUST Rabbit Club uses one official NFT contract and one auxiliary Whitelist Registry. The registry only collects
+      early-access wallets on-chain. It does not mint NFTs, does not sell NFTs and does not receive LUSDT from mint.
+    </p>
+
+    <div class="rabbit-transparency-grid">
+      <div>
+        <b>Official NFT contract</b>
+        <span>0x81b9a5bB109919CFF3eE4C92B2372ABCd73614e6</span>
+      </div>
+      <div>
+        <b>Whitelist Registry</b>
+        <span>0xA16DE59e5F13edf51464EdF807d0B23175cecfA6</span>
+      </div>
+      <div>
+        <b>Payment token</b>
+        <span>LUSDT — 0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE</span>
+      </div>
+      <div>
+        <b>Current receiver wallet</b>
+        <span>0x74b8db40d1bC5B590bB8dBB62dCc60Eb2DaD8f12</span>
+      </div>
+    </div>
+
+    <div class="rabbit-funds-grid">
+      <div class="rabbit-fund-card">
+        <strong>Whitelist mint</strong>
+        <em>50 LUSDT</em>
+        <span>Early price for approved wallets after whitelist sale opens on-chain.</span>
+      </div>
+      <div class="rabbit-fund-card">
+        <strong>Public mint</strong>
+        <em>100 LUSDT</em>
+        <span>Public price after public sale opens on-chain.</span>
+      </div>
+      <div class="rabbit-fund-card">
+        <strong>80% Treasury / Creator / Project</strong>
+        <em>80%</em>
+        <span>Creator/project treasury, development, art production, operations, marketing, infrastructure and future LUST ecosystem work.</span>
+      </div>
+      <div class="rabbit-fund-card">
+        <strong>20% Liquidity / Market Support</strong>
+        <em>20%</em>
+        <span>Liquidity support, pool campaigns, market depth, exchange initiatives and ecosystem liquidity actions.</span>
+      </div>
+    </div>
+
+    <div class="rabbit-funds-grid rabbit-funds-grid-secondary">
+      <div class="rabbit-fund-card">
+        <strong>Current on-chain setup</strong>
+        <em>100%</em>
+        <span>Both treasury and liquidity receiver are currently the same wallet: 0x74b8db40d1bC5B590bB8dBB62dCc60Eb2DaD8f12. Funds are received there and allocated by policy.</span>
+      </div>
+      <div class="rabbit-fund-card">
+        <strong>Whitelist registration</strong>
+        <em>0</em>
+        <span>Registration is free. Users only pay normal LUST gas. The registry does not collect LUSDT.</span>
+      </div>
+      <div class="rabbit-fund-card">
+        <strong>Secondary royalty</strong>
+        <em>5%</em>
+        <span>Royalty receiver is the project wallet. Royalties apply only on supported secondary marketplaces.</span>
+      </div>
+      <div class="rabbit-fund-card">
+        <strong>Reserve NFTs</strong>
+        <em>300</em>
+        <span>Reserved for community, miners, ambassadors, campaigns, partners and future activations. Not a hidden rarity allocation.</span>
+      </div>
+    </div>
+
+    <div class="rabbit-link-box">
+      <small>Important</small>
+      <code>Mint payments are split by the official NFT contract. Because the treasury and liquidity wallets are currently the same address, 100% is received by the project wallet today, with a public allocation policy of 80% treasury/project and 20% liquidity/market support.</code>
+    </div>
+  </section>
+
+
+<section class="rabbit-panel" style="margin-top:18px">
     <small>Benefits</small>
     <h2>More than a picture. A founder pass.</h2>
     <div class="rabbit-benefits">
@@ -203,6 +316,6 @@
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
 <script type="module" src="./app.js?v20260613-lustswap-v1"></script>
-<script type="module" src="./nfts-rabbit.js?v20260614-rabbit-launch-ready"></script>
+<script type="module" src="./nfts-rabbit.js?v20260614-transparency-corrected"></script>
 </body>
 </html>
