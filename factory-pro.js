@@ -199,6 +199,36 @@ function getPremiumLinks(plan) {
   return links;
 }
 
+
+function buildDescriptionWithOfficialLinks(description, links) {
+  const rows = [];
+  const labels = {
+    website: "Website",
+    twitter: "X / Twitter",
+    telegram: "Telegram",
+    discord: "Discord",
+    instagram: "Instagram",
+    youtube: "YouTube",
+    github: "GitHub",
+    medium: "Medium / Blog",
+    linkedin: "LinkedIn",
+    docs: "Whitepaper / Docs",
+    audit: "Audit report",
+    coingecko: "CoinGecko",
+    coinmarketcap: "CoinMarketCap",
+    dexscreener: "DexScreener",
+    email: "Support email"
+  };
+
+  for (const key of Object.keys(labels)) {
+    const value = String(links?.[key] || "").trim();
+    if (value) rows.push(`${labels[key]}: ${value}`);
+  }
+
+  if (!rows.length) return description;
+  return `${description}\n\nOfficial links:\n${rows.join("\n")}`.trim();
+}
+
 function getDescription(plan) {
   const value = String($("[data-factory-description]")?.value || "").trim();
   if (value.length > 800) throw new Error("Description is too long.");
@@ -237,7 +267,7 @@ async function uploadMetadataForExplorer({ plan, name, symbol, creator }) {
   form.append("plan", String(plan));
   form.append("name", name);
   form.append("symbol", symbol);
-  form.append("description", description);
+  form.append("description", buildDescriptionWithOfficialLinks(description, premiumLinks));
   form.append("creator", creator);
 
   for (const [field, value] of Object.entries(premiumLinks)) {
