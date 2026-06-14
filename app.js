@@ -3769,3 +3769,420 @@ window.lustSwap = {
 };
 
 wireLUSTSwap();
+
+// ------------------------------------------------------------
+// LUST Token Factory Pro page
+// ------------------------------------------------------------
+const LUST_TOKEN_FACTORY_PRO_ADDRESS = "0xbCB6A89713796eE1C0414c8898dED5657e6b9526";
+const LUST_EXPLORER_URL = "https://explorer.lustchain.org";
+
+const LUST_FACTORY_ABI = [
+  "function PLAN_BASIC() view returns (uint8)",
+  "function PLAN_LOGO() view returns (uint8)",
+  "function PLAN_PREMIUM() view returns (uint8)",
+  "function LUSDT() view returns (address)",
+  "function treasury() view returns (address)",
+  "function paused() view returns (bool)",
+  "function lusdtPaymentsEnabled() view returns (bool)",
+  "function lstPaymentsEnabled() view returns (bool)",
+  "function totalTokens() view returns (uint256)",
+  "function recordsCount() view returns (uint256)",
+  "function getLUSDTFeeForPlan(uint8 plan) view returns (uint256)",
+  "function getLSTFeeForPlan(uint8 plan) view returns (uint256)",
+  "function getCreatorTokens(address creator) view returns (address[])",
+  "function getTokenRecordByToken(address token) view returns (tuple(address token,address creator,uint8 plan,uint8 paymentAsset,address paymentToken,string name,string symbol,uint8 decimals,uint256 supply,uint256 totalSupply,uint256 feePaid,string metadataURI,uint256 createdAt))",
+  "function createBasicToken(string name,string symbol,uint8 decimals,uint256 supply,uint8 paymentAsset) payable returns (address)",
+  "function createLogoToken(string name,string symbol,uint8 decimals,uint256 supply,string metadataURI,uint8 paymentAsset) payable returns (address)",
+  "function createPremiumToken(string name,string symbol,uint8 decimals,uint256 supply,string metadataURI,uint8 paymentAsset) payable returns (address)",
+  "event TokenCreated(address indexed creator,address indexed token,uint8 indexed plan,uint8 paymentAsset,address paymentToken,uint256 feePaid,string metadataURI)"
+];
+
+const LUST_FACTORY_PLAN_NAMES = {
+  1: "Basic",
+  2: "Logo",
+  3: "Premium"
+};
+
+const LUST_FACTORY_PAYMENT_NAMES = {
+  0: "LUSDT",
+  1: "LST"
+};
+
+function factoryHasPage() {
+  return Boolean(document.querySelector("[data-token-factory]"));
+}
+
+function factoryProvider() {
+  return new ethers.JsonRpcProvider("https://rpc.lustchain.org");
+}
+
+function factoryContract(providerOrSigner = factoryProvider()) {
+  return new ethers.Contract(LUST_TOKEN_FACTORY_PRO_ADDRESS, LUST_FACTORY_ABI, providerOrSigner);
+}
+
+function factoryShort(value) {
+  return value ? `${String(value).slice(0, 6)}...${String(value).slice(-4)}` : "--";
+}
+
+function factoryEscape(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function factorySet(selector, value) {
+  document.querySelectorAll(selector).forEach((el) => { el.textContent = value; });
+}
+
+function factoryLog(message, tone = "") {
+  document.querySelectorAll("[data-factory-log]").forEach((el) => {
+    el.textContent = message;
+    el.dataset.tone = tone;
+  });
+}
+
+function factorySelectedPlan() {
+  return Number(document.querySelector("[data-factory-plan]:checked")?.value || "1");
+}
+
+function factorySelectedPayment() {
+  return Number(document.querySelector("[data-factory-payment]:checked")?.value || "0");
+}
+
+function factoryFormatFee(value, asset) {
+  try {
+    const decimals = asset === 0 ? 6 : 18;
+    const symbol = asset === 0 ? "LUSDT" : "LST";
+    const text = ethers.formatUnits(BigInt(value || 0), decimals);
+    const [whole, fraction = ""] = text.split(".");
+    const trimmed = fraction.replace(/0+$/, "").slice(0, asset === 0 ? 6 : 4);
+    return `${whole}${trimmed ? `.${trimmed}` : ""} ${symbol}`;
+  } catch (_) {
+    return `-- ${asset === 0 ? "LUSDT" : "LST"}`;
+  }
+}
+
+function factoryReadSupply() {
+  const raw = String(document.querySelector("[data-factory-supply]")?.value || "").trim().replaceAll(",", "");
+  if (!raw || !/^\d+$/.test(raw)) throw new Error("Supply must be a whole number. Example: 1000000");
+  const value = BigInt(raw);
+  if (value <= 0n) throw new Error("Supply must be greater than zero.");
+  return value;
+}
+
+function factoryReadDecimals() {
+  const raw = Number(document.querySelector("[data-factory-decimals]")?.value || "18");
+  if (!Number.isInteger(raw) || raw < 0 || raw > 18) throw new Error("Decimals must be between 0 and 18.");
+  return raw;
+}
+
+function factoryReadName() {
+  const name = String(document.querySelector("[data-factory-name]")?.value || "").trim();
+  if (!name) throw new Error("Enter token name.");
+  if (name.length > 64) throw new Error("Token name is too long.");
+  return name;
+}
+
+function factoryReadSymbol() {
+  const symbol = String(document.querySelector("[data-factory-symbol]")?.value || "").trim().toUpperCase();
+  if (!symbol) throw new Error("Enter token symbol.");
+  if (symbol.length > 16) throw new Error("Token symbol is too long.");
+  return symbol;
+}
+
+function factoryReadMetadataURI(plan) {
+  const uri = String(document.querySelector("[data-factory-metadata]")?.value || "").trim();
+  if (uri.length > 512) throw new Error("Metadata URI is too long.");
+  if ((plan === 2 || plan === 3) && !uri) throw new Error("Logo and Premium plans require a metadata URI.");
+  return uri;
+}
+
+async function factoryFees() {
+  const contract = factoryContract();
+  const plan = factorySelectedPlan();
+  const [lusdtFee, lstFee] = await Promise.all([
+    contract.getLUSDTFeeForPlan(plan),
+    contract.getLSTFeeForPlan(plan)
+  ]);
+  return { lusdtFee: BigInt(lusdtFee), lstFee: BigInt(lstFee) };
+}
+
+async function factoryUpdateSelectionUi() {
+  const plan = factorySelectedPlan();
+  const payment = factorySelectedPayment();
+
+  document.querySelectorAll("[data-factory-plan-card]").forEach((card) => {
+    const input = card.querySelector("[data-factory-plan]");
+    card.classList.toggle("is-selected", input?.checked === true);
+  });
+  document.querySelectorAll("[data-factory-payment-card]").forEach((card) => {
+    const input = card.querySelector("[data-factory-payment]");
+    card.classList.toggle("is-selected", input?.checked === true);
+  });
+
+  const metadataWrap = document.querySelector(".factory-metadata-wrap");
+  if (metadataWrap) metadataWrap.style.display = plan === 1 ? "none" : "block";
+
+  factorySet("[data-factory-summary-plan]", LUST_FACTORY_PLAN_NAMES[plan] || "--");
+  factorySet("[data-factory-summary-payment]", LUST_FACTORY_PAYMENT_NAMES[payment] || "--");
+
+  try {
+    const { lusdtFee, lstFee } = await factoryFees();
+    factorySet("[data-factory-selected-lusdt-fee]", factoryFormatFee(lusdtFee, 0));
+    factorySet("[data-factory-selected-lst-fee]", factoryFormatFee(lstFee, 1));
+    factorySet("[data-factory-summary-fee]", payment === 0 ? factoryFormatFee(lusdtFee, 0) : factoryFormatFee(lstFee, 1));
+  } catch (err) {
+    factorySet("[data-factory-summary-fee]", "Unavailable");
+  }
+}
+
+async function factoryRefresh() {
+  if (!factoryHasPage()) return;
+  try {
+    const contract = factoryContract();
+    const [paused, lusdtEnabled, lstEnabled, total] = await Promise.all([
+      contract.paused(),
+      contract.lusdtPaymentsEnabled(),
+      contract.lstPaymentsEnabled(),
+      contract.totalTokens()
+    ]);
+
+    factorySet("[data-factory-address-short]", factoryShort(LUST_TOKEN_FACTORY_PRO_ADDRESS));
+    factorySet("[data-factory-total-tokens]", String(total));
+    factorySet("[data-factory-status]", paused ? "Paused" : "Online");
+    factorySet("[data-factory-lusdt-enabled]", lusdtEnabled ? "Enabled" : "Disabled");
+    factorySet("[data-factory-lst-enabled]", lstEnabled ? "Enabled" : "Disabled");
+
+    await factoryUpdateSelectionUi();
+    await factoryRefreshWalletBalances();
+    await factoryLoadMyTokens();
+  } catch (err) {
+    console.error(err);
+    factorySet("[data-factory-status]", "Unavailable");
+    factoryLog(err?.message || "Could not load factory data.", "warn");
+  }
+}
+
+async function factoryRefreshWalletBalances() {
+  if (!factoryHasPage()) return;
+  const address = walletState.address || appKit.getAddress?.() || "";
+  if (!address) {
+    factorySet("[data-factory-lusdt-balance]", "Connect wallet");
+    factorySet("[data-factory-lusdt-allowance]", "Connect wallet");
+    return;
+  }
+
+  try {
+    const token = new ethers.Contract(LUSDT_TOKEN_ADDRESS, ERC20_ABI, factoryProvider());
+    const [balance, allowance] = await Promise.all([
+      token.balanceOf(address),
+      token.allowance(address, LUST_TOKEN_FACTORY_PRO_ADDRESS)
+    ]);
+    factorySet("[data-factory-lusdt-balance]", factoryFormatFee(balance, 0));
+    factorySet("[data-factory-lusdt-allowance]", factoryFormatFee(allowance, 0));
+  } catch (err) {
+    factorySet("[data-factory-lusdt-balance]", "Unavailable");
+    factorySet("[data-factory-lusdt-allowance]", "Unavailable");
+  }
+}
+
+async function factoryApproveLUSDT() {
+  try {
+    await ensureWalletChain("lust");
+    const signer = await browserSigner();
+    const plan = factorySelectedPlan();
+    const fee = BigInt(await factoryContract(signer).getLUSDTFeeForPlan(plan));
+    if (fee <= 0n) {
+      factoryLog("No LUSDT approval needed for this plan.", "ok");
+      return;
+    }
+    const owner = await signer.getAddress();
+    const token = new ethers.Contract(LUSDT_TOKEN_ADDRESS, ERC20_ABI, signer);
+    const allowance = BigInt(await token.allowance(owner, LUST_TOKEN_FACTORY_PRO_ADDRESS));
+    if (allowance >= fee) {
+      factoryLog("LUSDT allowance is already enough.", "ok");
+      await factoryRefreshWalletBalances();
+      return;
+    }
+    factoryLog(`Opening approval for ${factoryFormatFee(fee, 0)}...`);
+    const tx = await token.approve(LUST_TOKEN_FACTORY_PRO_ADDRESS, fee);
+    factoryLog(`Approval sent: ${tx.hash}. Waiting confirmation...`);
+    await tx.wait();
+    factoryLog("LUSDT approved successfully.", "ok");
+    await factoryRefreshWalletBalances();
+  } catch (err) {
+    console.error(err);
+    factoryLog(err?.shortMessage || err?.message || "Approval failed or was rejected.", "warn");
+  }
+}
+
+function factoryRenderCreatedToken(tokenAddress, txHash, name, symbol) {
+  const box = document.querySelector("[data-factory-success]");
+  if (!box) return;
+  const tokenUrl = `${LUST_EXPLORER_URL}/token/${tokenAddress}`;
+  const txUrl = `${LUST_EXPLORER_URL}/tx/${txHash}`;
+  box.innerHTML = `
+    <div class="factory-token-item">
+      <strong>${factoryEscape(name)} (${factoryEscape(symbol)})</strong>
+      <span>${factoryEscape(tokenAddress)}</span>
+      <a href="${tokenUrl}" target="_blank" rel="noopener">Open token on explorer</a><br>
+      <a href="${txUrl}" target="_blank" rel="noopener">Open creation transaction</a>
+    </div>
+  `;
+}
+
+function factoryParseCreatedToken(receipt) {
+  const iface = new ethers.Interface(LUST_FACTORY_ABI);
+  for (const log of receipt.logs || []) {
+    try {
+      if (String(log.address).toLowerCase() !== LUST_TOKEN_FACTORY_PRO_ADDRESS.toLowerCase()) continue;
+      const parsed = iface.parseLog(log);
+      if (parsed?.name === "TokenCreated") return parsed.args.token;
+    } catch (_) {}
+  }
+  return "";
+}
+
+async function factoryCreateToken(event) {
+  event?.preventDefault?.();
+  try {
+    await ensureWalletChain("lust");
+
+    const plan = factorySelectedPlan();
+    const paymentAsset = factorySelectedPayment();
+    const name = factoryReadName();
+    const symbol = factoryReadSymbol();
+    const decimals = factoryReadDecimals();
+    const supply = factoryReadSupply();
+    const metadataURI = factoryReadMetadataURI(plan);
+
+    const signer = await browserSigner();
+    const contract = factoryContract(signer);
+    let tx;
+
+    if (paymentAsset === 0) {
+      const fee = BigInt(await contract.getLUSDTFeeForPlan(plan));
+      const owner = await signer.getAddress();
+      const token = new ethers.Contract(LUSDT_TOKEN_ADDRESS, ERC20_ABI, signer);
+      const allowance = BigInt(await token.allowance(owner, LUST_TOKEN_FACTORY_PRO_ADDRESS));
+      if (allowance < fee) {
+        factoryLog(`Approval needed first: ${factoryFormatFee(fee, 0)}. Confirm approval in wallet...`);
+        const approveTx = await token.approve(LUST_TOKEN_FACTORY_PRO_ADDRESS, fee);
+        factoryLog(`Approval sent: ${approveTx.hash}. Waiting confirmation...`);
+        await approveTx.wait();
+      }
+    }
+
+    const value = paymentAsset === 1 ? BigInt(await contract.getLSTFeeForPlan(plan)) : 0n;
+    factoryLog("Opening token creation confirmation in wallet...");
+
+    if (plan === 1) {
+      tx = await contract.createBasicToken(name, symbol, decimals, supply, paymentAsset, { value });
+    } else if (plan === 2) {
+      tx = await contract.createLogoToken(name, symbol, decimals, supply, metadataURI, paymentAsset, { value });
+    } else if (plan === 3) {
+      tx = await contract.createPremiumToken(name, symbol, decimals, supply, metadataURI, paymentAsset, { value });
+    } else {
+      throw new Error("Invalid plan.");
+    }
+
+    factoryLog(`Creation sent: ${tx.hash}. Waiting confirmation...`);
+    const receipt = await tx.wait();
+    const tokenAddress = factoryParseCreatedToken(receipt);
+    if (!tokenAddress) throw new Error("Token was created but the event could not be parsed. Open the tx on explorer.");
+
+    factoryLog(`Token created successfully: ${tokenAddress}`, "ok");
+    factoryRenderCreatedToken(tokenAddress, tx.hash, name, symbol);
+    setTimeout(factoryRefresh, 1200);
+  } catch (err) {
+    console.error(err);
+    factoryLog(err?.shortMessage || err?.message || "Token creation failed or was rejected.", "warn");
+  }
+}
+
+async function factoryLoadMyTokens() {
+  if (!factoryHasPage()) return;
+  const box = document.querySelector("[data-factory-token-list]");
+  if (!box) return;
+  const address = walletState.address || appKit.getAddress?.() || "";
+  if (!address) {
+    box.innerHTML = "<p>Connect wallet to load your factory tokens.</p>";
+    return;
+  }
+
+  try {
+    const contract = factoryContract();
+    const tokens = await contract.getCreatorTokens(address);
+    if (!tokens.length) {
+      box.innerHTML = "<p>No tokens created by this wallet yet.</p>";
+      return;
+    }
+
+    const latest = [...tokens].slice(-8).reverse();
+    const records = await Promise.all(latest.map(async (token) => {
+      try { return await contract.getTokenRecordByToken(token); }
+      catch (_) { return { token, name: "Token", symbol: "TOKEN", plan: 0 }; }
+    }));
+
+    box.innerHTML = records.map((record) => {
+      const token = record.token || record[0];
+      const name = record.name || record[5] || "Token";
+      const symbol = record.symbol || record[6] || "TOKEN";
+      const plan = Number(record.plan ?? record[2] ?? 0);
+      return `
+        <div class="factory-token-item">
+          <strong>${factoryEscape(name)} (${factoryEscape(symbol)})</strong>
+          <span>${factoryEscape(token)}</span>
+          <span>Plan: ${factoryEscape(LUST_FACTORY_PLAN_NAMES[plan] || "--")}</span>
+          <a href="${LUST_EXPLORER_URL}/token/${token}" target="_blank" rel="noopener">Open on explorer</a>
+        </div>
+      `;
+    }).join("");
+  } catch (err) {
+    console.error(err);
+    box.innerHTML = "<p>Could not load your tokens right now.</p>";
+  }
+}
+
+function wireLUSTTokenFactory() {
+  if (!factoryHasPage()) return;
+
+  document.querySelector("[data-factory-address-short]")?.addEventListener("click", () => {
+    navigator.clipboard?.writeText?.(LUST_TOKEN_FACTORY_PRO_ADDRESS).catch(() => {});
+    factoryLog("Factory address copied.", "ok");
+  });
+
+  document.querySelectorAll("[data-factory-plan], [data-factory-payment]").forEach((input) => {
+    input.addEventListener("change", () => {
+      factoryUpdateSelectionUi();
+      factoryRefreshWalletBalances();
+    });
+  });
+
+  document.querySelector("[data-factory-refresh]")?.addEventListener("click", factoryRefresh);
+  document.querySelector("[data-factory-approve]")?.addEventListener("click", factoryApproveLUSDT);
+  document.querySelector("#tokenFactoryForm")?.addEventListener("submit", factoryCreateToken);
+
+  document.addEventListener("click", (event) => {
+    if (event.target.closest("[data-connect-wallet]")) {
+      setTimeout(factoryRefresh, 1200);
+      setTimeout(factoryRefresh, 2500);
+    }
+  });
+
+  factorySet("[data-factory-address-short]", factoryShort(LUST_TOKEN_FACTORY_PRO_ADDRESS));
+  factoryUpdateSelectionUi();
+  factoryRefresh();
+  setInterval(factoryRefresh, 30000);
+}
+
+window.lustTokenFactory = {
+  address: LUST_TOKEN_FACTORY_PRO_ADDRESS,
+  refresh: factoryRefresh,
+  approveLUSDT: factoryApproveLUSDT
+};
+
+wireLUSTTokenFactory();
