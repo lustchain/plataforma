@@ -7,8 +7,8 @@ This update only changes/adds the NFT launch files. Other platform pages remain 
 - `nfts.html` — LUST Rabbit Club landing and mint panel.
 - `nfts-rabbit.css` — styles loaded only by `nfts.html`.
 - `nfts-rabbit.js` — mint/approve logic loaded only by `nfts.html`.
-- `nfts/lust-rabbit-club/hidden.png` — pre-reveal image.
-- `nfts/lust-rabbit-club/teaser.png` — teaser image shown on the NFT page.
+- `nfts/lust-rabbit-club/hidden.webp` — pre-reveal image.
+- `nfts/lust-rabbit-club/teaser.webp` — teaser image shown on the NFT page.
 - `nfts/lust-rabbit-club/hidden.json` — metadata URI for the contract deploy.
 - `contracts/LUSTRabbitClub.sol` — Remix contract source.
 

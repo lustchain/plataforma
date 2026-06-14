@@ -4,7 +4,7 @@ Correct public site URL:
 
 - `https://platform.lustchain.org/nfts.html`
 - `https://platform.lustchain.org/nfts/lust-rabbit-club/hidden.json`
-- `https://platform.lustchain.org/nfts/lust-rabbit-club/hidden.png`
+- `https://platform.lustchain.org/nfts/lust-rabbit-club/hidden.webp`
 
 Contract already deployed:
 
