@@ -4,6 +4,7 @@ const FACTORY_ADDRESS = "0xbCB6A89713796eE1C0414c8898dED5657e6b9526";
 const LUSDT_ADDRESS = "0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE";
 const LUST_RPC_URL = "https://rpc.lustchain.org";
 const LUST_EXPLORER_URL = "https://explorer.lustchain.org";
+const METADATA_ENDPOINT = `${LUST_EXPLORER_URL}/api/token-factory/metadata`;
 
 const LUST_CHAIN = {
   chainId: "0x1b0b",
@@ -134,13 +135,69 @@ function getSupply() {
   return value;
 }
 
-function getMetadataURI(plan) {
-  const value = String($("[data-factory-metadata]")?.value || "").trim();
-  if (value.length > 512) throw new Error("Metadata URI is too long.");
-  if ((plan === PLAN.LOGO || plan === PLAN.PREMIUM) && !value) {
-    throw new Error("Logo and Premium plans require a metadata URI.");
+function getUrlField(selector, label) {
+  const value = String($(selector)?.value || "").trim();
+  if (!value) return "";
+  if (value.length > 256) throw new Error(`${label} is too long.`);
+  if (!value.startsWith("https://") && !value.startsWith("http://")) {
+    throw new Error(`${label} must start with https:// or http://`);
   }
   return value;
+}
+
+function getDescription(plan) {
+  const value = String($("[data-factory-description]")?.value || "").trim();
+  if (value.length > 800) throw new Error("Description is too long.");
+  if (plan === PLAN.PREMIUM && !value) throw new Error("Premium plan requires a description.");
+  return value;
+}
+
+function getLogoFile(plan) {
+  const input = $("[data-factory-logo]");
+  const file = input?.files?.[0] || null;
+  if ((plan === PLAN.LOGO || plan === PLAN.PREMIUM) && !file) {
+    throw new Error("Logo and Premium plans require a logo image.");
+  }
+  if (!file) return null;
+  const allowed = ["image/png", "image/webp", "image/jpeg", "image/svg+xml"];
+  if (!allowed.includes(file.type)) throw new Error("Logo must be PNG, WEBP, JPG or SVG.");
+  if (file.size > 2 * 1024 * 1024) throw new Error("Logo must be 2 MB or smaller.");
+  return file;
+}
+
+async function uploadMetadataForExplorer({ plan, name, symbol, creator }) {
+  if (plan === PLAN.BASIC) return "";
+
+  const logo = getLogoFile(plan);
+  const description = getDescription(plan);
+  const website = getUrlField("[data-factory-website]", "Website");
+  const twitter = getUrlField("[data-factory-twitter]", "X/Twitter");
+  const telegram = getUrlField("[data-factory-telegram]", "Telegram");
+
+  const form = new FormData();
+  form.append("plan", String(plan));
+  form.append("name", name);
+  form.append("symbol", symbol);
+  form.append("description", description);
+  form.append("website", website);
+  form.append("twitter", twitter);
+  form.append("telegram", telegram);
+  form.append("creator", creator);
+  if (logo) form.append("logo", logo);
+
+  log("Uploading logo and metadata to LUST Explorer...");
+  const response = await fetch(METADATA_ENDPOINT, { method: "POST", body: form });
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok || !data.ok || !data.metadataURI) {
+    throw new Error(data.error || "Metadata upload failed.");
+  }
+
+  const generated = $("[data-factory-metadata-generated]");
+  if (generated) generated.value = data.metadataURI;
+
+  log("Metadata created. Opening token creation confirmation in wallet...");
+  return data.metadataURI;
 }
 
 function injectedProvider() {
@@ -342,9 +399,9 @@ async function createToken(event) {
     const symbol = getSymbol();
     const decimals = getDecimals();
     const supply = getSupply();
-    const metadataURI = getMetadataURI(plan);
 
     const s = await signer();
+    const creator = await s.getAddress();
     const factory = new ethers.Contract(FACTORY_ADDRESS, FACTORY_ABI, s);
 
     if (payment === PAYMENT.LUSDT) {
@@ -361,7 +418,9 @@ async function createToken(event) {
     }
 
     const value = payment === PAYMENT.LST ? BigInt(await factoryRead.getLSTFeeForPlan(plan)) : 0n;
-    log("Opening token creation confirmation in wallet...");
+    const metadataURI = await uploadMetadataForExplorer({ plan, name, symbol, creator });
+
+    if (plan === PLAN.BASIC) log("Opening token creation confirmation in wallet...");
 
     let tx;
     if (plan === PLAN.BASIC) {

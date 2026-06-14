@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
   <link rel="stylesheet" href="./styles.css?v20260613-lustswap-v1" />
-  <link rel="stylesheet" href="./factory-pro.css?v20260614-safe-v1" />
+  <link rel="stylesheet" href="./factory-pro.css?v20260614-metadata-v1" />
 </head>
 <body>
 <div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
@@ -98,7 +98,7 @@
         <span>2</span>
         <div>
           <h2>Choose plan</h2>
-          <p>Logo and Premium require a metadata URI. The explorer logo/info sync will use this metadata when the backend worker is connected.</p>
+          <p>Logo and Premium create the metadata automatically. Upload the logo and info here; the site sends it to the LUST Explorer metadata service.</p>
         </div>
       </div>
 
@@ -126,26 +126,40 @@
         </label>
       </div>
 
-      <label class="factory-metadata-wrap">Metadata URI
-        <input class="input" data-factory-metadata maxlength="512" placeholder="https://.../metadata.json">
-        <div class="factory-small-note">For Logo/Premium, use a JSON URL with logo, description and links. The next worker step will automate upload and explorer sync.</div>
-      </label>
+      <div class="factory-metadata-wrap">
+        <div class="factory-section-title compact-title">
+          <span>2B</span>
+          <div>
+            <h2>Logo & explorer info</h2>
+            <p>For Logo and Premium plans, the site uploads your logo and creates the metadata URI automatically.</p>
+          </div>
+        </div>
 
-      <details class="factory-helper">
-        <summary>Metadata JSON example</summary>
-        <pre>{
-  "chainId": 6923,
-  "name": "Your Token Name",
-  "symbol": "YTN",
-  "description": "Community token created on LUST Chain.",
-  "image": "https://your-domain.com/logo.png",
-  "website": "https://your-site.com",
-  "twitter": "https://x.com/yourproject",
-  "telegram": "https://t.me/yourproject",
-  "createdWith": "LUST Token Factory",
-  "verifiedByLUST": false
-}</pre>
-      </details>
+        <div class="grid two factory-fields">
+          <label>Logo image
+            <input class="input" data-factory-logo type="file" accept="image/png,image/webp,image/jpeg,image/svg+xml">
+            <div class="factory-small-note">PNG, WEBP, JPG or SVG. Max 2 MB. Square 512x512 recommended.</div>
+          </label>
+          <label>Website
+            <input class="input" data-factory-website maxlength="256" placeholder="https://your-site.com" autocomplete="off">
+          </label>
+          <label>X / Twitter
+            <input class="input" data-factory-twitter maxlength="256" placeholder="https://x.com/yourproject" autocomplete="off">
+          </label>
+          <label>Telegram
+            <input class="input" data-factory-telegram maxlength="256" placeholder="https://t.me/yourproject" autocomplete="off">
+          </label>
+        </div>
+
+        <label class="factory-full-label">Description
+          <textarea class="input factory-textarea" data-factory-description maxlength="800" rows="4" placeholder="Short description for the LUST Explorer token page."></textarea>
+        </label>
+
+        <label class="factory-full-label">Generated metadata URI
+          <input class="input" data-factory-metadata-generated maxlength="512" placeholder="Generated automatically after upload" readonly>
+          <div class="factory-small-note">This URI is sent to the factory contract when the token is created.</div>
+        </label>
+      </div>
 
       <div class="factory-section-title">
         <span>3</span>
@@ -216,6 +230,6 @@
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
 <script type="module" src="./app.js?v20260613-lustswap-v1"></script>
-<script type="module" src="./factory-pro.js?v20260614-safe-v1"></script>
+<script type="module" src="./factory-pro.js?v20260614-metadata-v1"></script>
 </body>
 </html>
