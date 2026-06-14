@@ -84,8 +84,8 @@
       <small>Mint status</small>
       <h2>Pre-launch mint panel.</h2>
       <p>
-        This page is ready for the contract address. Before the contract is deployed, mint buttons stay locked.
-        After deploy, paste the contract address in <strong>nfts-rabbit.js</strong> and the same panel will work for approve and mint.
+        The official LUST Rabbit Club contract is deployed and verified. Mint stays locked until whitelist or public sale is opened on-chain.
+        Keep testing the hidden metadata and wallet connection before opening sales.
       </p>
 
       <div class="rabbit-prices">
@@ -120,7 +120,7 @@
       <small>Collection details</small>
       <div class="box">
         <div class="row"><span>Supply</span><strong data-rabbit-supply>0 / 10,000</strong></div>
-        <div class="row"><span>Contract</span><strong data-rabbit-contract>Pending deploy</strong></div>
+        <div class="row"><span>Contract</span><strong data-rabbit-contract>0x81b9a5bB109919CFF3eE4C92B2372ABCd73614e6</strong></div>
         <div class="row"><span>Wallet</span><strong data-rabbit-wallet>Not connected</strong></div>
         <div class="row"><span>Royalty</span><strong>5%</strong></div>
         <div class="row"><span>Reserve</span><strong>300 max</strong></div>
@@ -128,9 +128,9 @@
 
       <div class="rabbit-link-box">
         <small>Hidden metadata used in deploy</small>
-        <code>https://lustchain.org/nfts/lust-rabbit-club/hidden.json</code>
+        <code>https://platform.lustchain.org/nfts/lust-rabbit-club/hidden.json</code>
         <small>Hidden image</small>
-        <code>https://lustchain.org/nfts/lust-rabbit-club/hidden.png</code>
+        <code>https://platform.lustchain.org/nfts/lust-rabbit-club/hidden.png</code>
       </div>
     </div>
   </section>
@@ -153,9 +153,9 @@
     <h2>Do this before opening mint.</h2>
     <div class="rabbit-checklist">
       <div>Upload this version to the site and test <strong>/nfts/lust-rabbit-club/hidden.json</strong>.</div>
-      <div>Deploy <strong>contracts/LUSTRabbitClub.sol</strong> in Remix using compiler 0.8.30 and EVM London.</div>
-      <div>Use LUSDT as payment token: <strong>0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE</strong>.</div>
-      <div>Paste the deployed Rabbit contract address inside <strong>nfts-rabbit.js</strong>.</div>
+      <div>Contract deployed and verified: <strong>0x81b9a5bB109919CFF3eE4C92B2372ABCd73614e6</strong>.</div>
+      <div>Payment token is LUSDT: <strong>0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE</strong>.</div>
+      <div>Contract address is already configured inside <strong>nfts-rabbit.js</strong>.</div>
       <div>Keep <strong>whitelistSaleOpen</strong>, <strong>publicSaleOpen</strong> and <strong>revealed</strong> false until everything is tested.</div>
     </div>
   </section>

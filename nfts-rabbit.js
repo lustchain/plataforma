@@ -1,11 +1,9 @@
 import { ethers } from "https://esm.sh/ethers@6.16.0";
 
 const LUST_CHAIN_ID_HEX = "0x1b0b";
+const LUST_RPC_URL = "https://rpc.lustchain.org";
 const LUSDT_ADDRESS = "0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE";
-
-// After deploying LUSTRabbitClub.sol, paste the contract address here.
-// Example: const RABBIT_CONTRACT_ADDRESS = "0x1234...";
-const RABBIT_CONTRACT_ADDRESS = "";
+const RABBIT_CONTRACT_ADDRESS = "0x81b9a5bB109919CFF3eE4C92B2372ABCd73614e6";
 
 const LUSDT_ABI = [
   "function allowance(address owner, address spender) view returns (uint256)",
@@ -17,11 +15,16 @@ const RABBIT_ABI = [
   "function whitelistMint(uint256 quantity)",
   "function publicMint(uint256 quantity)",
   "function totalMinted() view returns (uint256)",
+  "function saleMinted() view returns (uint256)",
+  "function reservedMinted() view returns (uint256)",
   "function MAX_SUPPLY() view returns (uint256)",
+  "function SALE_SUPPLY() view returns (uint256)",
+  "function RESERVED_SUPPLY() view returns (uint256)",
   "function whitelistPrice() view returns (uint256)",
   "function publicPrice() view returns (uint256)",
   "function whitelistSaleOpen() view returns (bool)",
   "function publicSaleOpen() view returns (bool)",
+  "function revealed() view returns (bool)",
   "function whitelist(address account) view returns (bool)"
 ];
 
@@ -32,6 +35,13 @@ const contractEl = document.querySelector("[data-rabbit-contract]");
 const quantityEl = document.querySelector("#rabbitQuantity");
 const approveBtn = document.querySelector("[data-rabbit-approve]");
 const mintBtn = document.querySelector("[data-rabbit-mint]");
+
+let cachedMintState = {
+  whitelistSaleOpen: false,
+  publicSaleOpen: false,
+  isWhitelisted: false,
+  connected: false
+};
 
 function setStatus(message) {
   if (statusEl) statusEl.textContent = message;
@@ -48,46 +58,64 @@ function getMode() {
 function getQuantity() {
   const value = Number(quantityEl?.value || 1);
   if (!Number.isFinite(value) || value < 1) return 1;
-  return Math.floor(value);
+  return Math.min(Math.floor(value), 5);
+}
+
+function requireContractAddress() {
+  if (!ethers.isAddress(RABBIT_CONTRACT_ADDRESS)) {
+    throw new Error("Rabbit contract address is missing in nfts-rabbit.js.");
+  }
+  return RABBIT_CONTRACT_ADDRESS;
+}
+
+function readProvider() {
+  return new ethers.JsonRpcProvider(LUST_RPC_URL);
+}
+
+async function getConnectedWalletAddress() {
+  if (!window.ethereum) return "";
+  const accounts = await window.ethereum.request({ method: "eth_accounts" });
+  return accounts?.[0] || "";
+}
+
+async function ensureLustChain() {
+  if (!window.ethereum) throw new Error("Wallet not found. Install MetaMask or use a Web3 wallet.");
+
+  const chainId = await window.ethereum.request({ method: "eth_chainId" });
+  if (String(chainId).toLowerCase() === LUST_CHAIN_ID_HEX) return;
+
+  try {
+    await window.ethereum.request({
+      method: "wallet_switchEthereumChain",
+      params: [{ chainId: LUST_CHAIN_ID_HEX }]
+    });
+  } catch (switchError) {
+    if (switchError?.code === 4902) {
+      await window.ethereum.request({
+        method: "wallet_addEthereumChain",
+        params: [{
+          chainId: LUST_CHAIN_ID_HEX,
+          chainName: "LUST Chain",
+          nativeCurrency: { name: "LST", symbol: "LST", decimals: 18 },
+          rpcUrls: [LUST_RPC_URL],
+          blockExplorerUrls: ["https://explorer.lustchain.org"]
+        }]
+      });
+    } else {
+      throw switchError;
+    }
+  }
 }
 
 async function getProviderAndSigner() {
   if (!window.ethereum) throw new Error("Wallet not found. Install MetaMask or use a Web3 wallet.");
 
   await window.ethereum.request({ method: "eth_requestAccounts" });
-
-  const chainId = await window.ethereum.request({ method: "eth_chainId" });
-  if (String(chainId).toLowerCase() !== LUST_CHAIN_ID_HEX) {
-    try {
-      await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: LUST_CHAIN_ID_HEX }] });
-    } catch (switchError) {
-      if (switchError?.code === 4902) {
-        await window.ethereum.request({
-          method: "wallet_addEthereumChain",
-          params: [{
-            chainId: LUST_CHAIN_ID_HEX,
-            chainName: "LUST Chain",
-            nativeCurrency: { name: "LST", symbol: "LST", decimals: 18 },
-            rpcUrls: ["https://rpc.lustchain.org"],
-            blockExplorerUrls: ["https://explorer.lustchain.org"]
-          }]
-        });
-      } else {
-        throw switchError;
-      }
-    }
-  }
+  await ensureLustChain();
 
   const provider = new ethers.BrowserProvider(window.ethereum);
   const signer = await provider.getSigner();
   return { provider, signer, address: await signer.getAddress() };
-}
-
-function requireContractAddress() {
-  if (!ethers.isAddress(RABBIT_CONTRACT_ADDRESS)) {
-    throw new Error("Contract not deployed yet. Deploy LUSTRabbitClub.sol, then paste the address inside nfts-rabbit.js.");
-  }
-  return RABBIT_CONTRACT_ADDRESS;
 }
 
 async function priceFor(contract, mode, quantity) {
@@ -95,36 +123,67 @@ async function priceFor(contract, mode, quantity) {
   return unit * BigInt(quantity);
 }
 
-async function refreshRabbitInfo() {
-  if (contractEl) {
-    contractEl.textContent = ethers.isAddress(RABBIT_CONTRACT_ADDRESS) ? RABBIT_CONTRACT_ADDRESS : "Pending deploy";
-  }
+function updateActionButtons() {
+  const mode = getMode();
+  const saleOpen = mode === "whitelist" ? cachedMintState.whitelistSaleOpen : cachedMintState.publicSaleOpen;
+  const whitelistBlocked = mode === "whitelist" && cachedMintState.connected && !cachedMintState.isWhitelisted;
+  const canUse = saleOpen && !whitelistBlocked;
 
-  if (!ethers.isAddress(RABBIT_CONTRACT_ADDRESS)) {
-    if (approveBtn) approveBtn.disabled = true;
-    if (mintBtn) mintBtn.disabled = true;
-    if (supplyEl) supplyEl.textContent = "0 / 10,000";
-    setStatus("Pre-launch ready. The teaser image and hidden metadata are live in the site files. Deploy the contract, paste the address in nfts-rabbit.js, then open whitelist or public sale.");
-    return;
-  }
+  if (approveBtn) approveBtn.disabled = !canUse;
+  if (mintBtn) mintBtn.disabled = !canUse;
+}
+
+async function refreshRabbitInfo() {
+  const contractAddress = requireContractAddress();
+
+  if (contractEl) contractEl.textContent = contractAddress;
 
   try {
-    const { signer, address } = await getProviderAndSigner();
-    const contract = new ethers.Contract(RABBIT_CONTRACT_ADDRESS, RABBIT_ABI, signer);
-    const minted = await contract.totalMinted();
-    const max = await contract.MAX_SUPPLY();
-    const wlOpen = await contract.whitelistSaleOpen();
-    const publicOpen = await contract.publicSaleOpen();
-    const isWhitelisted = await contract.whitelist(address);
+    const provider = readProvider();
+    const contract = new ethers.Contract(contractAddress, RABBIT_ABI, provider);
 
-    if (walletEl) walletEl.textContent = shortAddress(address);
-    if (supplyEl) supplyEl.textContent = `${minted.toString()} / ${max.toString()}`;
-    if (approveBtn) approveBtn.disabled = false;
-    if (mintBtn) mintBtn.disabled = false;
+    const [minted, max, saleMinted, saleMax, reservedMinted, reserveMax, wlOpen, pubOpen, revealed] = await Promise.all([
+      contract.totalMinted(),
+      contract.MAX_SUPPLY(),
+      contract.saleMinted(),
+      contract.SALE_SUPPLY(),
+      contract.reservedMinted(),
+      contract.RESERVED_SUPPLY(),
+      contract.whitelistSaleOpen(),
+      contract.publicSaleOpen(),
+      contract.revealed()
+    ]);
 
-    setStatus(`Connected. Whitelist sale: ${wlOpen ? "open" : "closed"}. Public sale: ${publicOpen ? "open" : "closed"}. Your whitelist: ${isWhitelisted ? "yes" : "no"}.`);
+    const connectedAddress = await getConnectedWalletAddress();
+    let isWhitelisted = false;
+    if (connectedAddress) {
+      isWhitelisted = await contract.whitelist(connectedAddress);
+    }
+
+    cachedMintState = {
+      whitelistSaleOpen: wlOpen,
+      publicSaleOpen: pubOpen,
+      isWhitelisted,
+      connected: Boolean(connectedAddress)
+    };
+
+    if (walletEl) walletEl.textContent = shortAddress(connectedAddress);
+    if (supplyEl) supplyEl.textContent = `${minted.toString()} / ${max.toString()} · Sale ${saleMinted.toString()} / ${saleMax.toString()} · Reserve ${reservedMinted.toString()} / ${reserveMax.toString()}`;
+
+    updateActionButtons();
+
+    const mode = getMode();
+    if (!wlOpen && !pubOpen) {
+      setStatus(`Contract connected. Mint is still closed. Reveal: ${revealed ? "yes" : "no"}. Open whitelist or public sale only after final tests.`);
+    } else if (mode === "whitelist") {
+      setStatus(`Whitelist sale: ${wlOpen ? "open" : "closed"}. Wallet: ${connectedAddress ? shortAddress(connectedAddress) : "not connected"}. Whitelisted: ${isWhitelisted ? "yes" : "no"}.`);
+    } else {
+      setStatus(`Public sale: ${pubOpen ? "open" : "closed"}. Wallet: ${connectedAddress ? shortAddress(connectedAddress) : "not connected"}.`);
+    }
   } catch (error) {
-    setStatus(error?.message || "Could not refresh NFT info.");
+    if (approveBtn) approveBtn.disabled = true;
+    if (mintBtn) mintBtn.disabled = true;
+    setStatus(error?.shortMessage || error?.message || "Could not refresh NFT info.");
   }
 }
 
@@ -169,6 +228,8 @@ async function mintRabbit() {
 
 approveBtn?.addEventListener("click", approveLusdt);
 mintBtn?.addEventListener("click", mintRabbit);
+quantityEl?.addEventListener("change", refreshRabbitInfo);
+document.querySelectorAll("input[name='rabbitMintMode']").forEach((el) => el.addEventListener("change", refreshRabbitInfo));
 window.addEventListener("load", refreshRabbitInfo);
 window.ethereum?.on?.("accountsChanged", refreshRabbitInfo);
 window.ethereum?.on?.("chainChanged", () => setTimeout(refreshRabbitInfo, 500));

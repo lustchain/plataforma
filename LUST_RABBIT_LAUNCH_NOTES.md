@@ -24,7 +24,7 @@ Constructor:
 _paymentToken: 0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE
 _treasuryWallet: YOUR_WALLET
 _liquidityWallet: YOUR_WALLET_OR_LIQUIDITY_WALLET
-_hiddenMetadataURI: https://lustchain.org/nfts/lust-rabbit-club/hidden.json
+_hiddenMetadataURI: https://platform.lustchain.org/nfts/lust-rabbit-club/hidden.json
 _royaltyReceiver: YOUR_WALLET
 _royaltyFeeNumerator: 500
 ```
