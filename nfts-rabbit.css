@@ -490,3 +490,50 @@
 .rabbit-transparency-panel .rabbit-link-box code {
   line-height: 1.65;
 }
+
+
+/* Layout fix for long contract addresses in small cards */
+.rabbit-waitlist-panel .rabbit-statement-grid,
+.rabbit-transparency-panel .rabbit-transparency-grid,
+.rabbit-transparency-panel .rabbit-funds-grid {
+  min-width: 0;
+}
+
+.rabbit-waitlist-panel .rabbit-statement-grid div,
+.rabbit-transparency-panel .rabbit-transparency-grid div,
+.rabbit-transparency-panel .rabbit-fund-card {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.rabbit-waitlist-panel .rabbit-statement-grid span,
+.rabbit-transparency-panel .rabbit-transparency-grid span {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.45;
+}
+
+.rabbit-waitlist-panel .rabbit-statement-grid span[title] {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rabbit-waitlist-panel .rabbit-statement-grid {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+@media (max-width: 1100px) {
+  .rabbit-waitlist-panel .rabbit-statement-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .rabbit-waitlist-panel .rabbit-statement-grid {
+    grid-template-columns: 1fr;
+  }
+}
