@@ -4,11 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Factory | LUST Platform</title>
-  <meta name="description" content="LUST Chain platform." />
-    <link rel="icon" href="./assets/favicon.ico">
+  <meta name="description" content="Create ERC-20 tokens on LUST Chain." />
+  <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-<link rel="stylesheet" href="./styles.css?v20260614-tokenfactory-v1" />
+  <link rel="stylesheet" href="./styles.css?v20260613-lustswap-v1" />
+  <link rel="stylesheet" href="./factory-pro.css?v20260614-safe-v1" />
 </head>
 <body>
 <div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
@@ -63,7 +64,7 @@
         <small>Payments</small>
         <div class="row"><span>LUSDT</span><strong data-factory-lusdt-enabled>--</strong></div>
         <div class="row"><span>LST</span><strong data-factory-lst-enabled>--</strong></div>
-        <div class="row"><span>Network</span><strong>LUST Chain</strong></div>
+        <div class="row"><span>Connected wallet</span><strong data-factory-wallet>--</strong></div>
       </div>
     </div>
   </section>
@@ -97,7 +98,7 @@
         <span>2</span>
         <div>
           <h2>Choose plan</h2>
-          <p>Logo and Premium require a metadata URI. The automatic explorer logo sync needs the backend/worker integration next.</p>
+          <p>Logo and Premium require a metadata URI. The explorer logo/info sync will use this metadata when the backend worker is connected.</p>
         </div>
       </div>
 
@@ -127,6 +128,7 @@
 
       <label class="factory-metadata-wrap">Metadata URI
         <input class="input" data-factory-metadata maxlength="512" placeholder="https://.../metadata.json">
+        <div class="factory-small-note">For Logo/Premium, use a JSON URL with logo, description and links. The next worker step will automate upload and explorer sync.</div>
       </label>
 
       <details class="factory-helper">
@@ -213,6 +215,7 @@
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
-<script type="module" src="./app.js?v20260614-tokenfactory-v1"></script>
+<script type="module" src="./app.js?v20260613-lustswap-v1"></script>
+<script type="module" src="./factory-pro.js?v20260614-safe-v1"></script>
 </body>
 </html>
