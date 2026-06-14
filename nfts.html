@@ -3,12 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>NFTs | LUST Platform</title>
-  <meta name="description" content="LUST Chain platform." />
-    <link rel="icon" href="./assets/favicon.ico">
+  <title>LUST Rabbit Club | LUST Platform</title>
+  <meta name="description" content="LUST Rabbit Club is the official founder NFT collection of LUST Chain." />
+  <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-<link rel="stylesheet" href="./styles.css?v20260613-lustswap-v1" />
+  <link rel="stylesheet" href="./styles.css?v20260613-lustswap-v1" />
+  <link rel="stylesheet" href="./nfts-rabbit.css?v20260614-rabbit-v1" />
 </head>
 <body>
 <div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
@@ -46,8 +47,118 @@
   </div>
 </header>
 
-<main class="wrap page">
-<section class="hero"><div class="kicker">NFTs</div><h1>LUST NFTs.</h1><p>Only NFT collection information, mint link and marketplace status stay on this page.</p><div class="grid two"><div class="card"><small>Collection</small><h3>Coming soon</h3><p>Official LUST NFT collection can be listed here.</p></div><div class="card"><small>Mint</small><h3>Not live</h3><p>Add mint details after contract deployment.</p></div></div></section>
+<main class="wrap page rabbit-page">
+  <section class="rabbit-shell">
+    <div class="rabbit-hero">
+      <div class="rabbit-copy">
+        <div class="kicker">Official founder collection</div>
+        <h1>LUST Rabbit Club.</h1>
+        <p>
+          10,000 premium founder Rabbits for the LUST Chain community. Your Rabbit is your identity,
+          your membership pass, and your early access badge inside the LUST ecosystem.
+        </p>
+        <div class="rabbit-badges">
+          <span class="rabbit-badge">10,000 Rabbits</span>
+          <span class="rabbit-badge">Founder membership</span>
+          <span class="rabbit-badge">Reveal coming soon</span>
+          <span class="rabbit-badge">Paid in LUSDT</span>
+        </div>
+        <div class="hero-buttons">
+          <a class="btn primary" href="#mint">Join the waitlist</a>
+          <a class="btn" href="./contracts/LUSTRabbitClub.sol" target="_blank" rel="noopener">View contract source</a>
+        </div>
+      </div>
+
+      <div class="rabbit-art-card">
+        <img src="./nfts/lust-rabbit-club/teaser.png" alt="LUST Rabbit Club reveal coming soon teaser">
+        <div class="rabbit-art-caption">
+          <strong>Reveal coming soon</strong>
+          <span>LRC</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rabbit-panel-grid" id="mint">
+    <div class="rabbit-panel highlight">
+      <small>Mint status</small>
+      <h2>Pre-launch mint panel.</h2>
+      <p>
+        This page is ready for the contract address. Before the contract is deployed, mint buttons stay locked.
+        After deploy, paste the contract address in <strong>nfts-rabbit.js</strong> and the same panel will work for approve and mint.
+      </p>
+
+      <div class="rabbit-prices">
+        <div class="rabbit-price-card">
+          <span>Whitelist</span>
+          <strong>50 LUSDT</strong>
+        </div>
+        <div class="rabbit-price-card">
+          <span>Public</span>
+          <strong>100 LUSDT</strong>
+        </div>
+      </div>
+
+      <div class="rabbit-mint-box">
+        <div class="rabbit-mode-tabs" aria-label="Mint mode">
+          <label><input type="radio" name="rabbitMintMode" value="whitelist"> Whitelist mint</label>
+          <label><input type="radio" name="rabbitMintMode" value="public" checked> Public mint</label>
+        </div>
+
+        <input class="rabbit-number" id="rabbitQuantity" type="number" min="1" max="5" step="1" value="1" aria-label="Mint quantity">
+
+        <div class="rabbit-actions">
+          <button class="btn" type="button" data-rabbit-approve>Approve LUSDT</button>
+          <button class="btn primary" type="button" data-rabbit-mint>Mint Rabbit</button>
+        </div>
+
+        <div class="rabbit-status" data-rabbit-status>Loading mint status...</div>
+      </div>
+    </div>
+
+    <div class="rabbit-panel">
+      <small>Collection details</small>
+      <div class="box">
+        <div class="row"><span>Supply</span><strong data-rabbit-supply>0 / 10,000</strong></div>
+        <div class="row"><span>Contract</span><strong data-rabbit-contract>Pending deploy</strong></div>
+        <div class="row"><span>Wallet</span><strong data-rabbit-wallet>Not connected</strong></div>
+        <div class="row"><span>Royalty</span><strong>5%</strong></div>
+        <div class="row"><span>Reserve</span><strong>300 max</strong></div>
+      </div>
+
+      <div class="rabbit-link-box">
+        <small>Hidden metadata used in deploy</small>
+        <code>https://lustchain.org/nfts/lust-rabbit-club/hidden.json</code>
+        <small>Hidden image</small>
+        <code>https://lustchain.org/nfts/lust-rabbit-club/hidden.png</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="rabbit-panel" style="margin-top:18px">
+    <small>Benefits</small>
+    <h2>More than a picture. A founder pass.</h2>
+    <div class="rabbit-benefits">
+      <div class="rabbit-benefit"><b>Founder badge</b><span>Special holder identity inside the LUST ecosystem.</span></div>
+      <div class="rabbit-benefit"><b>Private community</b><span>Access to holder-only channels and community drops.</span></div>
+      <div class="rabbit-benefit"><b>Early access</b><span>Priority access to NFT Factory, tools and future launches.</span></div>
+      <div class="rabbit-benefit"><b>Exclusive airdrops</b><span>Future companion collections and holder campaigns.</span></div>
+      <div class="rabbit-benefit"><b>Commercial use</b><span>Use the specific Rabbit you own as your avatar, character or brand.</span></div>
+      <div class="rabbit-benefit"><b>Premium status</b><span>Rarity, club culture and visual identity for the LUST community.</span></div>
+    </div>
+  </section>
+
+  <section class="rabbit-panel" style="margin-top:18px">
+    <small>Safe launch checklist</small>
+    <h2>Do this before opening mint.</h2>
+    <div class="rabbit-checklist">
+      <div>Upload this version to the site and test <strong>/nfts/lust-rabbit-club/hidden.json</strong>.</div>
+      <div>Deploy <strong>contracts/LUSTRabbitClub.sol</strong> in Remix using compiler 0.8.30 and EVM London.</div>
+      <div>Use LUSDT as payment token: <strong>0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE</strong>.</div>
+      <div>Paste the deployed Rabbit contract address inside <strong>nfts-rabbit.js</strong>.</div>
+      <div>Keep <strong>whitelistSaleOpen</strong>, <strong>publicSaleOpen</strong> and <strong>revealed</strong> false until everything is tested.</div>
+    </div>
+  </section>
 </main>
 
 <footer class="footer">
@@ -58,5 +169,6 @@
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
 <script type="module" src="./app.js?v20260613-lustswap-v1"></script>
+<script type="module" src="./nfts-rabbit.js?v20260614-rabbit-v1"></script>
 </body>
 </html>
