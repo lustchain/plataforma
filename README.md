@@ -80,3 +80,11 @@ Update v20260613-p2p-lusdt-v1:
 - LUSDT: `0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE`.
 - Funções adicionadas no site: criar ordem de venda, criar ordem de compra, approve automático de LUSDT, preencher ordem, editar preço, editar deadline, cancelar, adicionar/remover tamanho e listar ordens abertas.
 - Cache busting atualizado em `p2p.html`.
+
+## Token Factory Premium links update
+
+The Factory Premium plan now sends a complete explorer profile payload:
+website, X/Twitter, Telegram, Discord, Instagram, YouTube, GitHub, Medium/Blog, LinkedIn, Whitepaper/Docs, Audit report, CoinGecko, CoinMarketCap, DexScreener and support email.
+
+The contract is unchanged. These fields are off-chain metadata sent to the LUST explorer metadata endpoint before token creation.
+

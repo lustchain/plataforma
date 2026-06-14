@@ -28,6 +28,24 @@ const PAYMENT_NAMES = {
   [PAYMENT.LST]: "LST"
 };
 
+const PREMIUM_URL_FIELDS = [
+  ["website", "[data-factory-website]", "Website"],
+  ["twitter", "[data-factory-twitter]", "X/Twitter"],
+  ["telegram", "[data-factory-telegram]", "Telegram"],
+  ["discord", "[data-factory-discord]", "Discord"],
+  ["instagram", "[data-factory-instagram]", "Instagram"],
+  ["youtube", "[data-factory-youtube]", "YouTube"],
+  ["github", "[data-factory-github]", "GitHub"],
+  ["medium", "[data-factory-medium]", "Medium / Blog"],
+  ["linkedin", "[data-factory-linkedin]", "LinkedIn"],
+  ["docs", "[data-factory-docs]", "Whitepaper / Docs"],
+  ["whitepaper", "[data-factory-docs]", "Whitepaper / Docs"],
+  ["audit", "[data-factory-audit]", "Audit report"],
+  ["coingecko", "[data-factory-coingecko]", "CoinGecko"],
+  ["coinmarketcap", "[data-factory-coinmarketcap]", "CoinMarketCap"],
+  ["dexscreener", "[data-factory-dexscreener]", "DexScreener"]
+];
+
 const FACTORY_ABI = [
   "function paused() view returns (bool)",
   "function lusdtPaymentsEnabled() view returns (bool)",
@@ -145,6 +163,42 @@ function getUrlField(selector, label) {
   return value;
 }
 
+function getEmailField(selector, label) {
+  const value = String($(selector)?.value || "").trim();
+  if (!value) return "";
+  if (value.length > 160) throw new Error(`${label} is too long.`);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+    throw new Error(`${label} must be a valid email address.`);
+  }
+  return value;
+}
+
+function getPremiumLinks(plan) {
+  const links = {};
+  if (plan !== PLAN.PREMIUM) return links;
+
+  for (const [field, selector, label] of PREMIUM_URL_FIELDS) {
+    links[field] = getUrlField(selector, label);
+  }
+
+  links.email = getEmailField("[data-factory-email]", "Support email");
+  links.supportEmail = links.email;
+
+  links.x = links.twitter;
+  links.xUrl = links.twitter;
+  links.twitterUrl = links.twitter;
+  links.telegramUrl = links.telegram;
+  links.projectWebsite = links.website;
+  links.projectEmail = links.email;
+  links.documentation = links.docs;
+  links.docsUrl = links.docs;
+  links.whitepaperUrl = links.whitepaper;
+  links.auditUrl = links.audit;
+  links.support = links.telegram || links.discord || (links.email ? `mailto:${links.email}` : "");
+
+  return links;
+}
+
 function getDescription(plan) {
   const value = String($("[data-factory-description]")?.value || "").trim();
   if (value.length > 800) throw new Error("Description is too long.");
@@ -177,19 +231,21 @@ async function uploadMetadataForExplorer({ plan, name, symbol, creator }) {
 
   const logo = getLogoFile(plan);
   const description = getDescription(plan);
-  const website = plan === PLAN.PREMIUM ? getUrlField("[data-factory-website]", "Website") : "";
-  const twitter = plan === PLAN.PREMIUM ? getUrlField("[data-factory-twitter]", "X/Twitter") : "";
-  const telegram = plan === PLAN.PREMIUM ? getUrlField("[data-factory-telegram]", "Telegram") : "";
+  const premiumLinks = getPremiumLinks(plan);
 
   const form = new FormData();
   form.append("plan", String(plan));
   form.append("name", name);
   form.append("symbol", symbol);
   form.append("description", description);
-  form.append("website", website);
-  form.append("twitter", twitter);
-  form.append("telegram", telegram);
   form.append("creator", creator);
+
+  for (const [field, value] of Object.entries(premiumLinks)) {
+    form.append(field, value || "");
+  }
+
+  form.append("premiumLinks", JSON.stringify(premiumLinks));
+
   if (logo) form.append("logo", logo);
 
   log("Uploading logo and metadata to LUST Explorer...");
@@ -278,8 +334,8 @@ async function updateSelection() {
   const descriptionNote = $("[data-factory-description-note]");
   if (descriptionNote) {
     descriptionNote.textContent = plan === PLAN.PREMIUM
-      ? "Premium profile: use a full project description. Website and social links are available."
-      : "Logo profile: use a short description. Website and social links are reserved for Premium.";
+      ? "Premium profile: add a full project description, website, socials, docs, audit and market links."
+      : "Logo profile: use a short description. Official links are reserved for Premium.";
   }
 
   setText("[data-factory-summary-plan]", PLAN_NAMES[plan] || "--");
