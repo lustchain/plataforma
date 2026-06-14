@@ -44,5 +44,10 @@
 .factory-full-label{display:block;margin-top:14px;color:var(--muted);font-weight:900}
 .factory-full-label .input{margin-top:8px}
 .factory-textarea{min-height:112px;resize:vertical;line-height:1.45}
-input[type="file"].input{padding:14px;background:rgba(255,255,255,.05);cursor:pointer}
+.factory-file-label{display:block;color:var(--muted);font-weight:900}
+.factory-file-input{position:absolute;inline-size:1px;block-size:1px;opacity:0;pointer-events:none}
+.factory-file-button{width:100%;min-height:52px;margin-top:8px;border:2px solid var(--line);border-radius:14px;background:rgba(255,255,255,.05);color:#fff;font-weight:1000;cursor:pointer;text-align:left;padding:0 16px;letter-spacing:.01em}
+.factory-file-button:hover{border-color:rgba(247,3,117,.75);background:rgba(247,3,117,.10)}
+.factory-file-name{margin-top:8px;font-size:13px;color:#ffd4e9;font-weight:950;word-break:break-all}
+.factory-premium-only{display:none}
 input[readonly].input{opacity:.82;cursor:not-allowed}

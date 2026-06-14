@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
   <link rel="stylesheet" href="./styles.css?v20260613-lustswap-v1" />
-  <link rel="stylesheet" href="./factory-pro.css?v20260614-metadata-v1" />
+  <link rel="stylesheet" href="./factory-pro.css?v20260614-english-v2" />
 </head>
 <body>
 <div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
@@ -98,7 +98,7 @@
         <span>2</span>
         <div>
           <h2>Choose plan</h2>
-          <p>Logo and Premium create the metadata automatically. Upload the logo and info here; the site sends it to the LUST Explorer metadata service.</p>
+          <p>Logo and Premium create explorer metadata automatically. Logo includes a logo image and short description. Premium includes logo, full description, website and social links.</p>
         </div>
       </div>
 
@@ -108,21 +108,21 @@
           <small>Basic</small>
           <strong>5 LUSDT</strong>
           <span>or 50 LST</span>
-          <p>Create token and open on explorer.</p>
+          <p>Create token only. No custom logo or explorer profile.</p>
         </label>
         <label class="factory-plan" data-factory-plan-card>
           <input type="radio" name="factoryPlan" value="2" data-factory-plan>
           <small>Logo</small>
           <strong>10 LUSDT</strong>
           <span>or 100 LST</span>
-          <p>Create token with metadata URI prepared for logo sync.</p>
+          <p>Logo image + short description for explorer metadata.</p>
         </label>
         <label class="factory-plan" data-factory-plan-card>
           <input type="radio" name="factoryPlan" value="3" data-factory-plan>
           <small>Premium</small>
           <strong>20 LUSDT</strong>
           <span>or 200 LST</span>
-          <p>Full metadata URI for description, website and socials.</p>
+          <p>Full explorer profile with logo, description, website and socials.</p>
         </label>
       </div>
 
@@ -131,28 +131,31 @@
           <span>2B</span>
           <div>
             <h2>Logo & explorer info</h2>
-            <p>For Logo and Premium plans, the site uploads your logo and creates the metadata URI automatically.</p>
+            <p>For Logo and Premium plans, the site uploads your logo and creates the metadata URI automatically. Premium unlocks website and social links.</p>
           </div>
         </div>
 
         <div class="grid two factory-fields">
-          <label>Logo image
-            <input class="input" data-factory-logo type="file" accept="image/png,image/webp,image/jpeg,image/svg+xml">
+          <label class="factory-file-label">Logo image
+            <input class="factory-file-input" data-factory-logo type="file" accept="image/png,image/webp,image/jpeg,image/svg+xml">
+            <button class="factory-file-button" type="button" data-factory-logo-picker>Upload logo</button>
+            <div class="factory-file-name" data-factory-logo-name>No file selected</div>
             <div class="factory-small-note">PNG, WEBP, JPG or SVG. Max 2 MB. Square 512x512 recommended.</div>
           </label>
-          <label>Website
+          <label class="factory-premium-only">Website
             <input class="input" data-factory-website maxlength="256" placeholder="https://your-site.com" autocomplete="off">
           </label>
-          <label>X / Twitter
+          <label class="factory-premium-only">X / Twitter
             <input class="input" data-factory-twitter maxlength="256" placeholder="https://x.com/yourproject" autocomplete="off">
           </label>
-          <label>Telegram
+          <label class="factory-premium-only">Telegram
             <input class="input" data-factory-telegram maxlength="256" placeholder="https://t.me/yourproject" autocomplete="off">
           </label>
         </div>
 
         <label class="factory-full-label">Description
-          <textarea class="input factory-textarea" data-factory-description maxlength="800" rows="4" placeholder="Short description for the LUST Explorer token page."></textarea>
+          <textarea class="input factory-textarea" data-factory-description maxlength="800" rows="4" placeholder="Logo plan: short description. Premium: full token profile description."></textarea>
+          <div class="factory-small-note" data-factory-description-note>Logo plan uses a short description. Premium can include a fuller project description.</div>
         </label>
 
         <label class="factory-full-label">Generated metadata URI
@@ -230,6 +233,6 @@
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
 <script type="module" src="./app.js?v20260613-lustswap-v1"></script>
-<script type="module" src="./factory-pro.js?v20260614-metadata-v1"></script>
+<script type="module" src="./factory-pro.js?v20260614-english-v2"></script>
 </body>
 </html>

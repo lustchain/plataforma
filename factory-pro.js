@@ -148,7 +148,7 @@ function getUrlField(selector, label) {
 function getDescription(plan) {
   const value = String($("[data-factory-description]")?.value || "").trim();
   if (value.length > 800) throw new Error("Description is too long.");
-  if (plan === PLAN.PREMIUM && !value) throw new Error("Premium plan requires a description.");
+  if ((plan === PLAN.LOGO || plan === PLAN.PREMIUM) && !value) throw new Error(`${PLAN_NAMES[plan]} plan requires a description.`);
   return value;
 }
 
@@ -165,14 +165,21 @@ function getLogoFile(plan) {
   return file;
 }
 
+function updateLogoFileName() {
+  const file = $("[data-factory-logo]")?.files?.[0];
+  const nameEl = $("[data-factory-logo-name]");
+  if (!nameEl) return;
+  nameEl.textContent = file ? file.name : "No file selected";
+}
+
 async function uploadMetadataForExplorer({ plan, name, symbol, creator }) {
   if (plan === PLAN.BASIC) return "";
 
   const logo = getLogoFile(plan);
   const description = getDescription(plan);
-  const website = getUrlField("[data-factory-website]", "Website");
-  const twitter = getUrlField("[data-factory-twitter]", "X/Twitter");
-  const telegram = getUrlField("[data-factory-telegram]", "Telegram");
+  const website = plan === PLAN.PREMIUM ? getUrlField("[data-factory-website]", "Website") : "";
+  const twitter = plan === PLAN.PREMIUM ? getUrlField("[data-factory-twitter]", "X/Twitter") : "";
+  const telegram = plan === PLAN.PREMIUM ? getUrlField("[data-factory-telegram]", "Telegram") : "";
 
   const form = new FormData();
   form.append("plan", String(plan));
@@ -263,6 +270,17 @@ async function updateSelection() {
 
   const metadataWrap = $(".factory-metadata-wrap");
   if (metadataWrap) metadataWrap.style.display = plan === PLAN.BASIC ? "none" : "block";
+
+  $all(".factory-premium-only").forEach((el) => {
+    el.style.display = plan === PLAN.PREMIUM ? "block" : "none";
+  });
+
+  const descriptionNote = $("[data-factory-description-note]");
+  if (descriptionNote) {
+    descriptionNote.textContent = plan === PLAN.PREMIUM
+      ? "Premium profile: use a full project description. Website and social links are available."
+      : "Logo profile: use a short description. Website and social links are reserved for Premium.";
+  }
 
   setText("[data-factory-summary-plan]", PLAN_NAMES[plan] || "--");
   setText("[data-factory-summary-payment]", PAYMENT_NAMES[payment] || "--");
@@ -489,6 +507,11 @@ function wireFactoryPage() {
     });
   });
 
+  $("[data-factory-logo-picker]")?.addEventListener("click", () => {
+    $("[data-factory-logo]")?.click();
+  });
+  $("[data-factory-logo]")?.addEventListener("change", updateLogoFileName);
+
   $("[data-factory-refresh]")?.addEventListener("click", refreshFactory);
   $("[data-factory-approve]")?.addEventListener("click", approveLUSDT);
   $("#tokenFactoryForm")?.addEventListener("submit", createToken);
@@ -503,6 +526,7 @@ function wireFactoryPage() {
   }
 
   setText("[data-factory-address-short]", shortAddress(FACTORY_ADDRESS));
+  updateLogoFileName();
   updateSelection();
   refreshFactory();
   setInterval(refreshFactory, 30000);
