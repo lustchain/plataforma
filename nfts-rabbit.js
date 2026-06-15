@@ -234,6 +234,7 @@ async function mintRabbit() {
 
 
 
+
 const RABBIT_REGISTRY_ABI = [
   "function register() external payable",
   "function registrationOpen() view returns (bool)",
@@ -252,7 +253,6 @@ const registryCountBigEl = document.querySelector("[data-registry-count-big]");
 const registryCountTextEl = document.querySelector("[data-registry-count-text]");
 const userRegistryStatusEl = document.querySelector("[data-user-registry-status]");
 
-
 function setWhitelistStatus(message) {
   if (whitelistStatusEl) whitelistStatusEl.textContent = message;
 }
@@ -262,10 +262,9 @@ function setUserRegistryStatus(message) {
 }
 
 async function readRegistryStatus() {
-  if (!registryStatusEl || !ethers.isAddress(RABBIT_REGISTRY_ADDRESS)) return;
+  if (!registryStatusEl || !ethers.isAddress(RABBIT_REGISTRY_ADDRESS)) return null;
 
   try {
-    // Public LUST RPC read. Works even before wallet connection.
     const provider = readProvider();
     const registry = new ethers.Contract(RABBIT_REGISTRY_ADDRESS, RABBIT_REGISTRY_ABI, provider);
 
@@ -292,19 +291,10 @@ async function readRegistryStatus() {
     return { open, locked, fee, count, max };
   } catch (error) {
     console.error("Registry read failed:", error);
-    registryStatusEl.textContent = "Unable to read registry. Check RPC/cache and refresh.";
+    registryStatusEl.textContent = "Unable to read registry. Refresh the page or check LUST RPC.";
     if (registryCountBigEl) registryCountBigEl.textContent = "...";
     if (registryCountTextEl) registryCountTextEl.textContent = "Unable to read live registry count. Refresh or check LUST RPC.";
     return null;
-  }
-}
-
-async function fillWhitelistWalletFromConnectedWallet() {
-  try {
-    const { address } = await getProviderAndSigner();
-    setWhitelistStatus(`Wallet connected: ${shortAddress(address)}. Now click Join Whitelist On-Chain.`);\n    await checkCurrentWalletRegistryStatus(address);
-  } catch (error) {
-    setWhitelistStatus(error?.shortMessage || error?.message || "Could not connect wallet.");
   }
 }
 
@@ -331,6 +321,15 @@ async function checkCurrentWalletRegistryStatus(addressFromCaller = "") {
   }
 }
 
+async function fillWhitelistWalletFromConnectedWallet() {
+  try {
+    const { address } = await getProviderAndSigner();
+    setWhitelistStatus(`Wallet connected: ${shortAddress(address)}. Now click Join Whitelist On-Chain.`);
+    await checkCurrentWalletRegistryStatus(address);
+  } catch (error) {
+    setWhitelistStatus(error?.shortMessage || error?.message || "Could not connect wallet.");
+  }
+}
 
 async function joinWhitelistOnChain() {
   try {
@@ -348,11 +347,13 @@ async function joinWhitelistOnChain() {
 
     if (locked) {
       setWhitelistStatus("Whitelist registry is locked.");
+      await readRegistryStatus();
       return;
     }
 
     if (!open) {
       setWhitelistStatus("Whitelist registry is not open yet. Owner must call setRegistrationOpen(true).");
+      await readRegistryStatus();
       return;
     }
 
@@ -360,13 +361,13 @@ async function joinWhitelistOnChain() {
       setWhitelistStatus(`Wallet already registered: ${shortAddress(address)}.`);
       setUserRegistryStatus(`Wallet status: ${shortAddress(address)} is registered on-chain.`);
       await readRegistryStatus();
-checkCurrentWalletRegistryStatus();
       return;
     }
 
     setWhitelistStatus("Sending on-chain whitelist registration on LUST Chain...");
     const tx = await registry.register({ value: fee });
     setWhitelistStatus(`Registration sent: ${tx.hash}`);
+
     await tx.wait();
 
     setWhitelistStatus(`Registered successfully: ${shortAddress(address)}. This does not mint a Rabbit yet.`);
@@ -374,26 +375,32 @@ checkCurrentWalletRegistryStatus();
     await readRegistryStatus();
   } catch (error) {
     console.error("Registration failed:", error);
-    setWhitelistStatus(error?.shortMessage || error?.message || "On-chain registration failed. Check LUST Chain in MetaMask.");
+    setWhitelistStatus(error?.shortMessage || error?.message || "On-chain registration failed. Check MetaMask is on LUST Chain and try again.");
   }
 }
 
 whitelistFillBtn?.addEventListener("click", fillWhitelistWalletFromConnectedWallet);
 onchainRegisterBtn?.addEventListener("click", joinWhitelistOnChain);
+
 readRegistryStatus();
+checkCurrentWalletRegistryStatus();
 
 if (window.ethereum) {
+  window.ethereum.on?.("accountsChanged", () => {
+    setTimeout(refreshRabbitInfo, 500);
+    setTimeout(checkCurrentWalletRegistryStatus, 500);
+  });
+
   window.ethereum.on?.("chainChanged", () => {
+    setTimeout(refreshRabbitInfo, 500);
     setTimeout(readRegistryStatus, 500);
+    setTimeout(checkCurrentWalletRegistryStatus, 800);
   });
 }
+
 
 approveBtn?.addEventListener("click", approveLusdt);
 mintBtn?.addEventListener("click", mintRabbit);
 quantityEl?.addEventListener("change", refreshRabbitInfo);
 document.querySelectorAll("input[name='rabbitMintMode']").forEach((el) => el.addEventListener("change", refreshRabbitInfo));
 window.addEventListener("load", refreshRabbitInfo);
-window.ethereum?.on?.("accountsChanged", refreshRabbitInfo);
-window.ethereum?.on?.("chainChanged", () => setTimeout(refreshRabbitInfo, 500));
-
-window.ethereum?.on?.("accountsChanged", () => setTimeout(checkCurrentWalletRegistryStatus, 500));

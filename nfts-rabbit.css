@@ -566,9 +566,29 @@
   word-break: break-word;
 }
 
-/* Live registry count/status */
+/* Final registry clean fixes */
 .rabbit-wallet-registry-status {
   margin-top: 8px;
   border-color: rgba(247, 3, 117, .28);
   background: rgba(247, 3, 117, .045);
+}
+
+.rabbit-waitlist-panel .rabbit-statement-grid div,
+.rabbit-transparency-panel .rabbit-transparency-grid div,
+.rabbit-transparency-panel .rabbit-fund-card {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.rabbit-waitlist-panel .rabbit-statement-grid span[title] {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rabbit-transparency-panel .rabbit-transparency-grid span {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
