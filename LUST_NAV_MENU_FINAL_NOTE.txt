@@ -1,0 +1,4 @@
+Final top menu order applied to every main page:
+Presale | Bridge | Swap | P2P | NFTs | Mining | Staking | Factory | Explorer | Docs
+Liquidity removed from the main menu; liquidity.html redirects to presale.html.
+No app.js function logic was changed in this menu-only patch.
