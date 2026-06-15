@@ -565,3 +565,10 @@
   overflow-wrap: anywhere;
   word-break: break-word;
 }
+
+/* Live registry count/status */
+.rabbit-wallet-registry-status {
+  margin-top: 8px;
+  border-color: rgba(247, 3, 117, .28);
+  background: rgba(247, 3, 117, .045);
+}

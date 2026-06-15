@@ -248,9 +248,17 @@ const registryStatusEl = document.querySelector("[data-registry-status]");
 const onchainRegisterBtn = document.querySelector("[data-onchain-register]");
 const whitelistFillBtn = document.querySelector("[data-whitelist-fill-wallet]");
 const whitelistStatusEl = document.querySelector("[data-whitelist-status]");
+const registryCountBigEl = document.querySelector("[data-registry-count-big]");
+const registryCountTextEl = document.querySelector("[data-registry-count-text]");
+const userRegistryStatusEl = document.querySelector("[data-user-registry-status]");
+
 
 function setWhitelistStatus(message) {
   if (whitelistStatusEl) whitelistStatusEl.textContent = message;
+}
+
+function setUserRegistryStatus(message) {
+  if (userRegistryStatusEl) userRegistryStatusEl.textContent = message;
 }
 
 async function readRegistryStatus() {
@@ -270,23 +278,59 @@ async function readRegistryStatus() {
     ]);
 
     const feeText = fee === 0n ? "free" : `${ethers.formatEther(fee)} LST`;
+    const countText = `${count.toString()} / ${max.toString()}`;
+
     registryStatusEl.textContent = locked
-      ? `Closed · ${count.toString()} / ${max.toString()} registered`
-      : `${open ? "Open" : "Closed"} · ${count.toString()} / ${max.toString()} registered · ${feeText}`;
+      ? `Closed · ${countText} registered`
+      : `${open ? "Open" : "Closed"} · ${countText} registered · ${feeText}`;
+
+    if (registryCountBigEl) registryCountBigEl.textContent = count.toString();
+    if (registryCountTextEl) {
+      registryCountTextEl.textContent = `${countText} wallets registered on-chain. Registration is free and does not collect LUSDT.`;
+    }
+
+    return { open, locked, fee, count, max };
   } catch (error) {
     console.error("Registry read failed:", error);
     registryStatusEl.textContent = "Unable to read registry. Check RPC/cache and refresh.";
+    if (registryCountBigEl) registryCountBigEl.textContent = "...";
+    if (registryCountTextEl) registryCountTextEl.textContent = "Unable to read live registry count. Refresh or check LUST RPC.";
+    return null;
   }
 }
 
 async function fillWhitelistWalletFromConnectedWallet() {
   try {
     const { address } = await getProviderAndSigner();
-    setWhitelistStatus(`Wallet connected: ${shortAddress(address)}. Now click Join Whitelist On-Chain.`);
+    setWhitelistStatus(`Wallet connected: ${shortAddress(address)}. Now click Join Whitelist On-Chain.`);\n    await checkCurrentWalletRegistryStatus(address);
   } catch (error) {
     setWhitelistStatus(error?.shortMessage || error?.message || "Could not connect wallet.");
   }
 }
+
+async function checkCurrentWalletRegistryStatus(addressFromCaller = "") {
+  try {
+    const address = addressFromCaller || await getConnectedWalletAddress();
+    if (!address) {
+      setUserRegistryStatus("Wallet status: not connected.");
+      return;
+    }
+
+    const provider = readProvider();
+    const registry = new ethers.Contract(RABBIT_REGISTRY_ADDRESS, RABBIT_REGISTRY_ABI, provider);
+    const registered = await registry.isRegistered(address);
+
+    setUserRegistryStatus(
+      registered
+        ? `Wallet status: ${shortAddress(address)} is registered on-chain.`
+        : `Wallet status: ${shortAddress(address)} is not registered yet.`
+    );
+  } catch (error) {
+    console.error("Wallet registry status failed:", error);
+    setUserRegistryStatus("Wallet status: unable to check right now.");
+  }
+}
+
 
 async function joinWhitelistOnChain() {
   try {
@@ -314,7 +358,9 @@ async function joinWhitelistOnChain() {
 
     if (alreadyRegistered) {
       setWhitelistStatus(`Wallet already registered: ${shortAddress(address)}.`);
+      setUserRegistryStatus(`Wallet status: ${shortAddress(address)} is registered on-chain.`);
       await readRegistryStatus();
+checkCurrentWalletRegistryStatus();
       return;
     }
 
@@ -324,6 +370,7 @@ async function joinWhitelistOnChain() {
     await tx.wait();
 
     setWhitelistStatus(`Registered successfully: ${shortAddress(address)}. This does not mint a Rabbit yet.`);
+    setUserRegistryStatus(`Wallet status: ${shortAddress(address)} is registered on-chain.`);
     await readRegistryStatus();
   } catch (error) {
     console.error("Registration failed:", error);
@@ -348,3 +395,5 @@ document.querySelectorAll("input[name='rabbitMintMode']").forEach((el) => el.add
 window.addEventListener("load", refreshRabbitInfo);
 window.ethereum?.on?.("accountsChanged", refreshRabbitInfo);
 window.ethereum?.on?.("chainChanged", () => setTimeout(refreshRabbitInfo, 500));
+
+window.ethereum?.on?.("accountsChanged", () => setTimeout(checkCurrentWalletRegistryStatus, 500));
