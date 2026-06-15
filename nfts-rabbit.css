@@ -537,3 +537,31 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Final registry layout safety */
+.rabbit-waitlist-panel .rabbit-statement-grid,
+.rabbit-transparency-panel .rabbit-transparency-grid,
+.rabbit-transparency-panel .rabbit-funds-grid {
+  min-width: 0;
+}
+
+.rabbit-waitlist-panel .rabbit-statement-grid div,
+.rabbit-transparency-panel .rabbit-transparency-grid div,
+.rabbit-transparency-panel .rabbit-fund-card {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.rabbit-waitlist-panel .rabbit-statement-grid span[title] {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rabbit-transparency-panel .rabbit-transparency-grid span {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
