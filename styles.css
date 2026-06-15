@@ -1838,5 +1838,9 @@ select.input{appearance:none;background:#09020d;color:#fff}
 .presale-contract-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}
 .presale-contract-strip a{padding:16px;display:block;min-width:0}
 .presale-contract-strip strong{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.presale-full-terms{margin-top:18px}
+.presale-full-terms h3{font-size:30px;line-height:1.05;margin:6px 0 12px}
+.presale-full-terms-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:760px){.presale-full-terms-grid{grid-template-columns:1fr}}
 @media(max-width:1080px){.presale-hero,.presale-layout{grid-template-columns:1fr}.presale-live-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.presale-info-grid,.presale-contract-strip{grid-template-columns:1fr}}
 @media(max-width:620px){.presale-page{width:min(94vw,720px);padding-top:24px}.presale-countdown{grid-template-columns:repeat(2,1fr)}.presale-live-grid,.presale-quote-grid{grid-template-columns:1fr}.presale-input-row{grid-template-columns:1fr}.presale-token-pill{justify-content:center}.presale-card{padding:18px}.presale-card-head{display:block}.presale-card-head span{display:inline-flex;margin-top:10px}.presale-hero h1{font-size:46px}}

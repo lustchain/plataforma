@@ -3770,7 +3770,7 @@ window.lustSwap = {
 
 wireLUSTSwap();
 
-// LUST Genesis Liquidity Event frontend v20260615-presale-v1
+// LUST Genesis Liquidity Event frontend v20260615-presale-v2
 const LUST_PRESALE_ADDRESS = "0x6AD87104DDC8F7CEd9267F115EE107F44AA9f936";
 const LUST_PRESALE_LUSDT_ADDRESS = "0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE";
 const LUST_PRESALE_MAX_WALLET = 500_000000n;
@@ -4037,11 +4037,14 @@ async function presaleUpdateAll() {
       ]);
       presaleSet("[data-presale-lusdt-balance]", presaleFormatLusdt(lusdtBalance, 4));
       if (info) {
+        const contributed = BigInt(info[0] || 0);
+        const remainingWallet = LUST_PRESALE_MAX_WALLET > contributed ? LUST_PRESALE_MAX_WALLET - contributed : 0n;
         presaleSet("[data-presale-user-contributed]", presaleFormatLusdt(info[0], 2));
         presaleSet("[data-presale-user-purchased]", presaleFormatLst(info[1], 2));
         presaleSet("[data-presale-user-bonus]", presaleFormatLst(info[2], 2));
         presaleSet("[data-presale-user-claimable]", presaleFormatLst(claimablePurchased, 2));
         presaleSet("[data-presale-user-bonus-available]", presaleFormatLst(info[6], 2));
+        presaleSet("[data-presale-remaining-wallet]", presaleFormatLusdt(remainingWallet, 2));
       }
     } else {
       presaleSet("[data-presale-lusdt-balance]", "Connect wallet");
@@ -4050,6 +4053,7 @@ async function presaleUpdateAll() {
       presaleSet("[data-presale-user-bonus]", "--");
       presaleSet("[data-presale-user-claimable]", "--");
       presaleSet("[data-presale-user-bonus-available]", "--");
+      presaleSet("[data-presale-remaining-wallet]", "Connect wallet");
     }
 
     await presaleUpdateQuote();

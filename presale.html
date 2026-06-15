@@ -8,7 +8,7 @@
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css?v20260615-presale-v1" />
+  <link rel="stylesheet" href="./styles.css?v20260615-presale-v2" />
 </head>
 <body>
 <div class="promo-bar">LUST Genesis Liquidity Event · Either liquidity is created, or your LUSDT comes back.</div>
@@ -73,7 +73,11 @@
 
   <section class="presale-live-grid">
     <div class="presale-metric"><small>Genesis price</small><strong>1 LST = 0.10 LUSDT</strong><span>1 LUSDT = 10 LST</span></div>
+    <div class="presale-metric"><small>Minimum buy</small><strong>10 LUSDT</strong><span>Small entry for the community</span></div>
+    <div class="presale-metric"><small>Maximum per wallet</small><strong>500 LUSDT</strong><span>Fair cap to reduce whale advantage</span></div>
     <div class="presale-metric"><small>Duration</small><strong>60 days</strong><span>Countdown controlled by contract</span></div>
+    <div class="presale-metric"><small>Softcap</small><strong>5,000 LUSDT</strong><span>If not reached, refund opens</span></div>
+    <div class="presale-metric"><small>Hardcap</small><strong>30,000 LUSDT</strong><span>Sale closes when reached</span></div>
     <div class="presale-metric"><small>Buy fee</small><strong>0.20%</strong><span>Withdrawable only after liquidity</span></div>
     <div class="presale-metric"><small>Buyer protection</small><strong>Refund path</strong><span>If softcap or liquidity fails</span></div>
   </section>
@@ -95,6 +99,8 @@
           <div class="presale-token-pill"><img src="./assets/lusdt-logo.png" alt="LUSDT">LUSDT</div>
         </div>
         <div class="presale-mini-row"><span>Your LUSDT balance</span><strong data-presale-lusdt-balance>--</strong></div>
+        <div class="presale-mini-row"><span>Wallet limit</span><strong>Min 10 · Max 500 LUSDT</strong></div>
+        <div class="presale-mini-row"><span>Your remaining limit</span><strong data-presale-remaining-wallet>--</strong></div>
       </div>
 
       <div class="presale-quote-grid">
@@ -124,6 +130,9 @@
           <div><span>Softcap</span><strong>5,000 LUSDT</strong></div>
           <div><span>Main target</span><strong>15,000 LUSDT</strong></div>
           <div><span>Hardcap</span><strong>30,000 LUSDT</strong></div>
+          <div><span>Minimum buy</span><strong>10 LUSDT</strong></div>
+          <div><span>Maximum per wallet</span><strong>500 LUSDT</strong></div>
+          <div><span>Sale duration</span><strong>60 days</strong></div>
           <div><span>Net for liquidity</span><strong data-presale-net-liquidity>--</strong></div>
           <div><span>LST sold</span><strong data-presale-sold-lst>--</strong></div>
           <div><span>Future bonus</span><strong data-presale-bonus-total>--</strong></div>
@@ -157,18 +166,62 @@
     <article class="presale-card">
       <small>Transparent rules</small>
       <h3>Either liquidity, or refund.</h3>
-      <p>The contract keeps the LUSDT until the sale ends. If the softcap is not reached, refund is available. If the softcap is reached but liquidity is not created during the grace period, refund is also available.</p>
+      <p>The contract keeps the LUSDT until the sale ends. If the softcap is not reached, refund is available. If the softcap is reached but liquidity is not created during the 7-day grace period, refund is also available.</p>
     </article>
     <article class="presale-card">
       <small>Liquidity first</small>
       <h3>100% net LUSDT to WLST/LUSDT.</h3>
-      <p>The sale was created to form the first WLST/LUSDT pool. The 0.20% fee can only be withdrawn after liquidity has been created.</p>
+      <p>The sale was created to form the first WLST/LUSDT pool. The 0.20% fee can only be withdrawn after liquidity has been created. LP tokens stay locked in the presale contract for 12 months.</p>
+    </article>
+    <article class="presale-card">
+      <small>Buyer limits</small>
+      <h3>Min 10 · Max 500 LUSDT per wallet.</h3>
+      <p>The minimum buy is 10 LUSDT and the maximum contribution per wallet is 500 LUSDT. This keeps the Genesis phase accessible and reduces unfair concentration before liquidity opens.</p>
     </article>
     <article class="presale-card">
       <small>Bonus schedule</small>
       <h3>Early participants receive more.</h3>
       <p>Days 1–15 receive 20% bonus, days 16–30 receive 15%, and days 31–60 receive 10%. Bonus unlocks after liquidity in 3 stages: 6, 9 and 12 months.</p>
     </article>
+    <article class="presale-card">
+      <small>Claim rules</small>
+      <h3>Purchased LST unlocks after liquidity.</h3>
+      <p>Buyers can claim their purchased LST only after the WLST/LUSDT liquidity is created. Bonus LST is separate and follows the 6/9/12 month unlock schedule.</p>
+    </article>
+    <article class="presale-card">
+      <small>Fair launch sequence</small>
+      <h3>Mining and staking open after liquidity.</h3>
+      <p>Public mining and staking remain locked for the community until the first WLST/LUSDT liquidity pool is created. Presale first, liquidity second, mining and staking after.</p>
+    </article>
+  </section>
+
+  <section class="presale-card presale-full-terms">
+    <small>Complete Genesis terms</small>
+    <h3>Everything shown before you buy.</h3>
+    <div class="presale-terms-list presale-full-terms-grid">
+      <div><span>Presale contract</span><strong>0x6AD87104DDC8F7CEd9267F115EE107F44AA9f936</strong></div>
+      <div><span>Payment token</span><strong>LUSDT · 6 decimals</strong></div>
+      <div><span>Token received</span><strong>LST native coin</strong></div>
+      <div><span>Liquidity pair</span><strong>WLST / LUSDT</strong></div>
+      <div><span>Genesis price</span><strong>1 LST = 0.10 LUSDT</strong></div>
+      <div><span>Conversion</span><strong>1 LUSDT = 10 LST</strong></div>
+      <div><span>Minimum buy</span><strong>10 LUSDT</strong></div>
+      <div><span>Maximum per wallet</span><strong>500 LUSDT</strong></div>
+      <div><span>Softcap</span><strong>5,000 LUSDT</strong></div>
+      <div><span>Main target</span><strong>15,000 LUSDT</strong></div>
+      <div><span>Hardcap</span><strong>30,000 LUSDT</strong></div>
+      <div><span>Sale duration</span><strong>60 days</strong></div>
+      <div><span>Buy fee</span><strong>0.20%</strong></div>
+      <div><span>Liquidity use</span><strong>100% of net LUSDT</strong></div>
+      <div><span>Liquidity grace period</span><strong>7 days after sale end</strong></div>
+      <div><span>LP lock</span><strong>12 months inside contract</strong></div>
+      <div><span>Refund case 1</span><strong>Softcap not reached</strong></div>
+      <div><span>Refund case 2</span><strong>Liquidity not created in time</strong></div>
+      <div><span>Purchased LST claim</span><strong>After liquidity is created</strong></div>
+      <div><span>Bonus unlock</span><strong>6, 9 and 12 months</strong></div>
+      <div><span>Mining public launch</span><strong>After liquidity opens</strong></div>
+      <div><span>Staking public launch</span><strong>After liquidity opens</strong></div>
+    </div>
   </section>
 
   <section class="presale-contract-strip">
@@ -185,6 +238,6 @@
 </footer>
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
-<script type="module" src="./app.js?v20260615-presale-v1"></script>
+<script type="module" src="./app.js?v20260615-presale-v2"></script>
 </body>
 </html>
