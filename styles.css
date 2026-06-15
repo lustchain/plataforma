@@ -1768,3 +1768,75 @@ select.input{appearance:none;background:#09020d;color:#fff}
   .dex-settings.two-cols{grid-template-columns:1fr}
   .dex-card{padding:18px;border-radius:20px}
 }
+
+/* LUST Genesis Presale page v20260615-presale-v1 */
+.presale-page{width:min(1180px,94vw);margin:0 auto;padding:34px 0 64px;color:#fff}
+.presale-hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr);gap:18px;align-items:stretch;margin-bottom:18px}
+.presale-hero-copy,.presale-countdown-card,.presale-card,.presale-metric,.presale-contract-strip a{
+  border:3px solid rgba(247,3,117,.36);
+  border-radius:26px;
+  background:linear-gradient(180deg,rgba(22,0,18,.96),rgba(7,0,9,.98));
+  box-shadow:none;
+}
+.presale-hero-copy{padding:clamp(26px,4vw,46px);background:
+  radial-gradient(circle at 12% 0%,rgba(247,3,117,.24),transparent 34%),
+  radial-gradient(circle at 100% 18%,rgba(143,53,255,.16),transparent 38%),
+  linear-gradient(180deg,rgba(22,0,18,.96),rgba(7,0,9,.98));}
+.presale-kicker,.presale-card small,.presale-metric small,.presale-contract-strip small,.presale-countdown-card small{
+  display:block;text-transform:uppercase;letter-spacing:.18em;color:#ff66b0;font-size:10px;font-weight:1000;margin-bottom:8px
+}
+.presale-hero h1{font-size:clamp(48px,7.4vw,82px);line-height:.92;letter-spacing:-.055em;margin:0 0 16px;color:#fff;max-width:850px}
+.presale-hero p,.presale-card p{color:#f1d6e4;line-height:1.56;font-size:16px;max-width:830px;margin:0}
+.presale-hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.presale-warning{margin-top:18px;border:2px solid rgba(255,204,102,.32);background:rgba(255,204,102,.065);color:#ffe8ae;border-radius:16px;padding:13px 15px;font-weight:850;font-size:13px;line-height:1.45}
+.presale-countdown-card{padding:24px;display:flex;flex-direction:column;justify-content:space-between;gap:18px}
+.presale-countdown-card>strong{font-size:clamp(28px,4vw,44px);line-height:1;letter-spacing:-.04em}
+.presale-countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.presale-countdown div{border:2px solid rgba(255,255,255,.16);border-radius:18px;background:#08010b;padding:14px 8px;text-align:center}
+.presale-countdown b{display:block;font-size:clamp(22px,3vw,34px);line-height:1;color:#fff}
+.presale-countdown span{display:block;margin-top:6px;color:#caa9ba;text-transform:uppercase;letter-spacing:.12em;font-size:9px;font-weight:1000}
+.presale-log{border:2px solid rgba(255,255,255,.16);border-radius:16px;background:#08010b;color:#dcc1d0;padding:13px;line-height:1.45;font-size:13px;word-break:break-word}
+.presale-log[data-tone="ok"]{border-color:rgba(78,255,190,.40);background:rgba(78,255,190,.07);color:#ddfff5}
+.presale-log[data-tone="warn"]{border-color:rgba(255,204,102,.46);background:rgba(255,204,102,.08);color:#ffe7a8}
+.presale-log[data-tone="bad"]{border-color:rgba(255,88,88,.50);background:rgba(255,88,88,.08);color:#ffd4dc}
+.presale-live-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}
+.presale-metric{padding:18px;min-height:122px}
+.presale-metric strong{display:block;font-size:22px;line-height:1.08;letter-spacing:-.03em}
+.presale-metric span{display:block;color:#d5b7c7;margin-top:10px;font-size:13px;font-weight:800}
+.presale-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(330px,.9fr);gap:18px;align-items:start;margin-top:18px}
+.presale-side{display:grid;gap:18px}
+.presale-card{padding:22px}
+.presale-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:18px}
+.presale-card-head.compact{margin-bottom:10px}
+.presale-card-head h2,.presale-card-head h3{margin:0;letter-spacing:-.04em}
+.presale-card-head h2{font-size:clamp(30px,4.4vw,48px)}
+.presale-card-head span{border:2px solid rgba(247,3,117,.38);background:rgba(247,3,117,.10);color:#ffe4f1;border-radius:999px;padding:8px 11px;font-size:12px;font-weight:950;white-space:nowrap}
+.presale-input-box{border:3px solid rgba(255,40,138,.26);border-radius:22px;background:rgba(10,0,9,.92);padding:16px;margin-bottom:14px}
+.presale-input-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:12px}
+.presale-input-top label{color:#d9bdcc;text-transform:uppercase;letter-spacing:.12em;font-size:11px;font-weight:1000}
+.presale-input-top button{border:0;background:transparent;color:#ff7cba;font-weight:950;cursor:pointer}
+.presale-input-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center}
+.presale-amount{width:100%;border:0;outline:0;background:transparent;color:#fff;font-size:clamp(38px,6vw,66px);font-weight:950;letter-spacing:-.05em;min-width:0}
+.presale-amount::placeholder{color:rgba(255,255,255,.32)}
+.presale-token-pill{display:flex;align-items:center;gap:8px;border:2px solid rgba(255,255,255,.16);background:#08010b;color:#fff;border-radius:999px;padding:10px 13px;font-weight:950}
+.presale-token-pill img{width:22px;height:22px;border-radius:999px;object-fit:contain}
+.presale-mini-row,.presale-progress-label{display:flex;justify-content:space-between;gap:12px;color:#cbaabb;font-size:13px;margin-top:10px}
+.presale-mini-row strong,.presale-progress-label strong{color:#fff;text-align:right}
+.presale-quote-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.presale-quote-grid div,.presale-terms-list div{border:2px solid rgba(255,255,255,.14);background:#08010b;border-radius:16px;padding:13px;min-width:0}
+.presale-quote-grid span,.presale-terms-list span{display:block;color:#cbaabb;font-size:11px;font-weight:950;text-transform:uppercase;letter-spacing:.11em;margin-bottom:7px}
+.presale-quote-grid strong,.presale-terms-list strong{display:block;color:#fff;font-size:16px;word-break:break-word}
+.presale-main-btn{width:100%;font-size:16px;margin-bottom:12px}
+.presale-progress-wrap{margin-top:4px}
+.presale-progress-bar{height:18px;border:2px solid rgba(255,255,255,.16);background:#08010b;border-radius:999px;overflow:hidden}
+.presale-progress-bar i{display:block;height:100%;width:0%;background:var(--pink);box-shadow:0 0 18px rgba(247,3,117,.26);transition:width .25s ease}
+.presale-terms-list{display:grid;gap:10px;margin-top:14px}
+.presale-actions-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px}
+.presale-info-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:18px}
+.presale-info-grid .presale-card{min-height:210px}
+.presale-info-grid h3{font-size:25px;line-height:1.05;margin-bottom:10px}
+.presale-contract-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}
+.presale-contract-strip a{padding:16px;display:block;min-width:0}
+.presale-contract-strip strong{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:1080px){.presale-hero,.presale-layout{grid-template-columns:1fr}.presale-live-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.presale-info-grid,.presale-contract-strip{grid-template-columns:1fr}}
+@media(max-width:620px){.presale-page{width:min(94vw,720px);padding-top:24px}.presale-countdown{grid-template-columns:repeat(2,1fr)}.presale-live-grid,.presale-quote-grid{grid-template-columns:1fr}.presale-input-row{grid-template-columns:1fr}.presale-token-pill{justify-content:center}.presale-card{padding:18px}.presale-card-head{display:block}.presale-card-head span{display:inline-flex;margin-top:10px}.presale-hero h1{font-size:46px}}

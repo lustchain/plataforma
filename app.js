@@ -3769,3 +3769,421 @@ window.lustSwap = {
 };
 
 wireLUSTSwap();
+
+// LUST Genesis Liquidity Event frontend v20260615-presale-v1
+const LUST_PRESALE_ADDRESS = "0x6AD87104DDC8F7CEd9267F115EE107F44AA9f936";
+const LUST_PRESALE_LUSDT_ADDRESS = "0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE";
+const LUST_PRESALE_MAX_WALLET = 500_000000n;
+const LUST_PRESALE_HARDCAP = 30_000_000000n;
+
+const LUST_PRESALE_ABI = [
+  "function saleTimes() view returns (bool scheduled,bool finalized,uint256 start,uint256 end,uint256 liquidityLimit,uint256 currentTime)",
+  "function saleProgress() view returns (uint256 raisedLUSDT,uint256 softcapLUSDT,uint256 hardcapLUSDT,uint256 netForLiquidityLUSDT,uint256 feesLUSDT,uint256 soldLST,uint256 bonusLSTAmount)",
+  "function userInfo(address account) view returns (uint256 contributed,uint256 purchased,uint256 bonus,uint256 purchasedClaimed,uint256 bonusClaimed,uint256 purchasedAvailable,uint256 bonusAvailable,bool hasRefunded)",
+  "function quoteBuy(uint256 lusdtAmount) view returns (uint256 feeAmount,uint256 netForLiquidity,uint256 purchasedAmountLST,uint256 bonusAmountLST,uint256 bonusBps)",
+  "function isSaleActive() view returns (bool)",
+  "function isRefundAvailable() view returns (bool)",
+  "function liquidityCreated() view returns (bool)",
+  "function currentBonusBps() view returns (uint256)",
+  "function nativeReserveStatus() view returns (uint256 currentNativeBalance,uint256 requiredNative,bool enoughNativeFunded)",
+  "function contributedLUSDT(address account) view returns (uint256)",
+  "function claimablePurchased(address account) view returns (uint256)",
+  "function buy(uint256 lusdtAmount)",
+  "function claimPurchased()",
+  "function claimBonus()",
+  "function refund()"
+];
+
+const LUST_PRESALE_ERC20_ABI = [
+  "function balanceOf(address) view returns (uint256)",
+  "function allowance(address owner,address spender) view returns (uint256)",
+  "function approve(address spender,uint256 amount) returns (bool)"
+];
+
+function presaleHasPage() {
+  return Boolean(document.querySelector("[data-presale-page]"));
+}
+
+function presaleProvider() {
+  return new ethers.JsonRpcProvider("https://rpc.lustchain.org", LUST_CHAIN_ID_DECIMAL);
+}
+
+function presaleContract(runner = presaleProvider()) {
+  return new ethers.Contract(LUST_PRESALE_ADDRESS, LUST_PRESALE_ABI, runner);
+}
+
+function presaleLusdt(runner = presaleProvider()) {
+  return new ethers.Contract(LUST_PRESALE_LUSDT_ADDRESS, LUST_PRESALE_ERC20_ABI, runner);
+}
+
+function presaleSet(selector, value) {
+  document.querySelectorAll(selector).forEach((el) => { el.textContent = value; });
+}
+
+function presaleLog(selector, message, tone = "") {
+  document.querySelectorAll(selector).forEach((el) => {
+    el.textContent = message;
+    el.dataset.tone = tone;
+  });
+}
+
+function presaleShort(value) {
+  return value ? `${value.slice(0, 6)}...${value.slice(-4)}` : "--";
+}
+
+function presaleTrim(text, decimals = 4) {
+  const [a, b = ""] = String(text || "0").split(".");
+  if (!decimals) return a;
+  const cut = b.slice(0, decimals).replace(/0+$/, "");
+  return cut ? `${a}.${cut}` : a;
+}
+
+function presaleFormat(value, decimals = 18, precision = 4) {
+  try {
+    return presaleTrim(ethers.formatUnits(BigInt(value || 0), decimals), precision);
+  } catch (_) {
+    return "0";
+  }
+}
+
+function presaleFormatLusdt(value, precision = 2) {
+  return `${presaleFormat(value, 6, precision)} LUSDT`;
+}
+
+function presaleFormatLst(value, precision = 2) {
+  return `${presaleFormat(value, 18, precision)} LST`;
+}
+
+function presaleParseLusdt(raw) {
+  const value = String(raw || "").trim().replace(",", ".");
+  if (!value || Number(value) <= 0 || !Number.isFinite(Number(value))) throw new Error("Enter a valid LUSDT amount.");
+  return ethers.parseUnits(value, 6);
+}
+
+function presalePercent(raised, hardcap) {
+  const r = BigInt(raised || 0);
+  const h = BigInt(hardcap || 1);
+  if (h <= 0n) return 0;
+  const bps = Number((r * 10000n) / h);
+  return Math.max(0, Math.min(100, bps / 100));
+}
+
+function presaleCountdownParts(targetSeconds) {
+  const now = Math.floor(Date.now() / 1000);
+  let total = Math.max(0, Number(targetSeconds || 0) - now);
+  const days = Math.floor(total / 86400); total -= days * 86400;
+  const hours = Math.floor(total / 3600); total -= hours * 3600;
+  const mins = Math.floor(total / 60); total -= mins * 60;
+  return [days, hours, mins, total];
+}
+
+function presaleRenderCountdown(targetSeconds) {
+  const box = document.querySelector("[data-presale-countdown]");
+  if (!box) return;
+  const values = targetSeconds ? presaleCountdownParts(targetSeconds) : ["--", "--", "--", "--"];
+  box.querySelectorAll("b").forEach((el, i) => { el.textContent = String(values[i]).padStart(i === 0 ? 1 : 2, "0"); });
+}
+
+async function presaleSigner() {
+  const eth = getInjectedEthereum();
+  if (!eth) throw new Error("MetaMask or injected wallet not found.");
+  await eth.request({ method: "eth_requestAccounts" });
+  await lustswapSwitchToLust();
+  const provider = new ethers.BrowserProvider(eth);
+  return provider.getSigner();
+}
+
+let presaleState = {
+  scheduled: false,
+  finalized: false,
+  start: 0n,
+  end: 0n,
+  liquidityLimit: 0n,
+  currentTime: 0n,
+  liquidityCreated: false,
+  refundAvailable: false,
+  active: false,
+  raised: 0n,
+  hardcap: LUST_PRESALE_HARDCAP,
+  targetCountdown: 0n
+};
+
+async function presaleUpdateQuote() {
+  if (!presaleHasPage()) return;
+  const input = document.querySelector("[data-presale-amount]");
+  if (!input) return;
+  let amount = 0n;
+  try {
+    amount = input.value ? presaleParseLusdt(input.value) : 0n;
+  } catch (_) {
+    presaleSet("[data-presale-quote-lst]", "--");
+    presaleSet("[data-presale-quote-bonus]", "--");
+    presaleSet("[data-presale-quote-fee]", "--");
+    presaleSet("[data-presale-quote-net]", "--");
+    return;
+  }
+
+  if (amount <= 0n) {
+    presaleSet("[data-presale-quote-lst]", "--");
+    presaleSet("[data-presale-quote-bonus]", "--");
+    presaleSet("[data-presale-quote-fee]", "--");
+    presaleSet("[data-presale-quote-net]", "--");
+    return;
+  }
+
+  try {
+    const [fee, net, purchased, bonus] = await presaleContract().quoteBuy(amount);
+    presaleSet("[data-presale-quote-lst]", presaleFormatLst(purchased, 2));
+    presaleSet("[data-presale-quote-bonus]", presaleFormatLst(bonus, 2));
+    presaleSet("[data-presale-quote-fee]", presaleFormatLusdt(fee, 4));
+    presaleSet("[data-presale-quote-net]", presaleFormatLusdt(net, 4));
+  } catch (err) {
+    console.warn(err);
+  }
+}
+
+function presaleRenderStatus(times, active, refundAvailable, liquidityCreated) {
+  const scheduled = Boolean(times?.[0]);
+  const finalized = Boolean(times?.[1]);
+  const start = BigInt(times?.[2] || 0);
+  const end = BigInt(times?.[3] || 0);
+  const liquidityLimit = BigInt(times?.[4] || 0);
+  const chainNow = BigInt(times?.[5] || 0);
+
+  let status = "Waiting for schedule";
+  let target = 0n;
+  let log = "Contract is verified and ready. The public start time has not been scheduled yet.";
+  let tone = "";
+
+  if (liquidityCreated) {
+    status = "Liquidity created · Claim open";
+    log = "The initial WLST/LUSDT liquidity was created. Purchased LST can be claimed now.";
+    tone = "ok";
+  } else if (!scheduled) {
+    status = "Ready · Not scheduled";
+  } else if (active) {
+    status = "Sale active";
+    target = end;
+    log = "The Genesis sale is active. Buy LST with LUSDT while the cap is available.";
+    tone = "ok";
+  } else if (chainNow < start) {
+    status = "Starts soon";
+    target = start;
+    log = "Countdown is live. Buying opens automatically at the contract start time.";
+  } else if (refundAvailable) {
+    status = "Refund available";
+    log = "Refund is available by contract rule. Participants can withdraw their LUSDT.";
+    tone = "warn";
+  } else if (finalized) {
+    status = "Finalized · Awaiting liquidity";
+    target = liquidityLimit;
+    log = "Sale is finalized and waiting for liquidity creation within the contract grace period.";
+  } else if (chainNow >= end) {
+    status = "Sale ended";
+    target = liquidityLimit;
+    log = "Sale time ended. Finalization is the next step before liquidity creation or refund state.";
+  }
+
+  presaleState = { ...presaleState, scheduled, finalized, start, end, liquidityLimit, currentTime: chainNow, active, refundAvailable, liquidityCreated, targetCountdown: target };
+  presaleSet("[data-presale-status]", status);
+  presaleLog("[data-presale-log]", log, tone);
+  presaleRenderCountdown(target);
+}
+
+async function presaleUpdateAll() {
+  if (!presaleHasPage()) return;
+
+  try {
+    const contract = presaleContract();
+    const [times, progress, active, refundAvailable, liquidityCreated, bonusBps, reserve] = await Promise.all([
+      contract.saleTimes(),
+      contract.saleProgress(),
+      contract.isSaleActive(),
+      contract.isRefundAvailable(),
+      contract.liquidityCreated(),
+      contract.currentBonusBps().catch(() => 0n),
+      contract.nativeReserveStatus().catch(() => null)
+    ]);
+
+    presaleRenderStatus(times, active, refundAvailable, liquidityCreated);
+
+    const [raised, softcap, hardcap, net, fees, sold, bonusTotal] = progress;
+    presaleState.raised = BigInt(raised || 0);
+    presaleState.hardcap = BigInt(hardcap || LUST_PRESALE_HARDCAP);
+
+    const pct = presalePercent(raised, hardcap);
+    const bar = document.querySelector("[data-presale-progress-bar]");
+    if (bar) bar.style.width = `${pct}%`;
+    presaleSet("[data-presale-progress-pct]", `${pct.toFixed(2)}%`);
+    presaleSet("[data-presale-raised]", `${presaleFormatLusdt(raised, 2)} raised`);
+    presaleSet("[data-presale-net-liquidity]", presaleFormatLusdt(net, 2));
+    presaleSet("[data-presale-sold-lst]", presaleFormatLst(sold, 2));
+    presaleSet("[data-presale-bonus-total]", presaleFormatLst(bonusTotal, 2));
+
+    const bonusPct = Number(BigInt(bonusBps || 0)) / 100;
+    presaleSet("[data-presale-bonus-chip]", `${bonusPct.toFixed(bonusPct % 1 ? 2 : 0)}% Genesis bonus now`);
+
+    const fundedText = reserve?.[2] ? "Reserve funded" : "Reserve check pending";
+    if (reserve?.[2] && !active && !liquidityCreated && !refundAvailable) {
+      presaleLog("[data-presale-action-log]", `${fundedText}. Waiting for the contract sale window.`, "ok");
+    }
+
+    const address = walletState.address || appKit.getAddress?.() || "";
+    if (address) {
+      const [lusdtBalance, info, claimablePurchased] = await Promise.all([
+        presaleLusdt().balanceOf(address).catch(() => 0n),
+        contract.userInfo(address).catch(() => null),
+        contract.claimablePurchased(address).catch(() => 0n)
+      ]);
+      presaleSet("[data-presale-lusdt-balance]", presaleFormatLusdt(lusdtBalance, 4));
+      if (info) {
+        presaleSet("[data-presale-user-contributed]", presaleFormatLusdt(info[0], 2));
+        presaleSet("[data-presale-user-purchased]", presaleFormatLst(info[1], 2));
+        presaleSet("[data-presale-user-bonus]", presaleFormatLst(info[2], 2));
+        presaleSet("[data-presale-user-claimable]", presaleFormatLst(claimablePurchased, 2));
+        presaleSet("[data-presale-user-bonus-available]", presaleFormatLst(info[6], 2));
+      }
+    } else {
+      presaleSet("[data-presale-lusdt-balance]", "Connect wallet");
+      presaleSet("[data-presale-user-contributed]", "--");
+      presaleSet("[data-presale-user-purchased]", "--");
+      presaleSet("[data-presale-user-bonus]", "--");
+      presaleSet("[data-presale-user-claimable]", "--");
+      presaleSet("[data-presale-user-bonus-available]", "--");
+    }
+
+    await presaleUpdateQuote();
+  } catch (err) {
+    console.error(err);
+    presaleSet("[data-presale-status]", "RPC unavailable");
+    presaleLog("[data-presale-log]", err?.message || "Could not load presale data.", "warn");
+  }
+}
+
+async function presaleBuy() {
+  try {
+    const raw = document.querySelector("[data-presale-amount]")?.value || "";
+    const amount = presaleParseLusdt(raw);
+    if (amount < 10_000000n) throw new Error("Minimum buy is 10 LUSDT.");
+
+    const signer = await presaleSigner();
+    const buyer = await signer.getAddress();
+    const read = presaleContract();
+    const active = await read.isSaleActive();
+    if (!active) throw new Error("Sale is not active yet.");
+
+    const already = await read.contributedLUSDT(buyer).catch(() => 0n);
+    if (BigInt(already || 0) + amount > LUST_PRESALE_MAX_WALLET) throw new Error("Maximum per wallet is 500 LUSDT.");
+
+    const token = presaleLusdt(signer);
+    const allowance = await token.allowance(buyer, LUST_PRESALE_ADDRESS);
+    if (allowance < amount) {
+      presaleLog("[data-presale-action-log]", "Approval needed. Confirm LUSDT approval in your wallet...");
+      const approveTx = await token.approve(LUST_PRESALE_ADDRESS, amount);
+      presaleLog("[data-presale-action-log]", `Approval sent: ${approveTx.hash}. Waiting confirmation...`);
+      await approveTx.wait();
+    }
+
+    presaleLog("[data-presale-action-log]", "Opening buy confirmation in your wallet...");
+    const tx = await presaleContract(signer).buy(amount);
+    presaleLog("[data-presale-action-log]", `Buy sent: ${tx.hash}. Waiting confirmation...`);
+    await tx.wait();
+    presaleLog("[data-presale-action-log]", `Genesis LST purchase confirmed: ${tx.hash}`, "ok");
+    await presaleUpdateAll();
+  } catch (err) {
+    console.error(err);
+    presaleLog("[data-presale-action-log]", err?.shortMessage || err?.message || "Buy failed or was rejected.", "warn");
+  }
+}
+
+async function presaleClaimPurchased() {
+  try {
+    const signer = await presaleSigner();
+    presaleLog("[data-presale-action-log]", "Opening purchased LST claim in your wallet...");
+    const tx = await presaleContract(signer).claimPurchased();
+    presaleLog("[data-presale-action-log]", `Claim sent: ${tx.hash}. Waiting confirmation...`);
+    await tx.wait();
+    presaleLog("[data-presale-action-log]", `Purchased LST claimed: ${tx.hash}`, "ok");
+    await presaleUpdateAll();
+  } catch (err) {
+    console.error(err);
+    presaleLog("[data-presale-action-log]", err?.shortMessage || err?.message || "Claim failed or nothing is available.", "warn");
+  }
+}
+
+async function presaleClaimBonus() {
+  try {
+    const signer = await presaleSigner();
+    presaleLog("[data-presale-action-log]", "Opening bonus claim in your wallet...");
+    const tx = await presaleContract(signer).claimBonus();
+    presaleLog("[data-presale-action-log]", `Bonus claim sent: ${tx.hash}. Waiting confirmation...`);
+    await tx.wait();
+    presaleLog("[data-presale-action-log]", `Bonus claimed: ${tx.hash}`, "ok");
+    await presaleUpdateAll();
+  } catch (err) {
+    console.error(err);
+    presaleLog("[data-presale-action-log]", err?.shortMessage || err?.message || "Bonus is not available yet.", "warn");
+  }
+}
+
+async function presaleRefund() {
+  try {
+    const signer = await presaleSigner();
+    const canRefund = await presaleContract().isRefundAvailable();
+    if (!canRefund) throw new Error("Refund is not available by contract rule right now.");
+    presaleLog("[data-presale-action-log]", "Opening refund confirmation in your wallet...");
+    const tx = await presaleContract(signer).refund();
+    presaleLog("[data-presale-action-log]", `Refund sent: ${tx.hash}. Waiting confirmation...`);
+    await tx.wait();
+    presaleLog("[data-presale-action-log]", `LUSDT refunded: ${tx.hash}`, "ok");
+    await presaleUpdateAll();
+  } catch (err) {
+    console.error(err);
+    presaleLog("[data-presale-action-log]", err?.shortMessage || err?.message || "Refund failed or is not available.", "warn");
+  }
+}
+
+async function presaleUseMax() {
+  try {
+    const signer = await presaleSigner();
+    const address = await signer.getAddress();
+    const [balance, contributed] = await Promise.all([
+      presaleLusdt().balanceOf(address),
+      presaleContract().contributedLUSDT(address).catch(() => 0n)
+    ]);
+    const remainingWallet = LUST_PRESALE_MAX_WALLET > BigInt(contributed || 0) ? LUST_PRESALE_MAX_WALLET - BigInt(contributed || 0) : 0n;
+    const remainingHardcap = LUST_PRESALE_HARDCAP > presaleState.raised ? LUST_PRESALE_HARDCAP - presaleState.raised : 0n;
+    const max = [BigInt(balance || 0), remainingWallet, remainingHardcap].reduce((a, b) => a < b ? a : b);
+    document.querySelector("[data-presale-amount]").value = presaleFormat(max, 6, 6);
+    await presaleUpdateQuote();
+  } catch (err) {
+    presaleLog("[data-presale-action-log]", err?.message || "Could not read max LUSDT.", "warn");
+  }
+}
+
+function wireLUSTPresale() {
+  if (!presaleHasPage()) return;
+  document.querySelector("[data-presale-refresh]")?.addEventListener("click", presaleUpdateAll);
+  document.querySelector("[data-presale-amount]")?.addEventListener("input", () => setTimeout(presaleUpdateQuote, 80));
+  document.querySelector("[data-presale-buy]")?.addEventListener("click", presaleBuy);
+  document.querySelector("[data-presale-claim]")?.addEventListener("click", presaleClaimPurchased);
+  document.querySelector("[data-presale-claim-bonus]")?.addEventListener("click", presaleClaimBonus);
+  document.querySelector("[data-presale-refund]")?.addEventListener("click", presaleRefund);
+  document.querySelector("[data-presale-max]")?.addEventListener("click", presaleUseMax);
+  document.addEventListener("click", (event) => {
+    if (event.target.closest("[data-connect-wallet]")) {
+      setTimeout(presaleUpdateAll, 1200);
+      setTimeout(presaleUpdateAll, 2500);
+    }
+  });
+  presaleUpdateAll();
+  setInterval(() => presaleRenderCountdown(presaleState.targetCountdown), 1000);
+  setInterval(presaleUpdateAll, 25000);
+}
+
+window.lustPresale = {
+  address: LUST_PRESALE_ADDRESS,
+  refresh: presaleUpdateAll
+};
+
+wireLUSTPresale();

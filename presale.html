@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LUST Genesis Presale | LUST Platform</title>
+  <meta name="description" content="LUST Genesis Liquidity Event: transparent LUSDT presale created to form the first WLST/LUSDT liquidity pool." />
+  <link rel="icon" href="./assets/favicon.ico">
+  <link rel="icon" type="image/png" href="./assets/favicon.png">
+  <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="./styles.css?v20260615-presale-v1" />
+</head>
+<body>
+<div class="promo-bar">LUST Genesis Liquidity Event · Either liquidity is created, or your LUSDT comes back.</div>
+<header class="topbar">
+  <a class="brand" href="./bridge.html">
+    <div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div>
+    <div>
+      <strong>LUST</strong>
+      <span>Platform</span>
+    </div>
+  </a>
+
+  <nav class="nav">
+      <a class="" href="./bridge.html">Bridge</a>
+      <a class="active" href="./presale.html">Presale</a>
+      <a class="" href="./mining.html">Mining</a>
+      <a class="" href="./swap.html">Swap</a>
+      <a class="" href="./staking.html">Staking</a>
+      <a class="" href="./liquidity.html">Liquidity</a>
+      <a class="" href="./p2p.html">P2P</a>
+      <a class="" href="./nfts.html">NFTs</a>
+      <a class="" href="./factory.html">Factory</a>
+      <a class="" href="./explorer.html">Explorer</a>
+      <a class="" href="./docs.html">Docs</a>
+  </nav>
+
+  <div class="actions">
+    <button class="btn connect-btn" type="button" data-connect-wallet aria-label="Connect wallet">
+      <div class="connect-icon">◫</div>
+      <div class="connect-copy">
+        <strong>Connect wallet</strong>
+        <span>Wallet not connected</span>
+      </div>
+      <div class="connect-caret">⌄</div>
+    </button>
+  </div>
+</header>
+
+<main class="presale-page" data-presale-page>
+  <section class="presale-hero">
+    <div class="presale-hero-copy">
+      <small class="presale-kicker">Genesis liquidity event</small>
+      <h1>The first WLST/LUSDT liquidity campaign.</h1>
+      <p>Buy LST with LUSDT before the public liquidity launch. 100% of net LUSDT raised is designed to create the initial WLST/LUSDT pool. If the softcap is not reached, or liquidity is not created, participants can refund their LUSDT directly from the contract.</p>
+      <div class="presale-hero-actions">
+        <a class="btn primary" href="https://explorer.lustchain.org/address/0x6AD87104DDC8F7CEd9267F115EE107F44AA9f936" target="_blank" rel="noreferrer">Verified contract</a>
+        <button class="btn" type="button" data-presale-refresh>Refresh on-chain data</button>
+      </div>
+      <div class="presale-warning">No profit promise. This event is focused on transparent liquidity formation for LUST Chain.</div>
+    </div>
+
+    <aside class="presale-countdown-card">
+      <small>Status</small>
+      <strong data-presale-status>Loading...</strong>
+      <div class="presale-countdown" data-presale-countdown>
+        <div><b>--</b><span>days</span></div>
+        <div><b>--</b><span>hours</span></div>
+        <div><b>--</b><span>mins</span></div>
+        <div><b>--</b><span>secs</span></div>
+      </div>
+      <div class="presale-log" data-presale-log>Connecting to LUST Chain RPC...</div>
+    </aside>
+  </section>
+
+  <section class="presale-live-grid">
+    <div class="presale-metric"><small>Genesis price</small><strong>1 LST = 0.10 LUSDT</strong><span>1 LUSDT = 10 LST</span></div>
+    <div class="presale-metric"><small>Duration</small><strong>60 days</strong><span>Countdown controlled by contract</span></div>
+    <div class="presale-metric"><small>Buy fee</small><strong>0.20%</strong><span>Withdrawable only after liquidity</span></div>
+    <div class="presale-metric"><small>Buyer protection</small><strong>Refund path</strong><span>If softcap or liquidity fails</span></div>
+  </section>
+
+  <section class="presale-layout">
+    <section class="presale-card presale-buy-card">
+      <div class="presale-card-head">
+        <div>
+          <small>Participate</small>
+          <h2>Buy Genesis LST</h2>
+        </div>
+        <span data-presale-bonus-chip>Bonus loading...</span>
+      </div>
+
+      <div class="presale-input-box">
+        <div class="presale-input-top"><label>LUSDT amount</label><button type="button" data-presale-max>Use max</button></div>
+        <div class="presale-input-row">
+          <input class="presale-amount" inputmode="decimal" placeholder="0.0" data-presale-amount />
+          <div class="presale-token-pill"><img src="./assets/lusdt-logo.png" alt="LUSDT">LUSDT</div>
+        </div>
+        <div class="presale-mini-row"><span>Your LUSDT balance</span><strong data-presale-lusdt-balance>--</strong></div>
+      </div>
+
+      <div class="presale-quote-grid">
+        <div><span>Purchased LST</span><strong data-presale-quote-lst>--</strong></div>
+        <div><span>Genesis bonus</span><strong data-presale-quote-bonus>--</strong></div>
+        <div><span>Fee 0.20%</span><strong data-presale-quote-fee>--</strong></div>
+        <div><span>Net to liquidity</span><strong data-presale-quote-net>--</strong></div>
+      </div>
+
+      <button class="btn primary presale-main-btn" type="button" data-presale-buy>Connect wallet / Buy LST</button>
+      <div class="presale-log" data-presale-action-log>Buy window opens only when the contract start time is reached.</div>
+    </section>
+
+    <aside class="presale-side">
+      <section class="presale-card">
+        <div class="presale-card-head compact">
+          <div>
+            <small>Sale progress</small>
+            <h3>Liquidity goal</h3>
+          </div>
+        </div>
+        <div class="presale-progress-wrap">
+          <div class="presale-progress-bar"><i data-presale-progress-bar></i></div>
+          <div class="presale-progress-label"><span data-presale-raised>--</span><strong data-presale-progress-pct>--</strong></div>
+        </div>
+        <div class="presale-terms-list">
+          <div><span>Softcap</span><strong>5,000 LUSDT</strong></div>
+          <div><span>Main target</span><strong>15,000 LUSDT</strong></div>
+          <div><span>Hardcap</span><strong>30,000 LUSDT</strong></div>
+          <div><span>Net for liquidity</span><strong data-presale-net-liquidity>--</strong></div>
+          <div><span>LST sold</span><strong data-presale-sold-lst>--</strong></div>
+          <div><span>Future bonus</span><strong data-presale-bonus-total>--</strong></div>
+        </div>
+      </section>
+
+      <section class="presale-card">
+        <div class="presale-card-head compact">
+          <div>
+            <small>Your position</small>
+            <h3>Claim / Refund</h3>
+          </div>
+        </div>
+        <div class="presale-terms-list">
+          <div><span>Your contributed</span><strong data-presale-user-contributed>--</strong></div>
+          <div><span>Your LST</span><strong data-presale-user-purchased>--</strong></div>
+          <div><span>Your bonus</span><strong data-presale-user-bonus>--</strong></div>
+          <div><span>Claimable now</span><strong data-presale-user-claimable>--</strong></div>
+          <div><span>Bonus available</span><strong data-presale-user-bonus-available>--</strong></div>
+        </div>
+        <div class="presale-actions-grid">
+          <button class="btn primary" type="button" data-presale-claim>Claim LST</button>
+          <button class="btn" type="button" data-presale-claim-bonus>Claim bonus</button>
+          <button class="btn" type="button" data-presale-refund>Refund LUSDT</button>
+        </div>
+      </section>
+    </aside>
+  </section>
+
+  <section class="presale-info-grid">
+    <article class="presale-card">
+      <small>Transparent rules</small>
+      <h3>Either liquidity, or refund.</h3>
+      <p>The contract keeps the LUSDT until the sale ends. If the softcap is not reached, refund is available. If the softcap is reached but liquidity is not created during the grace period, refund is also available.</p>
+    </article>
+    <article class="presale-card">
+      <small>Liquidity first</small>
+      <h3>100% net LUSDT to WLST/LUSDT.</h3>
+      <p>The sale was created to form the first WLST/LUSDT pool. The 0.20% fee can only be withdrawn after liquidity has been created.</p>
+    </article>
+    <article class="presale-card">
+      <small>Bonus schedule</small>
+      <h3>Early participants receive more.</h3>
+      <p>Days 1–15 receive 20% bonus, days 16–30 receive 15%, and days 31–60 receive 10%. Bonus unlocks after liquidity in 3 stages: 6, 9 and 12 months.</p>
+    </article>
+  </section>
+
+  <section class="presale-contract-strip">
+    <a href="https://explorer.lustchain.org/address/0x6AD87104DDC8F7CEd9267F115EE107F44AA9f936" target="_blank" rel="noreferrer"><small>Presale</small><strong>0x6AD8...f936</strong></a>
+    <a href="https://explorer.lustchain.org/address/0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE" target="_blank" rel="noreferrer"><small>LUSDT</small><strong>0x1E86...C19AE</strong></a>
+    <a href="https://explorer.lustchain.org/address/0xF8E57f2ee77B13F6673155308C9c431Ce9F90D86" target="_blank" rel="noreferrer"><small>WLST</small><strong>0xF8E5...0D86</strong></a>
+    <a href="https://explorer.lustchain.org/address/0x62883a46b045Cf1811DfDBec3FE0EAdc78f888f0" target="_blank" rel="noreferrer"><small>Router</small><strong>0x6288...88f0</strong></a>
+  </section>
+</main>
+
+<footer class="footer">
+  <strong>LUST Chain</strong>
+  <span>Chain ID 6923 · LST · RPC https://rpc.lustchain.org</span>
+</footer>
+
+<button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
+<script type="module" src="./app.js?v20260615-presale-v1"></script>
+</body>
+</html>
