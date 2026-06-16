@@ -1,20 +1,21 @@
-LUST PUBLIC MINER PACKAGES - V7A21 FINAL
+LUST Chain V7A21 official miner checksums
 
-Windows ZIP:
-filename: lust-v7a21-miner-windows-latest-snapshot.zip
-sha256: 78081eec5a77c7a57d2df32cd1d72fce924c95bd854035d100d36152b4801a43
-url: https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip
-sha256_url: https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip.sha256
+Windows latest-snapshot package:
+33490913d7bc69cce039e97070e8d761c9ecd1f80f04bdfcb97da8eab2ec1945  lust-v7a21-miner-windows-latest-snapshot.zip
+https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip
+https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip.sha256
 
-Ubuntu/Linux TGZ:
-filename: lust-v7a21-miner-linux-latest-snapshot.tar.gz
-sha256: 11ac48e722f562eb15d63cfba4156dc3b6a10b3ca2c3de2f7b94f580b411a554
-url: https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz
-sha256_url: https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz.sha256
+Ubuntu / Linux latest-snapshot package:
+87951b22068eeb382a3e27bb2f86b79cac92d33dfe121efa603cfecd40de46fd  lust-v7a21-miner-linux-latest-snapshot.tar.gz
+https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz
+https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz.sha256
 
-Notes:
-- Clean public package.
-- Mining page uses only V7A21 download filenames.
-- Registered public miners stay eligible while the miner is running.
-- Public producers can receive priority fees when they produce transaction blocks.
-- Always verify SHA256 before running.
+Package: V7A21 complete miner package
+
+Reward summary:
+- 0 public miners: official fallback producers keep the chain alive.
+- 1 public miner active: the public producer receives 2 LST per block it produces.
+- 2+ public miners active: producer receives 1.4 LST and active public miners share 0.6 LST.
+- Official fallback producers are excluded from the public committee share while public miners are active.
+
+The mining page reads the .sha256 files directly from the official download server to avoid stale checksums after package corrections.
