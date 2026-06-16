@@ -201,3 +201,23 @@
   .pioneer-rules-grid{grid-template-columns:1fr}
   .pioneer-submit-row .btn{width:100%}
 }
+
+/* Embedded official mining faucet on Pioneer page */
+.pioneer-faucet-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}
+.pioneer-faucet-heading h3{margin:2px 0 6px}
+.pioneer-faucet-heading p{margin:0;max-width:720px;color:var(--muted);font-size:14px;line-height:1.55}
+.pioneer-faucet-badge{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;border:1px solid rgba(247,3,117,.5);border-radius:999px;background:rgba(247,3,117,.08);color:var(--pink2);font-size:10px;font-weight:950;letter-spacing:.1em;text-transform:uppercase;padding:9px 12px}
+.pioneer-faucet-panel{border:2px solid rgba(247,3,117,.32);border-radius:17px;background:rgba(247,3,117,.035);padding:16px}
+.pioneer-faucet-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.pioneer-faucet-stats>div{border:1px solid rgba(255,255,255,.14);border-radius:12px;background:#08010a;padding:12px;min-width:0}
+.pioneer-faucet-stats span{display:block;color:var(--muted);font-size:10px;font-weight:850;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.pioneer-faucet-stats strong{display:block;color:#fff;font-size:14px;line-height:1.35;overflow-wrap:anywhere}
+.pioneer-faucet-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:13px}
+.pioneer-faucet-actions .btn{font-size:12px;padding:10px 13px}
+.pioneer-faucet-log{margin-top:12px;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:#08010a;color:var(--muted);font-size:12px;line-height:1.5;padding:11px 13px}
+.pioneer-faucet-log[data-tone="ok"]{color:var(--ok);border-color:rgba(78,255,190,.35)}
+.pioneer-faucet-log[data-tone="warn"]{color:#ffd17a;border-color:rgba(255,209,122,.35)}
+.pioneer-faucet-rules{display:flex;gap:7px;align-items:flex-start;margin-top:11px;color:var(--muted);font-size:11px;line-height:1.5}
+.pioneer-faucet-rules strong{color:#fff;white-space:nowrap}
+@media(max-width:900px){.pioneer-faucet-stats{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.pioneer-faucet-heading{display:block}.pioneer-faucet-badge{margin-top:10px}.pioneer-faucet-stats{grid-template-columns:1fr}.pioneer-faucet-actions .btn{width:100%}.pioneer-faucet-rules{display:block}.pioneer-faucet-rules strong{display:block;margin-bottom:3px}}
