@@ -238,9 +238,9 @@
           <small>Windows · V7A21 · Recommended</small>
           <h3>Windows one-click miner</h3>
           <p>Extract the ZIP and double-click <strong>START-LUST-MINER-WINDOWS.bat</strong>. It opens the miner plus a second <strong>LUST TX-FEED V3</strong> window. Keep both windows open.</p>
-          <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip?v=20260616-v7a21-full" target="_blank" rel="noreferrer">Download V7A21 Windows ZIP</a>
+          <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip?v=20260616-v7a21-stable-1828" target="_blank" rel="noreferrer">Download V7A21 Windows ZIP</a>
         </div>
-        <div class="sha-box"><span>SHA256</span><code id="windowsMinerSha">Loading official checksum…</code><a href="https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip.sha256?v=20260616-v7a21-full" target="_blank" rel="noreferrer">Open .sha256</a></div>
+        <div class="sha-box"><span>SHA256</span><code id="windowsMinerSha">Loading official checksum…</code><a href="https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip.sha256?v=20260616-v7a21-stable-1828" target="_blank" rel="noreferrer">Open .sha256</a></div>
       </div>
 
       <div class="download-card">
@@ -249,14 +249,14 @@
           <small>Ubuntu / Linux · V7A21 · Advanced / Beta</small>
           <h3>Linux latest-snapshot miner</h3>
           <p>For clean Ubuntu/VPS users. Extract the TGZ, give permission and run <strong>./START-LUST-MINER-LINUX.sh</strong>. TX-FEED V3 starts in background and logs to <strong>~/LUST-Miner/logs/txfeed-v3.log</strong>. If you already run INRI or another geth on the same Ubuntu/WSL, use Windows miner or advanced ports.</p>
-          <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz?v=20260616-v7a21-full" target="_blank" rel="noreferrer">Download V7A21 Linux TGZ</a>
+          <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz?v=20260616-v7a21-stable-1828" target="_blank" rel="noreferrer">Download V7A21 Linux TGZ</a>
         </div>
-        <div class="sha-box"><span>SHA256</span><code id="linuxMinerSha">Loading official checksum…</code><a href="https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz.sha256?v=20260616-v7a21-full" target="_blank" rel="noreferrer">Open .sha256</a></div>
+        <div class="sha-box"><span>SHA256</span><code id="linuxMinerSha">Loading official checksum…</code><a href="https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz.sha256?v=20260616-v7a21-stable-1828" target="_blank" rel="noreferrer">Open .sha256</a></div>
       </div>
     </div>
 
     <div class="hero-buttons">
-      <a class="btn" href="./miner-package-hashes.txt?v=20260616-v7a21-full" target="_blank" rel="noreferrer">Open official SHA256 file</a>
+      <a class="btn" href="./miner-package-hashes.txt?v=20260616-v7a21-stable-1828" target="_blank" rel="noreferrer">Open official SHA256 file</a>
     </div>
   </section>
 
@@ -391,8 +391,8 @@ tail -f ~/LUST-Miner/logs/txfeed-v3.log
 <script>
 (async () => {
   const files = [
-    ["windowsMinerSha", "https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip.sha256?v=20260616-v7a21-full"],
-    ["linuxMinerSha", "https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz.sha256?v=20260616-v7a21-full"]
+    ["windowsMinerSha", "https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip.sha256?v=20260616-v7a21-stable-1828"],
+    ["linuxMinerSha", "https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz.sha256?v=20260616-v7a21-stable-1828"]
   ];
   for (const [id, url] of files) {
     const el = document.getElementById(id);
@@ -408,6 +408,6 @@ tail -f ~/LUST-Miner/logs/txfeed-v3.log
   }
 })();
 </script>
-<script type="module" src="./app.js?v20260616-v7a21-mining-final"></script>
+<script type="module" src="./app.js?v20260616-v7a21-stable-1828"></script>
 </body>
 </html>

@@ -1,16 +1,17 @@
 LUST Chain V7A21 official miner checksums
 
 Windows latest-snapshot package:
-33490913d7bc69cce039e97070e8d761c9ecd1f80f04bdfcb97da8eab2ec1945  lust-v7a21-miner-windows-latest-snapshot.zip
+e08eac670edf840dc72fb769def053b85202d4cfd50c9ec40e6a99704429cda6  lust-v7a21-miner-windows-latest-snapshot.zip
 https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip
 https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip.sha256
 
 Ubuntu / Linux latest-snapshot package:
-87951b22068eeb382a3e27bb2f86b79cac92d33dfe121efa603cfecd40de46fd  lust-v7a21-miner-linux-latest-snapshot.tar.gz
+f0e745abfb5d435219a5aa64c262f38e1036401198a692ce2811ac631c31b5be  lust-v7a21-miner-linux-latest-snapshot.tar.gz
 https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz
 https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz.sha256
 
 Package: V7A21 complete miner package
+Core binary logic: V7A21 final consensus fix
 
 Reward summary:
 - 0 public miners: official fallback producers keep the chain alive.
