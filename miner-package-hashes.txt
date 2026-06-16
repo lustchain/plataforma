@@ -1,18 +1,20 @@
-LUST PUBLIC MINER PACKAGES - V7A20 FINAL
+LUST PUBLIC MINER PACKAGES - V7A21 FINAL
 
 Windows ZIP:
-filename: lust-v7a20-miner-windows-latest-snapshot.zip
-sha256: 404d0a07b0ce5f61d424299561dcc5c9794164b77a3cfb4c2860a40229b74e1a
-url: https://downloads.lustchain.org/lust-v7a20-miner-windows-latest-snapshot.zip
-sha256_url: https://downloads.lustchain.org/lust-v7a20-miner-windows-latest-snapshot.zip.sha256
+filename: lust-v7a21-miner-windows-latest-snapshot.zip
+sha256: 78081eec5a77c7a57d2df32cd1d72fce924c95bd854035d100d36152b4801a43
+url: https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip
+sha256_url: https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip.sha256
 
 Ubuntu/Linux TGZ:
-filename: lust-v7a20-miner-linux-latest-snapshot.tar.gz
-sha256: 96ac24337381f4394416f2100577e8815540a35d9733b92760fd0940bbd81186
-url: https://downloads.lustchain.org/lust-v7a20-miner-linux-latest-snapshot.tar.gz
-sha256_url: https://downloads.lustchain.org/lust-v7a20-miner-linux-latest-snapshot.tar.gz.sha256
+filename: lust-v7a21-miner-linux-latest-snapshot.tar.gz
+sha256: 11ac48e722f562eb15d63cfba4156dc3b6a10b3ca2c3de2f7b94f580b411a554
+url: https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz
+sha256_url: https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz.sha256
 
 Notes:
-- V7A20 keeps registered public miners eligible while the miner is running.
-- V7A20 removes the official tx-first override so public producers can receive priority fees when they produce transaction blocks.
+- Clean public package.
+- Mining page uses only V7A21 download filenames.
+- Registered public miners stay eligible while the miner is running.
+- Public producers can receive priority fees when they produce transaction blocks.
 - Always verify SHA256 before running.
