@@ -1942,3 +1942,29 @@ select.input{appearance:none;background:#09020d;color:#fff}
   from{opacity:0;transform:translateY(-4px)}
   to{opacity:1;transform:translateY(0)}
 }
+
+/* NFT MENU STABLE HOVER v20260616-hover-v5
+   Desktop: opens on hover and stays open while the pointer crosses into the menu.
+   Mobile/touch: opens only by tapping NFTs. */
+@media (hover:hover) and (pointer:fine){
+  .nav-nft-menu{position:relative}
+  .nav-nft-menu > summary{cursor:default}
+  .nav-nft-dropdown{
+    top:calc(100% - 1px) !important;
+    margin-top:0 !important;
+  }
+  /* Invisible hover bridge between NFTs and the dropdown. */
+  .nav-nft-menu[open]::after{
+    content:"";
+    position:absolute;
+    z-index:199;
+    left:-18px;
+    right:-18px;
+    top:100%;
+    height:14px;
+    background:transparent;
+  }
+  .nav-nft-menu[open] > .nav-nft-dropdown{
+    z-index:200;
+  }
+}
