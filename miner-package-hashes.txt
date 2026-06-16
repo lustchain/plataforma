@@ -1,20 +1,18 @@
-LUST Chain public miner packages — V7A20 final test
+LUST PUBLIC MINER PACKAGES - V7A20 FINAL
 
-Windows ZIP
-URL: https://downloads.lustchain.org/lust-v7a19-miner-windows-latest-snapshot.zip
-SHA256: 404d0a07b0ce5f61d424299561dcc5c9794164b77a3cfb4c2860a40229b74e1a
+Windows ZIP:
+filename: lust-v7a20-miner-windows-latest-snapshot.zip
+sha256: 404d0a07b0ce5f61d424299561dcc5c9794164b77a3cfb4c2860a40229b74e1a
+url: https://downloads.lustchain.org/lust-v7a20-miner-windows-latest-snapshot.zip
+sha256_url: https://downloads.lustchain.org/lust-v7a20-miner-windows-latest-snapshot.zip.sha256
 
-Ubuntu/Linux TGZ
-URL: https://downloads.lustchain.org/lust-v7a19-miner-linux-latest-snapshot.tar.gz
-SHA256: 96ac24337381f4394416f2100577e8815540a35d9733b92760fd0940bbd81186
+Ubuntu/Linux TGZ:
+filename: lust-v7a20-miner-linux-latest-snapshot.tar.gz
+sha256: 96ac24337381f4394416f2100577e8815540a35d9733b92760fd0940bbd81186
+url: https://downloads.lustchain.org/lust-v7a20-miner-linux-latest-snapshot.tar.gz
+sha256_url: https://downloads.lustchain.org/lust-v7a20-miner-linux-latest-snapshot.tar.gz.sha256
 
-Consensus/client binary V7A20
-Linux geth SHA256: 7e90d0d81deaa20bc4101bc18ed583ea2cd13b421d5042983c1b986448edb522
-Windows geth SHA256: c0ecf32fe52d5be18040c6d27aa4b3be6af831044cf215e4b4cb863960cd1c2b
-
-Reward behavior
-- No public miner active: official emergency producers keep the network running and receive 2 LST/block.
-- One public miner active: that public producer receives 2 LST/block.
-- Two or more public miners active: block producer receives 1.4 LST and other active public miners divide 0.6 LST.
-- Official bootstrap producers are excluded from the public 30% committee share while public miners are active.
-- Priority fees go to the real block producer; base fee is burned by EIP-1559.
+Notes:
+- V7A20 keeps registered public miners eligible while the miner is running.
+- V7A20 removes the official tx-first override so public producers can receive priority fees when they produce transaction blocks.
+- Always verify SHA256 before running.
