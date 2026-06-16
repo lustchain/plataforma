@@ -1,2 +1,9 @@
-Windows ZIP V7A19 SHA256 8eff7ae6f2a60df1d3ea2ee4fd2223ef71b6eddd0a597d8237f12059529a4958
-Linux TGZ V7A19 SHA256 37c99b86f5aa93bef238946d8a60c9d96b17d5c9d7e963a91e928773d01ed1d6
+LUST Chain V7A19 official miner checksums
+
+Windows live checksum:
+https://downloads.lustchain.org/lust-v7a19-miner-windows-latest-snapshot.zip.sha256
+
+Ubuntu / Linux live checksum:
+https://downloads.lustchain.org/lust-v7a19-miner-linux-latest-snapshot.tar.gz.sha256
+
+The mining page reads both checksum files directly from the official download server to avoid showing an outdated hash after a package correction.
