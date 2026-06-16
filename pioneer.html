@@ -8,8 +8,8 @@
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css?v=20260616-nft-hover-v5" />
-  <link rel="stylesheet" href="./pioneer.css?v=20260616-pioneer-faucet-v2" />
+  <link rel="stylesheet" href="./styles.css?v=20260617-faucet-page-v1" />
+  <link rel="stylesheet" href="./pioneer.css?v=20260617-dedicated-faucet-v1" />
 </head>
 <body data-pioneer-page>
 <div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
@@ -37,6 +37,7 @@
 
           </details>
     <a href="./mining.html">Mining</a>
+      <a class="" href="./faucet.html">Faucet</a>
     <a href="./staking.html">Staking</a>
     <a href="./factory.html">Factory</a>
     <a href="./explorer.html">Explorer</a>
@@ -62,7 +63,7 @@
       </p>
       <div class="pioneer-hero-actions">
         <a class="btn primary" href="#mint">Mint your Pioneer NFT</a>
-        <a class="btn" href="./mining.html#faucet">Get 0.01 LST for gas</a>
+        <a class="btn" href="./faucet.html">Get 0.01 LST for gas</a>
         <a class="btn" href="https://explorer.lustchain.org/address/0xCb207489E4dbd6D4e3bf75CA947D0C43d621Fef1" target="_blank" rel="noopener">View contract</a>
       </div>
       <div class="pioneer-contract-line">
@@ -104,40 +105,13 @@
       </div>
 
       <div class="pioneer-step-list">
-        <article class="pioneer-step pioneer-faucet-step" id="pioneer-faucet">
+        <article class="pioneer-step" id="pioneer-faucet">
           <div class="pioneer-step-number">1</div>
           <div class="pioneer-step-body">
-            <div class="pioneer-faucet-heading">
-              <div>
-                <h3>Claim 0.01 LST directly here</h3>
-                <p>This is the same official faucet used on the Mining page. It can be claimed only once per wallet, forever.</p>
-              </div>
-              <span class="pioneer-faucet-badge">Existing official faucet</span>
-            </div>
-
-            <div class="pioneer-faucet-panel">
-              <div class="pioneer-faucet-stats">
-                <div><span>Claim amount</span><strong data-faucet-amount>0.01 LST</strong></div>
-                <div><span>Faucet balance</span><strong data-faucet-balance>Checking...</strong></div>
-                <div><span>Your wallet balance</span><strong data-faucet-wallet-balance>Connect wallet</strong></div>
-                <div><span>Eligibility</span><strong data-faucet-eligibility>Connect wallet</strong></div>
-              </div>
-
-              <div class="pioneer-faucet-actions">
-                <button class="btn primary" type="button" data-claim-faucet>Claim 0.01 LST</button>
-                <button class="btn" type="button" data-connect-wallet>Connect wallet</button>
-                <button class="btn" type="button" data-refresh-faucet>Refresh faucet</button>
-                <a class="btn" href="./mining.html#faucet">Open full Mining page</a>
-              </div>
-
-              <div class="pioneer-faucet-log" data-faucet-log>
-                Connect your wallet to check faucet eligibility.
-              </div>
-
-              <div class="pioneer-faucet-rules">
-                <strong>Important:</strong>
-                <span>one claim per wallet forever · only wallets below 0.02 LST are eligible · the faucet never asks for a seed phrase or private key.</span>
-              </div>
+            <h3>Get 0.01 LST on the Faucet page</h3>
+            <p>The official faucet is available on one dedicated page. Each wallet can claim only once, forever.</p>
+            <div class="pioneer-step-actions">
+              <a class="btn primary" href="./faucet.html">Open official Faucet</a>
             </div>
           </div>
         </article>
@@ -248,7 +222,7 @@
       <article><b>One participation</b><span>One wallet and one normalized X account hash can mint only once.</span></article>
       <article><b>Winning NFT lock</b><span>A rewarded NFT cannot be transferred until its reward has been claimed.</span></article>
       <article><b>No hidden admin choice</b><span>The owner cannot directly select the reward tier for a participant.</span></article>
-      <article><b>Existing faucet only</b><span>The campaign links to the current 0.01 LST mining faucet and creates no new faucet.</span></article>
+      <article><b>Existing faucet only</b><span>The campaign uses the existing official 0.01 LST faucet through its dedicated Faucet page.</span></article>
     </div>
   </section>
 </main>
@@ -272,7 +246,7 @@
 </footer>
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 <script src="./pioneer-config.js?v=20260616-pioneer-v1"></script>
-<script type="module" src="./app.js?v=20260616-pioneer-faucet-v2"></script>
+<script type="module" src="./app.js?v=20260617-dedicated-faucet-v1"></script>
 <script type="module" src="./pioneer.js?v=20260616-pioneer-v1"></script>
 <script src="./nft-menu.js?v=20260616-hover-v5"></script>
 </body>

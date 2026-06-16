@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Official Faucet | LUST Platform</title>
+  <meta name="description" content="Claim 0.01 LST once per wallet for the first LUST Chain network transaction." />
+  <link rel="icon" href="./assets/favicon.ico">
+  <link rel="icon" type="image/png" href="./assets/favicon.png">
+  <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="./styles.css?v=20260617-faucet-page-v1" />
+  <link rel="stylesheet" href="./faucet.css?v=20260617-faucet-page-v1" />
+</head>
+<body data-faucet-page>
+<div class="promo-bar">Official LUST Faucet · 0.01 LST · One claim per wallet forever.</div>
+<header class="topbar">
+  <a class="brand" href="./presale.html">
+    <div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div>
+    <div><strong>LUST</strong><span>Platform</span></div>
+  </a>
+  <nav class="nav">
+    <a href="./presale.html">Presale</a>
+    <a href="./bridge.html">Bridge</a>
+    <a href="./swap.html">Swap</a>
+    <a href="./p2p.html">P2P</a>
+    <details class="nav-nft-menu">
+      <summary>NFTs</summary>
+      <div class="nav-nft-dropdown" role="menu" aria-label="NFT collections">
+        <a href="./nfts.html" role="menuitem"><strong>LUST Rabbit Club</strong><span>Premium NFT collection</span></a>
+        <a href="./pioneer.html" role="menuitem"><strong>Pioneer Rewards</strong><span>Free reward campaign</span></a>
+      </div>
+    </details>
+    <a href="./mining.html">Mining</a>
+    <a class="active" href="./faucet.html">Faucet</a>
+    <a href="./staking.html">Staking</a>
+    <a href="./factory.html">Factory</a>
+    <a href="./explorer.html">Explorer</a>
+    <a href="./docs.html">Docs</a>
+  </nav>
+  <div class="actions">
+    <button class="btn connect-btn" type="button" data-connect-wallet aria-label="Connect wallet">
+      <div class="connect-icon">◫</div>
+      <div class="connect-copy"><strong>Connect wallet</strong><span>Wallet not connected</span></div>
+      <div class="connect-caret">⌄</div>
+    </button>
+  </div>
+</header>
+
+<main class="faucet-page">
+  <section class="faucet-hero">
+    <div class="faucet-hero-copy">
+      <div class="kicker">Official LUST Chain utility</div>
+      <h1>Get 0.01 LST for your first transaction.</h1>
+      <p>Use the official faucet when a new wallet has no LST for network gas. The same faucet can help with miner registration, Pioneer NFT minting or another first on-chain action.</p>
+      <div class="faucet-rule-banner"><strong>Important:</strong> each wallet can claim only once, forever.</div>
+      <div class="hero-buttons">
+        <button class="btn primary" type="button" data-connect-wallet>Connect wallet</button>
+        <button class="btn" type="button" data-add-lust-chain>Add LUST Chain</button>
+      </div>
+    </div>
+    <aside class="faucet-summary-card">
+      <small>Faucet rules</small>
+      <div><span>Claim amount</span><strong>0.01 LST</strong></div>
+      <div><span>Wallet limit</span><strong>One claim forever</strong></div>
+      <div><span>Balance rule</span><strong>Below 0.02 LST</strong></div>
+      <div><span>Network</span><strong>LUST Chain · 6923</strong></div>
+    </aside>
+  </section>
+
+  <section class="faucet-main-grid">
+    <section class="faucet-claim-card">
+      <div class="faucet-card-heading">
+        <div><small>Live eligibility</small><h2>Claim from the official faucet.</h2></div>
+        <span class="faucet-official-chip">Official</span>
+      </div>
+      <div class="faucet-status-grid">
+        <div><span>Claim amount</span><strong data-faucet-amount>0.01 LST</strong></div>
+        <div><span>Faucet balance</span><strong data-faucet-balance>Checking...</strong></div>
+        <div><span>Your wallet balance</span><strong data-faucet-wallet-balance>Connect wallet</strong></div>
+        <div><span>Eligibility</span><strong data-faucet-eligibility>Connect wallet</strong></div>
+      </div>
+      <div class="faucet-actions">
+        <button class="btn primary faucet-claim-button" type="button" data-claim-faucet>Claim 0.01 LST</button>
+        <button class="btn" type="button" data-refresh-faucet>Refresh status</button>
+      </div>
+      <div class="faucet-live-log" data-faucet-log>Connect your wallet to check faucet eligibility.</div>
+    </section>
+
+    <aside class="faucet-info-card">
+      <small>Before claiming</small>
+      <h2>Simple and safe.</h2>
+      <div class="faucet-info-list">
+        <div><b>1</b><span>Connect the wallet that needs initial network gas.</span></div>
+        <div><b>2</b><span>Confirm that it has not claimed before and holds less than 0.02 LST.</span></div>
+        <div><b>3</b><span>Claim 0.01 LST. The faucet never asks for a seed phrase or private key.</span></div>
+      </div>
+      <div class="faucet-security-note">The one-claim rule is permanent for each wallet. Creating a new dedicated page does not create a new faucet or reset prior claims.</div>
+    </aside>
+  </section>
+
+  <section class="faucet-use-grid">
+    <article><small>Mining</small><h3>Register a miner wallet</h3><p>Use the LST for the on-chain registration gas.</p><a href="./mining.html">Open Mining</a></article>
+    <article><small>Pioneer Rewards</small><h3>Mint a promotional NFT</h3><p>Use the same initial gas claim before the Pioneer mint.</p><a href="./pioneer.html">Open Pioneer Rewards</a></article>
+    <article><small>Network</small><h3>Make a first transaction</h3><p>Add LUST Chain and keep the remaining balance for network fees.</p><button type="button" data-add-lust-chain>Add LUST Chain</button></article>
+  </section>
+</main>
+
+<footer class="footer"><strong>LUST Chain</strong><span>Chain ID 6923 · LST · RPC https://rpc.lustchain.org</span></footer>
+<button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
+<script type="module" src="./app.js?v=20260617-dedicated-faucet-v1"></script>
+<script src="./nft-menu.js?v=20260616-hover-v5"></script>
+</body>
+</html>

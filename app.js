@@ -640,7 +640,7 @@ async function updateFaucetPanel() {
     if (!address) {
       setFaucetLog("Connect your wallet to check faucet eligibility.", "");
     } else if (json.eligible) {
-      setFaucetLog("Your wallet can claim 0.01 LST for miner registration gas.", "ok");
+      setFaucetLog("Your wallet can claim 0.01 LST for its first LUST Chain transaction.", "ok");
     } else {
       setFaucetLog(json.reason || "This wallet is not eligible for the faucet.", "warn");
     }
@@ -655,7 +655,7 @@ async function claimLustFaucet() {
     const eth = getInjectedEthereum();
     if (!eth) throw new Error("MetaMask or injected wallet not found.");
 
-    setFaucetLog("Checking wallet and faucet eligibility...", "");
+    setFaucetLog("Checking wallet and official faucet eligibility...", "");
     const account = await getWalletAccount();
     await addLustChainToWallet();
 

@@ -8,7 +8,7 @@
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css?v=20260616-nft-hover-v5" />
+  <link rel="stylesheet" href="./styles.css?v=20260617-faucet-page-v1" />
 </head>
 <body>
 <div class="promo-bar">External mining test V7A21 is ready — official public mining opens after liquidity and final validation.</div>
@@ -39,6 +39,7 @@
 
             </details>
       <a class="active" href="./mining.html">Mining</a>
+      <a class="" href="./faucet.html">Faucet</a>
       <a class="" href="./staking.html">Staking</a>
       <a class="" href="./factory.html">Factory</a>
       <a class="" href="./explorer.html">Explorer</a>
@@ -67,6 +68,7 @@
         <button class="btn primary" type="button" data-connect-wallet>Connect wallet</button>
         <button class="btn" type="button" data-add-lust-chain>Add LUST Chain</button>
         <a class="btn" href="#downloads">Download miner</a>
+        <a class="btn" href="./faucet.html">Get 0.01 LST</a>
       </div>
       <div class="security-strip">
         <span>✓ No seed phrase</span>
@@ -186,51 +188,20 @@
           <div><span>Value</span><code>0 LST</code></div>
           <div><span>Meaning</span><code>LQCR_V1</code></div>
         </div>
-        <p class="mini-copy">You only pay the LUST network gas fee. If your wallet has no LST, use the official faucet when it is enabled.</p>
+        <p class="mini-copy">You only pay the LUST network gas fee. If your wallet has no LST, use the dedicated <a href="./faucet.html">official Faucet page</a> first.</p>
       </div>
     </div>
   </section>
-
-  <section class="miner-section" id="faucet">
+  <section class="miner-section miner-faucet-link" id="gas-help">
     <div class="section-head">
       <div>
-        <div class="kicker">Step 1.5</div>
-        <h2>Claim 0.01 LST for gas.</h2>
+        <div class="kicker">Need network gas?</div>
+        <h2>The official faucet now has its own page.</h2>
       </div>
-      <p>The official faucet helps a new wallet pay the registration gas. It is one claim per wallet, forever. The site never asks for seed phrase or private key.</p>
+      <p>Claim 0.01 LST once per wallet for your first LUST Chain transaction. The faucet is no longer embedded in the Mining page.</p>
     </div>
-
-    <div class="grid two">
-      <div class="form miner-wallet-panel faucet-panel">
-        <small>Official LUST faucet</small>
-        <div class="miner-status-grid">
-          <div><span>Claim amount</span><strong data-faucet-amount>0.01 LST</strong></div>
-          <div><span>Faucet balance</span><strong data-faucet-balance>Checking...</strong></div>
-          <div><span>Your wallet balance</span><strong data-faucet-wallet-balance>Connect wallet</strong></div>
-          <div><span>Eligibility</span><strong data-faucet-eligibility>Connect wallet</strong></div>
-        </div>
-
-        <div class="hero-buttons miner-actions-row">
-          <button class="btn primary" type="button" data-claim-faucet>Claim 0.01 LST</button>
-          <button class="btn" type="button" data-connect-wallet>Connect wallet</button>
-          <button class="btn" type="button" data-refresh-faucet>Refresh faucet</button>
-        </div>
-
-        <div class="notice miner-log" data-faucet-log>
-          Connect a new wallet to check faucet eligibility.
-        </div>
-      </div>
-
-      <div class="box">
-        <small>Faucet safety rules</small>
-        <div class="code-card">
-          <div><span>Amount</span><code>0.01 LST</code></div>
-          <div><span>Wallet limit</span><code>1 claim per wallet forever</code></div>
-          <div><span>Balance rule</span><code>Only wallets below 0.02 LST</code></div>
-          <div><span>Purpose</span><code>Gas for miner registration</code></div>
-        </div>
-        <p class="mini-copy">Use this before registration only if your wallet has no LST. After claiming, click Register Miner Wallet and confirm the transaction in MetaMask.</p>
-      </div>
+    <div class="hero-buttons">
+      <a class="btn primary" href="./faucet.html">Open official Faucet</a>
     </div>
   </section>
 

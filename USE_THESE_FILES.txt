@@ -1,0 +1,4 @@
+Dedicated Faucet page build. Upload every file in this ZIP directly to the repository root, replacing existing files.
+Faucet URL: /faucet.html
+The embedded faucet was removed from Mining and Pioneer. Both pages now link to the dedicated Faucet page.
+The existing faucet backend and one-claim-per-wallet rule are unchanged.

@@ -1,0 +1,33 @@
+/* Dedicated LUST Faucet page v20260617 */
+.faucet-page{width:min(1180px,94vw);margin:0 auto;padding:34px 0 64px;color:#fff}
+.faucet-hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:18px;align-items:stretch}
+.faucet-hero-copy,.faucet-summary-card,.faucet-claim-card,.faucet-info-card,.faucet-use-grid article{background:#09000c;border:3px solid rgba(247,3,117,.34);border-radius:24px;box-shadow:none}
+.faucet-hero-copy{padding:clamp(26px,4vw,46px)}
+.faucet-hero h1{font-size:clamp(46px,6.8vw,78px);line-height:.94;letter-spacing:-.052em;margin:0 0 16px;max-width:850px}
+.faucet-hero p{color:#e7cad9;line-height:1.58;font-size:16px;max-width:790px;margin:0}
+.faucet-rule-banner{margin-top:18px;padding:14px 16px;border:2px solid rgba(255,204,102,.38);border-radius:15px;background:#130d02;color:#ffe9ac;font-weight:800}
+.faucet-summary-card{padding:24px;display:grid;align-content:center;gap:10px}
+.faucet-summary-card>small,.faucet-card-heading small,.faucet-info-card>small,.faucet-use-grid small{display:block;text-transform:uppercase;letter-spacing:.16em;color:#ff65ad;font-size:10px;font-weight:1000}
+.faucet-summary-card>div{display:flex;justify-content:space-between;gap:14px;padding:14px;border:2px solid rgba(255,255,255,.12);border-radius:15px;background:#050006}
+.faucet-summary-card span{color:#caaaba;font-size:12px}.faucet-summary-card strong{text-align:right}
+.faucet-main-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:18px;margin-top:18px}
+.faucet-claim-card,.faucet-info-card{padding:24px}
+.faucet-card-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}
+.faucet-card-heading h2,.faucet-info-card h2{font-size:clamp(28px,4vw,42px);line-height:1;margin:6px 0 0}
+.faucet-official-chip{display:inline-flex;align-items:center;border-radius:999px;background:#f70375;color:#fff;padding:8px 12px;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.1em}
+.faucet-status-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.faucet-status-grid>div{border:2px solid rgba(255,255,255,.13);border-radius:16px;background:#050006;padding:15px;min-width:0}
+.faucet-status-grid span{display:block;color:#caaaba;font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:900;margin-bottom:7px}
+.faucet-status-grid strong{display:block;font-size:17px;word-break:break-word}
+.faucet-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.faucet-claim-button{min-width:210px}
+.faucet-live-log{margin-top:14px;border:2px solid rgba(255,255,255,.13);border-radius:15px;background:#050006;padding:14px;color:#ddc3d1;line-height:1.5;word-break:break-word}
+.faucet-live-log[data-tone="ok"]{border-color:rgba(36,255,185,.45);background:rgba(36,255,185,.06);color:#d9fff5}
+.faucet-live-log[data-tone="warn"]{border-color:rgba(255,190,80,.48);background:rgba(255,190,80,.07);color:#fff0d0}
+.faucet-info-list{display:grid;gap:10px;margin-top:18px}.faucet-info-list>div{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:center;border:2px solid rgba(255,255,255,.12);border-radius:15px;background:#050006;padding:13px}
+.faucet-info-list b{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#f70375;color:#fff}.faucet-info-list span{color:#e8cedb;line-height:1.45}
+.faucet-security-note{margin-top:14px;padding:14px;border:2px solid rgba(247,3,117,.34);border-radius:15px;color:#f6dbe8;background:#10000b;line-height:1.5;font-size:13px}
+.faucet-use-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:18px}.faucet-use-grid article{padding:21px}.faucet-use-grid h3{font-size:23px;margin:8px 0}.faucet-use-grid p{color:#cdaebe;line-height:1.48;margin:0 0 14px}.faucet-use-grid a,.faucet-use-grid button{display:inline-flex;border:0;background:transparent;color:#ff4ca1;font:inherit;font-weight:900;padding:0;cursor:pointer}
+.miner-faucet-link{border:2px solid rgba(247,3,117,.30);border-radius:20px;padding:22px;background:#09000c}
+.pioneer-step-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+@media(max-width:980px){.faucet-hero,.faucet-main-grid{grid-template-columns:1fr}.faucet-use-grid{grid-template-columns:1fr}}
+@media(max-width:620px){.faucet-page{padding-top:24px}.faucet-status-grid{grid-template-columns:1fr}.faucet-hero-copy,.faucet-summary-card,.faucet-claim-card,.faucet-info-card{padding:18px}.faucet-card-heading{display:block}.faucet-official-chip{margin-top:12px}.faucet-actions .btn{width:100%}.faucet-hero h1{font-size:44px}}
