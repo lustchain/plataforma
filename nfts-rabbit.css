@@ -592,3 +592,303 @@
   overflow-wrap: anywhere;
   word-break: break-word;
 }
+
+
+/* LUST Rabbit Club community page-only update */
+html { scroll-behavior: smooth; }
+
+.rabbit-section-nav {
+  position: sticky;
+  top: 78px;
+  z-index: 15;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 12px;
+  margin: 18px 0 0;
+  border: 1px solid rgba(247, 3, 117, .32);
+  border-radius: 18px;
+  background: rgba(7, 1, 9, .92);
+  backdrop-filter: blur(14px);
+  scrollbar-width: thin;
+}
+.rabbit-section-nav a {
+  flex: 0 0 auto;
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 999px;
+  padding: 9px 13px;
+  color: #ffe0ef;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.rabbit-section-nav a:hover {
+  border-color: #f70375;
+  background: rgba(247, 3, 117, .12);
+}
+
+.rabbit-club-gateway {
+  display: grid;
+  grid-template-columns: minmax(280px, .8fr) minmax(0, 1.2fr);
+  gap: clamp(22px, 5vw, 58px);
+  align-items: center;
+  margin-top: 18px;
+  padding: clamp(24px, 5vw, 54px);
+  border: 2px solid rgba(247, 3, 117, .46);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 25% 50%, rgba(247,3,117,.18), transparent 36%),
+    linear-gradient(145deg, rgba(255,255,255,.045), rgba(247,3,117,.045));
+  box-shadow: 0 28px 90px rgba(0,0,0,.32);
+}
+.rabbit-club-emblem img {
+  width: 100%;
+  display: block;
+  border-radius: 22px;
+  background: #000;
+}
+.rabbit-club-gateway-copy small {
+  display: block;
+  color: #ff82b9;
+  font-weight: 950;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  margin-bottom: 9px;
+}
+.rabbit-club-gateway-copy p {
+  color: #f3dbea;
+  line-height: 1.75;
+}
+.rabbit-gate-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  margin: 20px 0;
+}
+.rabbit-gate-flow span {
+  border: 1px solid rgba(247,3,117,.35);
+  border-radius: 999px;
+  padding: 8px 11px;
+  background: rgba(247,3,117,.08);
+  color: #ffe0ef;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.rabbit-gate-flow i {
+  color: #f70375;
+  font-style: normal;
+  font-weight: 900;
+}
+.rabbit-enter-wrap { margin-top: 18px; }
+.rabbit-enter-club {
+  width: min(100%, 680px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  border: 2px solid #f70375;
+  border-radius: 22px;
+  padding: 17px 24px;
+  background: #050006;
+  color: #fff;
+  box-shadow: 0 0 34px rgba(247,3,117,.22), inset 0 0 24px rgba(247,3,117,.08);
+  opacity: 1;
+  cursor: not-allowed;
+}
+.rabbit-enter-icon { font-size: 34px; color: #ff4ba8; }
+.rabbit-enter-club strong,
+.rabbit-enter-club small { display: block; text-align: left; }
+.rabbit-enter-club strong {
+  font-size: clamp(18px, 3vw, 28px);
+  letter-spacing: .08em;
+}
+.rabbit-enter-club small {
+  margin: 4px 0 0;
+  color: #ff9dcc;
+  font-size: 11px;
+}
+.rabbit-disclaimer {
+  font-size: 12px;
+  color: #bfaabd !important;
+  margin-top: 13px;
+}
+
+.rabbit-community-section p,
+.rabbit-tier-section > p,
+.rabbit-safety-section > p,
+.rabbit-fund-policy > p {
+  max-width: 1050px;
+  color: #f3dbea;
+  line-height: 1.75;
+}
+.rabbit-benefits-expanded {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.rabbit-tier-grid,
+.rabbit-roadmap-grid,
+.rabbit-safety-grid,
+.rabbit-principles-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+.rabbit-tier-card,
+.rabbit-roadmap-grid > div,
+.rabbit-safety-grid > div,
+.rabbit-principles-grid > div {
+  border: 1px solid rgba(247,3,117,.28);
+  border-radius: 20px;
+  padding: 18px;
+  background: rgba(247,3,117,.055);
+}
+.rabbit-tier-card span,
+.rabbit-roadmap-grid span {
+  display: block;
+  color: #ff8fc2;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 9px;
+}
+.rabbit-tier-card strong,
+.rabbit-roadmap-grid strong,
+.rabbit-safety-grid b,
+.rabbit-principles-grid b {
+  display: block;
+  color: #fff;
+  margin-bottom: 9px;
+}
+.rabbit-tier-card p,
+.rabbit-roadmap-grid p,
+.rabbit-safety-grid span,
+.rabbit-principles-grid span {
+  display: block;
+  color: #d6c1d2;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.rabbit-details {
+  margin-top: 18px;
+  border: 1px solid rgba(247,3,117,.32);
+  border-radius: 18px;
+  background: rgba(0,0,0,.16);
+  overflow: hidden;
+}
+.rabbit-details summary {
+  cursor: pointer;
+  padding: 16px 18px;
+  color: #fff;
+  font-weight: 900;
+}
+.rabbit-details > div {
+  border-top: 1px solid rgba(255,255,255,.1);
+  padding: 16px 18px;
+}
+.rabbit-details p { margin: 0 0 8px; color: #d9c7d7; }
+
+.rabbit-allocation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+.rabbit-allocation-grid > div {
+  border: 1px solid rgba(247,3,117,.3);
+  border-radius: 20px;
+  padding: 18px;
+  background: rgba(247,3,117,.055);
+}
+.rabbit-allocation-grid em,
+.rabbit-royalty-grid em {
+  display: block;
+  color: #fff;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 950;
+  text-shadow: 0 0 24px rgba(247,3,117,.36);
+  margin-bottom: 8px;
+}
+.rabbit-allocation-grid b {
+  display: block;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.rabbit-allocation-grid span {
+  display: block;
+  color: #d8c4d5;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.rabbit-allocation-liquidity {
+  grid-column: span 3;
+  border-color: rgba(247,3,117,.62) !important;
+  background: rgba(247,3,117,.11) !important;
+}
+.rabbit-policy-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  align-items: center;
+  margin-top: 14px;
+  border: 2px solid rgba(247,3,117,.48);
+  border-radius: 18px;
+  padding: 16px 18px;
+  background: #090109;
+}
+.rabbit-policy-total span { color: #ffc7e2; text-align: right; }
+.rabbit-subheading { margin-top: 28px; }
+.rabbit-royalty-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+.rabbit-royalty-grid > div {
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 18px;
+  padding: 16px;
+  background: rgba(0,0,0,.18);
+}
+.rabbit-royalty-grid span {
+  color: #dbc6d7;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+@media (max-width: 1050px) {
+  .rabbit-club-gateway { grid-template-columns: 1fr; }
+  .rabbit-tier-grid,
+  .rabbit-roadmap-grid,
+  .rabbit-safety-grid,
+  .rabbit-principles-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .rabbit-benefits-expanded,
+  .rabbit-allocation-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .rabbit-allocation-liquidity { grid-column: span 2; }
+}
+@media (max-width: 680px) {
+  .rabbit-section-nav { top: 68px; }
+  .rabbit-benefits-expanded,
+  .rabbit-tier-grid,
+  .rabbit-roadmap-grid,
+  .rabbit-safety-grid,
+  .rabbit-principles-grid,
+  .rabbit-allocation-grid,
+  .rabbit-royalty-grid {
+    grid-template-columns: 1fr;
+  }
+  .rabbit-allocation-liquidity { grid-column: auto; }
+  .rabbit-policy-total { display: grid; }
+  .rabbit-policy-total span { text-align: left; }
+  .rabbit-enter-club { justify-content: flex-start; }
+}

@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
   <link rel="stylesheet" href="./styles.css?v=20260617-faucet-page-v1" />
-  <link rel="stylesheet" href="./nfts-rabbit.css?v20260614-registry-final-clean" />
+  <link rel="stylesheet" href="./nfts-rabbit.css?v20260617-community-page-only" />
 </head>
 <body>
 <div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
@@ -75,9 +75,12 @@
           <span class="rabbit-badge">Founder membership</span>
           <span class="rabbit-badge">Reveal coming soon</span>
           <span class="rabbit-badge">Paid in LUSDT</span>
+          <span class="rabbit-badge">Private club 18+</span>
+          <span class="rabbit-badge">Rabbit-gated access</span>
         </div>
         <div class="hero-buttons">
           <a class="btn primary" href="#waitlist">Join the waitlist</a>
+          <a class="btn" href="#club-access">Explore the private club</a>
           <a class="btn" href="./contracts/LUSTRabbitClub.sol" target="_blank" rel="noopener">View contract source</a>
         </div>
       </div>
@@ -93,7 +96,53 @@
   </section>
 
 
-  
+  <nav class="rabbit-section-nav" aria-label="Rabbit Club sections">
+    <a href="#waitlist">Whitelist</a>
+    <a href="#mint">Mint</a>
+    <a href="#club-access">Private Club</a>
+    <a href="#member-benefits">Benefits</a>
+    <a href="#membership-tiers">Member Tiers</a>
+    <a href="#adult-safety">18+ Safety</a>
+    <a href="#fund-policy">Fund Policy</a>
+    <a href="#club-roadmap">Roadmap</a>
+  </nav>
+
+
+  <section class="rabbit-club-gateway" id="club-access">
+    <div class="rabbit-club-emblem">
+      <img src="./nfts/lust-rabbit-club/club-emblem.webp" alt="LUST Rabbit Club crowned rabbit emblem">
+    </div>
+    <div class="rabbit-club-gateway-copy">
+      <small>Holder-gated private community · 18+</small>
+      <h2>Your Rabbit will be your key.</h2>
+      <p>
+        The private LUST Rabbit Club will be restricted to adult holders of the official collection.
+        Members will connect a wallet, sign a gas-free login message and prove ownership of at least one Rabbit.
+        No password, private key or seed phrase will ever be requested.
+      </p>
+      <div class="rabbit-gate-flow">
+        <span>Confirm 18+</span><i>→</i>
+        <span>Connect wallet</span><i>→</i>
+        <span>Sign message</span><i>→</i>
+        <span>Verify Rabbit</span><i>→</i>
+        <span>Enter the Club</span>
+      </div>
+      <div class="rabbit-enter-wrap">
+        <button class="rabbit-enter-club" type="button" disabled aria-disabled="true">
+          <span class="rabbit-enter-icon">♛</span>
+          <span>
+            <strong>ENTER THE CLUB</strong>
+            <small>Secure holder gate coming soon</small>
+          </span>
+        </button>
+      </div>
+      <p class="rabbit-disclaimer">
+        Access is a membership utility, not an investment promise. No dividends, guaranteed returns or profit sharing are promised.
+      </p>
+    </div>
+  </section>
+
+
   <section class="rabbit-panel rabbit-waitlist-panel" id="waitlist" style="margin-top:18px">
     <small>On-chain whitelist registry</small>
     <h2>Join the early mint list on-chain.</h2>
@@ -104,7 +153,7 @@
     </p>
 
     <div class="rabbit-statement-grid">
-      <div><b>Registry contract</b><span title="0xA16DE59e5F13eaf51464EdF807a0B23175cecfA6">0xA16DE59e5F13eaf51464EdF807a0B23175cecfA6</span></div>
+      <div><b>Registry contract</b><span title="0xA16DE59e5F13eaf51464EdF807a0B23175cecfA6">0xA16D...cfA6</span></div>
       <div><b>Registration fee</b><span>0 LST / 0 LUSDT</span></div>
       <div><b>Max registrations</b><span>9,700 wallets</span></div>
       <div><b>Status</b><span data-registry-status>Checking on-chain...</span></div>
@@ -199,7 +248,7 @@
     </div>
   </section>
 
-  <section class="rabbit-panel rabbit-reserve-rules" style="margin-top:18px">
+  <section class="rabbit-panel rabbit-reserve-rules" id="reserve-policy" style="margin-top:18px">
     <small>Reserve rules</small>
     <h2>300 Rabbits reserved transparently for the ecosystem.</h2>
     <p>
@@ -293,31 +342,127 @@
     </div>
   </section>
 
-
-<section class="rabbit-panel" style="margin-top:18px">
-    <small>Benefits</small>
-    <h2>More than a picture. A founder pass.</h2>
-    <div class="rabbit-benefits">
-      <div class="rabbit-benefit"><b>Founder badge</b><span>Special holder identity inside the LUST ecosystem.</span></div>
-      <div class="rabbit-benefit"><b>Private community</b><span>Access to holder-only channels and community drops.</span></div>
-      <div class="rabbit-benefit"><b>Early access</b><span>Priority access to NFT Factory, tools and future launches.</span></div>
-      <div class="rabbit-benefit"><b>Exclusive airdrops</b><span>Future companion collections and holder campaigns.</span></div>
-      <div class="rabbit-benefit"><b>Commercial use</b><span>Use the specific Rabbit you own as your avatar, character or brand.</span></div>
-      <div class="rabbit-benefit"><b>Premium status</b><span>Rarity, club culture and visual identity for the LUST community.</span></div>
+  <section class="rabbit-panel rabbit-community-section" id="member-benefits" style="margin-top:18px">
+    <small>Holder benefits</small>
+    <h2>More than a picture. A private membership.</h2>
+    <p>
+      Every legitimate Rabbit unlocks the essential club experience. Rarity is not required for entry.
+      Benefits will grow in phases and may evolve based on security, legal readiness and community voting.
+    </p>
+    <div class="rabbit-benefits rabbit-benefits-expanded">
+      <div class="rabbit-benefit"><b>Founder identity</b><span>Verified Rabbit Holder badge, private profile and Rabbit avatar inside the club.</span></div>
+      <div class="rabbit-benefit"><b>Private lounge</b><span>Holder-only discussions, themed rooms, announcements and community drops.</span></div>
+      <div class="rabbit-benefit"><b>Adult creator hub</b><span>Access to verified adult creators, consensual exclusive productions and private releases.</span></div>
+      <div class="rabbit-benefit"><b>Events and live sessions</b><span>Private streams, interviews, virtual parties and future in-person activations.</span></div>
+      <div class="rabbit-benefit"><b>Early ecosystem access</b><span>Priority for selected LUST tools, NFT Factory releases, launches and partner campaigns.</span></div>
+      <div class="rabbit-benefit"><b>Holder rewards</b><span>Eligibility for merchandise, campaigns, Bunny Pets, Rabbit Serum and future companion drops.</span></div>
+      <div class="rabbit-benefit"><b>Community voting</b><span>Non-financial votes on themes, guests, features, events and community priorities.</span></div>
+      <div class="rabbit-benefit"><b>Commercial use</b><span>Use the specific Rabbit owned by your wallet as an avatar, character or personal brand under the collection license.</span></div>
+      <div class="rabbit-benefit"><b>Ownership-aware access</b><span>If a Rabbit is transferred or sold, holder access is removed after the next ownership check.</span></div>
     </div>
   </section>
 
-  <section class="rabbit-panel" style="margin-top:18px">
-    <small>Safe launch checklist</small>
-    <h2>Do this before opening mint.</h2>
-    <div class="rabbit-checklist">
-      <div>Upload this version to the site and test <strong>/nfts/lust-rabbit-club/hidden.json</strong>.</div>
-      <div>Contract deployed and verified: <strong>0x81b9a5bB109919CFF3eE4C92B2372ABCd73614e6</strong>.</div>
-      <div>Payment token is LUSDT: <strong>0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE</strong>.</div>
-      <div>Contract address is already configured inside <strong>nfts-rabbit.js</strong>.</div>
-      <div>Keep <strong>whitelistSaleOpen</strong>, <strong>publicSaleOpen</strong> and <strong>revealed</strong> false until everything is tested.</div>
+  <section class="rabbit-panel rabbit-tier-section" id="membership-tiers" style="margin-top:18px">
+    <small>Membership levels</small>
+    <h2>Every Rabbit enters. More Rabbits unlock status.</h2>
+    <p>Core club access remains available to every wallet holding at least one official Rabbit.</p>
+    <div class="rabbit-tier-grid">
+      <div class="rabbit-tier-card"><span>1 Rabbit</span><strong>Founder Member</strong><p>Full holder gate, private profile, lounge access and standard member benefits.</p></div>
+      <div class="rabbit-tier-card"><span>2–4 Rabbits</span><strong>Silver Rabbit</strong><p>Enhanced profile badge and priority for selected community campaigns.</p></div>
+      <div class="rabbit-tier-card"><span>5–9 Rabbits</span><strong>Gold Rabbit</strong><p>Higher community status and priority for limited events or allocations.</p></div>
+      <div class="rabbit-tier-card"><span>10+ Rabbits</span><strong>Royal Rabbit</strong><p>Top holder status, special recognition and selected premium activations.</p></div>
+    </div>
+    <div class="rabbit-link-box">
+      <small>Fair-access rule</small>
+      <code>Rarity does not control entry. Any authentic LUST Rabbit Club NFT unlocks the club. Status tiers do not create dividends or guaranteed financial rewards.</code>
     </div>
   </section>
+
+  <section class="rabbit-panel rabbit-safety-section" id="adult-safety" style="margin-top:18px">
+    <small>Adult-only safety and privacy</small>
+    <h2>Private, consensual and strictly 18+.</h2>
+    <p>
+      The adult area will only launch after age controls, moderation, privacy, creator verification and secure private storage are ready.
+      The public NFT page will remain non-explicit.
+    </p>
+    <div class="rabbit-safety-grid">
+      <div><b>Age gate</b><span>18+ confirmation and stronger age verification where required by jurisdiction.</span></div>
+      <div><b>Verified creators</b><span>Identity, age and consent checks before adult creators can publish inside the club.</span></div>
+      <div><b>Zero tolerance</b><span>No minors, non-consensual content, exploitation, illegal material, doxxing or stolen private content.</span></div>
+      <div><b>Moderation</b><span>Report, block, suspend and remove tools with a documented review process.</span></div>
+      <div><b>Private storage</b><span>Holder-only files stay outside the public site folder and use short-lived signed links.</span></div>
+      <div><b>Wallet privacy</b><span>Collect the minimum information necessary and never request seed phrases or private keys.</span></div>
+      <div><b>Watermarking</b><span>Optional member-linked watermarking to discourage unauthorized redistribution.</span></div>
+      <div><b>Access revalidation</b><span>The server periodically confirms that the connected wallet still owns a Rabbit.</span></div>
+    </div>
+    <details class="rabbit-details">
+      <summary>How secure holder login will work</summary>
+      <div>
+        <p>1. The member connects a wallet on LUST Chain.</p>
+        <p>2. The server issues a unique, expiring nonce.</p>
+        <p>3. The member signs a login message without paying gas.</p>
+        <p>4. The server verifies the signature and checks <code>balanceOf(wallet) &gt; 0</code> on the official NFT contract.</p>
+        <p>5. The server creates a secure, expiring session and protects every private route.</p>
+      </div>
+    </details>
+  </section>
+
+  <section class="rabbit-panel rabbit-fund-policy" id="fund-policy" style="margin-top:18px">
+    <small>Public allocation policy</small>
+    <h2>How primary mint proceeds are planned to support the club.</h2>
+    <p>
+      The NFT contract is configured for an 80% Treasury / 20% Liquidity split. The percentages below are the planned
+      administrative policy inside that 100%; they are not separate smart-contract transfers unless dedicated wallets or contracts are added later.
+    </p>
+    <div class="rabbit-allocation-grid">
+      <div><em>25%</em><b>Creator / founder / administration</b><span>Leadership, long-term project work and operational responsibility.</span></div>
+      <div><em>20%</em><b>Technology, security and infrastructure</b><span>Club backend, holder gate, servers, audits, storage and maintenance.</span></div>
+      <div><em>15%</em><b>Content and creator compensation</b><span>Original productions, verified creators, collaborations and private releases.</span></div>
+      <div><em>10%</em><b>Holder benefits and events</b><span>Merchandise, campaigns, live sessions, experiences and community activations.</span></div>
+      <div><em>5%</em><b>Marketing and partnerships</b><span>Growth, ambassadors, strategic collaborations and launch campaigns.</span></div>
+      <div><em>5%</em><b>Legal, moderation and operational reserve</b><span>Compliance, policies, moderation and unexpected operational needs.</span></div>
+      <div class="rabbit-allocation-liquidity"><em>20%</em><b>Liquidity and market support</b><span>Pool campaigns, market depth, integrations and ecosystem liquidity initiatives.</span></div>
+    </div>
+    <div class="rabbit-policy-total">
+      <strong>100% total policy</strong>
+      <span>80% Treasury/Project policy + 20% Liquidity policy</span>
+    </div>
+
+    <h3 class="rabbit-subheading">Planned use of the 5% supported-marketplace royalty</h3>
+    <div class="rabbit-royalty-grid">
+      <div><em>40%</em><span>Club infrastructure and security</span></div>
+      <div><em>30%</em><span>New content and verified creators</span></div>
+      <div><em>20%</em><span>Events and holder benefits</span></div>
+      <div><em>10%</em><span>Operational reserve</span></div>
+    </div>
+    <div class="rabbit-link-box">
+      <small>Royalty notice</small>
+      <code>ERC-2981 royalties are only paid when the secondary marketplace supports and honors royalty payments. Royalties are not guaranteed revenue.</code>
+    </div>
+  </section>
+
+  <section class="rabbit-panel rabbit-roadmap-section" id="club-roadmap" style="margin-top:18px">
+    <small>Private club roadmap</small>
+    <h2>Build securely, then expand.</h2>
+    <div class="rabbit-roadmap-grid">
+      <div><span>Phase 1</span><strong>Secure Club Gate</strong><p>18+ notice, wallet signature login, NFT ownership check, secure session, private dashboard and My Rabbits profile.</p></div>
+      <div><span>Phase 2</span><strong>Community Layer</strong><p>Private lounge, profiles, rooms, comments, announcements, polls, event calendar, reports and moderation.</p></div>
+      <div><span>Phase 3</span><strong>Verified Adult Creators</strong><p>Creator verification, private uploads, signed media links, live sessions and creator compensation.</p></div>
+      <div><span>Phase 4</span><strong>Advanced Holder Utility</strong><p>Bunny Pets, Rabbit Serum, tiers, merchandise, marketplace benefits, events and partner integrations.</p></div>
+    </div>
+  </section>
+
+  <section class="rabbit-panel rabbit-principles-section" style="margin-top:18px">
+    <small>Club principles</small>
+    <h2>Premium access without hidden promises.</h2>
+    <div class="rabbit-principles-grid">
+      <div><b>One official collection</b><span>The official NFT contract remains the only Rabbit collection used for access.</span></div>
+      <div><b>Holder-first access</b><span>At least one Rabbit is required; no Rabbit means no private club access.</span></div>
+      <div><b>No guaranteed profit</b><span>Benefits are access, identity, content, experiences and ecosystem utility.</span></div>
+      <div><b>Public reporting</b><span>Publish development milestones, reserve usage and fund-allocation reports as the club grows.</span></div>
+    </div>
+  </section>
+
 </main>
 
 <footer class="footer">
