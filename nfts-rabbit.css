@@ -916,3 +916,15 @@ html { scroll-behavior: smooth; }
   .rabbit-policy-total span { text-align: left; }
   .rabbit-enter-club img { width: 78px; height: 54px; }
 }
+
+
+/* ENTER THE CLUB button without duplicate emblem */
+.rabbit-enter-club {
+  justify-content: center;
+  text-align: center;
+}
+
+.rabbit-enter-club strong,
+.rabbit-enter-club small {
+  text-align: center;
+}
