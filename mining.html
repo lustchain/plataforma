@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mining V7A21 | LUST Platform</title>
-  <meta name="description" content="Register your wallet and download the official LUST Chain V7A21 external-miner test package for Windows or Linux." />
+  <title>Mining V7A24 | LUST Platform</title>
+  <meta name="description" content="Official LUST Chain V7A24 public mining information, reward rules, verified package checksums and launch status." />
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css?v=20260617-faucet-page-v1" />
+  <link rel="stylesheet" href="./styles.css?v=20260617-mining-v7a24-locked" />
 </head>
 <body>
-<div class="promo-bar">External mining test V7A21 is ready — official public mining opens after liquidity and final validation.</div>
+<div class="promo-bar">Public mining is locked until liquidity opens — V7A24 packages are finalized and ready for the official release.</div>
 <header class="topbar">
   <a class="brand" href="./presale.html">
     <div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div>
@@ -61,21 +61,21 @@
 <main class="wrap page miner-page">
   <section class="miner-hero">
     <div class="miner-hero-copy">
-      <div class="kicker">External Mining Test · V7A21</div>
+      <div class="kicker">Public Mining · V7A24</div>
       <h1>Mine LST from your own computer.</h1>
-      <p>LUST Chain lets normal computers participate in block production without expensive mining farms. The V7A21 package is available for the controlled external-miner test. Official public mining opens only after liquidity and final validation. Register your wallet once, verify the SHA256 and let the miner complete safe sync before mining starts.</p>
+      <p>LUST Chain lets normal computers participate in block production without expensive mining farms. The official V7A24 Windows and Ubuntu packages have been built and checksum-verified. Public registration and downloads remain locked until liquidity opens and the final launch authorization is announced.</p>
       <div class="hero-buttons">
         <button class="btn primary" type="button" data-connect-wallet>Connect wallet</button>
         <button class="btn" type="button" data-add-lust-chain>Add LUST Chain</button>
-        <a class="btn" href="#downloads">Download miner</a>
+        <button class="btn" type="button" disabled>Miner downloads locked</button>
         <a class="btn" href="./faucet.html">Get 0.01 LST</a>
       </div>
       <div class="security-strip">
         <span>✓ No seed phrase</span>
         <span>✓ MetaMask confirmation</span>
-        <span>✓ Official V7A21 SHA256</span>
-        <span>✓ Snapshot latest</span>
-        <span>✓ TX-FEED V3</span>
+        <span>✓ Official V7A24 SHA256</span>
+        <span>✓ Automatic latest snapshot</span>
+        <span>✓ Automatic TX-FEED</span>
       </div>
     </div>
     <div class="miner-command-card">
@@ -83,7 +83,8 @@
       <div class="row"><span>Network</span><strong>LUST Chain Mainnet</strong></div>
       <div class="row"><span>Chain ID</span><strong>6923 / 0x1b0b</strong></div>
       <div class="row"><span>Native coin</span><strong>LST</strong></div>
-      <div class="row"><span>Consensus</span><strong>LQC · V7A21</strong></div>
+      <div class="row"><span>Consensus</span><strong>LQC · V7A24</strong></div>
+      <div class="row"><span>Launch state</span><strong>Locked until liquidity opens</strong></div>
       <div class="row"><span>Block reward</span><strong>2 LST</strong></div>
       <div class="row"><span>Public selection</span><strong>Public miners first · official fallback</strong></div>
       <div class="row"><span>Transaction priority fee</span><strong>Actual block producer</strong></div>
@@ -153,10 +154,10 @@
   <section class="miner-section" id="register">
     <div class="section-head">
       <div>
-        <div class="kicker">Step 1</div>
+        <div class="kicker">Step 1 · Opens at launch</div>
         <h2>Register your miner wallet.</h2>
       </div>
-      <p>The registration is a normal MetaMask transaction sent by your own wallet. The site never asks for private key, seed phrase or password.</p>
+      <p>Public miner registration opens together with public mining after liquidity. Registration will be a normal MetaMask transaction sent by your own wallet. The site will never ask for a private key, seed phrase or password.</p>
     </div>
 
     <div class="grid two">
@@ -170,13 +171,13 @@
         </div>
 
         <div class="hero-buttons miner-actions-row">
-          <button class="btn primary" type="button" data-register-miner>Register Miner Wallet</button>
+          <button class="btn primary" type="button" disabled>Registration locked</button>
           <button class="btn" type="button" data-add-lust-chain>Add/Switch LUST</button>
           <button class="btn" type="button" data-refresh-miner>Status refresh</button>
         </div>
 
         <div class="notice miner-log" data-miner-log>
-          Connect your wallet, switch to LUST Chain and click Register Miner Wallet.
+          Public miner registration is locked until liquidity opens and the official mining launch is announced.
         </div>
       </div>
 
@@ -208,38 +209,38 @@
   <section class="miner-section" id="downloads">
     <div class="section-head">
       <div>
-        <div class="kicker">Step 2</div>
-        <h2>Download the official miner.</h2>
+        <div class="kicker">Step 2 · Files finalized</div>
+        <h2>Official V7A24 miner packages.</h2>
       </div>
-      <p>The V7A21 miner restores the latest snapshot when needed and TX-FEED V3 pulls public pending transactions into the local miner node every 0.5 seconds. These downloads are active for the controlled external-miner test. Always verify the SHA256 before running the package. The package SHA changes when miner scripts or binaries change; the snapshot SHA changes when the snapshot updates.</p>
+      <p>The V7A24 miner installs the latest verified snapshot when needed, waits for peers and synchronization, and starts the automatic transaction feed. Downloads remain locked until liquidity opens and public mining is officially authorized. The final package checksums are already published below for transparency.</p>
     </div>
 
     <div class="grid two download-grid">
       <div class="download-card">
         <div class="download-icon">⊞</div>
         <div>
-          <small>Windows · V7A21 · Recommended</small>
+          <small>Windows 64-bit · V7A24 · Recommended</small>
           <h3>Windows one-click miner</h3>
-          <p>Extract the ZIP and double-click <strong>START-LUST-MINER-WINDOWS.bat</strong>. It opens the miner plus a second <strong>LUST TX-FEED V3</strong> window. Keep both windows open.</p>
-          <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip?v=20260616-v7a21-stable-1828" target="_blank" rel="noreferrer">Download V7A21 Windows ZIP</a>
+          <p>At launch, extract the ZIP and double-click <strong>START-LUST-MINER-WINDOWS.bat</strong>. It starts the miner and a separate automatic TX-FEED window. Keep both windows open while mining.</p>
+          <button class="btn primary" type="button" disabled>Windows download locked</button>
         </div>
-        <div class="sha-box"><span>SHA256</span><code id="windowsMinerSha">Loading official checksum…</code><a href="https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip.sha256?v=20260616-v7a21-stable-1828" target="_blank" rel="noreferrer">Open .sha256</a></div>
+        <div class="sha-box"><span>Final package SHA256</span><code>e85ce78008b683a2fe2ba39fa952197f73b05d122c1f38d3c42027ee52954d05</code></div>
       </div>
 
       <div class="download-card">
         <div class="download-icon">⌁</div>
         <div>
-          <small>Ubuntu / Linux · V7A21 · Advanced / Beta</small>
-          <h3>Linux latest-snapshot miner</h3>
-          <p>For clean Ubuntu/VPS users. Extract the TGZ, give permission and run <strong>./START-LUST-MINER-LINUX.sh</strong>. TX-FEED V3 starts in background and logs to <strong>~/LUST-Miner/logs/txfeed-v3.log</strong>. If you already run INRI or another geth on the same Ubuntu/WSL, use Windows miner or advanced ports.</p>
-          <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz?v=20260616-v7a21-stable-1828" target="_blank" rel="noreferrer">Download V7A21 Linux TGZ</a>
+          <small>Ubuntu Linux 64-bit · V7A24 · Advanced</small>
+          <h3>Ubuntu latest-snapshot miner</h3>
+          <p>At launch, extract the TAR.GZ, run <strong>chmod +x *.sh</strong>, then <strong>./START-LUST-MINER-LINUX.sh</strong>. The automatic TX-FEED starts in the background and records activity in <strong>~/LUST-Miner/logs/txfeed-linux.log</strong>.</p>
+          <button class="btn primary" type="button" disabled>Ubuntu download locked</button>
         </div>
-        <div class="sha-box"><span>SHA256</span><code id="linuxMinerSha">Loading official checksum…</code><a href="https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz.sha256?v=20260616-v7a21-stable-1828" target="_blank" rel="noreferrer">Open .sha256</a></div>
+        <div class="sha-box"><span>Final package SHA256</span><code>f557d5783ea15de83afb999a569fe6343c78d2d694edd801445d42ef7f02ce05</code></div>
       </div>
     </div>
 
-    <div class="hero-buttons">
-      <a class="btn" href="./miner-package-hashes.txt?v=20260616-v7a21-stable-1828" target="_blank" rel="noreferrer">Open official SHA256 file</a>
+    <div class="notice miner-log">
+      Release filenames: <strong>lust-v7a24-miner-windows-amd64.zip</strong> and <strong>lust-v7a24-miner-ubuntu-amd64.tar.gz</strong>. Download access will be enabled only at the official public mining launch.
     </div>
   </section>
 
@@ -275,19 +276,19 @@
     </div>
   </section>
 
-  <section class="miner-section" id="txfeed-v3">
+  <section class="miner-section" id="txfeed-v7a24">
     <div class="section-head">
       <div>
-        <div class="kicker">TX-FEED V3</div>
-        <h2>Fast transaction feed for public miners.</h2>
+        <div class="kicker">Automatic TX-FEED · V7A24</div>
+        <h2>Public transactions reach local miners.</h2>
       </div>
-      <p>TX-FEED V3 checks the public pending transaction feed every 0.5 seconds and injects valid raw transactions into the local miner node. This gives public miners a real chance to include transactions when they produce the next block.</p>
+      <p>The V7A24 transaction feed checks the official primary and backup pending-transaction endpoints every second and injects valid raw transactions into the local miner node. This gives public miners a real chance to include transactions and receive the priority fee when they produce a block.</p>
     </div>
 
     <div class="grid three">
-      <div class="card"><small>Windows</small><h3>Two windows stay open.</h3><p>START opens <strong>LUST MINER</strong> and <strong>LUST TX-FEED V3</strong>. The feed auto-detects local RPC port 18547 or 8545 and logs to <strong>LUST-Miner/logs/txfeed-v3.log</strong>.</p></div>
-      <div class="card"><small>Ubuntu / Linux</small><h3>Background feed.</h3><p>The Linux starter launches TX-FEED V3 in background. It uses local RPC <strong>18547</strong> and P2P <strong>30313</strong> by default to avoid conflicts with INRI or another geth. Check the live feed log at <strong>~/LUST-Miner/logs/txfeed-v3.log</strong>.</p></div>
-      <div class="card"><small>Pending feed</small><h3>Public endpoint.</h3><p>The miner reads <strong>https://rpc.lustchain.org/pending-raw</strong>. This is the official public transaction feed used by TX-FEED V3.</p></div>
+      <div class="card"><small>Windows</small><h3>Automatic second window.</h3><p>START opens the miner and <strong>LUST TX-FEED V7A24</strong>. The feed detects local RPC port <strong>18547</strong> or <strong>8545</strong> and logs to <strong>~/LUST-Miner/logs/txfeed-windows.log</strong>.</p></div>
+      <div class="card"><small>Ubuntu / Linux</small><h3>Automatic background feed.</h3><p>The Ubuntu starter launches the feed in the background. It uses local RPC <strong>18547</strong> and P2P <strong>30313</strong>. Feed activity is recorded in <strong>~/LUST-Miner/logs/txfeed-linux.log</strong>.</p></div>
+      <div class="card"><small>Primary + backup</small><h3>Resilient public endpoints.</h3><p>The miner checks <strong>rpc.lustchain.org/pending-raw</strong> first and automatically tries <strong>rpc-backup.lustchain.org/pending-raw</strong> when needed.</p></div>
     </div>
   </section>
 
@@ -307,16 +308,16 @@
 STOP-LUST-MINER-WINDOWS.bat
 STATUS-LUST-MINER-WINDOWS.bat
 
-# START opens LUST MINER + LUST TX-FEED V3</code></pre>
+# START opens LUST MINER + LUST TX-FEED V7A24</code></pre>
       </div>
       <div class="box command-box">
         <small>Ubuntu / Linux commands</small>
-        <pre><code>chmod +x START-LUST-MINER-LINUX.sh STOP-LUST-MINER-LINUX.sh STATUS-LUST-MINER-LINUX.sh TXFEED-LUST-V3.py
+        <pre><code>chmod +x *.sh
 ./START-LUST-MINER-LINUX.sh
 ./STATUS-LUST-MINER-LINUX.sh
-tail -f ~/LUST-Miner/logs/txfeed-v3.log
+tail -f ~/LUST-Miner/logs/txfeed-linux.log
 ./STOP-LUST-MINER-LINUX.sh</code></pre>
-        <p class="mini-copy">Linux is advanced/beta for launch. Windows is the recommended public miner for normal users.</p>
+        <p class="mini-copy">Ubuntu/Linux is intended for advanced users. Windows remains the recommended package for normal desktop users.</p>
       </div>
     </div>
   </section>
@@ -350,7 +351,7 @@ tail -f ~/LUST-Miner/logs/txfeed-v3.log
         <div class="kicker">Network safety</div>
         <h2>Official producer standby.</h2>
       </div>
-      <p>V7A21 prioritizes active public miners for normal block production. Official/bootstrap/prod-1/prod-2 remain available only as emergency fallback when public production stops, and they are excluded from the passive 30% public committee share while public miners are active.</p>
+      <p>V7A24 prioritizes active public miners for normal block production. Official/bootstrap producers remain available only as emergency fallback when no public miner is producing, and they are excluded from the passive 30% public committee share while public miners are active.</p>
     </div>
   </section>
 
@@ -358,7 +359,7 @@ tail -f ~/LUST-Miner/logs/txfeed-v3.log
     <div class="grid three">
       <div class="card"><small>Security</small><h3>Never enter your seed.</h3><p>The official site only asks MetaMask to sign/send a registration transaction. Never type your seed phrase on any website.</p></div>
       <div class="card"><small>Wallet rule</small><h3>One machine, one wallet.</h3><p>For clean testing and production, use one registered wallet per miner machine. Do not run the same wallet on many devices at the same time.</p></div>
-      <div class="card"><small>Safe start</small><h3>No isolated mining.</h3><p>The miner starts with mining off, waits for peers, chain ID and gap, starts TX-FEED V3, then enables mining only when the node is ready.</p></div>
+      <div class="card"><small>Safe start</small><h3>No isolated mining.</h3><p>The miner starts with mining off, validates chain ID, peers and synchronization gap, then restarts in mining mode and launches the automatic TX-FEED.</p></div>
     </div>
   </section>
 </main>
@@ -371,27 +372,7 @@ tail -f ~/LUST-Miner/logs/txfeed-v3.log
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
 
-<script>
-(async () => {
-  const files = [
-    ["windowsMinerSha", "https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip.sha256?v=20260616-v7a21-stable-1828"],
-    ["linuxMinerSha", "https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz.sha256?v=20260616-v7a21-stable-1828"]
-  ];
-  for (const [id, url] of files) {
-    const el = document.getElementById(id);
-    if (!el) continue;
-    try {
-      const response = await fetch(url, { cache: "no-store" });
-      if (!response.ok) throw new Error("HTTP " + response.status);
-      const text = (await response.text()).trim();
-      el.textContent = text.split(/\s+/)[0] || "Checksum unavailable";
-    } catch (_) {
-      el.textContent = "Open the official .sha256 file";
-    }
-  }
-})();
-</script>
-<script type="module" src="./app.js?v20260616-v7a21-stable-1828"></script>
+<script type="module" src="./app.js?v=20260617-mining-v7a24-locked"></script>
 <script src="./nft-menu.js?v=20260616-hover-v5"></script>
 </body>
 </html>
