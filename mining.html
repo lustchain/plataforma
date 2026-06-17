@@ -8,10 +8,10 @@
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css?v=20260617-mining-v7a24-locked" />
+  <link rel="stylesheet" href="./styles.css?v=20260617-mining-v7a24-test" />
 </head>
 <body>
-<div class="promo-bar">Public mining is locked until liquidity opens — V7A24 packages are finalized and ready for the official release.</div>
+<div class="promo-bar">Controlled V7A24 miner testing is active — public mining remains locked until liquidity and the official launch.</div>
 <header class="topbar">
   <a class="brand" href="./presale.html">
     <div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div>
@@ -61,13 +61,13 @@
 <main class="wrap page miner-page">
   <section class="miner-hero">
     <div class="miner-hero-copy">
-      <div class="kicker">Public Mining · V7A24</div>
+      <div class="kicker">Controlled Mining Test · V7A24</div>
       <h1>Mine LST from your own computer.</h1>
-      <p>LUST Chain lets normal computers participate in block production without expensive mining farms. The official V7A24 Windows and Ubuntu packages have been built and checksum-verified. Public registration and downloads remain locked until liquidity opens and the final launch authorization is announced.</p>
+      <p>LUST Chain lets normal computers participate in block production without expensive mining farms. The official V7A24 Windows and Ubuntu packages are available now for the controlled test on authorized machines. Public mining remains locked until liquidity opens and the final launch authorization is announced.</p>
       <div class="hero-buttons">
         <button class="btn primary" type="button" data-connect-wallet>Connect wallet</button>
         <button class="btn" type="button" data-add-lust-chain>Add LUST Chain</button>
-        <button class="btn" type="button" disabled>Miner downloads locked</button>
+        <a class="btn" href="#downloads">Download V7A24 miner</a>
         <a class="btn" href="./faucet.html">Get 0.01 LST</a>
       </div>
       <div class="security-strip">
@@ -79,12 +79,12 @@
       </div>
     </div>
     <div class="miner-command-card">
-      <small>Miner launch status</small>
+      <small>Controlled test status</small>
       <div class="row"><span>Network</span><strong>LUST Chain Mainnet</strong></div>
       <div class="row"><span>Chain ID</span><strong>6923 / 0x1b0b</strong></div>
       <div class="row"><span>Native coin</span><strong>LST</strong></div>
       <div class="row"><span>Consensus</span><strong>LQC · V7A24</strong></div>
-      <div class="row"><span>Launch state</span><strong>Locked until liquidity opens</strong></div>
+      <div class="row"><span>Launch state</span><strong>Controlled test active</strong></div>
       <div class="row"><span>Block reward</span><strong>2 LST</strong></div>
       <div class="row"><span>Public selection</span><strong>Public miners first · official fallback</strong></div>
       <div class="row"><span>Transaction priority fee</span><strong>Actual block producer</strong></div>
@@ -154,10 +154,10 @@
   <section class="miner-section" id="register">
     <div class="section-head">
       <div>
-        <div class="kicker">Step 1 · Opens at launch</div>
+        <div class="kicker">Step 1 · Controlled test</div>
         <h2>Register your miner wallet.</h2>
       </div>
-      <p>Public miner registration opens together with public mining after liquidity. Registration will be a normal MetaMask transaction sent by your own wallet. The site will never ask for a private key, seed phrase or password.</p>
+      <p>Registration is active for the controlled miner test. It is a normal MetaMask transaction sent by your own wallet. The site will never ask for a private key, seed phrase or password.</p>
     </div>
 
     <div class="grid two">
@@ -171,13 +171,13 @@
         </div>
 
         <div class="hero-buttons miner-actions-row">
-          <button class="btn primary" type="button" disabled>Registration locked</button>
+          <button class="btn primary" type="button" data-register-miner>Register Miner Wallet</button>
           <button class="btn" type="button" data-add-lust-chain>Add/Switch LUST</button>
           <button class="btn" type="button" data-refresh-miner>Status refresh</button>
         </div>
 
         <div class="notice miner-log" data-miner-log>
-          Public miner registration is locked until liquidity opens and the official mining launch is announced.
+          Connect your test wallet, switch to LUST Chain and click Register Miner Wallet. Public mining is still not officially launched.
         </div>
       </div>
 
@@ -209,10 +209,10 @@
   <section class="miner-section" id="downloads">
     <div class="section-head">
       <div>
-        <div class="kicker">Step 2 · Files finalized</div>
+        <div class="kicker">Step 2 · Controlled test downloads</div>
         <h2>Official V7A24 miner packages.</h2>
       </div>
-      <p>The V7A24 miner installs the latest verified snapshot when needed, waits for peers and synchronization, and starts the automatic transaction feed. Downloads remain locked until liquidity opens and public mining is officially authorized. The final package checksums are already published below for transparency.</p>
+      <p>The V7A24 miner installs the latest verified snapshot when needed, waits for peers and synchronization, and starts the automatic transaction feed. These downloads are active for the controlled test on your authorized machines. Always verify the published SHA256 before running a package.</p>
     </div>
 
     <div class="grid two download-grid">
@@ -221,10 +221,10 @@
         <div>
           <small>Windows 64-bit · V7A24 · Recommended</small>
           <h3>Windows one-click miner</h3>
-          <p>At launch, extract the ZIP and double-click <strong>START-LUST-MINER-WINDOWS.bat</strong>. It starts the miner and a separate automatic TX-FEED window. Keep both windows open while mining.</p>
-          <button class="btn primary" type="button" disabled>Windows download locked</button>
+          <p>Extract the ZIP and double-click <strong>START-LUST-MINER-WINDOWS.bat</strong>. It starts the miner and a separate automatic TX-FEED window. Keep both windows open while testing.</p>
+          <a class="btn primary" href="https://snapshot.lustchain.org/downloads/lust-v7a24-miner-windows-amd64.zip" target="_blank" rel="noreferrer">Download V7A24 Windows ZIP</a>
         </div>
-        <div class="sha-box"><span>Final package SHA256</span><code>e85ce78008b683a2fe2ba39fa952197f73b05d122c1f38d3c42027ee52954d05</code></div>
+        <div class="sha-box"><span>Final package SHA256</span><code>e85ce78008b683a2fe2ba39fa952197f73b05d122c1f38d3c42027ee52954d05</code><a href="https://snapshot.lustchain.org/downloads/lust-v7a24-miner-windows-amd64.zip.sha256" target="_blank" rel="noreferrer">Open .sha256</a></div>
       </div>
 
       <div class="download-card">
@@ -232,15 +232,15 @@
         <div>
           <small>Ubuntu Linux 64-bit · V7A24 · Advanced</small>
           <h3>Ubuntu latest-snapshot miner</h3>
-          <p>At launch, extract the TAR.GZ, run <strong>chmod +x *.sh</strong>, then <strong>./START-LUST-MINER-LINUX.sh</strong>. The automatic TX-FEED starts in the background and records activity in <strong>~/LUST-Miner/logs/txfeed-linux.log</strong>.</p>
-          <button class="btn primary" type="button" disabled>Ubuntu download locked</button>
+          <p>Extract the TAR.GZ, run <strong>chmod +x *.sh</strong>, then <strong>./START-LUST-MINER-LINUX.sh</strong>. The automatic TX-FEED starts in the background and records activity in <strong>~/LUST-Miner/logs/txfeed-linux.log</strong>.</p>
+          <a class="btn primary" href="https://snapshot.lustchain.org/downloads/lust-v7a24-miner-ubuntu-amd64.tar.gz" target="_blank" rel="noreferrer">Download V7A24 Ubuntu TAR.GZ</a>
         </div>
-        <div class="sha-box"><span>Final package SHA256</span><code>f557d5783ea15de83afb999a569fe6343c78d2d694edd801445d42ef7f02ce05</code></div>
+        <div class="sha-box"><span>Final package SHA256</span><code>f557d5783ea15de83afb999a569fe6343c78d2d694edd801445d42ef7f02ce05</code><a href="https://snapshot.lustchain.org/downloads/lust-v7a24-miner-ubuntu-amd64.tar.gz.sha256" target="_blank" rel="noreferrer">Open .sha256</a></div>
       </div>
     </div>
 
     <div class="notice miner-log">
-      Release filenames: <strong>lust-v7a24-miner-windows-amd64.zip</strong> and <strong>lust-v7a24-miner-ubuntu-amd64.tar.gz</strong>. Download access will be enabled only at the official public mining launch.
+      Release filenames: <strong>lust-v7a24-miner-windows-amd64.zip</strong> and <strong>lust-v7a24-miner-ubuntu-amd64.tar.gz</strong>. Downloads are enabled temporarily for controlled testing. Public mining remains locked until liquidity and the official authorization.
     </div>
   </section>
 
@@ -372,7 +372,7 @@ tail -f ~/LUST-Miner/logs/txfeed-linux.log
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
 
-<script type="module" src="./app.js?v=20260617-mining-v7a24-locked"></script>
+<script type="module" src="./app.js?v=20260617-mining-v7a24-test"></script>
 <script src="./nft-menu.js?v=20260616-hover-v5"></script>
 </body>
 </html>
