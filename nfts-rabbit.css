@@ -594,7 +594,7 @@
 }
 
 
-/* LUST Rabbit Club community page-only update */
+/* LUST Rabbit Club final reviewed community presentation */
 html { scroll-behavior: smooth; }
 
 .rabbit-section-nav {
@@ -606,9 +606,9 @@ html { scroll-behavior: smooth; }
   overflow-x: auto;
   padding: 12px;
   margin: 18px 0 0;
-  border: 1px solid rgba(247, 3, 117, .32);
+  border: 1px solid rgba(247,3,117,.32);
   border-radius: 18px;
-  background: rgba(7, 1, 9, .92);
+  background: rgba(7,1,9,.92);
   backdrop-filter: blur(14px);
   scrollbar-width: thin;
 }
@@ -626,30 +626,34 @@ html { scroll-behavior: smooth; }
 }
 .rabbit-section-nav a:hover {
   border-color: #f70375;
-  background: rgba(247, 3, 117, .12);
+  background: rgba(247,3,117,.12);
 }
 
 .rabbit-club-gateway {
   display: grid;
-  grid-template-columns: minmax(280px, .8fr) minmax(0, 1.2fr);
-  gap: clamp(22px, 5vw, 58px);
+  grid-template-columns: minmax(300px,.9fr) minmax(0,1.1fr);
+  gap: clamp(24px,5vw,60px);
   align-items: center;
   margin-top: 18px;
-  padding: clamp(24px, 5vw, 54px);
-  border: 2px solid rgba(247, 3, 117, .46);
+  padding: clamp(24px,5vw,54px);
+  border: 2px solid rgba(247,3,117,.46);
   border-radius: 28px;
   background:
-    radial-gradient(circle at 25% 50%, rgba(247,3,117,.18), transparent 36%),
+    radial-gradient(circle at 25% 50%, rgba(247,3,117,.17), transparent 38%),
     linear-gradient(145deg, rgba(255,255,255,.045), rgba(247,3,117,.045));
   box-shadow: 0 28px 90px rgba(0,0,0,.32);
+}
+.rabbit-club-emblem {
+  overflow: hidden;
+  border: 1px solid rgba(247,3,117,.34);
+  border-radius: 22px;
+  background: #000;
 }
 .rabbit-club-emblem img {
   width: 100%;
   display: block;
-  border-radius: 22px;
-  background: #000;
 }
-.rabbit-club-gateway-copy small {
+.rabbit-club-gateway-copy > small {
   display: block;
   color: #ff82b9;
   font-weight: 950;
@@ -686,29 +690,39 @@ html { scroll-behavior: smooth; }
 }
 .rabbit-enter-wrap { margin-top: 18px; }
 .rabbit-enter-club {
-  width: min(100%, 680px);
+  width: min(100%,720px);
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 18px;
   border: 2px solid #f70375;
   border-radius: 22px;
-  padding: 17px 24px;
+  padding: 14px 22px;
   background: #050006;
   color: #fff;
   box-shadow: 0 0 34px rgba(247,3,117,.22), inset 0 0 24px rgba(247,3,117,.08);
   opacity: 1;
   cursor: not-allowed;
 }
-.rabbit-enter-icon { font-size: 34px; color: #ff4ba8; }
+.rabbit-enter-club img {
+  width: 112px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(247,3,117,.32);
+  background: #000;
+}
 .rabbit-enter-club strong,
-.rabbit-enter-club small { display: block; text-align: left; }
+.rabbit-enter-club small {
+  display: block;
+  text-align: left;
+}
 .rabbit-enter-club strong {
-  font-size: clamp(18px, 3vw, 28px);
+  font-size: clamp(18px,3vw,28px);
   letter-spacing: .08em;
 }
 .rabbit-enter-club small {
-  margin: 4px 0 0;
+  margin-top: 5px;
   color: #ff9dcc;
   font-size: 11px;
 }
@@ -727,14 +741,14 @@ html { scroll-behavior: smooth; }
   line-height: 1.75;
 }
 .rabbit-benefits-expanded {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3,minmax(0,1fr));
 }
 .rabbit-tier-grid,
 .rabbit-roadmap-grid,
 .rabbit-safety-grid,
 .rabbit-principles-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(4,minmax(0,1fr));
   gap: 14px;
   margin-top: 20px;
 }
@@ -742,6 +756,7 @@ html { scroll-behavior: smooth; }
 .rabbit-roadmap-grid > div,
 .rabbit-safety-grid > div,
 .rabbit-principles-grid > div {
+  min-width: 0;
   border: 1px solid rgba(247,3,117,.28);
   border-radius: 20px;
   padding: 18px;
@@ -773,7 +788,9 @@ html { scroll-behavior: smooth; }
   color: #d6c1d2;
   font-size: 13px;
   line-height: 1.6;
+  overflow-wrap: anywhere;
 }
+
 .rabbit-details {
   margin-top: 18px;
   border: 1px solid rgba(247,3,117,.32);
@@ -791,15 +808,19 @@ html { scroll-behavior: smooth; }
   border-top: 1px solid rgba(255,255,255,.1);
   padding: 16px 18px;
 }
-.rabbit-details p { margin: 0 0 8px; color: #d9c7d7; }
+.rabbit-details p {
+  margin: 0 0 8px;
+  color: #d9c7d7;
+}
 
 .rabbit-allocation-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3,minmax(0,1fr));
   gap: 14px;
   margin-top: 20px;
 }
 .rabbit-allocation-grid > div {
+  min-width: 0;
   border: 1px solid rgba(247,3,117,.3);
   border-radius: 20px;
   padding: 18px;
@@ -842,11 +863,14 @@ html { scroll-behavior: smooth; }
   padding: 16px 18px;
   background: #090109;
 }
-.rabbit-policy-total span { color: #ffc7e2; text-align: right; }
+.rabbit-policy-total span {
+  color: #ffc7e2;
+  text-align: right;
+}
 .rabbit-subheading { margin-top: 28px; }
 .rabbit-royalty-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(4,minmax(0,1fr));
   gap: 12px;
   margin-top: 14px;
 }
@@ -862,21 +886,21 @@ html { scroll-behavior: smooth; }
   line-height: 1.55;
 }
 
-@media (max-width: 1050px) {
+@media (max-width:1050px) {
   .rabbit-club-gateway { grid-template-columns: 1fr; }
   .rabbit-tier-grid,
   .rabbit-roadmap-grid,
   .rabbit-safety-grid,
   .rabbit-principles-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2,minmax(0,1fr));
   }
   .rabbit-benefits-expanded,
   .rabbit-allocation-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2,minmax(0,1fr));
   }
   .rabbit-allocation-liquidity { grid-column: span 2; }
 }
-@media (max-width: 680px) {
+@media (max-width:680px) {
   .rabbit-section-nav { top: 68px; }
   .rabbit-benefits-expanded,
   .rabbit-tier-grid,
@@ -890,5 +914,5 @@ html { scroll-behavior: smooth; }
   .rabbit-allocation-liquidity { grid-column: auto; }
   .rabbit-policy-total { display: grid; }
   .rabbit-policy-total span { text-align: left; }
-  .rabbit-enter-club { justify-content: flex-start; }
+  .rabbit-enter-club img { width: 78px; height: 54px; }
 }
