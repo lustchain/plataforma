@@ -1,22 +1,2 @@
-LUST Chain V7A21 official miner checksums
-
-Windows latest-snapshot package:
-e08eac670edf840dc72fb769def053b85202d4cfd50c9ec40e6a99704429cda6  lust-v7a21-miner-windows-latest-snapshot.zip
-https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip
-https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip.sha256
-
-Ubuntu / Linux latest-snapshot package:
-f0e745abfb5d435219a5aa64c262f38e1036401198a692ce2811ac631c31b5be  lust-v7a21-miner-linux-latest-snapshot.tar.gz
-https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz
-https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz.sha256
-
-Package: V7A21 complete miner package
-Core binary logic: V7A21 final consensus fix
-
-Reward summary:
-- 0 public miners: official fallback producers keep the chain alive.
-- 1 public miner active: the public producer receives 2 LST per block it produces.
-- 2+ public miners active: producer receives 1.4 LST and active public miners share 0.6 LST.
-- Official fallback producers are excluded from the public committee share while public miners are active.
-
-The mining page reads the .sha256 files directly from the official download server to avoid stale checksums after package corrections.
+Windows ZIP SHA256 24f8cd0778236d65f390be4ec624fbb3c4d13e004915c2cad628b9dfba2c4c13
+Linux TGZ SHA256 2ef91fc4156a41714a77321109ae6ede87c7a45a6ff22fdcb7c6a89d09c3ce25

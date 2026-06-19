@@ -3,44 +3,32 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>P2P LST/LUSDT | LUST Platform</title>
-  <meta name="description" content="Trade native LST peer-to-peer against LUSDT on LUST Chain." />
-  <link rel="icon" href="./assets/favicon.ico">
+  <title>P2P | LUST Platform</title>
+  <meta name="description" content="LUST Chain platform." />
+    <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css?v=20260617-faucet-page-v1" />
+<link rel="stylesheet" href="./styles.css?v20260610-miner-launch-v1" />
 </head>
-<body data-p2p-page>
+<body>
 <div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
 <header class="topbar">
-  <a class="brand" href="./presale.html">
+  <a class="brand" href="./bridge.html">
     <div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div>
     <div>
       <strong>LUST</strong>
       <span>Platform</span>
     </div>
   </a>
-    <nav class="nav">
-      <a class="" href="./presale.html">Presale</a>
+
+  <nav class="nav">
       <a class="" href="./bridge.html">Bridge</a>
-      <a class="" href="./swap.html">Swap</a>
-      <a class="active" href="./p2p.html">P2P</a>
-      <details class="nav-nft-menu">
-
-              <summary>NFTs</summary>
-
-              <div class="nav-nft-dropdown" role="menu" aria-label="NFT collections">
-
-                <a href="./nfts.html" role="menuitem"><strong>LUST Rabbit Club</strong><span>Premium NFT collection</span></a>
-
-                <a href="./pioneer.html" role="menuitem"><strong>Pioneer Rewards</strong><span>Free reward campaign</span></a>
-
-              </div>
-
-            </details>
       <a class="" href="./mining.html">Mining</a>
-      <a class="" href="./faucet.html">Faucet</a>
+      <a class="" href="./swap.html">Swap</a>
       <a class="" href="./staking.html">Staking</a>
+      <a class="" href="./liquidity.html">Liquidity</a>
+      <a class="active" href="./p2p.html">P2P</a>
+      <a class="" href="./nfts.html">NFTs</a>
       <a class="" href="./factory.html">Factory</a>
       <a class="" href="./explorer.html">Explorer</a>
       <a class="" href="./docs.html">Docs</a>
@@ -58,201 +46,8 @@
   </div>
 </header>
 
-<main class="wrap page p2p-page" data-p2p-market>
-  <section class="p2p-hero">
-    <div class="p2p-hero-copy">
-      <div class="kicker">LUST P2P MARKET</div>
-      <h1>Trade LST directly with LUSDT.</h1>
-      <p>Open buy or sell orders, fill partial amounts and manage everything from your wallet. Native LST stays locked in the contract for sell orders. LUSDT stays locked for buy orders.</p>
-      <div class="hero-buttons">
-        <button class="btn primary" type="button" data-p2p-scroll-create>Create order</button>
-        <button class="btn" type="button" data-p2p-refresh>Refresh market</button>
-        <a class="btn" href="https://explorer.lustchain.org/address/0xcd821ede23048f8fea777eeec3948135758e4926" target="_blank" rel="noreferrer">View contract</a>
-      </div>
-    </div>
-
-    <aside class="p2p-market-card">
-      <div class="p2p-pair">
-        <img src="./assets/lust-logo.png" alt="LST">
-        <div>
-          <span>Pair</span>
-          <strong>LST / LUSDT</strong>
-        </div>
-      </div>
-      <div class="row"><span>Fee</span><strong>0.02% LUSDT</strong></div>
-      <div class="row"><span>Contract</span><strong data-p2p-contract-short>0xcd82...4926</strong></div>
-      <div class="row"><span>Network</span><strong>LUST Chain · 6923</strong></div>
-      <div class="notice compact" data-p2p-log>Connect your wallet and refresh the market.</div>
-    </aside>
-  </section>
-
-  <section class="p2p-section">
-    <div class="grid three p2p-stats">
-      <div class="card"><small>Wallet LST</small><strong data-p2p-lst-balance>--</strong><p>Native LST balance on LUST Chain.</p></div>
-      <div class="card"><small>Wallet LUSDT</small><strong data-p2p-lusdt-balance>--</strong><p>LUSDT balance available for buying LST.</p></div>
-      <div class="card"><small>Allowance</small><strong data-p2p-lusdt-allowance>--</strong><p>LUSDT approved for the P2P contract.</p></div>
-    </div>
-  </section>
-
-  <section class="p2p-section" id="create-order">
-    <div class="section-head">
-      <div>
-        <div class="kicker">Create orders</div>
-        <h2>Choose your side.</h2>
-      </div>
-      <p>Price is always written as LUSDT per 1 LST. Example: 1.00 means 1 LST = 1 LUSDT.</p>
-    </div>
-
-    <div class="grid two">
-      <form class="form p2p-form" data-p2p-form="sell">
-        <small>Sell LST</small>
-        <h3>Lock LST and receive LUSDT</h3>
-        <p>Create a sell order. The buyer pays LUSDT and receives your LST.</p>
-
-        <label>LST amount to sell</label>
-        <input class="input" type="number" min="0" step="0.000001" placeholder="100" data-p2p-sell-amount>
-
-        <label>Price: LUSDT per 1 LST</label>
-        <input class="input" type="number" min="0" step="0.000001" placeholder="1.000000" data-p2p-sell-price>
-
-        <label>Deadline in days <span class="muted-inline">optional</span></label>
-        <input class="input" type="number" min="0" step="1" placeholder="0 = no deadline" data-p2p-sell-deadline>
-
-        <div class="result"><span>Buyer pays approximately</span><strong data-p2p-sell-quote>0.000000 LUSDT</strong></div>
-        <button class="btn primary wide" type="button" data-p2p-create-sell>Create sell order</button>
-      </form>
-
-      <form class="form p2p-form" data-p2p-form="buy">
-        <small>Buy LST</small>
-        <h3>Lock LUSDT and receive LST</h3>
-        <p>Create a buy order. The seller sends LST and receives your LUSDT.</p>
-
-        <label>LST amount wanted</label>
-        <input class="input" type="number" min="0" step="0.000001" placeholder="100" data-p2p-buy-amount>
-
-        <label>Price: LUSDT per 1 LST</label>
-        <input class="input" type="number" min="0" step="0.000001" placeholder="1.000000" data-p2p-buy-price>
-
-        <label>Deadline in days <span class="muted-inline">optional</span></label>
-        <input class="input" type="number" min="0" step="1" placeholder="0 = no deadline" data-p2p-buy-deadline>
-
-        <div class="result"><span>LUSDT to lock</span><strong data-p2p-buy-quote>0.000000 LUSDT</strong></div>
-        <button class="btn primary wide" type="button" data-p2p-create-buy>Approve + create buy order</button>
-      </form>
-    </div>
-  </section>
-
-  <section class="p2p-section">
-    <div class="section-head">
-      <div>
-        <div class="kicker">Fill orders</div>
-        <h2>Take an existing order.</h2>
-      </div>
-      <p>Partial fills are allowed. The contract checks side, balance, deadline and slippage before executing.</p>
-    </div>
-
-    <div class="grid two">
-      <div class="form p2p-form">
-        <small>Take order</small>
-        <label>Order ID</label>
-        <input class="input" type="number" min="1" step="1" placeholder="1" data-p2p-fill-id>
-
-        <label>LST amount</label>
-        <input class="input" type="number" min="0" step="0.000001" placeholder="10" data-p2p-fill-amount>
-
-        <label>Slippage protection in LUSDT <span class="muted-inline">optional</span></label>
-        <input class="input" type="number" min="0" step="0.000001" placeholder="Leave empty to ignore" data-p2p-fill-protection>
-
-        <div class="p2p-actions-row">
-          <button class="btn primary" type="button" data-p2p-fill-sell>Buy LST from sell order</button>
-          <button class="btn" type="button" data-p2p-fill-buy>Sell LST into buy order</button>
-        </div>
-      </div>
-
-      <div class="box p2p-help-card">
-        <small>How it works</small>
-        <div class="p2p-help-line"><strong>SELL order</strong><span>Maker locks LST. Taker pays LUSDT and receives LST.</span></div>
-        <div class="p2p-help-line"><strong>BUY order</strong><span>Maker locks LUSDT. Taker sends LST and receives LUSDT minus fee.</span></div>
-        <div class="p2p-help-line"><strong>Fee</strong><span>0.02% goes to the treasury in LUSDT.</span></div>
-        <div class="p2p-help-line"><strong>Safety</strong><span>No owner withdrawal. Only makers can cancel their own orders.</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="p2p-section">
-    <div class="section-head">
-      <div>
-        <div class="kicker">Manage orders</div>
-        <h2>Edit or cancel.</h2>
-      </div>
-      <p>Use this area only for orders created by your connected wallet.</p>
-    </div>
-
-    <div class="grid two">
-      <div class="form p2p-form">
-        <small>Price and deadline</small>
-        <label>Order ID</label>
-        <input class="input" type="number" min="1" step="1" placeholder="1" data-p2p-manage-id>
-
-        <label>New price: LUSDT per 1 LST</label>
-        <input class="input" type="number" min="0" step="0.000001" placeholder="1.000000" data-p2p-new-price>
-
-        <label>New deadline in days</label>
-        <input class="input" type="number" min="0" step="1" placeholder="0 = no deadline" data-p2p-new-deadline>
-
-        <div class="p2p-actions-row">
-          <button class="btn primary" type="button" data-p2p-update-price>Update price</button>
-          <button class="btn" type="button" data-p2p-update-deadline>Update deadline</button>
-          <button class="btn danger" type="button" data-p2p-cancel>Cancel order</button>
-        </div>
-      </div>
-
-      <div class="form p2p-form">
-        <small>Increase or reduce size</small>
-        <label>Sell order: add/remove LST</label>
-        <div class="p2p-inline-fields">
-          <input class="input" type="number" min="0" step="0.000001" placeholder="LST amount" data-p2p-sell-edit-amount>
-          <button class="btn" type="button" data-p2p-add-sell-lst>Add LST</button>
-          <button class="btn" type="button" data-p2p-remove-sell-lst>Remove LST</button>
-        </div>
-
-        <label>Buy order: add LUSDT or reduce wanted LST</label>
-        <div class="p2p-inline-fields">
-          <input class="input" type="number" min="0" step="0.000001" placeholder="Amount" data-p2p-buy-edit-amount>
-          <button class="btn" type="button" data-p2p-add-buy-lusdt>Add LUSDT</button>
-          <button class="btn" type="button" data-p2p-reduce-buy-lst>Reduce LST</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="p2p-section">
-    <div class="section-head">
-      <div>
-        <div class="kicker">Live book</div>
-        <h2>Open P2P orders.</h2>
-      </div>
-      <div class="p2p-book-actions">
-        <button class="btn" type="button" data-p2p-refresh>Refresh</button>
-      </div>
-    </div>
-
-    <div class="grid two">
-      <div class="box">
-        <small>Sell orders</small>
-        <div class="p2p-order-list" data-p2p-sell-orders><div class="notice compact">Loading sell orders...</div></div>
-      </div>
-      <div class="box">
-        <small>Buy orders</small>
-        <div class="p2p-order-list" data-p2p-buy-orders><div class="notice compact">Loading buy orders...</div></div>
-      </div>
-    </div>
-
-    <div class="box p2p-my-orders">
-      <small>My active orders</small>
-      <div class="p2p-order-list" data-p2p-my-orders><div class="notice compact">Connect wallet to see your active orders.</div></div>
-    </div>
-  </section>
+<main class="wrap page">
+<section class="hero"><div class="kicker">P2P</div><h1>P2P marketplace.</h1><p>Simple peer-to-peer page for LUST ecosystem trading when contracts are connected.</p><div class="box"><small>Status</small><div class="row"><span>Market</span><strong>LST / LUSDT</strong></div><div class="row"><span>Fee</span><strong>To configure</strong></div><div class="row"><span>Launch</span><strong>After bridge</strong></div></div></section>
 </main>
 
 <footer class="footer">
@@ -262,7 +57,6 @@
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
-<script type="module" src="./app.js?v20260613-p2p-lusdt-v1"></script>
-<script src="./nft-menu.js?v=20260616-hover-v5"></script>
+<script type="module" src="./app.js?v20260610-miner-launch-v1"></script>
 </body>
 </html>

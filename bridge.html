@@ -8,42 +8,30 @@
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css?v=20260617-faucet-page-v1" />
+  <link rel="stylesheet" href="./styles.css?v20260619-bsc-recover" />
 </head>
 <body>
 <div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
 <header class="topbar">
-  <a class="brand" href="./presale.html">
+  <a class="brand" href="./bridge.html">
     <div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div>
     <div>
       <strong>LUST</strong>
       <span>Platform</span>
     </div>
   </a>
-    <nav class="nav">
-      <a class="" href="./presale.html">Presale</a>
+
+  <nav class="nav">
       <a class="active" href="./bridge.html">Bridge</a>
-      <a class="" href="./swap.html">Swap</a>
-      <a class="" href="./p2p.html">P2P</a>
-      <details class="nav-nft-menu">
-
-              <summary>NFTs</summary>
-
-              <div class="nav-nft-dropdown" role="menu" aria-label="NFT collections">
-
-                <a href="./nfts.html" role="menuitem"><strong>LUST Rabbit Club</strong><span>Premium NFT collection</span></a>
-
-                <a href="./pioneer.html" role="menuitem"><strong>Pioneer Rewards</strong><span>Free reward campaign</span></a>
-
-              </div>
-
-            </details>
-      <a class="" href="./mining.html">Mining</a>
-      <a class="" href="./faucet.html">Faucet</a>
-      <a class="" href="./staking.html">Staking</a>
-      <a class="" href="./factory.html">Factory</a>
-      <a class="" href="./explorer.html">Explorer</a>
-      <a class="" href="./docs.html">Docs</a>
+      <a href="./mining.html">Mining</a>
+      <a href="./swap.html">Swap</a>
+      <a href="./staking.html">Staking</a>
+      <a href="./liquidity.html">Liquidity</a>
+      <a href="./p2p.html">P2P</a>
+      <a href="./nfts.html">NFTs</a>
+      <a href="./factory.html">Factory</a>
+      <a href="./explorer.html">Explorer</a>
+      <a href="./docs.html">Docs</a>
   </nav>
 
   <div class="actions">
@@ -144,10 +132,18 @@
 
         <div class="bridge-pro-status">
           <div class="bridge-status-title"><strong>Claim status</strong><span data-bridge-claim-state>Waiting</span></div>
-          <p data-bridge-claim-log>Ready. Connect wallet and choose an amount.</p>
+          <p data-bridge-log>Ready. Connect wallet and choose an amount.</p>
           <details>
             <summary>Need manual recovery?</summary>
-            <div class="bridge-inline-warning" data-bridge-manual-help>The bridge checks your claim automatically after the deposit confirms. If needed, this area also shows recent local recovery hints from your browser.</div>
+            <div class="bridge-inline-warning" data-bridge-manual-help>The bridge checks your claim automatically after the deposit confirms. If a BSC deposit does not appear, paste the BSC transaction hash below and the bridge will recover the claim from the on-chain receipt.</div>
+            <div class="bridge-recover-box" data-bridge-bsc-recover-box>
+              <label for="bridgeRecoverBscTx">Recover BSC deposit by transaction hash</label>
+              <div class="bridge-recover-row">
+                <input class="input bridge-recover-input" id="bridgeRecoverBscTx" data-bridge-recover-bsc-tx type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="0x... BSC deposit transaction hash" />
+                <button class="mini-btn" type="button" data-bridge-recover-bsc>Recover claim</button>
+              </div>
+              <small data-bridge-recover-bsc-status>Use this only for BSC buy/deposit transactions into the LUSDT lockbox. It is not needed for normal automatic claims.</small>
+            </div>
             <div class="claim-list" data-bridge-pending-claims>
               <div class="claim-item muted">Open this section to review recent claims and local recovery hints.</div>
             </div>
@@ -212,7 +208,7 @@
 
         <div class="bridge-pro-status">
           <div class="bridge-status-title"><strong>Release status</strong><span data-bridge-release-state>Waiting</span></div>
-          <p data-bridge-release-log>Ready. Burn LUSDT and the bridge will check the release automatically.</p>
+          <p>After your burn, the bridge unlocks the USDT release automatically. When it is ready, the Release USDT button becomes available.</p>
           <details open>
             <summary>Ready releases</summary>
             <div class="claim-list" data-bridge-pending-releases>
@@ -260,7 +256,6 @@
 </footer>
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
-<script type="module" src="./app.js?v20260612-lusdt-bridge-v35-anti-stuck"></script>
-<script src="./nft-menu.js?v=20260616-hover-v5"></script>
+<script type="module" src="./app.js?v20260619-bsc-recover"></script>
 </body>
 </html>

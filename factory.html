@@ -4,44 +4,31 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Factory | LUST Platform</title>
-  <meta name="description" content="Create ERC-20 tokens on LUST Chain." />
-  <link rel="icon" href="./assets/favicon.ico">
+  <meta name="description" content="LUST Chain platform." />
+    <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css?v=20260617-faucet-page-v1" />
-  <link rel="stylesheet" href="./factory-pro.css?v20260614-premium-socials-v1" />
+<link rel="stylesheet" href="./styles.css?v20260610-miner-launch-v1" />
 </head>
 <body>
 <div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
 <header class="topbar">
-  <a class="brand" href="./presale.html">
+  <a class="brand" href="./bridge.html">
     <div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div>
     <div>
       <strong>LUST</strong>
       <span>Platform</span>
     </div>
   </a>
-    <nav class="nav">
-      <a class="" href="./presale.html">Presale</a>
+
+  <nav class="nav">
       <a class="" href="./bridge.html">Bridge</a>
-      <a class="" href="./swap.html">Swap</a>
-      <a class="" href="./p2p.html">P2P</a>
-      <details class="nav-nft-menu">
-
-              <summary>NFTs</summary>
-
-              <div class="nav-nft-dropdown" role="menu" aria-label="NFT collections">
-
-                <a href="./nfts.html" role="menuitem"><strong>LUST Rabbit Club</strong><span>Premium NFT collection</span></a>
-
-                <a href="./pioneer.html" role="menuitem"><strong>Pioneer Rewards</strong><span>Free reward campaign</span></a>
-
-              </div>
-
-            </details>
       <a class="" href="./mining.html">Mining</a>
-      <a class="" href="./faucet.html">Faucet</a>
+      <a class="" href="./swap.html">Swap</a>
       <a class="" href="./staking.html">Staking</a>
+      <a class="" href="./liquidity.html">Liquidity</a>
+      <a class="" href="./p2p.html">P2P</a>
+      <a class="" href="./nfts.html">NFTs</a>
       <a class="active" href="./factory.html">Factory</a>
       <a class="" href="./explorer.html">Explorer</a>
       <a class="" href="./docs.html">Docs</a>
@@ -59,218 +46,8 @@
   </div>
 </header>
 
-<main class="wrap page factory-page" data-token-factory>
-  <section class="hero factory-hero">
-    <div class="kicker">Token Factory</div>
-    <h1>Create LUST tokens.</h1>
-    <p>Create a clean fixed-supply ERC-20 token on LUST Chain. Pay with LUSDT or native LST, then open the token directly on LUST Explorer.</p>
-
-    <div class="factory-status-grid">
-      <div class="box">
-        <small>Factory contract</small>
-        <div class="row"><span>Address</span><strong data-factory-address-short>--</strong></div>
-        <div class="row"><span>Total created</span><strong data-factory-total-tokens>--</strong></div>
-        <div class="row"><span>Status</span><strong data-factory-status>Loading</strong></div>
-      </div>
-      <div class="box">
-        <small>Payments</small>
-        <div class="row"><span>LUSDT</span><strong data-factory-lusdt-enabled>--</strong></div>
-        <div class="row"><span>LST</span><strong data-factory-lst-enabled>--</strong></div>
-        <div class="row"><span>Connected wallet</span><strong data-factory-wallet>--</strong></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="factory-layout">
-    <form class="form factory-form" id="tokenFactoryForm">
-      <div class="factory-section-title">
-        <span>1</span>
-        <div>
-          <h2>Token details</h2>
-          <p>Supply is entered in whole tokens. Example: 1000000 with 18 decimals creates 1,000,000 tokens.</p>
-        </div>
-      </div>
-
-      <div class="grid two factory-fields">
-        <label>Token name
-          <input class="input" data-factory-name maxlength="64" placeholder="Example: LUST Meme Token" autocomplete="off" required>
-        </label>
-        <label>Symbol
-          <input class="input" data-factory-symbol maxlength="16" placeholder="Example: LMT" autocomplete="off" required>
-        </label>
-        <label>Decimals
-          <input class="input" data-factory-decimals type="number" min="0" max="18" step="1" value="18" required>
-        </label>
-        <label>Supply
-          <input class="input" data-factory-supply inputmode="numeric" placeholder="1000000" required>
-        </label>
-      </div>
-
-      <div class="factory-section-title">
-        <span>2</span>
-        <div>
-          <h2>Choose plan</h2>
-          <p>Logo and Premium create explorer metadata automatically. Logo includes a logo image and short description. Premium includes logo, full description, website and a complete official links profile.</p>
-        </div>
-      </div>
-
-      <div class="factory-plans" role="radiogroup" aria-label="Token plan">
-        <label class="factory-plan is-selected" data-factory-plan-card>
-          <input type="radio" name="factoryPlan" value="1" checked data-factory-plan>
-          <small>Basic</small>
-          <strong>5 LUSDT</strong>
-          <span>or 50 LST</span>
-          <p>Create token only. No custom logo or explorer profile.</p>
-        </label>
-        <label class="factory-plan" data-factory-plan-card>
-          <input type="radio" name="factoryPlan" value="2" data-factory-plan>
-          <small>Logo</small>
-          <strong>10 LUSDT</strong>
-          <span>or 100 LST</span>
-          <p>Logo image + short description for explorer metadata.</p>
-        </label>
-        <label class="factory-plan" data-factory-plan-card>
-          <input type="radio" name="factoryPlan" value="3" data-factory-plan>
-          <small>Premium</small>
-          <strong>20 LUSDT</strong>
-          <span>or 200 LST</span>
-          <p>Full explorer profile with logo, description, website, socials, docs and market links.</p>
-        </label>
-      </div>
-
-      <div class="factory-metadata-wrap">
-        <div class="factory-section-title compact-title">
-          <span>2B</span>
-          <div>
-            <h2>Logo & explorer info</h2>
-            <p>For Logo and Premium plans, the site uploads your logo and creates the metadata URI automatically. Premium unlocks official links, social links, docs, audit and market links.</p>
-          </div>
-        </div>
-
-        <div class="grid two factory-fields">
-          <label class="factory-file-label">Logo image
-            <input class="factory-file-input" data-factory-logo type="file" accept="image/png,image/webp,image/jpeg,image/svg+xml">
-            <button class="factory-file-button" type="button" data-factory-logo-picker>Upload logo</button>
-            <div class="factory-file-name" data-factory-logo-name>No file selected</div>
-            <div class="factory-small-note">PNG, WEBP, JPG or SVG. Max 2 MB. Square 512x512 recommended.</div>
-          </label>
-          <label class="factory-premium-only">Website
-            <input class="input" data-factory-website maxlength="256" placeholder="https://your-site.com" autocomplete="off">
-          </label>
-          <label class="factory-premium-only">X / Twitter
-            <input class="input" data-factory-twitter maxlength="256" placeholder="https://x.com/yourproject" autocomplete="off">
-          </label>
-          <label class="factory-premium-only">Telegram
-            <input class="input" data-factory-telegram maxlength="256" placeholder="https://t.me/yourproject" autocomplete="off">
-          </label>
-          <label class="factory-premium-only">Discord
-            <input class="input" data-factory-discord maxlength="256" placeholder="https://discord.gg/yourproject" autocomplete="off">
-          </label>
-          <label class="factory-premium-only">Instagram
-            <input class="input" data-factory-instagram maxlength="256" placeholder="https://instagram.com/yourproject" autocomplete="off">
-          </label>
-          <label class="factory-premium-only">YouTube
-            <input class="input" data-factory-youtube maxlength="256" placeholder="https://youtube.com/@yourproject" autocomplete="off">
-          </label>
-          <label class="factory-premium-only">GitHub
-            <input class="input" data-factory-github maxlength="256" placeholder="https://github.com/yourproject" autocomplete="off">
-          </label>
-          <label class="factory-premium-only">Medium / Blog
-            <input class="input" data-factory-medium maxlength="256" placeholder="https://medium.com/@yourproject" autocomplete="off">
-          </label>
-          <label class="factory-premium-only">LinkedIn
-            <input class="input" data-factory-linkedin maxlength="256" placeholder="https://linkedin.com/company/yourproject" autocomplete="off">
-          </label>
-          <label class="factory-premium-only">Whitepaper / Docs
-            <input class="input" data-factory-docs maxlength="256" placeholder="https://docs.your-site.com" autocomplete="off">
-          </label>
-          <label class="factory-premium-only">Audit report
-            <input class="input" data-factory-audit maxlength="256" placeholder="https://your-site.com/audit.pdf" autocomplete="off">
-          </label>
-          <label class="factory-premium-only">CoinGecko
-            <input class="input" data-factory-coingecko maxlength="256" placeholder="https://www.coingecko.com/en/coins/your-token" autocomplete="off">
-          </label>
-          <label class="factory-premium-only">CoinMarketCap
-            <input class="input" data-factory-coinmarketcap maxlength="256" placeholder="https://coinmarketcap.com/currencies/your-token" autocomplete="off">
-          </label>
-          <label class="factory-premium-only">DexScreener
-            <input class="input" data-factory-dexscreener maxlength="256" placeholder="https://dexscreener.com/lustchain/your-pair" autocomplete="off">
-          </label>
-          <label class="factory-premium-only">Support email
-            <input class="input" data-factory-email maxlength="160" placeholder="support@your-site.com" autocomplete="off">
-          </label>
-        </div>
-
-        <label class="factory-full-label">Description
-          <textarea class="input factory-textarea" data-factory-description maxlength="800" rows="4" placeholder="Logo plan: short description. Premium: full token profile, utility, links and community description."></textarea>
-          <div class="factory-small-note" data-factory-description-note>Logo plan uses a short description. Premium can include a fuller project description and official links.</div>
-        </label>
-
-        <label class="factory-full-label">Generated metadata URI
-          <input class="input" data-factory-metadata-generated maxlength="512" placeholder="Generated automatically after upload" readonly>
-          <div class="factory-small-note">This URI is sent to the factory contract when the token is created.</div>
-        </label>
-      </div>
-
-      <div class="factory-section-title">
-        <span>3</span>
-        <div>
-          <h2>Payment</h2>
-          <p>LUSDT uses approve + create. LST is paid directly in the create transaction.</p>
-        </div>
-      </div>
-
-      <div class="factory-payment-grid">
-        <label class="factory-payment is-selected" data-factory-payment-card>
-          <input type="radio" name="factoryPayment" value="0" checked data-factory-payment>
-          <strong>Pay with LUSDT</strong>
-          <span data-factory-selected-lusdt-fee>--</span>
-        </label>
-        <label class="factory-payment" data-factory-payment-card>
-          <input type="radio" name="factoryPayment" value="1" data-factory-payment>
-          <strong>Pay with LST</strong>
-          <span data-factory-selected-lst-fee>--</span>
-        </label>
-      </div>
-
-      <div class="factory-summary box">
-        <small>Summary</small>
-        <div class="row"><span>Selected plan</span><strong data-factory-summary-plan>Basic</strong></div>
-        <div class="row"><span>Payment</span><strong data-factory-summary-payment>LUSDT</strong></div>
-        <div class="row"><span>Fee</span><strong data-factory-summary-fee>--</strong></div>
-        <div class="row"><span>Your LUSDT balance</span><strong data-factory-lusdt-balance>--</strong></div>
-        <div class="row"><span>LUSDT allowance</span><strong data-factory-lusdt-allowance>--</strong></div>
-      </div>
-
-      <div class="factory-actions-row">
-        <button class="btn" type="button" data-factory-refresh>Refresh</button>
-        <button class="btn" type="button" data-factory-approve>Approve LUSDT</button>
-        <button class="btn primary" type="submit" data-factory-create>Create token</button>
-      </div>
-
-      <div class="notice" data-factory-log>Connect wallet and select a plan.</div>
-    </form>
-
-    <aside class="factory-side">
-      <div class="box">
-        <small>Created token</small>
-        <div class="factory-success" data-factory-success>
-          <p>No token created in this session yet.</p>
-        </div>
-      </div>
-
-      <div class="box">
-        <small>Your tokens</small>
-        <div class="factory-token-list" data-factory-token-list>
-          <p>Connect wallet to load your factory tokens.</p>
-        </div>
-      </div>
-
-      <div class="notice compact" data-tone="warn">
-        Community-created tokens are not audited or endorsed by LUST Chain. Always verify the contract address and DYOR.
-      </div>
-    </aside>
-  </section>
+<main class="wrap page">
+<section class="hero"><div class="kicker">Factory</div><h1>Launch tokens.</h1><p>Token factory page only. Use this page for creating LUST ecosystem tokens after contracts are ready.</p><div class="box"><small>Factory status</small><div class="row"><span>Token standard</span><strong>ERC-20</strong></div><div class="row"><span>Network</span><strong>LUST Chain</strong></div><div class="row"><span>Status</span><strong>Preparing</strong></div></div></section>
 </main>
 
 <footer class="footer">
@@ -280,8 +57,6 @@
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
-<script type="module" src="./app.js?v20260613-lustswap-v1"></script>
-<script type="module" src="./factory-pro.js?v20260614-premium-socials-v1"></script>
-<script src="./nft-menu.js?v=20260616-hover-v5"></script>
+<script type="module" src="./app.js?v20260610-miner-launch-v1"></script>
 </body>
 </html>
