@@ -1,2 +1,0 @@
-0672f9ac82a713f91b4fa638b68528eb260210ec37ca7d242144e928e4922fcd  lust-v7a25-real-mainnet-private-test-windows-amd64-COMPLETE.zip
-7e4e7dca46b1bbb17955c2b10bd5e51a708a33f61a3a7ddd15d5daeeed1fa024  lust-v7a25-real-mainnet-private-test-ubuntu-amd64-COMPLETE.tar.gz
