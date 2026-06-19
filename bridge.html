@@ -151,6 +151,18 @@
             <div class="claim-list" data-bridge-pending-claims>
               <div class="claim-item muted">Open this section to review recent claims and local recovery hints.</div>
             </div>
+            <div class="claim-item" style="margin-top:12px; display:block; border-style:dashed;">
+              <div style="display:grid; gap:8px;">
+                <strong>Recover BSC deposit by transaction hash</strong>
+                <small>Use this only if a BSC deposit was confirmed but the claim did not appear automatically.</small>
+                <input class="input" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="Paste BSC tx hash 0x..." data-bsc-recover-tx>
+                <div class="bridge-action-grid two-actions" style="margin-top:0;">
+                  <button class="btn" type="button" data-bsc-recover-btn>Recover claim</button>
+                  <button class="btn primary" type="button" data-bsc-recover-mint disabled>Mint recovered claim</button>
+                </div>
+                <div class="bridge-inline-warning" data-bsc-recover-status>Paste a BSC deposit transaction hash if automatic claim detection fails.</div>
+              </div>
+            </div>
           </details>
         </div>
       </div>
@@ -260,6 +272,153 @@
 </footer>
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
+<script type="module">
+  import { ethers } from "https://esm.sh/ethers@6.16.0";
+
+  const BSC_RECOVER_API = "https://lusdt-bridge.lustchain.org/api/recover/bsc/";
+  const LUST_CHAIN_ID = "0x1b0b";
+  const LUST_CHAIN_PARAMS = {
+    chainId: LUST_CHAIN_ID,
+    chainName: "LUST Chain",
+    nativeCurrency: { name: "LST", symbol: "LST", decimals: 18 },
+    rpcUrls: ["https://rpc.lustchain.org"],
+    blockExplorerUrls: ["https://explorer.lustchain.org"]
+  };
+  const LUSDT_EXECUTOR = "0xbBC818f161D1B7190f85bE258CDB568a5A63f380";
+  const EXECUTOR_ABI = [
+    "function mintFromExternalDeposit(address user,uint256 amount,bytes32 depositId,uint256 sourceChainId,uint256 deadline,bytes[] signatures) external"
+  ];
+
+  let recoveredClaim = null;
+
+  const $ = (sel) => document.querySelector(sel);
+  const statusEl = () => $("[data-bsc-recover-status]");
+  const mintBtn = () => $("[data-bsc-recover-mint]");
+
+  function setRecoverStatus(message, ok = false) {
+    const el = statusEl();
+    if (!el) return;
+    el.textContent = message;
+    el.style.borderColor = ok ? "rgba(38,255,160,.45)" : "rgba(255,214,0,.35)";
+  }
+
+  function shortHash(x) {
+    const v = String(x || "");
+    return v.length > 14 ? `${v.slice(0, 8)}...${v.slice(-6)}` : v;
+  }
+
+  async function ensureLustChain() {
+    if (!window.ethereum) throw new Error("Wallet not found. Open with MetaMask/Rabby or another EVM wallet.");
+    try {
+      await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: LUST_CHAIN_ID }] });
+    } catch (err) {
+      if (err && (err.code === 4902 || String(err.message || "").includes("Unrecognized chain"))) {
+        await window.ethereum.request({ method: "wallet_addEthereumChain", params: [LUST_CHAIN_PARAMS] });
+        await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: LUST_CHAIN_ID }] });
+      } else {
+        throw err;
+      }
+    }
+  }
+
+  async function recoverBscClaim() {
+    const input = $("[data-bsc-recover-tx]");
+    const txHash = String(input?.value || "").trim();
+
+    if (!/^0x[a-fA-F0-9]{64}$/.test(txHash)) {
+      setRecoverStatus("Invalid BSC transaction hash. It must start with 0x and have 64 hex characters.");
+      return;
+    }
+
+    recoveredClaim = null;
+    if (mintBtn()) mintBtn().disabled = true;
+    setRecoverStatus("Checking BSC transaction and bridge claim...");
+
+    try {
+      const res = await fetch(`${BSC_RECOVER_API}${txHash}?t=${Date.now()}`, {
+        method: "GET",
+        mode: "cors",
+        credentials: "omit",
+        cache: "no-store",
+        headers: { accept: "application/json" }
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data.ok) {
+        throw new Error(data.error || `Recover failed with HTTP ${res.status}`);
+      }
+
+      const claim = data.claim;
+      if (!claim) throw new Error("Recover returned no claim data.");
+
+      try {
+        localStorage.setItem("lustLastDepositId", claim.depositId || data.depositId || "");
+        sessionStorage.setItem("lustBridgePending_claim", JSON.stringify({
+          value: String(claim.depositId || data.depositId || ""),
+          ts: Date.now(),
+          source: "bsc",
+          recovered: true
+        }));
+      } catch (_) {}
+
+      if (claim.used || String(claim.status || "").toLowerCase().includes("mint")) {
+        setRecoverStatus(`BSC claim found but already minted: ${shortHash(claim.depositId || data.depositId)}.`, true);
+        return;
+      }
+
+      if (String(claim.status || "").toLowerCase() !== "ready") {
+        setRecoverStatus(`Claim found, but status is ${claim.status || "unknown"}. Refresh in a few seconds.`);
+        return;
+      }
+
+      recoveredClaim = claim;
+      if (mintBtn()) mintBtn().disabled = false;
+      setRecoverStatus(`Claim recovered and ready: ${Number(BigInt(claim.amount || "0")) / 1_000_000} LUSDT. You can mint now on LUST Chain.`, true);
+    } catch (err) {
+      setRecoverStatus(err?.message || "Could not recover BSC claim.");
+    }
+  }
+
+  async function mintRecoveredClaim() {
+    if (!recoveredClaim) {
+      setRecoverStatus("Recover a ready BSC claim first.");
+      return;
+    }
+
+    try {
+      if (mintBtn()) mintBtn().disabled = true;
+      setRecoverStatus("Switching to LUST Chain...");
+      await ensureLustChain();
+
+      setRecoverStatus("Opening wallet confirmation to mint recovered LUSDT...");
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const exec = new ethers.Contract(LUSDT_EXECUTOR, EXECUTOR_ABI, signer);
+
+      const tx = await exec.mintFromExternalDeposit(
+        recoveredClaim.recipient,
+        BigInt(recoveredClaim.amount),
+        recoveredClaim.depositId,
+        BigInt(recoveredClaim.sourceChainId),
+        BigInt(recoveredClaim.deadline),
+        recoveredClaim.signatures
+      );
+
+      setRecoverStatus(`Mint sent: ${tx.hash}. Waiting confirmation...`, true);
+      await tx.wait();
+      setRecoverStatus(`LUSDT minted successfully: ${shortHash(tx.hash)}.`, true);
+      recoveredClaim = null;
+    } catch (err) {
+      if (mintBtn()) mintBtn().disabled = false;
+      setRecoverStatus(err?.shortMessage || err?.message || "Mint failed or was rejected.");
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    $("[data-bsc-recover-btn]")?.addEventListener("click", recoverBscClaim);
+    $("[data-bsc-recover-mint]")?.addEventListener("click", mintRecoveredClaim);
+  });
+</script>
 <script type="module" src="./app.js?v20260612-lusdt-bridge-v35-anti-stuck"></script>
 <script src="./nft-menu.js?v=20260616-hover-v5"></script>
 </body>
