@@ -308,7 +308,7 @@ syncBackToTopButton();
 
 // LUST miner registration + mining page helpers v20260611-txfeed-v3-final
 const LUST_REGISTRY_ADDRESS = "0x0000000000000000000000000000000000006923";
-const LUST_REGISTER_DATA = "0x4c5143525f5631";
+const LUST_REGISTER_MAGIC_V2 = "0x4c5143525f5632"; // LQCR_V2 + 20-byte operator address
 const LUST_RPC_URL = "https://rpc.lustchain.org";
 const LUST_EXPLORER_URL = "https://explorer.lustchain.org";
 const LUST_SNAPSHOT_INFO_URL = "https://snapshot.lustchain.org/snapshot/snapshot-info.json";
@@ -426,9 +426,15 @@ async function waitForTxReceipt(txHash, timeoutMs = 180000) {
 
 async function registerMinerWallet() {
   try {
-    setMinerLog("Opening wallet confirmation for miner registration...", "");
+    setMinerLog("Opening wallet confirmation for V7A25 miner registration...", "");
     const eth = getInjectedEthereum();
     if (!eth) throw new Error("MetaMask or injected wallet not found.");
+
+    const operatorInput = document.querySelector("[data-operator-address]");
+    const operator = String(operatorInput?.value || "").trim();
+    if (!/^0x[0-9a-fA-F]{40}$/.test(operator)) {
+      throw new Error("Paste the V7A25 operator address from operator-address.txt before registering.");
+    }
 
     const account = await getWalletAccount();
     await addLustChainToWallet();
@@ -438,22 +444,25 @@ async function registerMinerWallet() {
       throw new Error("Please switch to LUST Chain before registering.");
     }
 
+    const registerData = `${LUST_REGISTER_MAGIC_V2}${operator.slice(2).toLowerCase()}`;
+
     const txHash = await eth.request({
       method: "eth_sendTransaction",
       params: [{
         from: account,
         to: LUST_REGISTRY_ADDRESS,
         value: "0x0",
-        data: LUST_REGISTER_DATA
+        data: registerData,
+        gas: "0x249f0"
       }]
     });
 
-    setMinerLog(`Registration sent. Waiting confirmation: ${txHash}`, "");
+    setMinerLog(`V7A25 registration sent. Waiting confirmation: ${txHash}`, "");
     const receipt = await waitForTxReceipt(txHash);
 
     if (receipt?.status === "0x1") {
-      localStorage.setItem(localRegistrationKey(account), JSON.stringify({ txHash, time: Date.now() }));
-      setMinerLog(`Miner wallet registered successfully. Tx: ${txHash}`, "ok");
+      localStorage.setItem(localRegistrationKey(account), JSON.stringify({ txHash, operator, mode: "LQCR_V2", time: Date.now() }));
+      setMinerLog(`V7A25 miner registered successfully. Operator: ${shortAddress(operator)} · Tx: ${txHash}`, "ok");
     } else if (receipt) {
       setMinerLog(`Registration transaction failed. Tx: ${txHash}`, "warn");
     } else {
@@ -488,7 +497,7 @@ async function updateMinerPage() {
     const saved = localStorage.getItem(localRegistrationKey(address));
     if (saved) {
       const parsed = JSON.parse(saved);
-      setText("[data-registration-state]", `Saved tx ${shortAddress(parsed.txHash || "")}`);
+      setText("[data-registration-state]", parsed.operator ? `V7A25 ${shortAddress(parsed.operator)} · ${shortAddress(parsed.txHash || "")}` : `Saved tx ${shortAddress(parsed.txHash || "")}`);
     } else {
       setText("[data-registration-state]", "Ready to register");
     }

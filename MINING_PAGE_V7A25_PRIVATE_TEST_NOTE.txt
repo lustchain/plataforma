@@ -1,0 +1,14 @@
+Updated only the mining page flow and the miner registration handler for V7A25 private mainnet test.
+
+Changed files:
+- mining.html
+- app.js (miner registration only: LQCR_V2 + operator address)
+- styles.css (small operator-address input styling)
+- downloads/README_UPLOAD_V7A25_PACKAGES.txt
+
+Download links expected:
+./downloads/lust-v7a25-real-mainnet-private-test-windows-amd64-COMPLETE.zip
+./downloads/lust-v7a25-real-mainnet-private-test-ubuntu-amd64-COMPLETE.tar.gz
+./downloads/SHA256SUMS.txt
+
+To block downloads later, remove the downloads files or the downloads folder.

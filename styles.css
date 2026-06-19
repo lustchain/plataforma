@@ -1968,3 +1968,8 @@ select.input{appearance:none;background:#09020d;color:#fff}
     z-index:200;
   }
 }
+
+.operator-field{display:block;margin:16px 0 4px}
+.operator-field span{display:block;color:var(--muted);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.10em;margin-bottom:7px}
+.operator-field input{width:100%;box-sizing:border-box;border:2px solid rgba(255,255,255,.16);background:#08010b;color:#fff;border-radius:14px;padding:14px;font:inherit;outline:none}
+.operator-field input:focus{border-color:rgba(247,3,117,.75);box-shadow:0 0 0 3px rgba(247,3,117,.12)}
