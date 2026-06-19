@@ -316,6 +316,9 @@ const LUST_FAUCET_STATUS_URL = "https://downloads.lustchain.org/faucet/status";
 const LUST_FAUCET_CLAIM_URL = "https://downloads.lustchain.org/faucet/claim";
 const LUST_MINING_STATS_URL = "https://rpc.lustchain.org/mining-stats";
 const LUST_PENDING_RAW_URL = "https://rpc.lustchain.org/pending-raw";
+const LUST_V7A25_REGISTRY_BLOCK = 138282;
+const LUST_V7A25_SIGNATURE_BLOCK = 139082;
+const LUST_V7A25_AUTONOMY_BLOCK = 999999999999;
 
 function setMinerLog(message, tone = "") {
   document.querySelectorAll("[data-miner-log]").forEach((el) => {
@@ -362,6 +365,37 @@ async function lustRpc(method, params = []) {
   const json = await res.json();
   if (json.error) throw new Error(json.error.message || "RPC error");
   return json.result;
+}
+
+function parseRpcBlockNumber(value) {
+  if (typeof value === "number") return value;
+  const v = String(value || "").trim();
+  if (!v) return 0;
+  if (v.startsWith("0x")) return Number.parseInt(v, 16) || 0;
+  return Number.parseInt(v, 10) || 0;
+}
+
+async function getLustCurrentBlock() {
+  return parseRpcBlockNumber(await lustRpc("eth_blockNumber", []));
+}
+
+function updateV7A25GateDisplay(currentBlock) {
+  const block = Number(currentBlock || 0);
+  const remaining = Math.max(0, LUST_V7A25_REGISTRY_BLOCK - block);
+  const isOpen = block >= LUST_V7A25_REGISTRY_BLOCK;
+
+  setText("[data-current-block]", block > 0 ? fmtNumber(block) : "Loading...");
+  setText("[data-blocks-to-registry]", block > 0 ? fmtNumber(remaining) : "Loading...");
+  setText("[data-registration-open]", isOpen ? "Open" : `Locked until ${fmtNumber(LUST_V7A25_REGISTRY_BLOCK)}`);
+  setText("[data-registry-countdown-note]", isOpen ? "Registration is open now." : `Wait ${fmtNumber(remaining)} blocks before registering.`);
+
+  document.querySelectorAll("[data-register-miner]").forEach((btn) => {
+    btn.disabled = !isOpen;
+    btn.textContent = isOpen ? "Register V7A25 Miner now" : `Registration opens at block ${fmtNumber(LUST_V7A25_REGISTRY_BLOCK)}`;
+    btn.title = isOpen ? "Send V7A25 LQCR_V2 registration" : `Current block ${fmtNumber(block)}. Wait until ${fmtNumber(LUST_V7A25_REGISTRY_BLOCK)}.`;
+  });
+
+  return { block, remaining, isOpen };
 }
 
 function weiHexToLst(hexValue) {
@@ -444,6 +478,12 @@ async function registerMinerWallet() {
       throw new Error("Troque para LUST Chain antes de registrar.");
     }
 
+    const currentBlock = await getLustCurrentBlock();
+    const gate = updateV7A25GateDisplay(currentBlock);
+    if (!gate.isOpen) {
+      throw new Error(`Registro V7A25 ainda bloqueado. Bloco atual ${fmtNumber(currentBlock)}. Espere o bloco ${fmtNumber(LUST_V7A25_REGISTRY_BLOCK)}. Faltam ${fmtNumber(gate.remaining)} blocos.`);
+    }
+
     const registerData = `${LUST_REGISTER_MAGIC_V2}${operator.slice(2).toLowerCase()}`;
 
     const txHash = await eth.request({
@@ -481,6 +521,12 @@ async function updateMinerPage() {
   if (!hasMinerPage) return;
 
   readState();
+  try {
+    const currentBlock = await getLustCurrentBlock();
+    updateV7A25GateDisplay(currentBlock);
+  } catch (_) {
+    updateV7A25GateDisplay(0);
+  }
   const address = walletState.address || "";
   const chain = normalizeChainId(walletState.chainId || "");
   setText("[data-connected-address]", address ? shortAddress(address) : "Not connected");

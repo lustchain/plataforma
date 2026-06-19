@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mining V7A25 Private Test | LUST Platform</title>
-  <meta name="description" content="Official LUST Chain V7A25 private mining test page, wallet registration, reward rules, downloads and launch status." />
+  <title>Mining V7A25 Registration | LUST Platform</title>
+  <meta name="description" content="Official LUST Chain V7A25 private mining registration page with block lock, wallet registration and live status." />
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css?v=20260619-mining-v7a25-private-test" />
+  <link rel="stylesheet" href="./styles.css?v=20260619-v7a25-fixed-register-138282" />
 </head>
 <body>
-<div class="promo-bar">V7A25 private mainnet test — downloads and registration are for authorized test machines only. Public mining remains locked.</div>
+<div class="promo-bar">V7A25 private mainnet test — registration opens at block 138282. Do not register before this block.</div>
 <header class="topbar">
   <a class="brand" href="./presale.html">
     <div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div>
@@ -63,18 +63,19 @@
     <div class="miner-hero-copy">
       <div class="kicker">Private mainnet test · V7A25</div>
       <h1>Test real LUST mining from your own computer.</h1>
-      <p>This page is prepared for the private V7A25 mainnet test on your own machines. Downloads and registration are for authorized internal testing only. Public mining remains closed until liquidity and the final public launch decision.</p>
+      <p>This page is prepared for the private V7A25 mainnet test. The official nodes are aligned with the fixed V7A25 binary, but the registration transaction must only be sent after block 138282. Use the private miner package separately and register the operator here when the block gate opens.</p>
       <div class="hero-buttons">
         <button class="btn primary" type="button" data-connect-wallet>Connect wallet</button>
         <button class="btn" type="button" data-add-lust-chain>Add LUST Chain</button>
-        <a class="btn" href="#downloads">1. Download miner</a>
-        <a class="btn" href="#register">2. Register wallet/operator</a>
+        <a class="btn" href="#register">Register wallet/operator</a>
+        <a class="btn" href="#activation-status">Check block gate</a>
         <a class="btn" href="./faucet.html">Get 0.01 LST</a>
       </div>
       <div class="security-strip">
         <span>✓ No seed phrase</span>
         <span>✓ MetaMask confirmation</span>
-        <span>✓ V7A25 private test SHA256</span>
+        <span>✓ RegistryBlock 138282</span>
+        <span>✓ SignatureBlock 139082</span>
         <span>✓ Automatic latest snapshot</span>
         <span>✓ Automatic TX-FEED</span>
       </div>
@@ -85,9 +86,12 @@
       <div class="row"><span>Chain ID</span><strong>6923 / 0x1b0b</strong></div>
       <div class="row"><span>Native coin</span><strong>LST</strong></div>
       <div class="row"><span>Consensus</span><strong>LQC · V7A25</strong></div>
-      <div class="row"><span>Launch state</span><strong>Private mainnet test</strong></div>
-      <div class="row"><span>Registry block</span><strong>137073</strong></div>
-      <div class="row"><span>Signature block</span><strong>137193</strong></div>
+      <div class="row"><span>Launch state</span><strong>Private test · registration locked until 138282</strong></div>
+      <div class="row"><span>Registry block</span><strong>138282</strong></div>
+      <div class="row"><span>Signature block</span><strong>139082</strong></div>
+      <div class="row"><span>Current block</span><strong data-current-block>Loading...</strong></div>
+      <div class="row"><span>Blocks to registry</span><strong data-blocks-to-registry>Loading...</strong></div>
+      <div class="row"><span>Registration gate</span><strong data-registration-open>Locked</strong></div>
       <div class="row"><span>Autonomy block</span><strong>Locked / far future</strong></div>
       <div class="row"><span>Block reward</span><strong>2 LST</strong></div>
       <div class="row"><span>Public selection</span><strong>Public miners first · official fallback</strong></div>
@@ -101,19 +105,19 @@
     <div class="section-head">
       <div>
         <div class="kicker">Teste privado real · faça tudo nesta página</div>
-        <h2>Baixe, rode, copie o operator e registre aqui.</h2>
+        <h2>Rode o miner, copie o operator e registre aqui depois do bloco 138282.</h2>
       </div>
-      <p>Fluxo simples para seus PCs de teste: primeiro baixar o pacote, depois rodar o START local, copiar o <strong>operator-address.txt</strong>, voltar aqui e registrar com a mesma carteira payout do miner.</p>
+      <p>Fluxo simples para seus PCs de teste: rode o START local, copie o <strong>operator-address.txt</strong>, espere o bloco <strong>138282</strong> e registre com a mesma carteira payout do miner.</p>
     </div>
 
     <div class="grid three">
-      <div class="card"><small>1 · Baixar</small><h3>Windows ou Ubuntu</h3><p>Use os botões de download abaixo. Os arquivos precisam estar dentro de <strong>/downloads</strong> no site com os nomes exatos.</p></div>
+      <div class="card"><small>1 · Rodar miner</small><h3>Windows ou Ubuntu</h3><p>Use o pacote privado já gerado fora do site. Esta versão do site é focada no registro seguro do operator.</p></div>
       <div class="card"><small>2 · Rodar no PC</small><h3>START + operator</h3><p>Rode o START. O pacote gera <strong>operator-address.txt</strong>. Copie esse endereço, não copie chave privada.</p></div>
-      <div class="card"><small>3 · Registrar</small><h3>Registro nesta página</h3><p>Cole o operator address na área de registro, conecte a mesma wallet payout do miner e envie a transação V7A25.</p></div>
+      <div class="card"><small>3 · Registrar</small><h3>Registro nesta página</h3><p>Cole o operator address, conecte a mesma wallet payout e envie a transação somente quando o bloco atual for <strong>138282 ou maior</strong>.</p></div>
     </div>
 
     <div class="notice miner-log" data-tone="warn">
-      Para bloquear os downloads depois do teste, apague estes arquivos da pasta <strong>/downloads</strong>: Windows ZIP, Ubuntu TAR.GZ e SHA256SUMS.txt. O resto do site não precisa mudar.
+      Esta página não precisa dos downloads públicos para registrar. O botão de registro fica bloqueado no JavaScript até o bloco 138282 para evitar gastar gas antes da fase correta.
     </div>
   </section>
 
@@ -176,6 +180,25 @@
     </div>
   </section>
 
+
+  <section class="miner-section" id="activation-status">
+    <div class="section-head">
+      <div>
+        <div class="kicker">V7A25 activation gate</div>
+        <h2>Registration only opens at block 138282.</h2>
+      </div>
+      <p>The page reads the live LUST block from RPC. Before block <strong>138282</strong>, keep the miner syncing and do not send the registration transaction. After block 138282, paste the operator address and register.</p>
+    </div>
+    <div class="grid three">
+      <div class="box live-stat-card"><small>Current block</small><strong class="big-metric" data-current-block>Loading...</strong><span>Live from rpc.lustchain.org</span></div>
+      <div class="box live-stat-card"><small>RegistryBlock</small><strong class="big-metric">138282</strong><span>Registration transaction accepted from this block.</span></div>
+      <div class="box live-stat-card"><small>Blocks remaining</small><strong class="big-metric" data-blocks-to-registry>Loading...</strong><span data-registry-countdown-note>Waiting for RPC...</span></div>
+      <div class="box live-stat-card"><small>SignatureBlock</small><strong class="big-metric">139082</strong><span>Selection/signature phase starts here.</span></div>
+      <div class="box live-stat-card"><small>Registration gate</small><strong class="big-metric" data-registration-open>Locked</strong><span>Button unlocks automatically after RegistryBlock.</span></div>
+      <div class="box live-stat-card"><small>Registry address</small><strong class="big-metric compact-address">0x...6923</strong><span>Uses LQCR_V2 transaction data.</span></div>
+    </div>
+  </section>
+
   <section class="miner-section" id="register">
     <div class="section-head">
       <div>
@@ -189,6 +212,10 @@
       <div class="form miner-wallet-panel">
         <small>Secure wallet registration</small>
         <div class="miner-status-grid">
+          <div><span>Current block</span><strong data-current-block>Loading...</strong></div>
+          <div><span>Registry opens</span><strong>138282</strong></div>
+          <div><span>Blocks to register</span><strong data-blocks-to-registry>Loading...</strong></div>
+          <div><span>Gate</span><strong data-registration-open>Locked</strong></div>
           <div><span>Connected wallet</span><strong data-connected-address>Not connected</strong></div>
           <div><span>Network</span><strong data-chain-state>Waiting</strong></div>
           <div><span>LST balance</span><strong data-lust-balance>--</strong></div>
@@ -201,13 +228,13 @@
         </label>
 
         <div class="hero-buttons miner-actions-row">
-          <button class="btn primary" type="button" data-register-miner>Register V7A25 Miner</button>
+          <button class="btn primary" type="button" data-register-miner>Register V7A25 Miner after block 138282</button>
           <button class="btn" type="button" data-add-lust-chain>Add/Switch LUST</button>
           <button class="btn" type="button" data-refresh-miner>Status refresh</button>
         </div>
 
         <div class="notice miner-log" data-miner-log>
-          Rode o miner V7A25 no PC, copie o operator address do operator-address.txt, cole aqui, conecte a mesma wallet payout e registre. Este é teste privado; o lançamento público continua fechado.
+          Rode o miner V7A25 no PC, copie o operator address do operator-address.txt e cole aqui. O registro só deve ser enviado quando o bloco atual for 138282 ou maior. Este é teste privado; o lançamento público continua fechado.
         </div>
       </div>
 
@@ -240,9 +267,9 @@
     <div class="section-head">
       <div>
         <div class="kicker">Step 2 · Private test downloads</div>
-        <h2>V7A25 downloads para teste privado real.</h2>
+        <h2>Downloads privados fora do site público.</h2>
       </div>
-      <p>Use these packages only on your own authorized test PCs. They include the complete miner structure, snapshot logic, status/stop controls, TX-FEED and the V7A25 operator registration flow. After testing, remove or block these download files.</p>
+      <p>Use o pacote privado gerado no servidor. Esta versão do site serve principalmente para registro seguro do operator depois do RegistryBlock. Não é necessário publicar os downloads no GitHub para testar o registro.</p>
     </div>
 
     <div class="grid two download-grid">
@@ -252,9 +279,9 @@
           <small>Windows 64-bit · V7A25 · Real mainnet private test</small>
           <h3>Windows complete miner package</h3>
           <p>Extract the ZIP, run the START script, copy <strong>operator-address.txt</strong>, then register on this page with the same payout wallet. Keep the miner and TX-FEED running while testing.</p>
-          <a class="btn primary" href="./downloads/lust-v7a25-real-mainnet-private-test-windows-amd64-COMPLETE.zip" rel="noreferrer">Download V7A25 Windows ZIP</a>
+          <button class="btn primary" type="button" disabled>Private package already generated</button>
         </div>
-        <div class="sha-box"><span>SHA256</span><code>SHA256SUMS.txt will verify the final package</code><a href="./downloads/SHA256SUMS.txt" rel="noreferrer">Open SHA256SUMS.txt</a></div>
+        <div class="sha-box"><span>SHA256</span><code>Windows package SHA: d63d640714406e07d2ae2ee7e1030f575287665b2f169cb5c5acbb202c6fe91c</code></div>
       </div>
 
       <div class="download-card">
@@ -263,14 +290,14 @@
           <small>Ubuntu Linux 64-bit · V7A25 · Real mainnet private test</small>
           <h3>Ubuntu complete miner package</h3>
           <p>Extract the TAR.GZ, run <strong>chmod +x *.sh</strong>, start the miner, copy <strong>~/LUST-Miner/operator-address.txt</strong>, then register on this page with the same payout wallet.</p>
-          <a class="btn primary" href="./downloads/lust-v7a25-real-mainnet-private-test-ubuntu-amd64-COMPLETE.tar.gz" rel="noreferrer">Download V7A25 Ubuntu TAR.GZ</a>
+          <button class="btn primary" type="button" disabled>Private package already generated</button>
         </div>
-        <div class="sha-box"><span>SHA256</span><code>SHA256SUMS.txt will verify the final package</code><a href="./downloads/SHA256SUMS.txt" rel="noreferrer">Open SHA256SUMS.txt</a></div>
+        <div class="sha-box"><span>SHA256</span><code>Ubuntu package SHA: 315dad9f8afbd9679434f4b217986a4f58809f5de857319f25330d81862cbe7c</code></div>
       </div>
     </div>
 
     <div class="notice miner-log" data-tone="warn">
-      Arquivos esperados dentro de <strong>/downloads/</strong>: <strong>lust-v7a25-real-mainnet-private-test-windows-amd64-COMPLETE.zip</strong>, <strong>lust-v7a25-real-mainnet-private-test-ubuntu-amd64-COMPLETE.tar.gz</strong> e <strong>SHA256SUMS.txt</strong>. Depois do teste privado, remova esses arquivos para bloquear o download. A mineração pública continua fechada até liquidez e autorização final.
+      Downloads públicos não são necessários para o teste de registro. Use o pacote privado baixado direto do servidor. Esta página mantém o registro bloqueado até o bloco 138282. A mineração pública continua fechada até liquidez e autorização final.
     </div>
   </section>
 
@@ -286,7 +313,7 @@
     <div class="grid three">
       <div class="card"><small>1</small><h3>Start the miner package.</h3><p>Start once and wait until it creates <strong>operator-address.txt</strong>. Keep the same payout wallet in the miner.</p></div>
       <div class="card"><small>2</small><h3>Register V7A25.</h3><p>Paste the operator address in this page and register with the same payout wallet. The transaction uses <strong>LQCR_V2</strong>.</p></div>
-      <div class="card"><small>3</small><h3>Wait for SignatureBlock.</h3><p>After block <strong>137193</strong>, check STATUS. Rewards follow the 2 LST rule shown below. Autonomy remains locked for this private test.</p></div>
+      <div class="card"><small>3</small><h3>Wait for SignatureBlock.</h3><p>After block <strong>139082</strong>, check STATUS. Rewards follow the 2 LST rule shown below. Autonomy remains locked for this private test.</p></div>
     </div>
   </section>
 
@@ -418,7 +445,7 @@ tail -f ~/LUST-Miner/logs/txfeed-linux.log
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
 
-<script type="module" src="./app.js?v=20260619-mining-v7a25-private-test"></script>
+<script type="module" src="./app.js?v=20260619-v7a25-fixed-register-138282"></script>
 <script src="./nft-menu.js?v=20260616-hover-v5"></script>
 </body>
 </html>
