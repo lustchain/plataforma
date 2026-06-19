@@ -62,12 +62,31 @@ Update v20260610-top-promo-bar-v10:
 
 ## Public miner TX-FEED V3 package hashes
 
+V7A13 fork: `123387`
+
 Windows ZIP:
-`24f8cd0778236d65f390be4ec624fbb3c4d13e004915c2cad628b9dfba2c4c13`
+`5c3f943b7e7c075ae4d2ed584d9ecfa3a03192d9f60550095c126bda435e7249`
 
 Ubuntu/Linux TGZ:
-`2ef91fc4156a41714a77321109ae6ede87c7a45a6ff22fdcb7c6a89d09c3ce25`
+`ef77f4d4dd00c4b4d0e0fe974d7f6b7aa40c44658df3c2261ec28dfe90b0901d`
 
 Windows is the recommended/easy public miner at launch. Ubuntu/Linux is advanced/beta. TX-FEED V3 checks the public pending transaction feed every 0.5 seconds and injects raw pending transactions into the local miner node.
 
 Snapshot server note: latest snapshot is rebuilt automatically when the public snapshot is behind by about 1000 blocks.
+
+
+Update v20260613-p2p-lusdt-v1:
+- Página P2P recriada com visual LUST/INRI premium.
+- Contrato P2P conectado: `0xcd821ede23048f8fea777eeec3948135758e4926`.
+- Par nativo: `LST / LUSDT`.
+- LUSDT: `0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE`.
+- Funções adicionadas no site: criar ordem de venda, criar ordem de compra, approve automático de LUSDT, preencher ordem, editar preço, editar deadline, cancelar, adicionar/remover tamanho e listar ordens abertas.
+- Cache busting atualizado em `p2p.html`.
+
+## Token Factory Premium links update
+
+The Factory Premium plan now sends a complete explorer profile payload:
+website, X/Twitter, Telegram, Discord, Instagram, YouTube, GitHub, Medium/Blog, LinkedIn, Whitepaper/Docs, Audit report, CoinGecko, CoinMarketCap, DexScreener and support email.
+
+The contract is unchanged. These fields are off-chain metadata sent to the LUST explorer metadata endpoint before token creation.
+

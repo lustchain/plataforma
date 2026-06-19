@@ -3,32 +3,44 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mining | LUST Platform</title>
-  <meta name="description" content="Register your wallet and download the official LUST Chain public miner." />
+  <title>Mining V7A25 Registration | LUST Platform</title>
+  <meta name="description" content="Official LUST Chain V7A25 private mining registration page with block lock, wallet registration and live status." />
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css?v20260611-txfeed-v3-final" />
+  <link rel="stylesheet" href="./styles.css?v=20260619-v7a25-fixed-register-138282" />
 </head>
 <body>
-<div class="promo-bar">Public mining is live — register your wallet, download TX-FEED V3 and track registered miners live.</div>
+<div class="promo-bar">V7A25 private mainnet test — registration opens at block 138282. Do not register before this block.</div>
 <header class="topbar">
-  <a class="brand" href="./bridge.html">
+  <a class="brand" href="./presale.html">
     <div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div>
     <div>
       <strong>LUST</strong>
       <span>Platform</span>
     </div>
   </a>
-
-  <nav class="nav">
+    <nav class="nav">
+      <a class="" href="./presale.html">Presale</a>
       <a class="" href="./bridge.html">Bridge</a>
-      <a class="active" href="./mining.html">Mining</a>
       <a class="" href="./swap.html">Swap</a>
-      <a class="" href="./staking.html">Staking</a>
-      <a class="" href="./liquidity.html">Liquidity</a>
       <a class="" href="./p2p.html">P2P</a>
-      <a class="" href="./nfts.html">NFTs</a>
+      <details class="nav-nft-menu">
+
+              <summary>NFTs</summary>
+
+              <div class="nav-nft-dropdown" role="menu" aria-label="NFT collections">
+
+                <a href="./nfts.html" role="menuitem"><strong>LUST Rabbit Club</strong><span>Premium NFT collection</span></a>
+
+                <a href="./pioneer.html" role="menuitem"><strong>Pioneer Rewards</strong><span>Free reward campaign</span></a>
+
+              </div>
+
+            </details>
+      <a class="active" href="./mining.html">Mining</a>
+      <a class="" href="./faucet.html">Faucet</a>
+      <a class="" href="./staking.html">Staking</a>
       <a class="" href="./factory.html">Factory</a>
       <a class="" href="./explorer.html">Explorer</a>
       <a class="" href="./docs.html">Docs</a>
@@ -49,34 +61,66 @@
 <main class="wrap page miner-page">
   <section class="miner-hero">
     <div class="miner-hero-copy">
-      <div class="kicker">Public LUST Mining</div>
-      <h1>Mine LST from your own computer.</h1>
-      <p>LUST Chain public mining lets normal users participate without expensive mining farms. Register your wallet once, download the official TX-FEED V3 miner and let the miner sync safely before it starts mining.</p>
+      <div class="kicker">Private mainnet test · V7A25</div>
+      <h1>Test real LUST mining from your own computer.</h1>
+      <p>This page is prepared for the private V7A25 mainnet test. The official nodes are aligned with the fixed V7A25 binary, but the registration transaction must only be sent after block 138282. Use the private miner package separately and register the operator here when the block gate opens.</p>
       <div class="hero-buttons">
         <button class="btn primary" type="button" data-connect-wallet>Connect wallet</button>
         <button class="btn" type="button" data-add-lust-chain>Add LUST Chain</button>
-        <a class="btn" href="#downloads">Download miner</a>
+        <a class="btn" href="#register">Register wallet/operator</a>
+        <a class="btn" href="#activation-status">Check block gate</a>
+        <a class="btn" href="./faucet.html">Get 0.01 LST</a>
       </div>
       <div class="security-strip">
         <span>✓ No seed phrase</span>
         <span>✓ MetaMask confirmation</span>
-        <span>✓ Official SHA256</span>
-        <span>✓ Snapshot latest</span>
-        <span>✓ TX-FEED V3</span>
+        <span>✓ RegistryBlock 138282</span>
+        <span>✓ SignatureBlock 139082</span>
+        <span>✓ Automatic latest snapshot</span>
+        <span>✓ Automatic TX-FEED</span>
       </div>
     </div>
     <div class="miner-command-card">
-      <small>Miner launch status</small>
+      <small>Controlled test status</small>
       <div class="row"><span>Network</span><strong>LUST Chain Mainnet</strong></div>
       <div class="row"><span>Chain ID</span><strong>6923 / 0x1b0b</strong></div>
       <div class="row"><span>Native coin</span><strong>LST</strong></div>
-      <div class="row"><span>Consensus</span><strong>LQC</strong></div>
-      <div class="row"><span>Public reward</span><strong>1.4 LST / block</strong></div>
-      <div class="row"><span>Network reserve</span><strong>0.6 LST / block</strong></div>
+      <div class="row"><span>Consensus</span><strong>LQC · V7A25</strong></div>
+      <div class="row"><span>Launch state</span><strong>Private test · registration locked until 138282</strong></div>
+      <div class="row"><span>Registry block</span><strong>138282</strong></div>
+      <div class="row"><span>Signature block</span><strong>139082</strong></div>
+      <div class="row"><span>Current block</span><strong data-current-block>Loading...</strong></div>
+      <div class="row"><span>Blocks to registry</span><strong data-blocks-to-registry>Loading...</strong></div>
+      <div class="row"><span>Registration gate</span><strong data-registration-open>Locked</strong></div>
+      <div class="row"><span>Autonomy block</span><strong>Locked / far future</strong></div>
+      <div class="row"><span>Block reward</span><strong>2 LST</strong></div>
+      <div class="row"><span>Public selection</span><strong>Public miners first · official fallback</strong></div>
+      <div class="row"><span>Transaction priority fee</span><strong>Actual block producer</strong></div>
       <div class="row"><span>Registered miners</span><strong data-mining-registered>Loading...</strong></div>
       <div class="row"><span>Active public miners</span><strong data-mining-active>Loading...</strong></div>
     </div>
   </section>
+
+  <section class="miner-section miner-quick-test" id="teste-rapido-v7a25">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Teste privado real · faça tudo nesta página</div>
+        <h2>Rode o miner, copie o operator e registre aqui depois do bloco 138282.</h2>
+      </div>
+      <p>Fluxo simples para seus PCs de teste: rode o START local, copie o <strong>operator-address.txt</strong>, espere o bloco <strong>138282</strong> e registre com a mesma carteira payout do miner.</p>
+    </div>
+
+    <div class="grid three">
+      <div class="card"><small>1 · Rodar miner</small><h3>Windows ou Ubuntu</h3><p>Use o pacote privado já gerado fora do site. Esta versão do site é focada no registro seguro do operator.</p></div>
+      <div class="card"><small>2 · Rodar no PC</small><h3>START + operator</h3><p>Rode o START. O pacote gera <strong>operator-address.txt</strong>. Copie esse endereço, não copie chave privada.</p></div>
+      <div class="card"><small>3 · Registrar</small><h3>Registro nesta página</h3><p>Cole o operator address, conecte a mesma wallet payout e envie a transação somente quando o bloco atual for <strong>138282 ou maior</strong>.</p></div>
+    </div>
+
+    <div class="notice miner-log" data-tone="warn">
+      Esta página não precisa dos downloads públicos para registrar. O botão de registro fica bloqueado no JavaScript até o bloco 138282 para evitar gastar gas antes da fase correta.
+    </div>
+  </section>
+
 
   <section class="miner-section" id="public-mining-stats">
     <div class="section-head">
@@ -84,7 +128,7 @@
         <div class="kicker">Live public mining</div>
         <h2>Registered miners and public mining activity.</h2>
       </div>
-      <p>This panel reads on-chain miner registrations and recent block producers. A registered miner is a unique wallet that sent the official LQCR_V1 registration transaction on LUST Chain.</p>
+      <p>This panel reads on-chain miner registrations and recent block producers. A registered miner is a unique payout wallet linked to its local V7A25 operator address using the official LQCR_V2 registration transaction on LUST Chain.</p>
     </div>
 
     <div class="grid three mining-live-grid">
@@ -136,33 +180,61 @@
     </div>
   </section>
 
+
+  <section class="miner-section" id="activation-status">
+    <div class="section-head">
+      <div>
+        <div class="kicker">V7A25 activation gate</div>
+        <h2>Registration only opens at block 138282.</h2>
+      </div>
+      <p>The page reads the live LUST block from RPC. Before block <strong>138282</strong>, keep the miner syncing and do not send the registration transaction. After block 138282, paste the operator address and register.</p>
+    </div>
+    <div class="grid three">
+      <div class="box live-stat-card"><small>Current block</small><strong class="big-metric" data-current-block>Loading...</strong><span>Live from rpc.lustchain.org</span></div>
+      <div class="box live-stat-card"><small>RegistryBlock</small><strong class="big-metric">138282</strong><span>Registration transaction accepted from this block.</span></div>
+      <div class="box live-stat-card"><small>Blocks remaining</small><strong class="big-metric" data-blocks-to-registry>Loading...</strong><span data-registry-countdown-note>Waiting for RPC...</span></div>
+      <div class="box live-stat-card"><small>SignatureBlock</small><strong class="big-metric">139082</strong><span>Selection/signature phase starts here.</span></div>
+      <div class="box live-stat-card"><small>Registration gate</small><strong class="big-metric" data-registration-open>Locked</strong><span>Button unlocks automatically after RegistryBlock.</span></div>
+      <div class="box live-stat-card"><small>Registry address</small><strong class="big-metric compact-address">0x...6923</strong><span>Uses LQCR_V2 transaction data.</span></div>
+    </div>
+  </section>
+
   <section class="miner-section" id="register">
     <div class="section-head">
       <div>
-        <div class="kicker">Step 1</div>
-        <h2>Register your miner wallet.</h2>
+        <div class="kicker">Step 1 · V7A25 registration</div>
+        <h2>Registre aqui a wallet payout e o operator do seu PC.</h2>
       </div>
-      <p>The registration is a normal MetaMask transaction sent by your own wallet. The site never asks for private key, seed phrase or password.</p>
+      <p>O registro V7A25 liga sua carteira payout ao operator address gerado no seu PC. O site nunca pede seed phrase, chave privada da wallet nem chave privada do operator.</p>
     </div>
 
     <div class="grid two">
       <div class="form miner-wallet-panel">
         <small>Secure wallet registration</small>
         <div class="miner-status-grid">
+          <div><span>Current block</span><strong data-current-block>Loading...</strong></div>
+          <div><span>Registry opens</span><strong>138282</strong></div>
+          <div><span>Blocks to register</span><strong data-blocks-to-registry>Loading...</strong></div>
+          <div><span>Gate</span><strong data-registration-open>Locked</strong></div>
           <div><span>Connected wallet</span><strong data-connected-address>Not connected</strong></div>
           <div><span>Network</span><strong data-chain-state>Waiting</strong></div>
           <div><span>LST balance</span><strong data-lust-balance>--</strong></div>
           <div><span>Registration</span><strong data-registration-state>Not checked</strong></div>
         </div>
 
+        <label class="operator-field">
+          <span>Operator address from operator-address.txt</span>
+          <input type="text" data-operator-address placeholder="0x... paste the V7A25 operator address generated by START" autocomplete="off" spellcheck="false" />
+        </label>
+
         <div class="hero-buttons miner-actions-row">
-          <button class="btn primary" type="button" data-register-miner>Register Miner Wallet</button>
+          <button class="btn primary" type="button" data-register-miner>Register V7A25 Miner after block 138282</button>
           <button class="btn" type="button" data-add-lust-chain>Add/Switch LUST</button>
           <button class="btn" type="button" data-refresh-miner>Status refresh</button>
         </div>
 
         <div class="notice miner-log" data-miner-log>
-          Connect your wallet, switch to LUST Chain and click Register Miner Wallet.
+          Rode o miner V7A25 no PC, copie o operator address do operator-address.txt e cole aqui. O registro só deve ser enviado quando o bloco atual for 138282 ou maior. Este é teste privado; o lançamento público continua fechado.
         </div>
       </div>
 
@@ -170,107 +242,126 @@
         <small>Registration transaction</small>
         <div class="code-card">
           <div><span>To</span><code>0x0000000000000000000000000000000000006923</code></div>
-          <div><span>Data</span><code>0x4c5143525f5631</code></div>
+          <div><span>Data prefix</span><code>0x4c5143525f5632 + operator address</code></div>
           <div><span>Value</span><code>0 LST</code></div>
-          <div><span>Meaning</span><code>LQCR_V1</code></div>
+          <div><span>Meaning</span><code>LQCR_V2</code></div>
         </div>
-        <p class="mini-copy">You only pay the LUST network gas fee. If your wallet has no LST, use the official faucet when it is enabled.</p>
+        <p class="mini-copy">You only pay the LUST network gas fee. The payout wallet must be the same wallet used by the miner package. If your wallet has no LST, use the dedicated <a href="./faucet.html">official Faucet page</a> first.</p>
       </div>
     </div>
   </section>
-
-  <section class="miner-section" id="faucet">
+  <section class="miner-section miner-faucet-link" id="gas-help">
     <div class="section-head">
       <div>
-        <div class="kicker">Step 1.5</div>
-        <h2>Claim 0.01 LST for gas.</h2>
+        <div class="kicker">Need network gas?</div>
+        <h2>The official faucet now has its own page.</h2>
       </div>
-      <p>The official faucet helps a new wallet pay the registration gas. It is one claim per wallet, forever. The site never asks for seed phrase or private key.</p>
+      <p>Claim 0.01 LST once per wallet for your first LUST Chain transaction. The faucet is no longer embedded in the Mining page.</p>
     </div>
-
-    <div class="grid two">
-      <div class="form miner-wallet-panel faucet-panel">
-        <small>Official LUST faucet</small>
-        <div class="miner-status-grid">
-          <div><span>Claim amount</span><strong data-faucet-amount>0.01 LST</strong></div>
-          <div><span>Faucet balance</span><strong data-faucet-balance>Checking...</strong></div>
-          <div><span>Your wallet balance</span><strong data-faucet-wallet-balance>Connect wallet</strong></div>
-          <div><span>Eligibility</span><strong data-faucet-eligibility>Connect wallet</strong></div>
-        </div>
-
-        <div class="hero-buttons miner-actions-row">
-          <button class="btn primary" type="button" data-claim-faucet>Claim 0.01 LST</button>
-          <button class="btn" type="button" data-connect-wallet>Connect wallet</button>
-          <button class="btn" type="button" data-refresh-faucet>Refresh faucet</button>
-        </div>
-
-        <div class="notice miner-log" data-faucet-log>
-          Connect a new wallet to check faucet eligibility.
-        </div>
-      </div>
-
-      <div class="box">
-        <small>Faucet safety rules</small>
-        <div class="code-card">
-          <div><span>Amount</span><code>0.01 LST</code></div>
-          <div><span>Wallet limit</span><code>1 claim per wallet forever</code></div>
-          <div><span>Balance rule</span><code>Only wallets below 0.02 LST</code></div>
-          <div><span>Purpose</span><code>Gas for miner registration</code></div>
-        </div>
-        <p class="mini-copy">Use this before registration only if your wallet has no LST. After claiming, click Register Miner Wallet and confirm the transaction in MetaMask.</p>
-      </div>
+    <div class="hero-buttons">
+      <a class="btn primary" href="./faucet.html">Open official Faucet</a>
     </div>
   </section>
 
   <section class="miner-section" id="downloads">
     <div class="section-head">
       <div>
-        <div class="kicker">Step 2</div>
-        <h2>Download the official miner.</h2>
+        <div class="kicker">Step 2 · Private test downloads</div>
+        <h2>Downloads privados fora do site público.</h2>
       </div>
-      <p>The miner restores the latest snapshot when needed and TX-FEED V3 pulls public pending transactions into the local miner node every 0.5 seconds. The package SHA changes when miner scripts change; the snapshot SHA changes when the snapshot updates.</p>
+      <p>Use o pacote privado gerado no servidor. Esta versão do site serve principalmente para registro seguro do operator depois do RegistryBlock. Não é necessário publicar os downloads no GitHub para testar o registro.</p>
     </div>
 
     <div class="grid two download-grid">
       <div class="download-card">
         <div class="download-icon">⊞</div>
         <div>
-          <small>Windows</small>
-          <h3>Windows one-click miner</h3>
-          <p>Extract the ZIP and double-click <strong>START-LUST-MINER-WINDOWS.bat</strong>. It opens the miner plus a second <strong>LUST TX-FEED V3</strong> window. Keep both windows open.</p>
-          <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a12-miner-windows-latest-snapshot.zip" target="_blank" rel="noreferrer">Download Windows ZIP</a>
+          <small>Windows 64-bit · V7A25 · Real mainnet private test</small>
+          <h3>Windows complete miner package</h3>
+          <p>Extract the ZIP, run the START script, copy <strong>operator-address.txt</strong>, then register on this page with the same payout wallet. Keep the miner and TX-FEED running while testing.</p>
+          <button class="btn primary" type="button" disabled>Private package already generated</button>
         </div>
-        <div class="sha-box"><span>SHA256</span><code>24f8cd0778236d65f390be4ec624fbb3c4d13e004915c2cad628b9dfba2c4c13</code></div>
+        <div class="sha-box"><span>SHA256</span><code>Windows package SHA: d63d640714406e07d2ae2ee7e1030f575287665b2f169cb5c5acbb202c6fe91c</code></div>
       </div>
 
       <div class="download-card">
         <div class="download-icon">⌁</div>
         <div>
-          <small>Ubuntu / Linux · Advanced / Beta</small>
-          <h3>Linux latest-snapshot miner</h3>
-          <p>For clean Ubuntu/VPS users. Extract the TGZ, give permission and run <strong>./START-LUST-MINER-LINUX.sh</strong>. TX-FEED V3 starts in background and logs to <strong>~/LUST-Miner/logs/txfeed-v3.log</strong>. If you already run INRI or another geth on the same Ubuntu/WSL, use Windows miner or advanced ports.</p>
-          <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a12-miner-linux-latest-snapshot.tar.gz" target="_blank" rel="noreferrer">Download Linux TGZ</a>
+          <small>Ubuntu Linux 64-bit · V7A25 · Real mainnet private test</small>
+          <h3>Ubuntu complete miner package</h3>
+          <p>Extract the TAR.GZ, run <strong>chmod +x *.sh</strong>, start the miner, copy <strong>~/LUST-Miner/operator-address.txt</strong>, then register on this page with the same payout wallet.</p>
+          <button class="btn primary" type="button" disabled>Private package already generated</button>
         </div>
-        <div class="sha-box"><span>SHA256</span><code>2ef91fc4156a41714a77321109ae6ede87c7a45a6ff22fdcb7c6a89d09c3ce25</code></div>
+        <div class="sha-box"><span>SHA256</span><code>Ubuntu package SHA: 315dad9f8afbd9679434f4b217986a4f58809f5de857319f25330d81862cbe7c</code></div>
       </div>
+    </div>
+
+    <div class="notice miner-log" data-tone="warn">
+      Downloads públicos não são necessários para o teste de registro. Use o pacote privado baixado direto do servidor. Esta página mantém o registro bloqueado até o bloco 138282. A mineração pública continua fechada até liquidez e autorização final.
     </div>
   </section>
 
 
-
-  <section class="miner-section" id="txfeed-v3">
+  <section class="miner-section" id="v7a25-test-flow">
     <div class="section-head">
       <div>
-        <div class="kicker">TX-FEED V3</div>
-        <h2>Fast transaction feed for public miners.</h2>
+        <div class="kicker">Private test flow</div>
+        <h2>How to test real V7A25 mining safely.</h2>
       </div>
-      <p>TX-FEED V3 checks the public pending transaction feed every 0.5 seconds and injects valid raw transactions into the local miner node. This gives public miners a real chance to include transactions when they produce the next block.</p>
+      <p>Run this only on your own test machines. Do not share the download page or packages publicly.</p>
+    </div>
+    <div class="grid three">
+      <div class="card"><small>1</small><h3>Start the miner package.</h3><p>Start once and wait until it creates <strong>operator-address.txt</strong>. Keep the same payout wallet in the miner.</p></div>
+      <div class="card"><small>2</small><h3>Register V7A25.</h3><p>Paste the operator address in this page and register with the same payout wallet. The transaction uses <strong>LQCR_V2</strong>.</p></div>
+      <div class="card"><small>3</small><h3>Wait for SignatureBlock.</h3><p>After block <strong>139082</strong>, check STATUS. Rewards follow the 2 LST rule shown below. Autonomy remains locked for this private test.</p></div>
+    </div>
+  </section>
+
+  <section class="miner-section" id="reward-rules">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Verified reward rules</div>
+        <h2>Exactly how each 2 LST block reward is distributed.</h2>
+      </div>
+      <p>The reward depends on how many public miners are active. The block producer is never counted again inside the public committee, and official/bootstrap addresses are excluded from the public 30% share.</p>
     </div>
 
     <div class="grid three">
-      <div class="card"><small>Windows</small><h3>Two windows stay open.</h3><p>START opens <strong>LUST MINER</strong> and <strong>LUST TX-FEED V3</strong>. The feed auto-detects local RPC port 18547 or 8545 and logs to <strong>LUST-Miner/logs/txfeed-v3.log</strong>.</p></div>
-      <div class="card"><small>Ubuntu / Linux</small><h3>Background feed.</h3><p>The Linux starter launches TX-FEED V3 in background. It uses local RPC <strong>18547</strong> and P2P <strong>30313</strong> by default to avoid conflicts with INRI or another geth. Check the live feed log at <strong>~/LUST-Miner/logs/txfeed-v3.log</strong>.</p></div>
-      <div class="card"><small>Pending feed</small><h3>Public endpoint.</h3><p>The miner reads <strong>https://rpc.lustchain.org/pending-raw</strong>. This is the official public transaction feed used by TX-FEED V3.</p></div>
+      <div class="card">
+        <small>0 public miners</small>
+        <h3>Official emergency production.</h3>
+        <p>Prod-1/prod-2 keep the chain alive as fallback. The official producer of the block receives the full <strong>2 LST</strong>.</p>
+      </div>
+      <div class="card">
+        <small>1 public miner</small>
+        <h3>The public miner receives 2 LST.</h3>
+        <p>The active public miner produces the block. Because there is no second public participant to form a committee, the same producer receives the full <strong>2 LST</strong>.</p>
+      </div>
+      <div class="card">
+        <small>2 or more public miners</small>
+        <h3>70% producer · 30% public committee.</h3>
+        <p>The block producer receives <strong>1.4 LST</strong>. The other active public miners divide <strong>0.6 LST</strong>. Official/bootstrap nodes receive none of this public committee share.</p>
+      </div>
+    </div>
+
+    <div class="notice miner-log">
+      Transaction priority fees go to the actual producer of the block. The EIP-1559 base fee follows the network protocol and is not part of the 2 LST block reward.
+    </div>
+  </section>
+
+  <section class="miner-section" id="txfeed-v7a25">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Automatic TX-FEED · V7A25</div>
+        <h2>Public transactions reach local miners.</h2>
+      </div>
+      <p>The V7A25 transaction feed checks the official primary and backup pending-transaction endpoints every second and injects valid raw transactions into the local miner node. This gives registered private-test miners a real chance to include transactions and receive the priority fee when they produce a block.</p>
+    </div>
+
+    <div class="grid three">
+      <div class="card"><small>Windows</small><h3>Automatic second window.</h3><p>START opens the miner and <strong>LUST TX-FEED V7A25</strong>. The feed detects local RPC port <strong>18547</strong> or <strong>8545</strong> and logs to <strong>~/LUST-Miner/logs/txfeed-windows.log</strong>.</p></div>
+      <div class="card"><small>Ubuntu / Linux</small><h3>Automatic background feed.</h3><p>The Ubuntu starter launches the feed in the background. It uses local RPC <strong>18547</strong> and P2P <strong>30313</strong>. Feed activity is recorded in <strong>~/LUST-Miner/logs/txfeed-linux.log</strong>.</p></div>
+      <div class="card"><small>Primary + backup</small><h3>Resilient public endpoints.</h3><p>The miner checks <strong>rpc.lustchain.org/pending-raw</strong> first and automatically tries <strong>rpc-backup.lustchain.org/pending-raw</strong> when needed.</p></div>
     </div>
   </section>
 
@@ -290,16 +381,16 @@
 STOP-LUST-MINER-WINDOWS.bat
 STATUS-LUST-MINER-WINDOWS.bat
 
-# START opens LUST MINER + LUST TX-FEED V3</code></pre>
+# START opens LUST MINER + LUST TX-FEED V7A25</code></pre>
       </div>
       <div class="box command-box">
         <small>Ubuntu / Linux commands</small>
-        <pre><code>chmod +x START-LUST-MINER-LINUX.sh STOP-LUST-MINER-LINUX.sh STATUS-LUST-MINER-LINUX.sh TXFEED-LUST-V3.py
+        <pre><code>chmod +x *.sh
 ./START-LUST-MINER-LINUX.sh
 ./STATUS-LUST-MINER-LINUX.sh
-tail -f ~/LUST-Miner/logs/txfeed-v3.log
+tail -f ~/LUST-Miner/logs/txfeed-linux.log
 ./STOP-LUST-MINER-LINUX.sh</code></pre>
-        <p class="mini-copy">Linux is advanced/beta for launch. Windows is the recommended public miner for normal users.</p>
+        <p class="mini-copy">Ubuntu/Linux is intended for advanced users. Windows remains the recommended package for normal desktop users.</p>
       </div>
     </div>
   </section>
@@ -333,7 +424,7 @@ tail -f ~/LUST-Miner/logs/txfeed-v3.log
         <div class="kicker">Network safety</div>
         <h2>Official producer standby.</h2>
       </div>
-      <p>When public miners are active, transactions stay public-first through TX-FEED V3 so public miners can collect fees. If public mining stops and the chain becomes stale, the official producer can automatically enter emergency mode to keep the network alive.</p>
+      <p>V7A25 prioritizes registered active public miners for normal block production. Official/bootstrap producers remain available only as emergency fallback when no public miner is producing, and they are excluded from the passive 30% public committee share while public miners are active.</p>
     </div>
   </section>
 
@@ -341,7 +432,7 @@ tail -f ~/LUST-Miner/logs/txfeed-v3.log
     <div class="grid three">
       <div class="card"><small>Security</small><h3>Never enter your seed.</h3><p>The official site only asks MetaMask to sign/send a registration transaction. Never type your seed phrase on any website.</p></div>
       <div class="card"><small>Wallet rule</small><h3>One machine, one wallet.</h3><p>For clean testing and production, use one registered wallet per miner machine. Do not run the same wallet on many devices at the same time.</p></div>
-      <div class="card"><small>Safe start</small><h3>No isolated mining.</h3><p>The miner starts with mining off, waits for peers, chain ID and gap, starts TX-FEED V3, then enables mining only when the node is ready.</p></div>
+      <div class="card"><small>Safe start</small><h3>No isolated mining.</h3><p>The miner starts with mining off, validates chain ID, peers and synchronization gap, then restarts in mining mode and launches the automatic TX-FEED.</p></div>
     </div>
   </section>
 </main>
@@ -353,6 +444,8 @@ tail -f ~/LUST-Miner/logs/txfeed-v3.log
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
-<script type="module" src="./app.js?v20260611-final-launch-hashes"></script>
+
+<script type="module" src="./app.js?v=20260619-v7a25-fixed-register-138282"></script>
+<script src="./nft-menu.js?v=20260616-hover-v5"></script>
 </body>
 </html>
