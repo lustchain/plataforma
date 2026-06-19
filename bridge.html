@@ -147,15 +147,7 @@
           <p data-bridge-claim-log>Ready. Connect wallet and choose an amount.</p>
           <details>
             <summary>Need manual recovery?</summary>
-            <div class="bridge-inline-warning" data-bridge-manual-help>The bridge checks your claim automatically after the deposit confirms. If a BSC deposit does not appear, paste the BSC transaction hash below and recover the claim from the on-chain receipt.</div>
-            <div class="bridge-inline-warning" style="display:grid;gap:10px;margin-top:10px;">
-              <label for="bridgeRecoverBscTx" style="font-weight:1000;color:#fff5fa;text-transform:uppercase;font-size:12px;">Recover BSC deposit by transaction hash</label>
-              <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;">
-                <input class="input" id="bridgeRecoverBscTx" data-bridge-recover-bsc-tx type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="0x... BSC deposit transaction hash" style="min-width:0;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;" />
-                <button class="mini-btn" type="button" data-bridge-recover-bsc>Recover claim</button>
-              </div>
-              <small data-bridge-recover-bsc-status style="color:#d8bed0;line-height:1.45;word-break:break-word;">Only for BSC buy/deposit transactions into the LUSDT lockbox. Normal automatic claims continue working.</small>
-            </div>
+            <div class="bridge-inline-warning" data-bridge-manual-help>The bridge checks your claim automatically after the deposit confirms. If needed, this area also shows recent local recovery hints from your browser.</div>
             <div class="claim-list" data-bridge-pending-claims>
               <div class="claim-item muted">Open this section to review recent claims and local recovery hints.</div>
             </div>
@@ -270,60 +262,5 @@
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 <script type="module" src="./app.js?v20260612-lusdt-bridge-v35-anti-stuck"></script>
 <script src="./nft-menu.js?v=20260616-hover-v5"></script>
-
-<script>
-(function(){
-  const API_BASE = "https://lusdt-bridge.lustchain.org";
-  const TX_RE = /^0x[0-9a-fA-F]{64}$/;
-  function box(){ return document.querySelector('[data-bridge-recover-bsc-status]'); }
-  function input(){ return document.querySelector('[data-bridge-recover-bsc-tx]'); }
-  function status(msg, tone){
-    const el = box();
-    if (!el) return;
-    el.textContent = msg;
-    el.style.color = tone === 'ok' ? '#baffdf' : tone === 'warn' ? '#ffd0a6' : '#d9c8ff';
-  }
-  function short(x){ return String(x || '').slice(0,10) + '...' + String(x || '').slice(-8); }
-  async function recover(){
-    const tx = String(input()?.value || '').trim();
-    if (!TX_RE.test(tx)) {
-      status('Paste a valid BSC transaction hash starting with 0x.', 'warn');
-      return;
-    }
-    try { localStorage.setItem('lustLastBscDepositTx', tx); } catch(e) {}
-    status('Checking BSC receipt and bridge claim...', 'info');
-    try {
-      const res = await fetch(API_BASE + '/api/recover/bsc/' + encodeURIComponent(tx), { cache: 'no-store' });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data.ok || !data.claim) throw new Error(data.error || 'Could not recover this BSC deposit.');
-      const claim = data.claim;
-      if (claim.depositId) {
-        try { localStorage.setItem('lustLastDepositId', claim.depositId); } catch(e) {}
-      }
-      const amount = Number(BigInt(claim.amount || '0')) / 1e6;
-      const used = !!claim.used || String(claim.status || '').toLowerCase().includes('mint');
-      if (used) {
-        status('Claim found but already minted. Amount: ' + amount.toFixed(6) + ' LUSDT · ' + short(claim.depositId), 'ok');
-      } else if (claim.status === 'ready') {
-        status('Claim ready. Amount: ' + amount.toFixed(6) + ' LUSDT. Connect wallet on LUST Chain and click Find / Refresh or Mint claim.', 'ok');
-        setTimeout(function(){ document.querySelector('[data-bridge-refresh]')?.click(); }, 500);
-      } else {
-        status('Claim found with status: ' + (claim.status || 'unknown') + '. Wait and refresh.', 'warn');
-      }
-    } catch (e) {
-      status(e.message || 'Could not recover BSC claim.', 'warn');
-    }
-  }
-  document.addEventListener('DOMContentLoaded', function(){
-    const btn = document.querySelector('[data-bridge-recover-bsc]');
-    const inp = input();
-    try { const last = localStorage.getItem('lustLastBscDepositTx'); if (last && inp && !inp.value) inp.value = last; } catch(e) {}
-    btn?.addEventListener('click', recover);
-    inp?.addEventListener('keydown', function(ev){ if (ev.key === 'Enter') recover(); });
-  });
-})();
-</script>
-<!-- BRIDGE_BSC_RECOVER_HTML_ONLY_V38 -->
-
 </body>
 </html>
