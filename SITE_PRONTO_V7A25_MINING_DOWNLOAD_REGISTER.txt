@@ -1,0 +1,14 @@
+SITE PRONTO - PAGINA MINING V7A25
+
+Alterado somente o fluxo da pagina de mineracao:
+- Download Windows/Ubuntu V7A25 em /downloads
+- Registro V7A25 com LQCR_V2 + operator-address.txt
+- Passo a passo para baixar, rodar START, copiar operator, registrar no site e testar
+- Explicacao para bloquear downloads depois do teste
+
+Arquivos reais esperados em public/downloads ou downloads:
+- lust-v7a25-real-mainnet-private-test-windows-amd64-COMPLETE.zip
+- lust-v7a25-real-mainnet-private-test-ubuntu-amd64-COMPLETE.tar.gz
+- SHA256SUMS.txt
+
+Nao foram incluidos binarios falsos neste ZIP. Use os pacotes V7A25 reais gerados no servidor.

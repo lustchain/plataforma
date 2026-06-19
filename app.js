@@ -426,14 +426,14 @@ async function waitForTxReceipt(txHash, timeoutMs = 180000) {
 
 async function registerMinerWallet() {
   try {
-    setMinerLog("Opening wallet confirmation for V7A25 miner registration...", "");
+    setMinerLog("Abrindo confirmação da carteira para registro V7A25...", "");
     const eth = getInjectedEthereum();
     if (!eth) throw new Error("MetaMask or injected wallet not found.");
 
     const operatorInput = document.querySelector("[data-operator-address]");
     const operator = String(operatorInput?.value || "").trim();
     if (!/^0x[0-9a-fA-F]{40}$/.test(operator)) {
-      throw new Error("Paste the V7A25 operator address from operator-address.txt before registering.");
+      throw new Error("Cole o operator address V7A25 do operator-address.txt antes de registrar.");
     }
 
     const account = await getWalletAccount();
@@ -441,7 +441,7 @@ async function registerMinerWallet() {
 
     const chainId = normalizeChainId(await eth.request({ method: "eth_chainId" }));
     if (chainId !== LUST_CHAIN_ID_HEX) {
-      throw new Error("Please switch to LUST Chain before registering.");
+      throw new Error("Troque para LUST Chain antes de registrar.");
     }
 
     const registerData = `${LUST_REGISTER_MAGIC_V2}${operator.slice(2).toLowerCase()}`;
@@ -462,7 +462,7 @@ async function registerMinerWallet() {
 
     if (receipt?.status === "0x1") {
       localStorage.setItem(localRegistrationKey(account), JSON.stringify({ txHash, operator, mode: "LQCR_V2", time: Date.now() }));
-      setMinerLog(`V7A25 miner registered successfully. Operator: ${shortAddress(operator)} · Tx: ${txHash}`, "ok");
+      setMinerLog(`Miner V7A25 registrado com sucesso. Operator: ${shortAddress(operator)} · Tx: ${txHash}`, "ok");
     } else if (receipt) {
       setMinerLog(`Registration transaction failed. Tx: ${txHash}`, "warn");
     } else {

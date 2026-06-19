@@ -67,7 +67,8 @@
       <div class="hero-buttons">
         <button class="btn primary" type="button" data-connect-wallet>Connect wallet</button>
         <button class="btn" type="button" data-add-lust-chain>Add LUST Chain</button>
-        <a class="btn" href="#downloads">Download V7A25 test miner</a>
+        <a class="btn" href="#downloads">1. Download miner</a>
+        <a class="btn" href="#register">2. Register wallet/operator</a>
         <a class="btn" href="./faucet.html">Get 0.01 LST</a>
       </div>
       <div class="security-strip">
@@ -95,6 +96,27 @@
       <div class="row"><span>Active public miners</span><strong data-mining-active>Loading...</strong></div>
     </div>
   </section>
+
+  <section class="miner-section miner-quick-test" id="teste-rapido-v7a25">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Teste privado real · faça tudo nesta página</div>
+        <h2>Baixe, rode, copie o operator e registre aqui.</h2>
+      </div>
+      <p>Fluxo simples para seus PCs de teste: primeiro baixar o pacote, depois rodar o START local, copiar o <strong>operator-address.txt</strong>, voltar aqui e registrar com a mesma carteira payout do miner.</p>
+    </div>
+
+    <div class="grid three">
+      <div class="card"><small>1 · Baixar</small><h3>Windows ou Ubuntu</h3><p>Use os botões de download abaixo. Os arquivos precisam estar dentro de <strong>/downloads</strong> no site com os nomes exatos.</p></div>
+      <div class="card"><small>2 · Rodar no PC</small><h3>START + operator</h3><p>Rode o START. O pacote gera <strong>operator-address.txt</strong>. Copie esse endereço, não copie chave privada.</p></div>
+      <div class="card"><small>3 · Registrar</small><h3>Registro nesta página</h3><p>Cole o operator address na área de registro, conecte a mesma wallet payout do miner e envie a transação V7A25.</p></div>
+    </div>
+
+    <div class="notice miner-log" data-tone="warn">
+      Para bloquear os downloads depois do teste, apague estes arquivos da pasta <strong>/downloads</strong>: Windows ZIP, Ubuntu TAR.GZ e SHA256SUMS.txt. O resto do site não precisa mudar.
+    </div>
+  </section>
+
 
   <section class="miner-section" id="public-mining-stats">
     <div class="section-head">
@@ -158,9 +180,9 @@
     <div class="section-head">
       <div>
         <div class="kicker">Step 1 · V7A25 registration</div>
-        <h2>Register your payout wallet and operator.</h2>
+        <h2>Registre aqui a wallet payout e o operator do seu PC.</h2>
       </div>
-      <p>V7A25 registration links your payout wallet to the operator address generated locally by the miner package. The site never asks for your seed phrase, wallet private key or operator private key.</p>
+      <p>O registro V7A25 liga sua carteira payout ao operator address gerado no seu PC. O site nunca pede seed phrase, chave privada da wallet nem chave privada do operator.</p>
     </div>
 
     <div class="grid two">
@@ -185,7 +207,7 @@
         </div>
 
         <div class="notice miner-log" data-miner-log>
-          First run the V7A25 miner package. Copy the operator address from operator-address.txt, paste it here, connect the same payout wallet and register. Public mining is still not officially launched.
+          Rode o miner V7A25 no PC, copie o operator address do operator-address.txt, cole aqui, conecte a mesma wallet payout e registre. Este é teste privado; o lançamento público continua fechado.
         </div>
       </div>
 
@@ -218,7 +240,7 @@
     <div class="section-head">
       <div>
         <div class="kicker">Step 2 · Private test downloads</div>
-        <h2>V7A25 real mainnet private-test packages.</h2>
+        <h2>V7A25 downloads para teste privado real.</h2>
       </div>
       <p>Use these packages only on your own authorized test PCs. They include the complete miner structure, snapshot logic, status/stop controls, TX-FEED and the V7A25 operator registration flow. After testing, remove or block these download files.</p>
     </div>
@@ -232,7 +254,7 @@
           <p>Extract the ZIP, run the START script, copy <strong>operator-address.txt</strong>, then register on this page with the same payout wallet. Keep the miner and TX-FEED running while testing.</p>
           <a class="btn primary" href="./downloads/lust-v7a25-real-mainnet-private-test-windows-amd64-COMPLETE.zip" rel="noreferrer">Download V7A25 Windows ZIP</a>
         </div>
-        <div class="sha-box"><span>SHA256</span><code>Upload the final .sha256 with the package</code><a href="./downloads/SHA256SUMS.txt" rel="noreferrer">Open SHA256SUMS.txt</a></div>
+        <div class="sha-box"><span>SHA256</span><code>SHA256SUMS.txt will verify the final package</code><a href="./downloads/SHA256SUMS.txt" rel="noreferrer">Open SHA256SUMS.txt</a></div>
       </div>
 
       <div class="download-card">
@@ -243,12 +265,12 @@
           <p>Extract the TAR.GZ, run <strong>chmod +x *.sh</strong>, start the miner, copy <strong>~/LUST-Miner/operator-address.txt</strong>, then register on this page with the same payout wallet.</p>
           <a class="btn primary" href="./downloads/lust-v7a25-real-mainnet-private-test-ubuntu-amd64-COMPLETE.tar.gz" rel="noreferrer">Download V7A25 Ubuntu TAR.GZ</a>
         </div>
-        <div class="sha-box"><span>SHA256</span><code>Upload the final .sha256 with the package</code><a href="./downloads/SHA256SUMS.txt" rel="noreferrer">Open SHA256SUMS.txt</a></div>
+        <div class="sha-box"><span>SHA256</span><code>SHA256SUMS.txt will verify the final package</code><a href="./downloads/SHA256SUMS.txt" rel="noreferrer">Open SHA256SUMS.txt</a></div>
       </div>
     </div>
 
     <div class="notice miner-log" data-tone="warn">
-      Private test download filenames expected inside <strong>/downloads/</strong>: <strong>lust-v7a25-real-mainnet-private-test-windows-amd64-COMPLETE.zip</strong> and <strong>lust-v7a25-real-mainnet-private-test-ubuntu-amd64-COMPLETE.tar.gz</strong>. Public mining remains locked until liquidity and final authorization.
+      Arquivos esperados dentro de <strong>/downloads/</strong>: <strong>lust-v7a25-real-mainnet-private-test-windows-amd64-COMPLETE.zip</strong>, <strong>lust-v7a25-real-mainnet-private-test-ubuntu-amd64-COMPLETE.tar.gz</strong> e <strong>SHA256SUMS.txt</strong>. Depois do teste privado, remova esses arquivos para bloquear o download. A mineração pública continua fechada até liquidez e autorização final.
     </div>
   </section>
 
