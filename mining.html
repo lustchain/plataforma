@@ -117,7 +117,7 @@
       <div class="sequence-step"><h3>Add LUST Chain</h3><p>Connect MetaMask and add/switch to <strong>LUST Chain</strong>, chain ID <strong>6923</strong>.</p></div>
       <div class="sequence-step"><h3>Claim faucet gas</h3><p>Open the faucet and claim a small amount of native <strong>LST</strong>. This pays gas for registration and heartbeat.</p><div class="hero-buttons"><a class="btn primary" href="./faucet.html">Open faucet</a></div></div>
       <div class="sequence-step"><h3>Download V7A29</h3><p>Download only the current V7A29 miner package for Windows or Ubuntu from the official download links.</p></div>
-      <div class="sequence-step"><h3>Start the miner</h3><p>Run the miner and wait for <strong>Gap 0</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong> and <strong>READY</strong>.</p></div>
+      <div class="sequence-step"><h3>Start the miner</h3><p>Run the miner and wait for <strong>Gap 0</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong>, <strong>Canonical YES</strong> and <strong>READY</strong>.</p></div>
       <div class="sequence-step"><h3>Register wallet</h3><p>Use the same wallet shown in the miner. Click <strong>Register wallet</strong> once and wait for confirmation.</p></div>
       <div class="sequence-step"><h3>Activate / Heartbeat</h3><p>Click <strong>Activate / Heartbeat</strong>. Keep the miner running and watch the live stats for your public blocks.</p></div>
     </div>
@@ -177,14 +177,13 @@
         <div>
           <small>Windows 64-bit · V7A29 · full package</small>
           <h3>Windows complete miner package</h3>
-          <p>Extract the ZIP into a new folder, run <strong>START-LUST-MINER-WINDOWS.bat</strong>, use one wallet per PC and wait until the status shows <strong>READY</strong>.</p>
+          <p>Extract the ZIP into a new folder, run <strong>START-LUST-MINER-WINDOWS.bat</strong>, use one wallet per PC and wait until the status shows <strong>Canonical YES</strong> and <strong>READY</strong>.</p>
           <div class="hero-buttons">
             <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a29-miner-windows-FULL.zip" target="_blank" rel="noreferrer">Download Windows</a>
             <a class="btn" href="https://downloads.lustchain.org/SHA256SUMS.txt" target="_blank" rel="noreferrer">SHA file</a>
           </div>
-          <div class="copy-box"><small>Backup test link</small><br><a href="http://157.230.84.128:18083/lust-v7a29-miner-windows-FULL.zip" target="_blank" rel="noreferrer">http://157.230.84.128:18083/lust-v7a29-miner-windows-FULL.zip</a></div>
         </div>
-        <div class="sha-box"><span>SHA256</span><code>896b0df1ef0428f33c6ede3036aca6c53387b8b3260095d94a02cf7289313d61</code></div>
+        <div class="sha-box"><span>SHA256</span><code>2aae796be6d2775537f15039f10e22a479eaf88e435484111fe4845a80747b6d</code></div>
       </div>
 
       <div class="download-card">
@@ -197,7 +196,6 @@
             <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a29-miner-ubuntu.tar.gz" target="_blank" rel="noreferrer">Download Ubuntu</a>
             <a class="btn" href="https://downloads.lustchain.org/SHA256SUMS.txt" target="_blank" rel="noreferrer">SHA file</a>
           </div>
-          <div class="copy-box"><small>Backup test link</small><br><a href="http://157.230.84.128:18083/lust-v7a29-miner-ubuntu.tar.gz" target="_blank" rel="noreferrer">http://157.230.84.128:18083/lust-v7a29-miner-ubuntu.tar.gz</a></div>
         </div>
         <div class="sha-box"><span>SHA256</span><code>27e3d74cdbd9f71b661f8a9e990abe1bf88f84fc07557415ebcd57f528e641b8</code></div>
       </div>
@@ -269,7 +267,7 @@
     <div class="grid three">
       <div class="card"><small>Sync</small><h3>Gap 0 and not syncing.</h3><p>The local block must match the public block and <strong>Syncing</strong> must be <strong>False</strong>.</p></div>
       <div class="card"><small>Peers</small><h3>Peers 1 or more.</h3><p>For production, more peers is better. If peers stay 0, restart the miner or check firewall/router.</p></div>
-      <div class="card"><small>Canonical safety</small><h3>Hash check is mandatory.</h3><p>The next miner package must show <strong>Local hash</strong> and <strong>Public hash</strong>. Gap 0 alone is not enough.</p></div>
+      <div class="card"><small>Canonical safety</small><h3>Hash check is mandatory.</h3><p>The current Windows V7A29 package shows <strong>Local hash</strong>, <strong>Public hash</strong>, <strong>Compare height</strong> and <strong>Canonical YES/NO</strong>. Gap 0 alone is not enough.</p></div>
     </div>
 
     <div class="box command-box">
@@ -277,10 +275,15 @@
       <pre><code>Running: YES
 Chain ID: 0x1b0b
 Local block: same as public block
+Local hash: matches public hash
+Public block: same as local block
+Public hash: matches local hash
 Gap: 0
+Compare height: latest common block
+Canonical: YES
 Peers: 1+
 Syncing: False
-STATUS: READY</code></pre>
+STATUS: READY - synced, canonical and mining ready</code></pre>
     </div>
   </section>
 
