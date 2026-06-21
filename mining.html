@@ -110,20 +110,25 @@
         <div class="kicker">Correct mining order</div>
         <h2>Do the steps in this order.</h2>
       </div>
-      <p>This is the safest sequence for new community miners. The faucet comes before registration because Register and Heartbeat are on-chain transactions.</p>
+      <p>This is the safest sequence for new community miners. The faucet comes before registration because Register and Heartbeat are on-chain transactions. If you change the wallet on the same PC, repeat Register and Activate / Heartbeat for the new wallet.</p>
     </div>
 
     <div class="grid three sequence-grid">
       <div class="sequence-step"><h3>Add LUST Chain</h3><p>Connect MetaMask and add/switch to <strong>LUST Chain</strong>, chain ID <strong>6923</strong>.</p></div>
       <div class="sequence-step"><h3>Claim faucet gas</h3><p>Open the faucet and claim a small amount of native <strong>LST</strong>. This pays gas for registration and heartbeat.</p><div class="hero-buttons"><a class="btn primary" href="./faucet.html">Open faucet</a></div></div>
       <div class="sequence-step"><h3>Download V7A29</h3><p>Download only the current V7A29 miner package for Windows or Ubuntu from the official download links.</p></div>
-      <div class="sequence-step"><h3>Start the miner</h3><p>Run the miner and wait for <strong>Gap 0</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong>, <strong>Canonical YES</strong> and <strong>READY</strong>.</p></div>
-      <div class="sequence-step"><h3>Register wallet</h3><p>Use the same wallet shown in the miner. Click <strong>Register wallet</strong> once and wait for confirmation.</p></div>
-      <div class="sequence-step"><h3>Activate / Heartbeat</h3><p>Click <strong>Activate / Heartbeat</strong>. Keep the miner running and watch the live stats for your public blocks.</p></div>
+      <div class="sequence-step"><h3>Start the miner</h3><p>Run the miner and wait for <strong>Gap 0</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong>, <strong>Canonical YES</strong> , <strong>Canonical YES</strong> and <strong>READY</strong>.</p></div>
+      <div class="sequence-step"><h3>Register wallet</h3><p>Use the same wallet shown in the miner. Click <strong>Register wallet</strong> once, wait for the transaction to confirm, and do not change wallet after this step.</p></div>
+      <div class="sequence-step"><h3>Activate / Heartbeat</h3><p>After Register is confirmed, click <strong>Activate / Heartbeat</strong>. This marks that wallet as active for mining.</p></div>
+      <div class="sequence-step"><h3>Watch first blocks</h3><p>Keep the miner open. If it shows <strong>READY</strong> and <strong>Canonical YES</strong> but your wallet does not appear after 10–15 minutes, send one more <strong>Activate / Heartbeat</strong>.</p></div>
     </div>
 
     <div class="mining-alert mining-warn">
       <strong>Important:</strong> faucet gas is not a mining deposit. It is only a small native LST amount used to pay transaction gas for Register and Heartbeat.
+    </div>
+    <div class="mining-alert mining-good">
+      <strong>When do I need Register / Heartbeat?</strong><br>
+      <strong>Register wallet</strong> is normally done once for each wallet. Do it again only when using a new wallet. <strong>Activate / Heartbeat</strong> must be sent after Register is confirmed, and again if you change wallet, restart with a new wallet, stay offline, or the miner is READY/Canonical YES but your wallet does not start appearing in live blocks after a few minutes. Do not spam heartbeat every few seconds.
     </div>
   </section>
 
@@ -177,7 +182,7 @@
         <div>
           <small>Windows 64-bit · V7A29 · full package</small>
           <h3>Windows complete miner package</h3>
-          <p>Extract the ZIP into a new folder, run <strong>START-LUST-MINER-WINDOWS.bat</strong>, use one wallet per PC and wait until the status shows <strong>Canonical YES</strong> and <strong>READY</strong>.</p>
+          <p>Extract the ZIP into a new folder, run <strong>START-LUST-MINER-WINDOWS.bat</strong>, use one wallet per PC and wait until the status shows <strong>Canonical YES</strong> , <strong>Canonical YES</strong> and <strong>READY</strong>.</p>
           <div class="hero-buttons">
             <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a29-miner-windows-FULL.zip" target="_blank" rel="noreferrer">Download Windows</a>
             <a class="btn" href="https://downloads.lustchain.org/SHA256SUMS.txt" target="_blank" rel="noreferrer">SHA file</a>
@@ -191,7 +196,7 @@
         <div>
           <small>Ubuntu / Linux 64-bit · V7A29</small>
           <h3>Ubuntu complete miner package</h3>
-          <p>Extract the TAR.GZ, run <strong>chmod +x *.sh</strong>, start the miner and wait for <strong>Gap 0</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong> and <strong>READY</strong>.</p>
+          <p>Extract the TAR.GZ, run <strong>chmod +x *.sh</strong>, start the miner and wait for <strong>Gap 0</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong>, <strong>Canonical YES</strong> and <strong>READY</strong>.</p>
           <div class="hero-buttons">
             <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a29-miner-ubuntu.tar.gz" target="_blank" rel="noreferrer">Download Ubuntu</a>
             <a class="btn" href="https://downloads.lustchain.org/SHA256SUMS.txt" target="_blank" rel="noreferrer">SHA file</a>
@@ -237,7 +242,7 @@
         </div>
 
         <div class="notice miner-log" data-v7a29-log>
-          Start the V7A29 miner first. When the miner shows READY, connect the same wallet, register once, then send Activate / Heartbeat.
+          Start the V7A29 miner first. When the miner shows READY and Canonical YES, connect the same wallet, register once, wait for confirmation, then send Activate / Heartbeat. If you change wallet on the same PC, repeat Register and Heartbeat for the new wallet.
         </div>
       </div>
 
@@ -250,6 +255,7 @@
           <div><span>Value</span><code>0 LST</code></div>
         </div>
         <p class="mini-copy"><strong>Do this before Register/Heartbeat:</strong> claim faucet gas first. You only need a tiny amount of native LST for gas; it is not a mining deposit.</p>
+        <p class="mini-copy"><strong>Correct order:</strong> Register must confirm first. After that, send Activate / Heartbeat. If the miner is synced but your wallet does not produce/appear after 10–15 minutes, send one fresh Heartbeat and keep the miner running.</p>
         <div class="hero-buttons"><a class="btn primary" href="./faucet.html">Open LST gas faucet</a><a class="btn" href="#start-sequence">View full sequence</a></div>
       </div>
     </div>
@@ -268,6 +274,10 @@
       <div class="card"><small>Sync</small><h3>Gap 0 and not syncing.</h3><p>The local block must match the public block and <strong>Syncing</strong> must be <strong>False</strong>.</p></div>
       <div class="card"><small>Peers</small><h3>Peers 1 or more.</h3><p>For production, more peers is better. If peers stay 0, restart the miner or check firewall/router.</p></div>
       <div class="card"><small>Canonical safety</small><h3>Hash check is mandatory.</h3><p>The current Windows V7A29 package shows <strong>Local hash</strong>, <strong>Public hash</strong>, <strong>Compare height</strong> and <strong>Canonical YES/NO</strong>. Gap 0 alone is not enough.</p></div>
+    </div>
+
+    <div class="mining-alert mining-warn">
+      <strong>If you change wallet on a PC:</strong> stop/start the miner with the new wallet, wait for READY + Canonical YES, then Register the new wallet and send a fresh Activate / Heartbeat. The old wallet may stop producing immediately, but the new wallet only joins after its own on-chain activation is confirmed.
     </div>
 
     <div class="box command-box">
