@@ -10,11 +10,11 @@
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
   <link rel="stylesheet" href="./styles.css?v=20260619-v7a25-fixed-register-138282" />
   <style>
-    .mining-alert{border:1px solid rgba(247,3,117,.55);padding:14px 16px;border-radius:18px;background:rgba(247,3,117,.08);margin-top:16px}.mining-alert strong{color:#fff}.mining-good{border-color:rgba(20,220,140,.5);background:rgba(20,220,140,.08)}.mining-warn{border-color:rgba(255,200,90,.55);background:rgba(255,200,90,.08)}.mining-danger{border-color:rgba(255,80,90,.55);background:rgba(255,80,90,.08)}.live-row{display:flex;justify-content:space-between;gap:16px;border-top:1px solid rgba(255,255,255,.12);padding:10px 0}.live-row:first-child{border-top:0}.live-row span{opacity:.78}.live-row strong,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.compact-small{font-size:.82rem;word-break:break-all}.status-pill{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:7px 10px;background:rgba(255,255,255,.05);font-size:.86rem}.miner-table{width:100%;border-collapse:collapse}.miner-table th,.miner-table td{border-bottom:1px solid rgba(255,255,255,.12);padding:10px;text-align:left;vertical-align:top}.miner-table th{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;opacity:.75}.download-card .hero-buttons{margin-top:12px}.copy-box{border:1px solid rgba(255,255,255,.14);border-radius:16px;background:rgba(255,255,255,.04);padding:14px;margin-top:12px}.copy-box code{white-space:normal;word-break:break-all}.mini-list{margin:10px 0 0 18px;padding:0}.mini-list li{margin:7px 0}.big-metric.compact-address{font-size:1rem;word-break:break-all}.miner-page .download-card .btn[aria-disabled="true"]{opacity:.65;cursor:not-allowed}.heartbeat-actions .btn{min-width:170px}.full-width{grid-column:1 / -1}@media(max-width:760px){.live-row{display:block}.miner-table{font-size:.86rem}.heartbeat-actions .btn{width:100%}}
+    .mining-alert{border:1px solid rgba(247,3,117,.55);padding:14px 16px;border-radius:18px;background:rgba(247,3,117,.08);margin-top:16px}.mining-alert strong{color:#fff}.mining-good{border-color:rgba(20,220,140,.5);background:rgba(20,220,140,.08)}.mining-warn{border-color:rgba(255,200,90,.55);background:rgba(255,200,90,.08)}.mining-danger{border-color:rgba(255,80,90,.55);background:rgba(255,80,90,.08)}.live-row{display:flex;justify-content:space-between;gap:16px;border-top:1px solid rgba(255,255,255,.12);padding:10px 0}.live-row:first-child{border-top:0}.live-row span{opacity:.78}.live-row strong,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.compact-small{font-size:.82rem;word-break:break-all}.status-pill{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:7px 10px;background:rgba(255,255,255,.05);font-size:.86rem}.miner-table{width:100%;border-collapse:collapse}.miner-table th,.miner-table td{border-bottom:1px solid rgba(255,255,255,.12);padding:10px;text-align:left;vertical-align:top}.miner-table th{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;opacity:.75}.download-card .hero-buttons{margin-top:12px}.copy-box{border:1px solid rgba(255,255,255,.14);border-radius:16px;background:rgba(255,255,255,.04);padding:14px;margin-top:12px}.copy-box code{white-space:normal;word-break:break-all}.mini-list{margin:10px 0 0 18px;padding:0}.mini-list li{margin:7px 0}.big-metric.compact-address{font-size:1rem;word-break:break-all}.miner-page .download-card .btn[aria-disabled="true"]{opacity:.65;cursor:not-allowed}.heartbeat-actions .btn{min-width:170px}.full-width{grid-column:1 / -1}.faucet-spotlight{border:2px solid rgba(247,3,117,.85);background:linear-gradient(135deg,rgba(247,3,117,.20),rgba(255,255,255,.05));box-shadow:0 0 0 1px rgba(255,255,255,.08),0 18px 50px rgba(247,3,117,.18);padding:18px;border-radius:22px;margin-top:18px}.faucet-spotlight h3{margin:6px 0 8px}.faucet-spotlight p{margin:0 0 12px}.sequence-grid{counter-reset:mineStep}.sequence-step{position:relative;border:1px solid rgba(255,255,255,.14);border-radius:20px;background:rgba(255,255,255,.04);padding:18px 16px 16px 64px}.sequence-step:before{counter-increment:mineStep;content:counter(mineStep);position:absolute;left:16px;top:18px;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#f70375;color:#fff;font-weight:900}.sequence-step h3{margin:0 0 8px}.sequence-step p{margin:0}.sequence-step strong{color:#fff}@media(max-width:760px){.live-row{display:block}.miner-table{font-size:.86rem}.heartbeat-actions .btn{width:100%}}
   </style>
 </head>
 <body>
-<div class="promo-bar">LUST Chain Mining V7A29 · live stats, downloads, registration and heartbeat for controlled public-mining tests.</div>
+<div class="promo-bar">LUST Chain Mining V7A29 · live stats, faucet gas, downloads, registration and heartbeat for controlled public-mining tests.</div>
 <header class="topbar">
   <a class="brand" href="./presale.html">
     <div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div>
@@ -61,12 +61,20 @@
       <div class="kicker">LUST public mining · V7A29</div>
       <h1>Mine LUST from your own computer.</h1>
       <p>V7A29 is the current mining candidate tested on real mainnet with PC1, PC2 and PC3. Official producers stay as emergency fallback only: when public miners are active, official/prod wallets must not produce blocks.</p>
+      <div class="faucet-spotlight">
+        <small>Required before register / heartbeat</small>
+        <h3>First get faucet gas.</h3>
+        <p>Every new mining wallet needs a small amount of native <strong>LST</strong> to pay gas for <strong>Register wallet</strong> and <strong>Activate / Heartbeat</strong>. Without faucet gas, the miner can run but the wallet cannot become active on-chain.</p>
+        <div class="hero-buttons">
+          <a class="btn primary" href="./faucet.html">Open LST gas faucet</a>
+          <button class="btn" type="button" data-add-lust-chain>Add/Switch LUST Chain</button>
+          <a class="btn" href="#start-sequence">See correct order</a>
+        </div>
+      </div>
       <div class="hero-buttons">
         <a class="btn primary" href="#downloads">Download miner</a>
         <a class="btn" href="#live-mining">Live mining stats</a>
         <a class="btn" href="#register">Register / Heartbeat</a>
-        <button class="btn" type="button" data-add-lust-chain>Add LUST Chain</button>
-        <a class="btn" href="./faucet.html">Get gas faucet</a>
       </div>
       <div class="security-strip">
         <span>✓ V7A29</span>
@@ -93,6 +101,29 @@
       <div class="row"><span>Official blocks / last 200</span><strong data-mining-official-blocks>Loading...</strong></div>
       <div class="row"><span>Snapshot block</span><strong data-snapshot-block>Loading...</strong></div>
       <div class="row"><span>Public mining state</span><strong data-v7a29-public-state>Checking...</strong></div>
+    </div>
+  </section>
+
+  <section class="miner-section" id="start-sequence">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Correct mining order</div>
+        <h2>Do the steps in this order.</h2>
+      </div>
+      <p>This is the safest sequence for new community miners. The faucet comes before registration because Register and Heartbeat are on-chain transactions.</p>
+    </div>
+
+    <div class="grid three sequence-grid">
+      <div class="sequence-step"><h3>Add LUST Chain</h3><p>Connect MetaMask and add/switch to <strong>LUST Chain</strong>, chain ID <strong>6923</strong>.</p></div>
+      <div class="sequence-step"><h3>Claim faucet gas</h3><p>Open the faucet and claim a small amount of native <strong>LST</strong>. This pays gas for registration and heartbeat.</p><div class="hero-buttons"><a class="btn primary" href="./faucet.html">Open faucet</a></div></div>
+      <div class="sequence-step"><h3>Download V7A29</h3><p>Download only the current V7A29 miner package for Windows or Ubuntu from the official download links.</p></div>
+      <div class="sequence-step"><h3>Start the miner</h3><p>Run the miner and wait for <strong>Gap 0</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong> and <strong>READY</strong>.</p></div>
+      <div class="sequence-step"><h3>Register wallet</h3><p>Use the same wallet shown in the miner. Click <strong>Register wallet</strong> once and wait for confirmation.</p></div>
+      <div class="sequence-step"><h3>Activate / Heartbeat</h3><p>Click <strong>Activate / Heartbeat</strong>. Keep the miner running and watch the live stats for your public blocks.</p></div>
+    </div>
+
+    <div class="mining-alert mining-warn">
+      <strong>Important:</strong> faucet gas is not a mining deposit. It is only a small native LST amount used to pay transaction gas for Register and Heartbeat.
     </div>
   </section>
 
@@ -136,6 +167,10 @@
       <p>Use only V7A29. Do not use V7A27 or V7A28 after the activation block, because V7A29 is the gated fix that keeps old blocks valid and removes official producers when public miners are active.</p>
     </div>
 
+    <div class="mining-alert mining-warn">
+      <strong>Before downloading for a new wallet:</strong> add LUST Chain in MetaMask and use the <a href="./faucet.html">LST gas faucet</a>. You need faucet gas before Register wallet and Activate / Heartbeat.
+    </div>
+
     <div class="grid two download-grid">
       <div class="download-card">
         <div class="download-icon">⊞</div>
@@ -145,7 +180,7 @@
           <p>Extract the ZIP into a new folder, run <strong>START-LUST-MINER-WINDOWS.bat</strong>, use one wallet per PC and wait until the status shows <strong>READY</strong>.</p>
           <div class="hero-buttons">
             <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a29-miner-windows-FULL.zip" target="_blank" rel="noreferrer">Download Windows</a>
-            <a class="btn" href="https://downloads.lustchain.org/lust-v7a29-miner-windows-FULL.zip.sha256" target="_blank" rel="noreferrer">SHA file</a>
+            <a class="btn" href="https://downloads.lustchain.org/SHA256SUMS.txt" target="_blank" rel="noreferrer">SHA file</a>
           </div>
           <div class="copy-box"><small>Backup test link</small><br><a href="http://157.230.84.128:18083/lust-v7a29-miner-windows-FULL.zip" target="_blank" rel="noreferrer">http://157.230.84.128:18083/lust-v7a29-miner-windows-FULL.zip</a></div>
         </div>
@@ -160,7 +195,7 @@
           <p>Extract the TAR.GZ, run <strong>chmod +x *.sh</strong>, start the miner and wait for <strong>Gap 0</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong> and <strong>READY</strong>.</p>
           <div class="hero-buttons">
             <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a29-miner-ubuntu.tar.gz" target="_blank" rel="noreferrer">Download Ubuntu</a>
-            <a class="btn" href="https://downloads.lustchain.org/lust-v7a29-miner-ubuntu.tar.gz.sha256" target="_blank" rel="noreferrer">SHA file</a>
+            <a class="btn" href="https://downloads.lustchain.org/SHA256SUMS.txt" target="_blank" rel="noreferrer">SHA file</a>
           </div>
           <div class="copy-box"><small>Backup test link</small><br><a href="http://157.230.84.128:18083/lust-v7a29-miner-ubuntu.tar.gz" target="_blank" rel="noreferrer">http://157.230.84.128:18083/lust-v7a29-miner-ubuntu.tar.gz</a></div>
         </div>
@@ -216,7 +251,8 @@
           <div><span>Heartbeat prefix</span><code>0x4c5143485f5631</code></div>
           <div><span>Value</span><code>0 LST</code></div>
         </div>
-        <p class="mini-copy">You only need a tiny amount of LST for gas. Use the faucet page if this is a new wallet.</p>
+        <p class="mini-copy"><strong>Do this before Register/Heartbeat:</strong> claim faucet gas first. You only need a tiny amount of native LST for gas; it is not a mining deposit.</p>
+        <div class="hero-buttons"><a class="btn primary" href="./faucet.html">Open LST gas faucet</a><a class="btn" href="#start-sequence">View full sequence</a></div>
       </div>
     </div>
   </section>
@@ -318,7 +354,7 @@ STATUS: READY</code></pre>
     <div class="grid two">
       <div class="box"><small>Gap is not 0</small><h3>Miner is still syncing.</h3><p>Wait. If the gap does not reduce, restart the miner. If still stuck, delete only the local miner data folder on that PC, not the wallet file.</p></div>
       <div class="box"><small>Peers are 0</small><h3>Network connectivity problem.</h3><p>Check firewall, VPN, router and internet. Bootnodes must be reachable on P2P.</p></div>
-      <div class="box"><small>Register fails</small><h3>Usually wrong network or no gas.</h3><p>Switch MetaMask to LUST Chain and claim 0.01 LST from the faucet if the wallet is new.</p></div>
+      <div class="box"><small>Register fails</small><h3>Usually wrong network or no gas.</h3><p>Switch MetaMask to LUST Chain and claim faucet LST before trying again. Register and Heartbeat need native LST gas.</p></div>
       <div class="box"><small>PROD1 blocks appear</small><h3>Check the window.</h3><p>After V7A29 and with public miners active, official blocks should be 0 in a clean recent window. If public miners are offline, official fallback may appear to keep the chain alive.</p></div>
     </div>
   </section>
