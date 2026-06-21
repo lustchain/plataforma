@@ -85,7 +85,7 @@
         <span>✓ Prod blocked with public active</span>
       </div>
       <div class="mining-alert mining-good">
-        <strong>Internal test passed:</strong> PC1, PC2 and PC3 mined together; PROD1 blocks were 0 after V7A29 activation; clean 40-block audit paid exactly 80 LST total.
+        <strong>Internal test passed:</strong> public wallets mined together; PROD1/PROD2 blocks stayed 0 while public miners were active; reward audits matched the expected 2 LST per block.
       </div>
     </div>
     <div class="miner-command-card">
@@ -96,7 +96,7 @@
       <div class="row"><span>Consensus</span><strong>LQC · V7A29</strong></div>
       <div class="row"><span>Current block</span><strong data-v7a29-block>Loading...</strong></div>
       <div class="row"><span>Registered miners</span><strong data-mining-registered>Loading...</strong></div>
-      <div class="row"><span>Active public miners</span><strong data-mining-active>Loading...</strong></div>
+      <div class="row"><span>Producing wallets / last 200</span><strong data-mining-active>Loading...</strong></div>
       <div class="row"><span>Public blocks / last 200</span><strong data-mining-public-blocks>Loading...</strong></div>
       <div class="row"><span>Official blocks / last 200</span><strong data-mining-official-blocks>Loading...</strong></div>
       <div class="row"><span>Snapshot block</span><strong data-snapshot-block>Loading...</strong></div>
@@ -117,7 +117,7 @@
       <div class="sequence-step"><h3>Add LUST Chain</h3><p>Connect MetaMask and add/switch to <strong>LUST Chain</strong>, chain ID <strong>6923</strong>.</p></div>
       <div class="sequence-step"><h3>Claim faucet gas</h3><p>Open the faucet and claim a small amount of native <strong>LST</strong>. This pays gas for registration and heartbeat.</p><div class="hero-buttons"><a class="btn primary" href="./faucet.html">Open faucet</a></div></div>
       <div class="sequence-step"><h3>Download V7A29</h3><p>Download only the current V7A29 miner package for Windows or Ubuntu from the official download links.</p></div>
-      <div class="sequence-step"><h3>Start the miner</h3><p>Run the miner and wait for <strong>Gap 0</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong>, <strong>Canonical YES</strong> , <strong>Canonical YES</strong> and <strong>READY</strong>.</p></div>
+      <div class="sequence-step"><h3>Start the miner</h3><p>Run the miner and wait for <strong>Gap 0</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong>, <strong>Canonical YES</strong> and <strong>READY</strong>.</p></div>
       <div class="sequence-step"><h3>Register wallet</h3><p>Use the same wallet shown in the miner. Click <strong>Register wallet</strong> once, wait for the transaction to confirm, and do not change wallet after this step.</p></div>
       <div class="sequence-step"><h3>Activate / Heartbeat</h3><p>After Register is confirmed, click <strong>Activate / Heartbeat</strong>. This marks that wallet as active for mining.</p></div>
       <div class="sequence-step"><h3>Watch first blocks</h3><p>Keep the miner open. If it shows <strong>READY</strong> and <strong>Canonical YES</strong> but your wallet does not appear after 10–15 minutes, send one more <strong>Activate / Heartbeat</strong>.</p></div>
@@ -128,7 +128,10 @@
     </div>
     <div class="mining-alert mining-good">
       <strong>When do I need Register / Heartbeat?</strong><br>
-      <strong>Register wallet</strong> is normally done once for each wallet. Do it again only when using a new wallet. <strong>Activate / Heartbeat</strong> must be sent after Register is confirmed, and again if you change wallet, restart with a new wallet, stay offline, or the miner is READY/Canonical YES but your wallet does not start appearing in live blocks after a few minutes. Do not spam heartbeat every few seconds.
+      <strong>Register wallet</strong> is normally done once for each wallet. Do it again only when using a new wallet. <strong>Activate / Heartbeat</strong> must be sent after Register is confirmed, and again if you change wallet, restart with a new wallet, stay offline, or the miner is READY/Canonical YES but your wallet does not start appearing in live blocks after 10–15 minutes. Do not spam heartbeat every few seconds.
+    </div>
+    <div class="mining-alert mining-warn">
+      <strong>Simple rule:</strong> same wallet = no new Register. New wallet = new Register, then Heartbeat. If the miner already shows READY + Canonical YES, but the wallet still does not produce blocks after a few minutes, send one fresh Heartbeat and keep the miner running.
     </div>
   </section>
 
@@ -136,19 +139,23 @@
     <div class="section-head">
       <div>
         <div class="kicker">Live mining dashboard</div>
-        <h2>How many registered and how many are mining now.</h2>
+        <h2>Registered wallets, recent producers and real public activity.</h2>
       </div>
-      <p>This panel reads the LUST mining stats API and TX-FEED. It is the main place to check adoption before opening the network in larger waves.</p>
+      <p>This panel reads the LUST mining stats API and TX-FEED. Some numbers are rolling-window counters, not an exact count of computers online at this second.</p>
     </div>
 
     <div class="grid three mining-live-grid">
-      <div class="box live-stat-card"><small>Registered miners</small><strong class="big-metric" data-mining-registered>Loading...</strong><span>Unique wallets registered on-chain.</span></div>
-      <div class="box live-stat-card"><small>Active public miners</small><strong class="big-metric" data-mining-active>Loading...</strong><span>Unique public miners in recent blocks.</span></div>
+      <div class="box live-stat-card"><small>Registered wallets</small><strong class="big-metric" data-mining-registered>Loading...</strong><span>Total unique wallets that have registered on-chain. This is not the number of PCs online now.</span></div>
+      <div class="box live-stat-card"><small>Producing wallets / last 200</small><strong class="big-metric" data-mining-active>Loading...</strong><span>Unique public wallets that produced at least one block in the last 200 blocks. A stopped wallet may remain here until the window rolls out.</span></div>
       <div class="box live-stat-card"><small>Public blocks / last 200</small><strong class="big-metric" data-mining-public-blocks>Loading...</strong><span>Blocks produced by public miners.</span></div>
       <div class="box live-stat-card"><small>Official fallback / last 200</small><strong class="big-metric" data-mining-official-blocks>Loading...</strong><span>Should be 0 while public miners are active.</span></div>
       <div class="box live-stat-card"><small>Pending TX-FEED</small><strong class="big-metric" data-mining-pending>Loading...</strong><span>Raw transactions visible to miners.</span></div>
       <div class="box live-stat-card"><small>Last public miner</small><strong class="big-metric compact-address" data-mining-last-public>Loading...</strong><span data-mining-last-public-block>Waiting...</span></div>
-      <div class="box live-stat-card full-width"><small>Registry scan</small><strong class="big-metric compact-address" data-mining-scan-progress>Starting...</strong><span>Historic registration scan plus live updates.</span></div>
+      <div class="box live-stat-card full-width"><small>Registry scan</small><strong class="big-metric compact-address" data-mining-scan-progress>Starting...</strong><span>Historic registration scan plus live updates. Registered means wallet registered; producer means wallet that recently mined blocks.</span></div>
+    </div>
+
+    <div class="mining-alert mining-warn">
+      <strong>Read the live numbers correctly:</strong> <strong>Registered wallets</strong> is the total number of wallets that registered on-chain. <strong>Producing wallets / last 200</strong> is a rolling recent-block window, not an exact live PC count. If you change wallet on the same PC, the old wallet can still appear in this number until its old blocks leave the last-200 window or its heartbeat expires.
     </div>
 
     <div class="notice miner-log" data-mining-stats-log>
@@ -182,7 +189,7 @@
         <div>
           <small>Windows 64-bit · V7A29 · full package</small>
           <h3>Windows complete miner package</h3>
-          <p>Extract the ZIP into a new folder, run <strong>START-LUST-MINER-WINDOWS.bat</strong>, use one wallet per PC and wait until the status shows <strong>Canonical YES</strong> , <strong>Canonical YES</strong> and <strong>READY</strong>.</p>
+          <p>Extract the ZIP into a new folder, run <strong>START-LUST-MINER-WINDOWS.bat</strong>, use one wallet per PC and wait until the status shows <strong>Canonical YES</strong> and <strong>READY</strong>.</p>
           <div class="hero-buttons">
             <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a29-miner-windows-FULL.zip" target="_blank" rel="noreferrer">Download Windows</a>
             <a class="btn" href="https://downloads.lustchain.org/SHA256SUMS.txt" target="_blank" rel="noreferrer">SHA file</a>
@@ -255,7 +262,7 @@
           <div><span>Value</span><code>0 LST</code></div>
         </div>
         <p class="mini-copy"><strong>Do this before Register/Heartbeat:</strong> claim faucet gas first. You only need a tiny amount of native LST for gas; it is not a mining deposit.</p>
-        <p class="mini-copy"><strong>Correct order:</strong> Register must confirm first. After that, send Activate / Heartbeat. If the miner is synced but your wallet does not produce/appear after 10–15 minutes, send one fresh Heartbeat and keep the miner running.</p>
+        <p class="mini-copy"><strong>Correct order:</strong> Register must confirm first. After that, send Activate / Heartbeat. Register is once per wallet. Heartbeat is used after Register, after changing wallet, after being offline, or if READY/Canonical YES does not produce blocks after 10–15 minutes.</p>
         <div class="hero-buttons"><a class="btn primary" href="./faucet.html">Open LST gas faucet</a><a class="btn" href="#start-sequence">View full sequence</a></div>
       </div>
     </div>
@@ -277,7 +284,7 @@
     </div>
 
     <div class="mining-alert mining-warn">
-      <strong>If you change wallet on a PC:</strong> stop/start the miner with the new wallet, wait for READY + Canonical YES, then Register the new wallet and send a fresh Activate / Heartbeat. The old wallet may stop producing immediately, but the new wallet only joins after its own on-chain activation is confirmed.
+      <strong>If you change wallet on a PC:</strong> stop/start the miner with the new wallet, wait for READY + Canonical YES, then Register the new wallet and send a fresh Activate / Heartbeat. The old wallet may stop producing immediately, but it can still appear in the last-200 live stats until the window rolls out. The new wallet only joins after its own Register and Heartbeat are confirmed.
     </div>
 
     <div class="box command-box">
@@ -455,8 +462,8 @@ STATUS: READY - synced, canonical and mining ready</code></pre>
       set("[data-mining-scan-progress]", progress);
       const official = Number(stats.officialBlocksLast200||0);
       const active = Number(stats.activePublicMinersLast200||0);
-      set("[data-v7a29-public-state]", active > 0 && official === 0 ? "Public miners active · official 0" : active > 0 ? "Check official fallback blocks" : "Waiting public miners");
-      qsa("[data-mining-stats-log]").forEach(el=>{ el.textContent = `${progress} · registered ${fmt(stats.registeredMiners)} · active ${fmt(stats.activePublicMinersLast200)} · updated ${stats.updatedAt ? new Date(stats.updatedAt).toLocaleString() : "now"}`; el.dataset.tone = official===0 ? "ok" : "warn"; });
+      set("[data-v7a29-public-state]", active > 0 && official === 0 ? "Public producers seen · official 0" : active > 0 ? "Check official fallback blocks" : "Waiting public miners");
+      qsa("[data-mining-stats-log]").forEach(el=>{ el.textContent = `${progress} · registered ${fmt(stats.registeredMiners)} · producersLast200 ${fmt(stats.activePublicMinersLast200)} · updated ${stats.updatedAt ? new Date(stats.updatedAt).toLocaleString() : "now"}`; el.dataset.tone = official===0 ? "ok" : "warn"; });
     }catch(e){
       qsa("[data-mining-stats-log]").forEach(el=>{ el.textContent = `Could not load mining stats: ${e.message}. Open the API button and refresh with Ctrl+F5.`; el.dataset.tone="warn"; });
     }
