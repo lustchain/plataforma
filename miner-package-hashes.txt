@@ -1,15 +1,25 @@
-LUST Chain V7A30 final miner package hashes
+LUST Chain V7A30 FULL miner packages
+Updated: 2026-06-22 template-fixed final v2
 
-Windows FULL package / lust-v7a30-miner-windows.zip
-75e6a56b2d2e753986d08f6f44073ffbfb62e8aa442d4c40944a598a8c5dd0d1
+Windows package:
+75e6a56b2d2e753986d08f6f44073ffbfb62e8aa442d4c40944a598a8c5dd0d1  lust-v7a30-miner-windows.zip
+75e6a56b2d2e753986d08f6f44073ffbfb62e8aa442d4c40944a598a8c5dd0d1  lust-v7a30-miner-windows-FULL.zip
 
-Ubuntu FULL package / lust-v7a30-miner-ubuntu.tar.gz
-044b296f4965063ce38931eac162f3f9441b410e5d7f8f31d96393e0819f5a2e
+Ubuntu package:
+044b296f4965063ce38931eac162f3f9441b410e5d7f8f31d96393e0819f5a2e  lust-v7a30-miner-ubuntu.tar.gz
+044b296f4965063ce38931eac162f3f9441b410e5d7f8f31d96393e0819f5a2e  lust-v7a30-miner-ubuntu-FULL.tar.gz
 
-Windows binary / bin/lust-geth-windows-amd64.exe
-afe9b209e5369bcd23af018f77bf0982e23b465e7626556a92f9162b0a43345f
+Windows binary:
+afe9b209e5369bcd23af018f77bf0982e23b465e7626556a92f9162b0a43345f  bin/lust-geth-windows-amd64.exe
 
-Linux binary / bin/lust-geth-linux-amd64
-12193de6b86462f2ade00ee978393ec8f1423aadfad6c5864d13d0f4741fe9d2
+Linux binary:
+12193de6b86462f2ade00ee978393ec8f1423aadfad6c5864d13d0f4741fe9d2  bin/lust-geth-linux-amd64
 
-Snapshot rule: prod-2 auto update every ~1000 blocks.
+Windows start file:
+LUST_V7A30_WINDOWS_FULL/START-LUST-MINER-WINDOWS.bat
+
+Ubuntu start file:
+LUST_V7A30_UBUNTU_FULL/START-LUST-MINER-UBUNTU.sh
+
+Snapshot note:
+prod-2 snapshot auto update must stay active around every 1000 blocks.
