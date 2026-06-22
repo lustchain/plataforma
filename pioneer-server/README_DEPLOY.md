@@ -68,3 +68,13 @@ After the service is online, call:
 - then call `freezeMetadata()` only after every URL is confirmed
 
 Do not run `startMint()` until the service signer, page, metadata, reward reserve and end timestamp are all verified.
+
+## Faster install script
+
+On the downloads/faucet server, from inside this `pioneer-server` folder:
+
+```bash
+bash install-on-downloads.sh
+```
+
+The script generates a dedicated signer and writes it to `/opt/lust-pioneer/.env`. It prints the signer address. Use the owner wallet on `pioneer-owner-launch.html` to call `setMintAuthorizer(signerAddress)`.

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LUST Pioneer Owner Launch</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="icon" href="./assets/favicon.png" />
+  <link rel="stylesheet" href="./styles.css?v=20260616-hover-v5" />
+  <style>
+    body{background:#050509;color:#fff}.owner-wrap{width:min(1180px,92vw);margin:40px auto 80px}.owner-hero{border:1px solid rgba(247,3,117,.35);background:linear-gradient(135deg,rgba(247,3,117,.14),rgba(255,255,255,.04));border-radius:28px;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,.35)}.owner-hero h1{margin:10px 0 8px;font-size:clamp(2rem,5vw,4rem);line-height:.95}.owner-hero p{max-width:860px;opacity:.78}.owner-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}.owner-card{border:1px solid rgba(255,255,255,.14);border-radius:24px;background:rgba(255,255,255,.045);padding:18px}.owner-card h2{margin:0 0 10px}.owner-card small{color:#ff6fb0;text-transform:uppercase;letter-spacing:.12em}.owner-row{display:flex;justify-content:space-between;gap:12px;border-top:1px solid rgba(255,255,255,.1);padding:10px 0}.owner-row:first-of-type{border-top:0}.owner-row span{opacity:.72}.owner-row strong{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;text-align:right;word-break:break-all}.owner-form{display:grid;gap:10px;margin-top:12px}.owner-form label{display:grid;gap:6px}.owner-form input{width:100%}.owner-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}.owner-log{border:1px solid rgba(255,255,255,.14);border-radius:18px;background:#050509;padding:14px;min-height:54px;margin-top:14px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:pre-wrap;word-break:break-word}.owner-log[data-tone="ok"]{border-color:rgba(20,220,140,.5);background:rgba(20,220,140,.06)}.owner-log[data-tone="warn"]{border-color:rgba(255,200,90,.5);background:rgba(255,200,90,.06)}.owner-log[data-tone="error"]{border-color:rgba(255,70,100,.6);background:rgba(255,70,100,.08)}.owner-warning{border:1px solid rgba(255,200,90,.45);background:rgba(255,200,90,.08);border-radius:18px;padding:14px;margin-top:14px}.owner-warning strong{color:#ffe08a}.owner-danger{border-color:rgba(255,70,100,.55);background:rgba(255,70,100,.09)}@media(max-width:900px){.owner-grid{grid-template-columns:1fr}.owner-row{display:block}.owner-row strong{text-align:left;display:block;margin-top:6px}}
+  </style>
+</head>
+<body>
+  <div class="promo-bar">Private owner launch panel · do not share this page publicly.</div>
+  <header class="topbar"><a class="logo" href="./presale.html"><img src="./assets/lust-logo.png" alt="LUST Chain logo"><span>LUST Platform</span></a><nav class="nav"><a href="./pioneer.html">Pioneer Public Page</a><a href="https://explorer.lustchain.org/address/0xCb207489E4dbd6D4e3bf75CA947D0C43d621Fef1?tab=contract" target="_blank" rel="noopener">Contract</a></nav><div class="wallet-box"><button class="connect-btn" id="ownerConnect" type="button">Connect owner wallet</button><span id="ownerWallet">Wallet not connected</span></div></header>
+
+  <main class="owner-wrap">
+    <section class="owner-hero">
+      <small>Launch helper</small>
+      <h1>Pioneer NFT owner setup.</h1>
+      <p>This page uses your connected owner wallet to prepare the already deployed Pioneer contract. It never asks for a private key. The backend signer private key stays only on the downloads/faucet server.</p>
+      <div class="owner-warning"><strong>Order:</strong> backend online → set mint authorizer → set metadata → freeze metadata → fund 10,000 LST → start mint. Do not freeze before the metadata URL is working.</div>
+    </section>
+
+    <section class="owner-grid">
+      <article class="owner-card">
+        <small>Contract state</small><h2>Live checks</h2>
+        <div class="owner-row"><span>Owner</span><strong id="contractOwner">checking...</strong></div>
+        <div class="owner-row"><span>Mint authorizer</span><strong id="mintAuthorizer">checking...</strong></div>
+        <div class="owner-row"><span>Base URI</span><strong id="baseURI">checking...</strong></div>
+        <div class="owner-row"><span>Collection URI</span><strong id="contractURI">checking...</strong></div>
+        <div class="owner-row"><span>metadataFrozen</span><strong id="metadataFrozen">checking...</strong></div>
+        <div class="owner-row"><span>mintStarted</span><strong id="mintStarted">checking...</strong></div>
+        <div class="owner-row"><span>mintClosed</span><strong id="mintClosed">checking...</strong></div>
+        <div class="owner-row"><span>mintOpen</span><strong id="mintOpen">checking...</strong></div>
+        <div class="owner-row"><span>claimsOpen</span><strong id="claimsOpen">checking...</strong></div>
+        <div class="owner-row"><span>totalMinted</span><strong id="totalMinted">checking...</strong></div>
+        <div class="owner-row"><span>Contract balance</span><strong id="contractBalance">checking...</strong></div>
+        <div class="owner-actions"><button class="btn" type="button" id="refreshAll">Refresh</button><a class="btn" href="https://downloads.lustchain.org/pioneer/health" target="_blank" rel="noopener">Open backend health</a></div>
+        <div class="owner-log" id="ownerLog">Open this page with the owner wallet.</div>
+      </article>
+
+      <article class="owner-card">
+        <small>Step 1</small><h2>Backend signer</h2>
+        <p>The downloads/faucet backend must run the Pioneer service and show <b>signerMatches: true</b> after this step.</p>
+        <div class="owner-form">
+          <label><span>Dedicated backend signer address</span><input class="input" id="newAuthorizer" placeholder="0x... signer address generated on server"></label>
+        </div>
+        <div class="owner-actions"><button class="btn primary" type="button" id="setAuthorizer">Set mint authorizer</button></div>
+        <div class="owner-warning">Never put the owner private key on the server. Only the new dedicated signer private key goes in the backend .env.</div>
+      </article>
+
+      <article class="owner-card">
+        <small>Step 2</small><h2>Metadata</h2>
+        <p>These are the final URLs for automatic explorer/wallet metadata.</p>
+        <div class="owner-form">
+          <label><span>Base token URI</span><input class="input" id="baseTokenURI" value="https://downloads.lustchain.org/pioneer/metadata/"></label>
+          <label><span>Collection metadata URI</span><input class="input" id="collectionURI" value="https://downloads.lustchain.org/pioneer/collection.json"></label>
+        </div>
+        <div class="owner-actions"><button class="btn primary" type="button" id="setMetadata">Set metadata</button><a class="btn" href="https://downloads.lustchain.org/pioneer/collection.json" target="_blank" rel="noopener">Test collection.json</a></div>
+        <div class="owner-warning owner-danger"><strong>Freeze only after testing the backend.</strong> Once frozen, metadata cannot be changed.</div>
+        <div class="owner-actions"><button class="btn" type="button" id="freezeMetadata">Freeze metadata</button></div>
+      </article>
+
+      <article class="owner-card">
+        <small>Step 3</small><h2>Fund and open</h2>
+        <p>The official contract requires the full 10,000 LST reward reserve before mint can open.</p>
+        <div class="owner-form"><label><span>Mint duration in hours</span><input class="input" id="mintHours" type="number" min="1" value="72"></label></div>
+        <div class="owner-actions"><button class="btn" type="button" id="fundRewards">Fund 10,000 LST</button><button class="btn primary" type="button" id="startMint">Start mint</button></div>
+        <div class="owner-warning"><strong>After startMint:</strong> public users can mint from <a href="./pioneer.html">pioneer.html</a> if backend health is OK.</div>
+      </article>
+    </section>
+  </main>
+
+<script src="./pioneer-config.js?v=20260622-launch-helper-v1"></script>
+<script type="module">
+import { ethers } from "https://esm.sh/ethers@6.16.0";
+const CONFIG = window.LUST_PIONEER_CONFIG || {};
+const CHAIN_ID = Number(CONFIG.chainId || 6923);
+const CHAIN_ID_HEX = CONFIG.chainIdHex || "0x1b0b";
+const RPC_URL = CONFIG.rpcUrl || "https://rpc.lustchain.org";
+const CONTRACT = CONFIG.contractAddress || "0xCb207489E4dbd6D4e3bf75CA947D0C43d621Fef1";
+const ABI = [
+  "function owner() view returns(address)","function mintAuthorizer() view returns(address)","function baseURI() view returns(string)","function contractURI() view returns(string)","function metadataFrozen() view returns(bool)","function mintStarted() view returns(bool)","function mintClosed() view returns(bool)","function mintOpen() view returns(bool)","function claimsOpen() view returns(bool)","function totalMinted() view returns(uint256)","function setMintAuthorizer(address)","function setMetadata(string,string)","function freezeMetadata()","function fundRewards() payable","function startMint(uint64)"
+];
+const provider = new ethers.JsonRpcProvider(RPC_URL, CHAIN_ID, { staticNetwork: true });
+const read = new ethers.Contract(CONTRACT, ABI, provider);
+let signer, wallet, write;
+const $ = (id) => document.getElementById(id);
+function short(a){return a ? a.slice(0,6)+"..."+a.slice(-4) : "not connected";}
+function log(msg,tone=""){ const el=$("ownerLog"); el.textContent=msg; el.dataset.tone=tone; }
+async function browserSigner(){
+  const eth = window.ethereum || window.lustAppKit?.getWalletProvider?.();
+  if(!eth) throw new Error("No wallet found. Open MetaMask or Rabby.");
+  try { await eth.request({method:"wallet_switchEthereumChain",params:[{chainId:CHAIN_ID_HEX}]}); } catch(e){
+    if(e?.code===4902) await eth.request({method:"wallet_addEthereumChain",params:[{chainId:CHAIN_ID_HEX,chainName:"LUST Chain",nativeCurrency:{name:"LST",symbol:"LST",decimals:18},rpcUrls:[RPC_URL],blockExplorerUrls:["https://explorer.lustchain.org"]}]}); else throw e;
+  }
+  const bp = new ethers.BrowserProvider(eth); await bp.send("eth_requestAccounts", []); signer = await bp.getSigner(); wallet = await signer.getAddress(); write = new ethers.Contract(CONTRACT, ABI, signer); $("ownerWallet").textContent = short(wallet); return signer;
+}
+async function refresh(){
+  try{
+    const [owner,auth,base,uri,frozen,started,closed,open,claims,minted,balance] = await Promise.all([read.owner(),read.mintAuthorizer(),read.baseURI(),read.contractURI(),read.metadataFrozen(),read.mintStarted(),read.mintClosed(),read.mintOpen(),read.claimsOpen(),read.totalMinted(),provider.getBalance(CONTRACT)]);
+    $("contractOwner").textContent=owner; $("mintAuthorizer").textContent=auth; $("baseURI").textContent=base || "not set"; $("contractURI").textContent=uri || "not set"; $("metadataFrozen").textContent=String(frozen); $("mintStarted").textContent=String(started); $("mintClosed").textContent=String(closed); $("mintOpen").textContent=String(open); $("claimsOpen").textContent=String(claims); $("totalMinted").textContent=minted.toString(); $("contractBalance").textContent=ethers.formatEther(balance)+" LST";
+    log("Contract state loaded.","ok");
+  }catch(e){ console.error(e); log(e.shortMessage||e.message||"Could not read contract.","error"); }
+}
+async function txRun(fn, label){ try{ if(!signer) await browserSigner(); log(label+" - confirm in wallet..."); const tx = await fn(); log("Sent: "+tx.hash+"\nWaiting confirmation..."); await tx.wait(); log(label+" confirmed.","ok"); await refresh(); }catch(e){ console.error(e); log(e.shortMessage||e.reason||e.message||"Transaction failed.","error"); } }
+$("ownerConnect").onclick=async()=>{ await browserSigner(); await refresh(); };
+$("refreshAll").onclick=refresh;
+$("setAuthorizer").onclick=()=>txRun(()=>write.setMintAuthorizer($("newAuthorizer").value.trim()),"setMintAuthorizer");
+$("setMetadata").onclick=()=>txRun(()=>write.setMetadata($("baseTokenURI").value.trim(),$("collectionURI").value.trim()),"setMetadata");
+$("freezeMetadata").onclick=()=>{ if(confirm("Freeze metadata forever? Only continue if backend metadata URLs work.")) txRun(()=>write.freezeMetadata(),"freezeMetadata"); };
+$("fundRewards").onclick=()=>{ if(confirm("Deposit 10,000 LST native into the Pioneer reward contract?")) txRun(()=>write.fundRewards({value: ethers.parseEther("10000")}),"fundRewards 10000 LST"); };
+$("startMint").onclick=()=>{ const h=Math.max(1,Number($("mintHours").value||72)); const end=Math.floor(Date.now()/1000)+Math.floor(h*3600); txRun(()=>write.startMint(end),"startMint until "+new Date(end*1000).toISOString()); };
+refresh();
+</script>
+</body>
+</html>

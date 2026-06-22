@@ -1,0 +1,43 @@
+LUST PIONEER NFT - LAUNCH TODAY GUIDE
+
+IMPORTANT:
+- The public site is static. GitHub Pages cannot sign mint authorizations and cannot serve dynamic reward metadata.
+- For the already deployed contract to work automatically for public users, the pioneer-server must run on the existing downloads/faucet backend domain.
+- Use the existing domain: https://downloads.lustchain.org/pioneer/
+- Do NOT put the owner private key on any server.
+
+PUBLIC USER FLOW AFTER SETUP:
+1) User opens https://platform.lustchain.org/pioneer.html
+2) User connects wallet.
+3) User enters X account and public X promotion post.
+4) Backend signs authorization.
+5) User confirms mint tx.
+6) Contract mints NFT and assigns random reward.
+7) Page shows NFT + reward immediately.
+8) Explorer/wallet read tokenURI from https://downloads.lustchain.org/pioneer/metadata/{tokenId}.json
+
+FILES:
+- pioneer.html / pioneer.js / pioneer.css: public mint page.
+- pioneer-config.js: points public page to downloads.lustchain.org/pioneer/authorize.
+- pioneer-owner-launch.html: private owner setup page. Do not link publicly.
+- pioneer-server/: Node service for authorization + dynamic metadata + numbered images.
+
+OWNER CONTRACT ORDER:
+1) Deploy/start pioneer-server on downloads/faucet server.
+2) Create dedicated backend signer wallet on server.
+3) Open pioneer-owner-launch.html with owner wallet.
+4) setMintAuthorizer(new backend signer address).
+5) Verify https://downloads.lustchain.org/pioneer/health shows signerMatches true.
+6) setMetadata(
+   https://downloads.lustchain.org/pioneer/metadata/,
+   https://downloads.lustchain.org/pioneer/collection.json
+)
+7) Test collection.json in browser.
+8) freezeMetadata().
+9) fundRewards() with 10000 LST native.
+10) startMint(end timestamp).
+
+DO NOT:
+- Do not create another contract.
+- Do not upload private keys to GitHub.
+- Do not call freezeMetadata before backend URLs work.
