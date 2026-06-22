@@ -104,7 +104,7 @@
       <div class="row"><span>Consensus</span><strong>LQC · V7A30</strong></div>
       <div class="row"><span>Current block</span><strong data-current-block data-v7a29-block data-v7a29-block data-v7a30-block>Loading...</strong></div>
       <div class="row"><span>Snapshot block</span><strong data-snapshot-block>Loading...</strong></div>
-      <div class="row"><span>V7A30 activation</span><strong>Block 157500</strong></div>
+      <div class="row"><span>V7A30 activation</span><strong>Active since block 157500</strong></div>
       <div class="row"><span>Registered miners</span><strong data-mining-registered>Loading...</strong></div>
       <div class="row"><span>Miners online</span><strong data-mining-active>Loading...</strong></div>
       <div class="row"><span>Public blocks / 200</span><strong data-mining-public-blocks>Loading...</strong></div>
@@ -169,7 +169,7 @@
     <div class="stats-log" data-mining-stats-log>Loading live mining stats...</div>
 
     <div class="grid three mining-live-grid" style="margin-top:18px">
-      <div class="box live-stat-card"><small>Mining version</small><strong class="big-metric">V7A30</strong><span>Fast fallback activates at block 157500. After activation, offline public slots cannot hold the chain for long.</span></div>
+      <div class="box live-stat-card"><small>Mining version</small><strong class="big-metric">V7A30</strong><span>Active from block 157500. Offline public slots cannot hold the chain for long after activation.</span></div>
       <div class="box live-stat-card"><small>Downloads</small><strong class="big-metric">Ready</strong><span>Official Windows and Ubuntu/Linux V7A30 packages are available below.</span></div>
       <div class="box live-stat-card"><small>Registration</small><strong class="big-metric">Open</strong><span>Register wallet and Activate / Heartbeat are available for miner wallets.</span></div>
     </div>
@@ -191,11 +191,11 @@
         <div class="kicker">Download center · V7A30 · official</div>
         <h2>Download the official V7A30 miner packages.</h2>
       </div>
-      <p>Use these packages for production testing and final community release. Each PC should use one wallet. Start the miner, wait for sync/canonical readiness, then Register wallet and send Activate / Heartbeat.</p>
+      <p>Use these official production packages for V7A30 mining. Each PC should use one wallet. Download the full package, extract it into a new folder, start the miner from the easy start file, wait for sync/canonical readiness, then Register wallet and send Activate / Heartbeat.</p>
     </div>
 
     <div class="mining-alert mining-good">
-      <strong>Official V7A30 downloads:</strong> these are the current miner packages for LUST Chain. The same page can later block only the download buttons without changing the full production layout.
+      <strong>Official V7A30 downloads:</strong> these are the current full miner packages for LUST Chain. Windows includes a click-to-start BAT file; Ubuntu/Linux includes start, status and reset shell scripts.
     </div>
 
     <div class="mining-alert mining-warn">
@@ -208,13 +208,14 @@
         <div>
           <small>Windows 64-bit · V7A30 · full package</small>
           <h3>Windows complete miner package</h3>
-          <p>Download the ZIP, extract it into a new folder, run the Windows start script, use one wallet per PC and wait until the status shows <strong>Gap 0</strong>, <strong>Canonical YES</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong> and <strong>READY</strong>.</p>
+          <p>Download the ZIP, extract it into a new folder and run <strong>CLICK-HERE-START-LUST-MINER-WINDOWS.bat</strong>. Do not click the .ps1 file. Use one wallet per PC and wait until the miner is synced/canonical and ready.</p>
           <div class="hero-buttons">
             <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a30-miner-windows.zip" target="_blank" rel="noreferrer">Download Windows V7A30</a>
             <a class="btn" href="https://downloads.lustchain.org/SHA256SUMS-V7A30.txt" target="_blank" rel="noreferrer">Verify SHA</a>
           </div>
         </div>
-        <div class="sha-box"><span>Package SHA256</span><code>7c7725aac222ec8e6c2f935d22c16bc51592cf32637a2eae1ba080791300135a</code></div>
+        <div class="sha-box"><span>Package SHA256</span><code>ee92da1a8b9522cc76417743d1b11fb357be9ccc6ba66bbd0c4db356956cbeb9</code></div>
+        <div class="copy-box"><strong>Windows package includes</strong><br><code>CLICK-HERE-START-LUST-MINER-WINDOWS.bat</code><br><code>STATUS-LUST-MINER-WINDOWS.bat</code><br><code>RESET-SAVED-WALLET.bat</code><br><code>README-LUST-V7A30-FIRST.txt</code><br><code>SHA256SUMS.txt</code></div>
       </div>
 
       <div class="download-card">
@@ -222,20 +223,21 @@
         <div>
           <small>Ubuntu / Linux 64-bit · V7A30</small>
           <h3>Ubuntu complete miner package</h3>
-          <p>Download the TAR.GZ, extract it, run <strong>chmod +x *.sh</strong>, start the miner with your wallet and wait for <strong>Gap 0</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong>, <strong>Canonical YES</strong> and <strong>READY</strong>.</p>
+          <p>Download the TAR.GZ, extract it, run <strong>chmod +x *.sh</strong>, then start with <strong>./start-lust-miner-v7a30.sh</strong>. Use the status script to confirm the local miner RPC and keep the miner open while registered/active.</p>
           <div class="hero-buttons">
             <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a30-miner-ubuntu.tar.gz" target="_blank" rel="noreferrer">Download Ubuntu V7A30</a>
             <a class="btn" href="https://downloads.lustchain.org/SHA256SUMS-V7A30.txt" target="_blank" rel="noreferrer">Verify SHA</a>
           </div>
         </div>
-        <div class="sha-box"><span>Package SHA256</span><code>e23ebabd3ec1dae853a56c92d67cfa0603e3bee677efa7d858ba882abf23af33</code></div>
+        <div class="sha-box"><span>Package SHA256</span><code>f9b973289d5f84185b1cc4e294847809903fd542035a20ef032a5245a597dff4</code></div>
+        <div class="copy-box"><strong>Ubuntu/Linux package includes</strong><br><code>start-lust-miner-v7a30.sh</code><br><code>status-lust-miner-v7a30.sh</code><br><code>reset-saved-wallet.sh</code><br><code>README-LUST-V7A30-FIRST.txt</code><br><code>SHA256SUMS.txt</code></div>
       </div>
     </div>
 
     <div class="grid three">
       <div class="card"><small>Expected binary SHA</small><h3>Windows binary</h3><p class="compact-small mono">afe9b209e5369bcd23af018f77bf0982e23b465e7626556a92f9162b0a43345f</p></div>
       <div class="card"><small>Expected binary SHA</small><h3>Linux binary</h3><p class="compact-small mono">12193de6b86462f2ade00ee978393ec8f1423aadfad6c5864d13d0f4741fe9d2</p></div>
-      <div class="card"><small>Activation</small><h3>V7A30 block 157500</h3><p>Before block 157500 the binary remains legacy-compatible. At and after 157500, the fast emergency fallback rule is active.</p></div>
+      <div class="card"><small>Activation</small><h3>V7A30 block 157500</h3><p>V7A30 is active from block 157500. The binary keeps the fast emergency fallback rule active from that block forward.</p></div>
     </div>
   </section>
 
@@ -349,13 +351,13 @@ STATUS: READY - synced, canonical and mining ready</code></pre>
         <div class="kicker">Snapshot and fast sync</div>
         <h2>Miners start from the latest official snapshot.</h2>
       </div>
-      <p>The snapshot server updates automatically when the public snapshot is behind by about 1000 blocks. This keeps new community miners from waiting too long.</p>
+      <p>The prod-2 snapshot publisher updates the public snapshot automatically when it is behind by about 1000 blocks. This keeps new community miners from waiting too long and must remain active after node/client updates.</p>
     </div>
 
     <div class="grid three snapshot-grid">
       <div class="box"><small>Snapshot block</small><strong class="big-metric" data-snapshot-block>Loading...</strong></div>
       <div class="box"><small>Snapshot SHA</small><code data-snapshot-sha>Loading latest snapshot...</code></div>
-      <div class="box"><small>Rule</small><strong>Auto update every ~1000 blocks</strong></div>
+      <div class="box"><small>Rule</small><strong>prod-2 auto update every ~1000 blocks</strong></div>
     </div>
 
     <div class="hero-buttons">
