@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mining V7A29 | LUST Platform</title>
-  <meta name="description" content="Official LUST Chain mining page. Public miner downloads, registration and activation remain locked until the presale is completed and liquidity is created." />
+  <meta name="description" content="Official LUST Chain mining page. Miner downloads remain locked until liquidity; faucet gas and wallet registration tools are available for presale gas and early wallet setup." />
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
@@ -14,7 +14,7 @@
   </style>
 </head>
 <body>
-<div class="promo-bar">LUST Chain Mining · public mining opens only after the presale is completed and liquidity is created.</div>
+<div class="promo-bar">LUST Chain Mining · downloads locked until liquidity · faucet gas available now for presale and wallet setup.</div>
 <header class="topbar">
   <a class="brand" href="./presale.html">
     <div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div>
@@ -58,23 +58,31 @@
 <main class="wrap page miner-page">
   <section class="miner-hero">
     <div class="miner-hero-copy">
-      <div class="kicker">LUST mining · locked until liquidity</div>
-      <h1>Public mining opens after liquidity.</h1>
-      <p>LUST mining is prepared for the post-liquidity phase. Public miner downloads, wallet registration and activation remain locked until the Genesis Liquidity Event is completed and liquidity is created.</p>
+      <div class="kicker">LUST mining · downloads locked until liquidity</div>
+      <h1>Mining access opens after liquidity.</h1>
+      <p>LUST mining is prepared for the post-liquidity phase. Miner downloads stay locked until the Genesis Liquidity Event is completed and liquidity is created. The faucet and wallet registration tools remain available for presale gas, early setup and controlled testing.</p>
       <div class="faucet-spotlight">
-        <small>Required when mining opens</small>
-        <h3>Faucet gas will be required.</h3>
-        <p>When public mining opens, every new mining wallet will need a small amount of native <strong>LST</strong> to pay gas for <strong>Register wallet</strong> and <strong>Activate / Heartbeat</strong>. This is gas only, not a mining deposit.</p>
-        <div class="hero-buttons">
-          <a class="btn primary" href="./presale.html">Go to Presale</a>
-          <button class="btn" type="button" data-add-lust-chain>Add/Switch LUST Chain</button>
-          <a class="btn" href="#start-sequence">See correct order</a>
+        <small>Required for presale, register and heartbeat</small>
+        <h3>Faucet gas is available now.</h3>
+        <p>Every new wallet needs a small amount of native <strong>LST</strong> to pay gas for presale approval/buy transactions, <strong>Register wallet</strong> and <strong>Activate / Heartbeat</strong>. This is gas only, not a mining deposit.</p>
+        <div class="faucet-status-grid" style="margin:12px 0">
+          <div><span>Claim amount</span><strong data-faucet-amount>0.01 LST</strong></div>
+          <div><span>Faucet balance</span><strong data-faucet-balance>Checking...</strong></div>
+          <div><span>Your wallet balance</span><strong data-faucet-wallet-balance>Connect wallet</strong></div>
+          <div><span>Eligibility</span><strong data-faucet-eligibility>Connect wallet</strong></div>
         </div>
+        <div class="hero-buttons">
+          <button class="btn primary" type="button" data-claim-faucet>Claim 0.01 LST faucet</button>
+          <a class="btn" href="./faucet.html">Open Faucet page</a>
+          <button class="btn" type="button" data-add-lust-chain>Add/Switch LUST Chain</button>
+          <a class="btn" href="./presale.html">Go to Presale</a>
+        </div>
+        <div class="notice miner-log" data-faucet-log style="margin-top:12px">Connect your wallet to check faucet eligibility.</div>
       </div>
       <div class="hero-buttons">
         <a class="btn primary" href="#downloads">Miner downloads locked</a>
         <a class="btn" href="#live-mining">Pre-launch status</a>
-        <a class="btn" href="#liquidity-lock">Mining locked</a>
+        <a class="btn" href="#register">Register / Heartbeat</a>
       </div>
       <div class="security-strip">
         <span>✓ V7A29</span>
@@ -82,10 +90,10 @@
         <span>✓ 2 LST/block</span>
         <span>✓ 70/30 with 2+ miners</span>
         <span>✓ Snapshot ready</span>
-        <span>✓ Unlock after liquidity</span>
+        <span>✓ Faucet and registration available</span>
       </div>
       <div class="mining-alert mining-good">
-        <strong>Public mining is locked:</strong> the mining system is prepared, but community access opens only after the presale / Genesis Liquidity Event is complete and liquidity is created.
+        <strong>Public mining downloads are locked:</strong> miner packages open only after the presale / Genesis Liquidity Event is complete and liquidity is created. Faucet, Register and Heartbeat remain available for gas, presale preparation, early wallet setup and controlled testing.
       </div>
     </div>
     <div class="miner-command-card">
@@ -98,26 +106,26 @@
       <div class="row"><span>Snapshot block</span><strong data-snapshot-block>Loading...</strong></div>
       <div class="row"><span>Public mining</span><strong>Locked until liquidity</strong></div>
       <div class="row"><span>Miner downloads</span><strong>Locked</strong></div>
-      <div class="row"><span>Registration</span><strong>Locked</strong></div>
+      <div class="row"><span>Registration</span><strong>Open for setup</strong></div>
     </div>
   </section>
 
   <section class="miner-section" id="start-sequence">
     <div class="section-head">
       <div>
-        <div class="kicker">Post-liquidity mining order</div>
-        <h2>When mining opens, follow this order.</h2>
+        <div class="kicker">Correct setup order</div>
+        <h2>Follow this order for faucet, register and heartbeat.</h2>
       </div>
-      <p>This is the official sequence that will apply when public mining is unlocked. Faucet gas comes before registration because Register and Heartbeat are on-chain transactions. If you later change the wallet on the same PC, repeat Register and Activate / Heartbeat for the new wallet.</p>
+      <p>Faucet gas comes before registration because Register and Heartbeat are on-chain transactions. Miner downloads are still locked until liquidity, but wallet registration and heartbeat can be used for early setup and controlled testing. If you later change the wallet on the same PC, repeat Register and Activate / Heartbeat for the new wallet.</p>
     </div>
 
     <div class="grid three sequence-grid">
       <div class="sequence-step"><h3>Add LUST Chain</h3><p>Connect MetaMask and add/switch to <strong>LUST Chain</strong>, chain ID <strong>6923</strong>.</p></div>
-      <div class="sequence-step"><h3>Claim faucet gas</h3><p>Open the faucet and claim a small amount of native <strong>LST</strong>. This pays gas for registration and heartbeat.</p><div class="hero-buttons"><a class="btn primary" href="#liquidity-lock">Locked until liquidity</a></div></div>
+      <div class="sequence-step"><h3>Claim faucet gas</h3><p>Open the faucet and claim a small amount of native <strong>LST</strong>. This pays gas for presale, registration and heartbeat.</p><div class="hero-buttons"><button class="btn primary" type="button" data-claim-faucet>Claim faucet</button><a class="btn" href="./faucet.html">Open Faucet</a></div></div>
       <div class="sequence-step"><h3>Download V7A29</h3><p><strong>Locked for now.</strong> Miner downloads open only after the presale / Genesis Liquidity Event is complete and liquidity is created.</p></div>
       <div class="sequence-step"><h3>Start the miner</h3><p>Run the miner and wait for <strong>Gap 0</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong>, <strong>Canonical YES</strong> and <strong>READY</strong>.</p></div>
-      <div class="sequence-step"><h3>Register wallet</h3><p>Use the same wallet shown in the miner. <strong>Register wallet</strong> is done once per wallet. Wait for the transaction to confirm before sending Heartbeat.</p></div>
-      <div class="sequence-step"><h3>Activate / Heartbeat</h3><p>After Register is confirmed, send <strong>Activate / Heartbeat</strong>. This marks that wallet as active for mining after public access is unlocked.</p></div>
+      <div class="sequence-step"><h3>Register wallet</h3><p>Use the same wallet shown in the miner. <strong>Register wallet</strong> is done once per wallet. Wait for the transaction to confirm before sending Heartbeat.</p><div class="hero-buttons"><button class="btn" type="button" data-v7a29-register>Register wallet</button></div></div>
+      <div class="sequence-step"><h3>Activate / Heartbeat</h3><p>After Register is confirmed, send <strong>Activate / Heartbeat</strong>. This marks that wallet as active for mining after public access is unlocked.</p><div class="hero-buttons"><button class="btn" type="button" data-v7a29-heartbeat>Activate / Heartbeat</button></div></div>
       <div class="sequence-step"><h3>Watch first blocks</h3><p>Keep the miner open. If it shows <strong>READY</strong> and <strong>Canonical YES</strong> but your wallet does not appear after 10–15 minutes, send one more <strong>Activate / Heartbeat</strong>.</p></div>
     </div>
 
@@ -139,17 +147,17 @@
         <div class="kicker">Pre-launch mining status</div>
         <h2>Mining is prepared, but not open to the public yet.</h2>
       </div>
-      <p>During the presale phase, this page is informational. Public mining statistics, miner onboarding and active miner counters will be opened only when liquidity is created and mining access is officially unlocked.</p>
+      <p>During the presale phase, miner downloads stay locked. Faucet, Register and Heartbeat are available so wallets can prepare correctly and controlled tests can continue without releasing public miner packages.</p>
     </div>
 
     <div class="grid three mining-live-grid">
       <div class="box live-stat-card"><small>Public mining</small><strong class="big-metric">Locked</strong><span>Community mining opens after the presale / Genesis Liquidity Event and liquidity creation.</span></div>
       <div class="box live-stat-card"><small>Downloads</small><strong class="big-metric">Locked</strong><span>Official miner packages will be released here when mining opens.</span></div>
-      <div class="box live-stat-card"><small>Registration</small><strong class="big-metric">Locked</strong><span>Register wallet and Heartbeat remain disabled on the public site until liquidity is ready.</span></div>
+      <div class="box live-stat-card"><small>Registration</small><strong class="big-metric">Open</strong><span>Register wallet and Heartbeat are available for early wallet setup. Downloads remain locked until liquidity.</span></div>
     </div>
 
     <div class="mining-alert mining-warn">
-      <strong>Pre-sale phase:</strong> mining is not part of the public sale flow. Users should not download old miner files, run unofficial packages or send registration transactions before the official unlock notice.
+      <strong>Pre-sale phase:</strong> miner downloads are not part of the public sale flow. Users may use the official faucet for gas and may register/heartbeat a wallet for setup, but they should not download old miner files or run unofficial packages.
     </div>
   </section>
 
@@ -210,10 +218,10 @@
   <section class="miner-section" id="register">
     <div class="section-head">
       <div>
-        <div class="kicker">Registration status · locked</div>
-        <h2>Registration and heartbeat are locked until liquidity.</h2>
+        <div class="kicker">Registration status · setup open</div>
+        <h2>Register and Heartbeat are available for wallet setup.</h2>
       </div>
-      <p>V7A29 registration is wallet based. Registration and Heartbeat are locked on the public site until liquidity is created.</p>
+      <p>V7A29 registration is wallet based. Downloads remain locked until liquidity, but Register and Heartbeat can be used now for presale gas preparation, early wallet setup and controlled testing.</p>
     </div>
 
     <div class="grid two">
@@ -225,18 +233,18 @@
           <div><span>LST balance</span><strong data-v7a29-balance>--</strong></div>
           <div><span>Current block</span><strong data-v7a29-block>Loading...</strong></div>
           <div><span>Registry</span><strong>0x...6923</strong></div>
-          <div><span>Status</span><strong data-v7a29-registration-status>Locked</strong></div>
+          <div><span>Status</span><strong data-v7a29-registration-status>Ready when wallet connects</strong></div>
         </div>
 
         <div class="hero-buttons heartbeat-actions">
-          <button class="btn primary" type="button" aria-disabled="true" disabled>Locked until liquidity</button>
-          <button class="btn" type="button" aria-disabled="true" disabled>Heartbeat locked</button>
+          <button class="btn primary" type="button" data-v7a29-register>Register wallet</button>
+          <button class="btn" type="button" data-v7a29-heartbeat>Activate / Heartbeat</button>
           <button class="btn" type="button" data-add-lust-chain>Add/Switch LUST</button>
           <button class="btn" type="button" data-v7a29-refresh>Refresh</button>
         </div>
 
         <div class="notice miner-log" data-v7a29-log>
-          Public registration is locked until liquidity is created. When mining opens, start the V7A29 miner first, wait for READY and Canonical YES, connect the same wallet, register once, wait for confirmation, then send Activate / Heartbeat.
+          Connect the same wallet used by the miner. Claim faucet gas first, then Register once, wait for confirmation, and send Activate / Heartbeat. Downloads remain locked until liquidity.
         </div>
       </div>
 
@@ -250,7 +258,7 @@
         </div>
         <p class="mini-copy"><strong>Do this before Register/Heartbeat:</strong> claim faucet gas first. You only need a tiny amount of native LST for gas; it is not a mining deposit.</p>
         <p class="mini-copy"><strong>Correct order:</strong> Register must confirm first. After that, send Activate / Heartbeat. Register is once per wallet. Heartbeat is used after Register, after changing wallet, after being offline, or if READY/Canonical YES does not produce blocks after 10–15 minutes.</p>
-        <div class="hero-buttons"><a class="btn primary" href="./presale.html">Go to Presale</a><a class="btn" href="#start-sequence">View full sequence</a></div>
+        <div class="hero-buttons"><a class="btn primary" href="./faucet.html">Open LST Faucet</a><a class="btn" href="./presale.html">Go to Presale</a><a class="btn" href="#start-sequence">View full sequence</a></div>
       </div>
     </div>
   </section>
@@ -338,10 +346,10 @@ STATUS: READY - synced, canonical and mining ready</code></pre>
         <div class="kicker">Public mining release status</div>
         <h2>Public mining opens only after liquidity.</h2>
       </div>
-      <p>Public mining remains locked until the presale / Genesis Liquidity Event is completed and liquidity is created.</p>
+      <p>Miner downloads and full public mining access remain locked until the presale / Genesis Liquidity Event is completed and liquidity is created.</p>
     </div>
     <div class="mining-alert mining-warn">
-      <strong>Do not start public mining before liquidity is ready.</strong> The current page provides the official instructions, lock status and safety rules. Community release happens only after the presale/liquidity step is complete.
+      <strong>Do not release miner downloads before liquidity is ready.</strong> The current page provides the official faucet, registration tools, lock status and safety rules. Full community mining release happens only after the presale/liquidity step is complete.
     </div>
     <div class="mining-alert mining-warn">
       Do not ask anyone for a seed phrase. The website only sends MetaMask transactions. Each PC should use its own wallet.
