@@ -352,6 +352,23 @@ function getInjectedEthereum() {
   return window.ethereum || null;
 }
 
+async function getBestWalletAddress() {
+  readState();
+  if (walletState.address) return walletState.address;
+  const eth = getInjectedEthereum();
+  if (!eth?.request) return "";
+  try {
+    const accounts = await eth.request({ method: "eth_accounts" });
+    const account = Array.isArray(accounts) && accounts.length ? accounts[0] : "";
+    if (account) {
+      walletState = { ...walletState, address: account, connected: true };
+      renderWalletButton();
+      return account;
+    }
+  } catch (_) {}
+  return "";
+}
+
 function localRegistrationKey(address) {
   return `lustMinerRegistered:${String(address || "").toLowerCase()}`;
 }
@@ -678,11 +695,11 @@ async function updateFaucetPanel() {
   const hasFaucet = document.querySelector("[data-faucet-eligibility]") || document.querySelector("[data-faucet-balance]");
   if (!hasFaucet) return;
 
-  const address = walletState.address || "";
+  const address = await getBestWalletAddress();
   const url = address ? `${LUST_FAUCET_STATUS_URL}?address=${encodeURIComponent(address)}` : LUST_FAUCET_STATUS_URL;
 
   try {
-    const res = await fetch(url, { cache: "no-store" });
+    const res = await fetch(url, { method: "GET", mode: "cors", cache: "no-store", headers: { "Accept": "application/json" } });
     const json = await res.json();
 
     if (!json.ok) throw new Error(json.message || "Faucet status failed");
@@ -701,7 +718,7 @@ async function updateFaucetPanel() {
     }
   } catch (err) {
     console.error(err);
-    setFaucetLog(err?.message || "Could not read faucet status.", "warn");
+    setFaucetLog(err?.message || "Could not read faucet status. Hard refresh the page and try again.", "warn");
   }
 }
 
@@ -716,7 +733,9 @@ async function claimLustFaucet() {
 
     const res = await fetch(LUST_FAUCET_CLAIM_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      mode: "cors",
+      cache: "no-store",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
       body: JSON.stringify({ address: account })
     });
 
