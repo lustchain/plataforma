@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mining V7A29 | LUST Platform</title>
-  <meta name="description" content="Official LUST Chain V7A29 mining page with live mining stats, miner downloads, registration, heartbeat, rewards, snapshot and safety instructions." />
+  <meta name="description" content="Official LUST Chain V7A29 mining page with live mining stats, safety instructions and locked miner downloads until liquidity is created." />
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
@@ -14,7 +14,7 @@
   </style>
 </head>
 <body>
-<div class="promo-bar">LUST Chain Mining V7A29 · live stats, faucet gas, downloads, registration and heartbeat for controlled public-mining tests.</div>
+<div class="promo-bar">LUST Chain Mining V7A29 · technical tests approved; public miner downloads remain locked until presale/liquidity is complete.</div>
 <header class="topbar">
   <a class="brand" href="./presale.html">
     <div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div>
@@ -72,7 +72,7 @@
         </div>
       </div>
       <div class="hero-buttons">
-        <a class="btn primary" href="#downloads">Download miner</a>
+        <a class="btn primary" href="#downloads">Miner downloads locked</a>
         <a class="btn" href="#live-mining">Live mining stats</a>
         <a class="btn" href="#register">Register / Heartbeat</a>
       </div>
@@ -116,7 +116,7 @@
     <div class="grid three sequence-grid">
       <div class="sequence-step"><h3>Add LUST Chain</h3><p>Connect MetaMask and add/switch to <strong>LUST Chain</strong>, chain ID <strong>6923</strong>.</p></div>
       <div class="sequence-step"><h3>Claim faucet gas</h3><p>Open the faucet and claim a small amount of native <strong>LST</strong>. This pays gas for registration and heartbeat.</p><div class="hero-buttons"><a class="btn primary" href="./faucet.html">Open faucet</a></div></div>
-      <div class="sequence-step"><h3>Download V7A29</h3><p>Download only the current V7A29 miner package for Windows or Ubuntu from the official download links.</p></div>
+      <div class="sequence-step"><h3>Download V7A29</h3><p><strong>Locked for now.</strong> Miner downloads open only after the presale / Genesis Liquidity Event is complete and liquidity is created.</p></div>
       <div class="sequence-step"><h3>Start the miner</h3><p>Run the miner and wait for <strong>Gap 0</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong>, <strong>Canonical YES</strong> and <strong>READY</strong>.</p></div>
       <div class="sequence-step"><h3>Register wallet</h3><p>Use the same wallet shown in the miner. Click <strong>Register wallet</strong> once, wait for the transaction to confirm, and do not change wallet after this step.</p></div>
       <div class="sequence-step"><h3>Activate / Heartbeat</h3><p>After Register is confirmed, click <strong>Activate / Heartbeat</strong>. This marks that wallet as active for mining.</p></div>
@@ -173,14 +173,18 @@
   <section class="miner-section" id="downloads">
     <div class="section-head">
       <div>
-        <div class="kicker">Download center · V7A29</div>
-        <h2>Download the current miner packages.</h2>
+        <div class="kicker">Download center · V7A29 · locked</div>
+        <h2>Miner downloads are locked until liquidity is ready.</h2>
       </div>
-      <p>Use only V7A29. Do not use V7A27 or V7A28 after the activation block, because V7A29 is the gated fix that keeps old blocks valid and removes official producers when public miners are active.</p>
+      <p>The V7A29 packages are prepared and tested, but public download access must stay locked until the presale / Genesis Liquidity Event is completed and liquidity is created.</p>
     </div>
 
     <div class="mining-alert mining-warn">
-      <strong>Before downloading for a new wallet:</strong> add LUST Chain in MetaMask and use the <a href="./faucet.html">LST gas faucet</a>. You need faucet gas before Register wallet and Activate / Heartbeat.
+      <strong>Downloads locked before liquidity:</strong> the miner packages are not open to the public yet. After liquidity is created, new miners must add LUST Chain, claim LST faucet gas, then Register wallet and Activate / Heartbeat in the correct order.
+    </div>
+
+    <div class="mining-alert mining-danger">
+      <strong>Public mining is not open yet.</strong> Do not download old miners from previous links, shared files or screenshots. The official download buttons will be unlocked here only after liquidity is created.
     </div>
 
     <div class="grid two download-grid">
@@ -189,10 +193,10 @@
         <div>
           <small>Windows 64-bit · V7A29 · full package</small>
           <h3>Windows complete miner package</h3>
-          <p>Extract the ZIP into a new folder, run <strong>START-LUST-MINER-WINDOWS.bat</strong>, use one wallet per PC and wait until the status shows <strong>Canonical YES</strong> and <strong>READY</strong>.</p>
+          <p><strong>Locked until liquidity.</strong> When public mining opens, extract the ZIP into a new folder, run <strong>START-LUST-MINER-WINDOWS.bat</strong>, use one wallet per PC and wait until the status shows <strong>Canonical YES</strong> and <strong>READY</strong>.</p>
           <div class="hero-buttons">
-            <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a29-miner-windows-FULL.zip" target="_blank" rel="noreferrer">Download Windows</a>
-            <a class="btn" href="https://downloads.lustchain.org/SHA256SUMS.txt" target="_blank" rel="noreferrer">SHA file</a>
+            <a class="btn primary" href="#liquidity-lock" aria-disabled="true">Locked until liquidity</a>
+            <a class="btn" href="#liquidity-lock" aria-disabled="true">SHA shown below</a>
           </div>
         </div>
         <div class="sha-box"><span>SHA256</span><code>2aae796be6d2775537f15039f10e22a479eaf88e435484111fe4845a80747b6d</code></div>
@@ -203,10 +207,10 @@
         <div>
           <small>Ubuntu / Linux 64-bit · V7A29</small>
           <h3>Ubuntu complete miner package</h3>
-          <p>Extract the TAR.GZ, run <strong>chmod +x *.sh</strong>, start the miner and wait for <strong>Gap 0</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong>, <strong>Canonical YES</strong> and <strong>READY</strong>.</p>
+          <p><strong>Locked until liquidity.</strong> When public mining opens, extract the TAR.GZ, run <strong>chmod +x *.sh</strong>, start the miner and wait for <strong>Gap 0</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong>, <strong>Canonical YES</strong> and <strong>READY</strong>.</p>
           <div class="hero-buttons">
-            <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a29-miner-ubuntu.tar.gz" target="_blank" rel="noreferrer">Download Ubuntu</a>
-            <a class="btn" href="https://downloads.lustchain.org/SHA256SUMS.txt" target="_blank" rel="noreferrer">SHA file</a>
+            <a class="btn primary" href="#liquidity-lock" aria-disabled="true">Locked until liquidity</a>
+            <a class="btn" href="#liquidity-lock" aria-disabled="true">SHA shown below</a>
           </div>
         </div>
         <div class="sha-box"><span>SHA256</span><code>27e3d74cdbd9f71b661f8a9e990abe1bf88f84fc07557415ebcd57f528e641b8</code></div>
@@ -346,7 +350,7 @@ STATUS: READY - synced, canonical and mining ready</code></pre>
   </section>
 
   <section class="miner-section" id="release-gate">
-    <div class="section-head">
+    <div class="section-head" id="liquidity-lock">
       <div>
         <div class="kicker">Public mining release status</div>
         <h2>Mining is technically ready, but public access opens only after liquidity.</h2>
