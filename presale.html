@@ -8,7 +8,7 @@
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css?v=20260617-faucet-page-v1" />
+  <link rel="stylesheet" href="./styles.css?v=20260622-lust-footer-v1" />
 </head>
 <body>
 <div class="promo-bar">LUST Genesis Liquidity Event · Either liquidity is created, or your LUSDT comes back.</div>
@@ -267,9 +267,53 @@
   </section>
 </main>
 
-<footer class="footer">
-  <strong>LUST Chain</strong>
-  <span>Chain ID 6923 · LST · RPC https://rpc.lustchain.org</span>
+<footer class="footer lust-footer" aria-label="LUST Chain footer">
+  <div class="lust-footer__glow" aria-hidden="true"></div>
+  <div class="lust-footer__inner">
+    <section class="lust-footer__brand" aria-label="LUST Chain summary">
+      <a class="lust-footer__logo" href="./presale.html" aria-label="LUST Chain home">
+        <img src="./assets/lust-logo.png" alt="LUST Chain logo" loading="lazy" />
+      </a>
+      <div>
+        <strong>LUST Chain</strong>
+        <p>Independent L1 for LST, LUSDT, NFTs, swap, P2P and community mining.</p>
+        <div class="lust-footer__badges" aria-label="Network details">
+          <span>Chain ID 6923</span>
+          <span>Native LST</span>
+          <span>LQC Network</span>
+        </div>
+      </div>
+    </section>
+
+    <nav class="lust-footer__links" aria-label="Footer navigation">
+      <div>
+        <h2>Platform</h2>
+        <a href="./presale.html">Genesis Presale</a>
+        <a href="./bridge.html">LUSDT Bridge</a>
+        <a href="./swap.html">Swap</a>
+        <a href="./p2p.html">P2P Market</a>
+      </div>
+      <div>
+        <h2>Community</h2>
+        <a href="./mining.html">Mining</a>
+        <a href="./staking.html">Staking</a>
+        <a href="./nfts.html">NFTs</a>
+        <a href="./faucet.html">Gas Faucet</a>
+      </div>
+      <div>
+        <h2>Network</h2>
+        <a href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">Explorer</a>
+        <a href="https://rpc.lustchain.org" target="_blank" rel="noreferrer">RPC</a>
+        <a href="./docs.html">Docs</a>
+        <a href="https://lustchain.org" target="_blank" rel="noreferrer">Main Site</a>
+      </div>
+    </nav>
+  </div>
+
+  <div class="lust-footer__bottom">
+    <span>© 2026 LUST Chain. Built for public ownership and transparent on-chain activity.</span>
+    <span>RPC https://rpc.lustchain.org · Explorer explorer.lustchain.org</span>
+  </div>
 </footer>
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>

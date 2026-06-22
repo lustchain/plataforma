@@ -1984,3 +1984,184 @@ button.btn[disabled], .btn[disabled] {
 [data-registration-open] {
   color: #F70375;
 }
+
+/* LUST premium footer update v20260622-lust-footer-v1
+   Scope: footer only. Does not alter page cards, forms, scripts, or page sections. */
+.footer.lust-footer{
+  position:relative;
+  overflow:hidden;
+  display:block !important;
+  padding:0 !important;
+  border-top:5px solid rgba(247,3,117,.68) !important;
+  background:
+    radial-gradient(circle at 14% 0%, rgba(247,3,117,.18), transparent 34%),
+    radial-gradient(circle at 86% 20%, rgba(143,53,255,.16), transparent 34%),
+    #07000a !important;
+  color:var(--muted) !important;
+  box-shadow:0 -1px 0 rgba(247,3,117,.16), 0 0 28px rgba(247,3,117,.10);
+}
+.lust-footer__glow{
+  position:absolute;
+  inset:auto -12% -70px -12%;
+  height:150px;
+  pointer-events:none;
+  background:linear-gradient(90deg, transparent, rgba(247,3,117,.18), rgba(255,75,168,.16), transparent);
+  filter:blur(24px);
+  opacity:.92;
+}
+.lust-footer__inner{
+  position:relative;
+  width:min(1180px,92vw);
+  margin:0 auto;
+  padding:34px 0 26px;
+  display:grid;
+  grid-template-columns:minmax(280px,1.08fr) minmax(420px,1.35fr);
+  gap:34px;
+  align-items:start;
+}
+.lust-footer__brand{
+  display:grid;
+  grid-template-columns:82px 1fr;
+  gap:18px;
+  align-items:center;
+}
+.lust-footer__logo{
+  width:82px;
+  height:82px;
+  display:grid;
+  place-items:center;
+  border-radius:24px;
+  border:2px solid rgba(247,3,117,.42);
+  background:rgba(255,255,255,.045);
+  box-shadow:0 0 0 1px rgba(255,255,255,.05) inset, 0 18px 50px rgba(247,3,117,.14);
+}
+.lust-footer__logo img{
+  width:66px;
+  height:66px;
+  object-fit:contain;
+  display:block;
+}
+.lust-footer__brand strong{
+  display:block;
+  color:#fff;
+  font-size:26px;
+  line-height:1;
+  letter-spacing:.03em;
+  text-transform:uppercase;
+  font-weight:950;
+}
+.lust-footer__brand p{
+  margin:10px 0 0;
+  max-width:460px;
+  color:#d8c8dd;
+  font-size:15px;
+  line-height:1.55;
+}
+.lust-footer__badges{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:14px;
+}
+.lust-footer__badges span{
+  border:2px solid rgba(247,3,117,.28);
+  background:rgba(247,3,117,.07);
+  color:#fff;
+  border-radius:999px;
+  padding:7px 10px;
+  font-size:11px;
+  font-weight:950;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.lust-footer__links{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+.lust-footer__links div{
+  min-width:0;
+  border:2px solid rgba(255,255,255,.10);
+  border-radius:18px;
+  background:rgba(255,255,255,.035);
+  padding:18px;
+}
+.lust-footer__links h2{
+  margin:0 0 12px;
+  color:var(--pink2);
+  font-size:12px;
+  line-height:1.1;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  font-weight:950;
+}
+.lust-footer__links a{
+  position:relative;
+  display:block;
+  padding:8px 0 8px 14px;
+  color:#eaddec;
+  font-size:14px;
+  font-weight:850;
+  line-height:1.25;
+  transition:color .16s ease, transform .16s ease;
+}
+.lust-footer__links a::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:50%;
+  width:6px;
+  height:6px;
+  border-radius:999px;
+  background:var(--pink);
+  transform:translateY(-50%);
+  box-shadow:0 0 10px rgba(247,3,117,.48);
+}
+.lust-footer__links a:hover{
+  color:#fff;
+  transform:translateX(3px);
+}
+.lust-footer__bottom{
+  position:relative;
+  width:min(1180px,92vw);
+  margin:0 auto;
+  padding:18px 0 22px;
+  border-top:2px solid rgba(255,255,255,.10);
+  display:flex;
+  justify-content:space-between;
+  gap:18px;
+  color:#bdaec4;
+  font-size:12px;
+  line-height:1.55;
+}
+.lust-footer__bottom span:last-child{
+  text-align:right;
+  color:#f0d7ef;
+  font-weight:800;
+}
+@media(max-width:980px){
+  .lust-footer__inner{
+    grid-template-columns:1fr;
+  }
+  .lust-footer__links{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+  .lust-footer__bottom{
+    flex-direction:column;
+  }
+  .lust-footer__bottom span:last-child{
+    text-align:left;
+  }
+}
+@media(max-width:720px){
+  .lust-footer__brand{
+    grid-template-columns:1fr;
+  }
+  .lust-footer__links{
+    grid-template-columns:1fr;
+  }
+  .lust-footer__brand strong{
+    font-size:23px;
+  }
+}
+
