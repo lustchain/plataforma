@@ -1,22 +1,15 @@
-LUST Chain V7A21 official miner checksums
+LUST Chain V7A30 final miner package hashes
 
-Windows latest-snapshot package:
-e08eac670edf840dc72fb769def053b85202d4cfd50c9ec40e6a99704429cda6  lust-v7a21-miner-windows-latest-snapshot.zip
-https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip
-https://downloads.lustchain.org/lust-v7a21-miner-windows-latest-snapshot.zip.sha256
+Windows FULL package / lust-v7a30-miner-windows.zip
+75e6a56b2d2e753986d08f6f44073ffbfb62e8aa442d4c40944a598a8c5dd0d1
 
-Ubuntu / Linux latest-snapshot package:
-f0e745abfb5d435219a5aa64c262f38e1036401198a692ce2811ac631c31b5be  lust-v7a21-miner-linux-latest-snapshot.tar.gz
-https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz
-https://downloads.lustchain.org/lust-v7a21-miner-linux-latest-snapshot.tar.gz.sha256
+Ubuntu FULL package / lust-v7a30-miner-ubuntu.tar.gz
+044b296f4965063ce38931eac162f3f9441b410e5d7f8f31d96393e0819f5a2e
 
-Package: V7A21 complete miner package
-Core binary logic: V7A21 final consensus fix
+Windows binary / bin/lust-geth-windows-amd64.exe
+afe9b209e5369bcd23af018f77bf0982e23b465e7626556a92f9162b0a43345f
 
-Reward summary:
-- 0 public miners: official fallback producers keep the chain alive.
-- 1 public miner active: the public producer receives 2 LST per block it produces.
-- 2+ public miners active: producer receives 1.4 LST and active public miners share 0.6 LST.
-- Official fallback producers are excluded from the public committee share while public miners are active.
+Linux binary / bin/lust-geth-linux-amd64
+12193de6b86462f2ade00ee978393ec8f1423aadfad6c5864d13d0f4741fe9d2
 
-The mining page reads the .sha256 files directly from the official download server to avoid stale checksums after package corrections.
+Snapshot rule: prod-2 auto update every ~1000 blocks.
