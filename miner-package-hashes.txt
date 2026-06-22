@@ -1,35 +1,38 @@
-LUST Chain V7A30 SYNCFIX official miner checksums
+LUST Chain V7A30 VALID-ENODES miner downloads
 
 Status:
 - Downloads are released on prod-1 under the final names below.
-- These packages were rebuilt from the working V7A29 miner structure.
-- SYNCFIX adds live bootnodes and resets stale peer tables on start.
+- This valid-enodes fix removes the invalid short prod-1 enode that caused: invalid public key (wrong length, want 128 hex chars).
+- The packages contain only valid 128-hex enode public keys in bootnodes.txt / bootnodes-comma.txt.
+- The Windows package keeps the proven V7A29 PowerShell structure.
 - prod-2 snapshot updater must keep refreshing the public snapshot about every 1000 blocks.
 
-Windows V7A30 SYNCFIX package:
-35ba0a51fbee37fcc6387c4213078d5e15def7c010b312396a81c4e452d0ceba  lust-v7a30-miner-windows.zip
-https://downloads.lustchain.org/lust-v7a30-miner-windows.zip?v=20260622-v7a30-syncfix-live
+Windows V7A30 package:
+https://downloads.lustchain.org/lust-v7a30-miner-windows.zip?v=20260622-v7a30-valid-enodes-final
+SHA256:
+87aaa48e3688fea441797db23a799b3969ef2c63202d170db53f27b50db5774a
 
-Windows V7A30 SYNCFIX full alias:
-35ba0a51fbee37fcc6387c4213078d5e15def7c010b312396a81c4e452d0ceba  lust-v7a30-miner-windows-FULL.zip
-https://downloads.lustchain.org/lust-v7a30-miner-windows-FULL.zip?v=20260622-v7a30-syncfix-live
+Ubuntu / Linux V7A30 package:
+https://downloads.lustchain.org/lust-v7a30-miner-ubuntu.tar.gz?v=20260622-v7a30-valid-enodes-final
+SHA256:
+e7fbb6c0a2ddc175852c516e9bffa98f12f508fc572ce2c5670c9c1ff514d444
 
-Ubuntu / Linux V7A30 SYNCFIX package:
-74563ac634ee6d2ed8eceb943d33e5c68e52f2d93c35beea7625ef0c22a34031  lust-v7a30-miner-ubuntu.tar.gz
-https://downloads.lustchain.org/lust-v7a30-miner-ubuntu.tar.gz?v=20260622-v7a30-syncfix-live
+Checksum file:
+https://downloads.lustchain.org/SHA256SUMS-V7A30.txt?v=20260622-v7a30-valid-enodes-final
 
-Ubuntu / Linux V7A30 SYNCFIX full alias:
-74563ac634ee6d2ed8eceb943d33e5c68e52f2d93c35beea7625ef0c22a34031  lust-v7a30-miner-ubuntu-FULL.tar.gz
-https://downloads.lustchain.org/lust-v7a30-miner-ubuntu-FULL.tar.gz?v=20260622-v7a30-syncfix-live
-
-Windows binary SHA256:
+Expected binary SHA256 values:
+Windows binary:
 afe9b209e5369bcd23af018f77bf0982e23b465e7626556a92f9162b0a43345f  bin/lust-geth-windows-amd64.exe
 
-Linux binary SHA256:
+Linux binary:
 12193de6b86462f2ade00ee978393ec8f1423aadfad6c5864d13d0f4741fe9d2  bin/lust-geth-linux-amd64
 
-Reward summary:
-- 0 public miners: official fallback producers keep the chain alive.
-- 1 public miner active: the public producer receives 2 LST per block it produces.
-- 2+ public miners active: producer receives 1.4 LST and active public miners share 0.6 LST.
-- Official fallback producers are excluded from the public committee share while public miners are active.
+Correct Windows start file:
+LUST_V7A30_WINDOWS_FULL/START-LUST-MINER-WINDOWS.bat
+
+Correct Ubuntu start file:
+LUST_V7A30_UBUNTU_FULL/START-LUST-MINER-UBUNTU.sh
+
+Correct Windows package start banner:
+LUST MINER V7A30 - WINDOWS VALID ENODES
+Updating VALID bootnodes and resetting stale peer table...

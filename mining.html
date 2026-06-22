@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mining V7A30 | LUST Platform</title>
-  <meta name="description" content="Official LUST Chain V7A30 SYNCFIX mining page with active miner downloads, faucet gas, wallet registration, heartbeat tools, live status and setup sequence." />
+  <meta name="description" content="Official LUST Chain V7A30 VALID-ENODES mining page with active miner downloads, faucet gas, wallet registration, heartbeat tools, live status and setup sequence." />
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
@@ -208,13 +208,13 @@
         <div>
           <small>Windows 64-bit · V7A30 · full package</small>
           <h3>Windows complete miner package</h3>
-          <p>Download the ZIP, delete any old extracted miner folder, extract it into a new folder, open <strong>LUST_V7A30_WINDOWS_FULL</strong> and run <strong>START-LUST-MINER-WINDOWS.bat</strong>. This SYNCFIX package uses live bootnodes and resets stale peers on start. Wait until status shows <strong>Gap ≤ 5</strong>, <strong>Canonical YES</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong> and <strong>READY</strong>.</p>
+          <p>Download the ZIP, delete any old extracted miner folder, extract it into a new folder, open <strong>LUST_V7A30_WINDOWS_FULL</strong> and run <strong>START-LUST-MINER-WINDOWS.bat</strong>. This VALID-ENODES package removes invalid short enodes, uses only 128-hex bootnode public keys, and resets stale peers on start. Wait until status shows <strong>Gap ≤ 5</strong>, <strong>Canonical YES</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong> and <strong>READY</strong>.</p>
           <div class="hero-buttons">
-            <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a30-miner-windows.zip?v=20260622-v7a30-syncfix-live" target="_blank" rel="noreferrer">Download Windows V7A30</a>
-            <a class="btn" href="https://downloads.lustchain.org/SHA256SUMS-V7A30.txt?v=20260622-v7a30-syncfix-live" target="_blank" rel="noreferrer">Verify SHA</a>
+            <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a30-miner-windows.zip?v=20260622-v7a30-valid-enodes-final" target="_blank" rel="noreferrer">Download Windows V7A30</a>
+            <a class="btn" href="https://downloads.lustchain.org/SHA256SUMS-V7A30.txt?v=20260622-v7a30-valid-enodes-final" target="_blank" rel="noreferrer">Verify SHA</a>
           </div>
         </div>
-        <div class="sha-box"><span>Package SHA256</span><code>35ba0a51fbee37fcc6387c4213078d5e15def7c010b312396a81c4e452d0ceba</code></div>
+        <div class="sha-box"><span>Package SHA256</span><code>87aaa48e3688fea441797db23a799b3969ef2c63202d170db53f27b50db5774a</code></div>
       </div>
 
       <div class="download-card">
@@ -222,18 +222,18 @@
         <div>
           <small>Ubuntu / Linux 64-bit · V7A30</small>
           <h3>Ubuntu complete miner package</h3>
-          <p>Download the TAR.GZ, delete old extracted folders, extract it, run <strong>chmod +x *.sh</strong> then <strong>./START-LUST-MINER-UBUNTU.sh</strong>. This SYNCFIX package uses live bootnodes and resets stale peers on start. Wait for <strong>Gap ≤ 5</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong>, <strong>Canonical YES</strong> and <strong>READY</strong>.</p>
+          <p>Download the TAR.GZ, delete old extracted folders, extract it, run <strong>chmod +x *.sh</strong> then <strong>./START-LUST-MINER-UBUNTU.sh</strong>. This VALID-ENODES package removes invalid short enodes, uses only 128-hex bootnode public keys, and resets stale peers on start. Wait for <strong>Gap ≤ 5</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong>, <strong>Canonical YES</strong> and <strong>READY</strong>.</p>
           <div class="hero-buttons">
-            <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a30-miner-ubuntu.tar.gz?v=20260622-v7a30-syncfix-live" target="_blank" rel="noreferrer">Download Ubuntu V7A30</a>
-            <a class="btn" href="https://downloads.lustchain.org/SHA256SUMS-V7A30.txt?v=20260622-v7a30-syncfix-live" target="_blank" rel="noreferrer">Verify SHA</a>
+            <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a30-miner-ubuntu.tar.gz?v=20260622-v7a30-valid-enodes-final" target="_blank" rel="noreferrer">Download Ubuntu V7A30</a>
+            <a class="btn" href="https://downloads.lustchain.org/SHA256SUMS-V7A30.txt?v=20260622-v7a30-valid-enodes-final" target="_blank" rel="noreferrer">Verify SHA</a>
           </div>
         </div>
-        <div class="sha-box"><span>Package SHA256</span><code>74563ac634ee6d2ed8eceb943d33e5c68e52f2d93c35beea7625ef0c22a34031</code></div>
+        <div class="sha-box"><span>Package SHA256</span><code>e7fbb6c0a2ddc175852c516e9bffa98f12f508fc572ce2c5670c9c1ff514d444</code></div>
       </div>
     </div>
 
 <div class="mining-alert mining-good">
-      <strong>SYNCFIX active:</strong> downloads now include live bootnodes from prod-1/prod-2/rpc/boot peers, reset stale peer tables on start, and keep the old working V7A29 PowerShell structure. If a PC was stuck at an old snapshot block, delete the old extracted folder and download again.
+      <strong>VALID-ENODES fix active:</strong> downloads remove the invalid short prod-1 enode that caused “invalid public key”, keep only valid 128-hex bootnodes, reset stale peer tables on start, and keep the old working V7A29 PowerShell structure. Delete the old ZIP and old extracted folder, then download again. The correct Windows package SHA is 87aaa48e3688fea441797db23a799b3969ef2c63202d170db53f27b50db5774a.
     </div>
 
         <div class="grid three">
@@ -458,7 +458,7 @@ STATUS: READY - synced, canonical and mining ready</code></pre>
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
-<script type="module" src="./app.js?v=20260622-v7a30-syncfix-live"></script>
+<script type="module" src="./app.js?v=20260622-v7a30-valid-enodes-final"></script>
 <script>
 (() => {
   const RPC = "https://rpc.lustchain.org";
