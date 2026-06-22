@@ -11,6 +11,9 @@
   <link rel="stylesheet" href="./styles.css?v=20260622-lust-footer-v3" />
   <style>
     .mining-alert{border:1px solid rgba(247,3,117,.55);padding:14px 16px;border-radius:18px;background:rgba(247,3,117,.08);margin-top:16px}.mining-alert strong{color:#fff}.mining-good{border-color:rgba(20,220,140,.5);background:rgba(20,220,140,.08)}.mining-warn{border-color:rgba(255,200,90,.55);background:rgba(255,200,90,.08)}.mining-danger{border-color:rgba(255,80,90,.55);background:rgba(255,80,90,.08)}.live-row{display:flex;justify-content:space-between;gap:16px;border-top:1px solid rgba(255,255,255,.12);padding:10px 0}.live-row:first-child{border-top:0}.live-row span{opacity:.78}.live-row strong,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.compact-small{font-size:.82rem;word-break:break-all}.status-pill{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:7px 10px;background:rgba(255,255,255,.05);font-size:.86rem}.miner-table{width:100%;border-collapse:collapse}.miner-table th,.miner-table td{border-bottom:1px solid rgba(255,255,255,.12);padding:10px;text-align:left;vertical-align:top}.miner-table th{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;opacity:.75}.download-card .hero-buttons{margin-top:12px}.copy-box{border:1px solid rgba(255,255,255,.14);border-radius:16px;background:rgba(255,255,255,.04);padding:14px;margin-top:12px}.copy-box code{white-space:normal;word-break:break-all}.mini-list{margin:10px 0 0 18px;padding:0}.mini-list li{margin:7px 0}.big-metric.compact-address{font-size:1rem;word-break:break-all}.miner-page .download-card .btn[aria-disabled="true"],.miner-page button[disabled]{opacity:.65;cursor:not-allowed}.heartbeat-actions .btn{min-width:170px}.network-card .row strong{max-width:58%;text-align:right}.network-card .row .compact-address{font-size:.78rem;line-height:1.25}.stat-grid-six{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.stat-mini{border:1px solid rgba(255,255,255,.14);border-radius:18px;background:rgba(255,255,255,.04);padding:14px}.stat-mini small{display:block;opacity:.72;margin-bottom:8px}.stat-mini strong{display:block;font-size:1.45rem;color:#fff}.stat-mini span{display:block;margin-top:6px;opacity:.72;font-size:.9rem}.stats-log{border:1px solid rgba(247,3,117,.35);background:rgba(247,3,117,.06);border-radius:18px;padding:14px;margin-top:14px}.stats-log[data-tone="ok"]{border-color:rgba(20,220,140,.45);background:rgba(20,220,140,.07)}.stats-log[data-tone="warn"]{border-color:rgba(255,200,90,.55);background:rgba(255,200,90,.08)}.full-width{grid-column:1 / -1}.faucet-spotlight{border:2px solid rgba(247,3,117,.85);background:linear-gradient(135deg,rgba(247,3,117,.20),rgba(255,255,255,.05));box-shadow:0 0 0 1px rgba(255,255,255,.08),0 18px 50px rgba(247,3,117,.18);padding:18px;border-radius:22px;margin-top:18px}.faucet-spotlight h3{margin:6px 0 8px}.faucet-spotlight p{margin:0 0 12px}.sequence-grid{counter-reset:mineStep}.sequence-step{position:relative;border:1px solid rgba(255,255,255,.14);border-radius:20px;background:rgba(255,255,255,.04);padding:18px 16px 16px 64px}.sequence-step:before{counter-increment:mineStep;content:counter(mineStep);position:absolute;left:16px;top:18px;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#f70375;color:#fff;font-weight:900}.sequence-step h3{margin:0 0 8px}.sequence-step p{margin:0}.sequence-step strong{color:#fff}@media(max-width:960px){.stat-grid-six{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:760px){.live-row{display:block}.miner-table{font-size:.86rem}.heartbeat-actions .btn{width:100%}.stat-grid-six{grid-template-columns:1fr}.network-card .row strong{max-width:100%;text-align:left}}
+  
+    .download-card{align-content:start;min-width:0}.download-card>div{min-width:0}.download-card .copy-box,.download-card .package-includes{grid-column:1 / -1;width:100%;min-width:0}.sha-box code{display:block;overflow-wrap:anywhere;word-break:break-word;line-height:1.5}.package-includes{border:2px solid rgba(255,255,255,.14);border-radius:16px;background:#08010b;padding:14px;margin-top:12px}.package-includes strong{display:block;margin-bottom:10px;color:#fff}.package-includes ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px;margin:0;padding:0;list-style:none}.package-includes li{font-size:13px;line-height:1.35;color:rgba(255,255,255,.86);overflow-wrap:anywhere;word-break:normal}.package-includes li:before{content:"✓";color:#f70375;font-weight:900;margin-right:7px}.download-note-box{grid-column:1 / -1;border:2px solid rgba(247,3,117,.28);border-radius:16px;background:rgba(247,3,117,.06);padding:14px;margin-top:12px}.download-note-box p{margin:0 0 8px}.download-note-box p:last-child{margin-bottom:0}.miner-status-grid strong{overflow-wrap:anywhere}.code-card code{overflow-wrap:anywhere;word-break:break-word}@media(max-width:720px){.package-includes ul{grid-template-columns:1fr}.download-card{grid-template-columns:1fr}.download-icon{width:48px;height:48px}}
+
   </style>
 </head>
 <body>
@@ -102,9 +105,9 @@
       <div class="row"><span>Chain ID</span><strong>6923 / 0x1b0b</strong></div>
       <div class="row"><span>Native coin</span><strong>LST</strong></div>
       <div class="row"><span>Consensus</span><strong>LQC · V7A30</strong></div>
-      <div class="row"><span>Current block</span><strong data-current-block data-v7a29-block data-v7a29-block data-v7a30-block>Loading...</strong></div>
+      <div class="row"><span>Current block</span><strong data-current-block data-v7a29-block data-v7a30-block>Loading...</strong></div>
       <div class="row"><span>Snapshot block</span><strong data-snapshot-block>Loading...</strong></div>
-      <div class="row"><span>V7A30 activation</span><strong>Active since block 157500</strong></div>
+      <div class="row"><span>V7A30 activation</span><strong>Block 157500</strong></div>
       <div class="row"><span>Registered miners</span><strong data-mining-registered>Loading...</strong></div>
       <div class="row"><span>Miners online</span><strong data-mining-active>Loading...</strong></div>
       <div class="row"><span>Public blocks / 200</span><strong data-mining-public-blocks>Loading...</strong></div>
@@ -169,7 +172,7 @@
     <div class="stats-log" data-mining-stats-log>Loading live mining stats...</div>
 
     <div class="grid three mining-live-grid" style="margin-top:18px">
-      <div class="box live-stat-card"><small>Mining version</small><strong class="big-metric">V7A30</strong><span>Active from block 157500. Offline public slots cannot hold the chain for long after activation.</span></div>
+      <div class="box live-stat-card"><small>Mining version</small><strong class="big-metric">V7A30</strong><span>Fast fallback activates at block 157500. After activation, offline public slots cannot hold the chain for long.</span></div>
       <div class="box live-stat-card"><small>Downloads</small><strong class="big-metric">Ready</strong><span>Official Windows and Ubuntu/Linux V7A30 packages are available below.</span></div>
       <div class="box live-stat-card"><small>Registration</small><strong class="big-metric">Open</strong><span>Register wallet and Activate / Heartbeat are available for miner wallets.</span></div>
     </div>
@@ -177,7 +180,7 @@
     <div class="hero-buttons">
       <a class="btn" href="https://rpc.lustchain.org/mining-stats" target="_blank" rel="noreferrer">Open mining-stats API</a>
       <a class="btn" href="https://rpc.lustchain.org/pending-raw" target="_blank" rel="noreferrer">Open pending feed</a>
-      <button class="btn" type="button" data-v7a29-refresh data-v7a29-refresh data-v7a30-refresh>Refresh stats</button>
+      <button class="btn" type="button" data-v7a29-refresh data-v7a30-refresh>Refresh stats</button>
     </div>
 
     <div class="mining-alert mining-warn">
@@ -188,56 +191,84 @@
   <section class="miner-section" id="downloads">
     <div class="section-head">
       <div>
-        <div class="kicker">Download center · V7A30 · official</div>
-        <h2>Download the official V7A30 miner packages.</h2>
+        <div class="kicker">Download center · V7A30 · official full packages</div>
+        <h2>Official V7A30 miner downloads for Windows and Ubuntu/Linux.</h2>
       </div>
-      <p>Use these official production packages for V7A30 mining. Each PC should use one wallet. Download the full package, extract it into a new folder, start the miner from the easy start file, wait for sync/canonical readiness, then Register wallet and send Activate / Heartbeat.</p>
+      <p>These are the full production packages. Download, extract into a new folder, start the miner with the easy start file, wait for sync/canonical readiness, then Register wallet and send Activate / Heartbeat on this page.</p>
     </div>
 
     <div class="mining-alert mining-good">
-      <strong>Official V7A30 downloads:</strong> these are the current full miner packages for LUST Chain. Windows includes a click-to-start BAT file; Ubuntu/Linux includes start, status and reset shell scripts.
-    </div>
-
-    <div class="mining-alert mining-warn">
-      <strong>Do not use old miners.</strong> Only use the Windows and Ubuntu/Linux files linked here. After extracting, verify the SHA256 shown below before running.
+      <strong>V7A30 is active from block 157500.</strong> Use only these final official packages. One wallet per PC. CPU/GPU power does not increase chance; one active registered wallet equals one queue chance.
     </div>
 
     <div class="grid two download-grid">
       <div class="download-card">
         <div class="download-icon">⊞</div>
         <div>
-          <small>Windows 64-bit · V7A30 · full package</small>
+          <small>Windows 64-bit · V7A30 · FULL package</small>
           <h3>Windows complete miner package</h3>
-          <p>Download the ZIP, extract it into a new folder and run <strong>CLICK-HERE-START-LUST-MINER-WINDOWS.bat</strong>. Do not click the .ps1 file. Use one wallet per PC and wait until the miner is synced/canonical and ready.</p>
+          <p>Download the ZIP, extract it into a new folder, then double-click <strong>START-LUST-MINER-WINDOWS.bat</strong>. Do not start by clicking the PowerShell file. Keep the miner window open while registering and activating your wallet.</p>
           <div class="hero-buttons">
             <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a30-miner-windows.zip" target="_blank" rel="noreferrer">Download Windows V7A30</a>
             <a class="btn" href="https://downloads.lustchain.org/SHA256SUMS-V7A30.txt" target="_blank" rel="noreferrer">Verify SHA</a>
           </div>
         </div>
         <div class="sha-box"><span>Package SHA256</span><code>ee92da1a8b9522cc76417743d1b11fb357be9ccc6ba66bbd0c4db356956cbeb9</code></div>
-        <div class="copy-box"><strong>Windows package includes</strong><br><code>CLICK-HERE-START-LUST-MINER-WINDOWS.bat</code><br><code>STATUS-LUST-MINER-WINDOWS.bat</code><br><code>RESET-SAVED-WALLET.bat</code><br><code>README-LUST-V7A30-FIRST.txt</code><br><code>SHA256SUMS.txt</code></div>
+        <div class="package-includes">
+          <strong>Windows package includes</strong>
+          <ul>
+            <li>START-LUST-MINER-WINDOWS.bat</li>
+            <li>STATUS-LUST-MINER-WINDOWS.bat</li>
+            <li>STOP-LUST-MINER-WINDOWS.bat</li>
+            <li>REGISTER-MINER-WINDOWS.bat</li>
+            <li>REGISTER-MINER.html</li>
+            <li>TXFEED-LUST-MINER-WINDOWS.bat</li>
+            <li>bin/lust-geth-windows-amd64.exe</li>
+            <li>config, README and SHA256SUMS.txt</li>
+          </ul>
+        </div>
+        <div class="download-note-box">
+          <p><strong>Correct Windows test:</strong> start with <strong>START-LUST-MINER-WINDOWS.bat</strong>, wait for Gap 0 / Canonical YES / Peers 1+ / Syncing false / READY.</p>
+          <p>Then use this web page: <strong>Faucet → Register wallet → Activate / Heartbeat</strong>.</p>
+        </div>
       </div>
 
       <div class="download-card">
         <div class="download-icon">⌁</div>
         <div>
-          <small>Ubuntu / Linux 64-bit · V7A30</small>
+          <small>Ubuntu / Linux 64-bit · V7A30 · FULL package</small>
           <h3>Ubuntu complete miner package</h3>
-          <p>Download the TAR.GZ, extract it, run <strong>chmod +x *.sh</strong>, then start with <strong>./start-lust-miner-v7a30.sh</strong>. Use the status script to confirm the local miner RPC and keep the miner open while registered/active.</p>
+          <p>Download the TAR.GZ, extract it, run <strong>chmod +x *.sh</strong>, then start with <strong>./start-lust-miner-v7a30.sh</strong>. Keep the miner running while registering and activating your wallet.</p>
           <div class="hero-buttons">
             <a class="btn primary" href="https://downloads.lustchain.org/lust-v7a30-miner-ubuntu.tar.gz" target="_blank" rel="noreferrer">Download Ubuntu V7A30</a>
             <a class="btn" href="https://downloads.lustchain.org/SHA256SUMS-V7A30.txt" target="_blank" rel="noreferrer">Verify SHA</a>
           </div>
         </div>
         <div class="sha-box"><span>Package SHA256</span><code>f9b973289d5f84185b1cc4e294847809903fd542035a20ef032a5245a597dff4</code></div>
-        <div class="copy-box"><strong>Ubuntu/Linux package includes</strong><br><code>start-lust-miner-v7a30.sh</code><br><code>status-lust-miner-v7a30.sh</code><br><code>reset-saved-wallet.sh</code><br><code>README-LUST-V7A30-FIRST.txt</code><br><code>SHA256SUMS.txt</code></div>
+        <div class="package-includes">
+          <strong>Ubuntu/Linux package includes</strong>
+          <ul>
+            <li>start-lust-miner-v7a30.sh</li>
+            <li>status-lust-miner-v7a30.sh</li>
+            <li>stop-lust-miner-v7a30.sh</li>
+            <li>register-miner-v7a30.html</li>
+            <li>reset-saved-wallet.sh</li>
+            <li>bin/geth-v7a30-linux-amd64</li>
+            <li>config, README and SHA256SUMS.txt</li>
+            <li>snapshot-ready sync flow</li>
+          </ul>
+        </div>
+        <div class="download-note-box">
+          <p><strong>Correct Ubuntu test:</strong> run <strong>chmod +x *.sh</strong>, then <strong>./start-lust-miner-v7a30.sh</strong>.</p>
+          <p>Then use this web page: <strong>Faucet → Register wallet → Activate / Heartbeat</strong>.</p>
+        </div>
       </div>
     </div>
 
     <div class="grid three">
       <div class="card"><small>Expected binary SHA</small><h3>Windows binary</h3><p class="compact-small mono">afe9b209e5369bcd23af018f77bf0982e23b465e7626556a92f9162b0a43345f</p></div>
       <div class="card"><small>Expected binary SHA</small><h3>Linux binary</h3><p class="compact-small mono">12193de6b86462f2ade00ee978393ec8f1423aadfad6c5864d13d0f4741fe9d2</p></div>
-      <div class="card"><small>Activation</small><h3>V7A30 block 157500</h3><p>V7A30 is active from block 157500. The binary keeps the fast emergency fallback rule active from that block forward.</p></div>
+      <div class="card"><small>Snapshot source</small><h3>prod-2 updates snapshots every ~1000 blocks</h3><p>The public miner packages use the latest snapshot so new users do not need to sync from genesis.</p></div>
     </div>
   </section>
 
@@ -351,13 +382,13 @@ STATUS: READY - synced, canonical and mining ready</code></pre>
         <div class="kicker">Snapshot and fast sync</div>
         <h2>Miners start from the latest official snapshot.</h2>
       </div>
-      <p>The prod-2 snapshot publisher updates the public snapshot automatically when it is behind by about 1000 blocks. This keeps new community miners from waiting too long and must remain active after node/client updates.</p>
+      <p>The snapshot server updates automatically when the public snapshot is behind by about 1000 blocks. This keeps new community miners from waiting too long.</p>
     </div>
 
     <div class="grid three snapshot-grid">
       <div class="box"><small>Snapshot block</small><strong class="big-metric" data-snapshot-block>Loading...</strong></div>
       <div class="box"><small>Snapshot SHA</small><code data-snapshot-sha>Loading latest snapshot...</code></div>
-      <div class="box"><small>Rule</small><strong>prod-2 auto update every ~1000 blocks</strong></div>
+      <div class="box"><small>Rule</small><strong>Auto update every ~1000 blocks</strong></div>
     </div>
 
     <div class="hero-buttons">
@@ -472,7 +503,7 @@ STATUS: READY - synced, canonical and mining ready</code></pre>
   function set(sel, val){ qsa(sel).forEach(el => { el.textContent = val; }); }
   function short(addr){ return addr ? addr.slice(0,6) + "..." + addr.slice(-6) : "--"; }
   function fmt(n){ const x=Number(n||0); return Number.isFinite(x) ? new Intl.NumberFormat("en-US").format(x) : "--"; }
-  function log(msg,tone=""){ qsa("[data-v7a29-log data-v7a30-log]").forEach(el => { el.textContent=msg; el.dataset.tone=tone; }); }
+  function log(msg,tone=""){ qsa("[data-v7a29-log],[data-v7a30-log]").forEach(el => { el.textContent=msg; el.dataset.tone=tone; }); }
   async function rpc(method, params=[]){
     const r = await fetch(RPC,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({jsonrpc:"2.0",id:Date.now(),method,params})});
     const j = await r.json(); if(j.error) throw new Error(j.error.message||"RPC error"); return j.result;
@@ -498,14 +529,14 @@ STATUS: READY - synced, canonical and mining ready</code></pre>
     const eth = window.ethereum;
     let addr = "";
     try { addr = (await eth?.request({method:"eth_accounts"}))?.[0] || ""; } catch(e){}
-    set("[data-v7a29-wallet data-v7a30-wallet]", addr ? short(addr) : "Not connected");
+    set("[data-v7a29-wallet],[data-v7a30-wallet]", addr ? short(addr) : "Not connected");
     let chain = "";
     try { chain = await eth?.request({method:"eth_chainId"}); } catch(e){}
-    set("[data-v7a29-chain data-v7a30-chain]", String(chain).toLowerCase() === CHAIN_HEX ? "LUST Chain" : (addr ? "Wrong network" : "Not connected"));
+    set("[data-v7a29-chain],[data-v7a30-chain]", String(chain).toLowerCase() === CHAIN_HEX ? "LUST Chain" : (addr ? "Wrong network" : "Not connected"));
     if(addr){
-      try { set("[data-v7a29-balance data-v7a30-balance]", weiToLst(await rpc("eth_getBalance",[addr,"latest"]))); }
-      catch(e){ set("[data-v7a29-balance data-v7a30-balance]", "--"); }
-    } else set("[data-v7a29-balance data-v7a30-balance]", "--");
+      try { set("[data-v7a29-balance],[data-v7a30-balance]", weiToLst(await rpc("eth_getBalance",[addr,"latest"]))); }
+      catch(e){ set("[data-v7a29-balance],[data-v7a30-balance]", "--"); }
+    } else set("[data-v7a29-balance],[data-v7a30-balance]", "--");
   }
   async function refreshBlock(){
     try {
@@ -557,10 +588,10 @@ STATUS: READY - synced, canonical and mining ready</code></pre>
       const from = await account();
       const data = REGISTER_PREFIX + from.slice(2).toLowerCase();
       const tx = await window.ethereum.request({method:"eth_sendTransaction",params:[{from,to:REGISTRY,value:"0x0",data,gas:"0x249f0"}]});
-      set("[data-v7a29-registration-status data-v7a30-registration-status]", "Register sent");
+      set("[data-v7a29-registration-status],[data-v7a30-registration-status]", "Register sent");
       log(`Register sent. Waiting confirmation: ${tx}`, "");
       const receipt = await waitReceipt(tx);
-      if(receipt?.status === "0x1"){ set("[data-v7a29-registration-status data-v7a30-registration-status]", "Registered"); log(`Registered successfully. Tx: ${tx}. Now send Activate / Heartbeat.`, "ok"); }
+      if(receipt?.status === "0x1"){ set("[data-v7a29-registration-status],[data-v7a30-registration-status]", "Registered"); log(`Registered successfully. Tx: ${tx}. Now send Activate / Heartbeat.`, "ok"); }
       else if(receipt){ log(`Register failed. Tx: ${tx}`, "warn"); }
       else { log(`Register sent but still pending. Tx: ${tx}`, "warn"); }
       refreshStats();
@@ -572,19 +603,19 @@ STATUS: READY - synced, canonical and mining ready</code></pre>
       await ensureChain();
       const from = await account();
       const tx = await window.ethereum.request({method:"eth_sendTransaction",params:[{from,to:REGISTRY,value:"0x0",data:HEARTBEAT_DATA,gas:"0x249f0"}]});
-      set("[data-v7a29-registration-status data-v7a30-registration-status]", "Heartbeat sent");
+      set("[data-v7a29-registration-status],[data-v7a30-registration-status]", "Heartbeat sent");
       log(`Heartbeat sent. Waiting confirmation: ${tx}`, "");
       const receipt = await waitReceipt(tx);
-      if(receipt?.status === "0x1"){ set("[data-v7a29-registration-status data-v7a30-registration-status]", "Active heartbeat"); log(`Heartbeat confirmed. Keep the miner running and watch READY status. Tx: ${tx}`, "ok"); }
+      if(receipt?.status === "0x1"){ set("[data-v7a29-registration-status],[data-v7a30-registration-status]", "Active heartbeat"); log(`Heartbeat confirmed. Keep the miner running and watch READY status. Tx: ${tx}`, "ok"); }
       else if(receipt){ log(`Heartbeat failed. Tx: ${tx}`, "warn"); }
       else { log(`Heartbeat sent but still pending. Tx: ${tx}`, "warn"); }
       refreshStats();
     }catch(e){ console.error(e); log(e.message || "Heartbeat failed or was rejected.", "warn"); }
   }
   document.addEventListener("click", (ev)=>{
-    if(ev.target.closest("[data-v7a29-refresh data-v7a30-refresh]")){ ev.preventDefault(); refreshStats(); }
-    if(ev.target.closest("[data-v7a29-register data-v7a30-register]")){ ev.preventDefault(); sendRegister(); }
-    if(ev.target.closest("[data-v7a29-heartbeat data-v7a30-heartbeat]")){ ev.preventDefault(); sendHeartbeat(); }
+    if(ev.target.closest("[data-v7a29-refresh],[data-v7a30-refresh]")){ ev.preventDefault(); refreshStats(); }
+    if(ev.target.closest("[data-v7a29-register],[data-v7a30-register]")){ ev.preventDefault(); sendRegister(); }
+    if(ev.target.closest("[data-v7a29-heartbeat],[data-v7a30-heartbeat]")){ ev.preventDefault(); sendHeartbeat(); }
   });
   window.ethereum?.on?.("accountsChanged", refreshStats);
   window.ethereum?.on?.("chainChanged", refreshStats);
