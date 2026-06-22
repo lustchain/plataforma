@@ -8,17 +8,17 @@ Status:
 - prod-2 snapshot updater must keep refreshing the public snapshot about every 1000 blocks.
 
 Windows V7A30 package:
-https://downloads.lustchain.org/lust-v7a30-miner-windows.zip?v=20260622-v7a30-valid-enodes-final
+https://downloads.lustchain.org/lust-v7a30-miner-windows.zip?v=20260622-v7a30-force-snapshot
 SHA256:
-87aaa48e3688fea441797db23a799b3969ef2c63202d170db53f27b50db5774a
+AFTER_PROD1_SCRIPT_CHECK_SHA256SUMS_V7A30_TXT
 
 Ubuntu / Linux V7A30 package:
-https://downloads.lustchain.org/lust-v7a30-miner-ubuntu.tar.gz?v=20260622-v7a30-valid-enodes-final
+https://downloads.lustchain.org/lust-v7a30-miner-ubuntu.tar.gz?v=20260622-v7a30-force-snapshot
 SHA256:
-e7fbb6c0a2ddc175852c516e9bffa98f12f508fc572ce2c5670c9c1ff514d444
+AFTER_PROD1_SCRIPT_CHECK_SHA256SUMS_V7A30_TXT
 
 Checksum file:
-https://downloads.lustchain.org/SHA256SUMS-V7A30.txt?v=20260622-v7a30-valid-enodes-final
+https://downloads.lustchain.org/SHA256SUMS-V7A30.txt?v=20260622-v7a30-force-snapshot
 
 Expected binary SHA256 values:
 Windows binary:
