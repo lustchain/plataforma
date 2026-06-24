@@ -1,47 +1,38 @@
-LUST Chain V31H2I public mining downloads
+LUST Chain V7A30 VALID-ENODES miner downloads
 
 Status:
-- V31H2I consensus activated at block 166994.
-- All official nodes audited SHA_OK=true after activation.
-- The network passed activation +20 blocks without invalid V7A25 difficulty, bad block, panic or sync failure.
-- Use only the complete FULL miner packages below.
+- Downloads are released on prod-1 under the final names below.
+- This valid-enodes fix removes the invalid short prod-1 enode that caused: invalid public key (wrong length, want 128 hex chars).
+- The packages contain only valid 128-hex enode public keys in bootnodes.txt / bootnodes-comma.txt.
+- The Windows package keeps the proven V7A29 PowerShell structure.
+- prod-2 snapshot updater must keep refreshing the public snapshot about every 1000 blocks.
 
-Windows V31H2I FULL package:
-https://downloads.lustchain.org/lust-v31h2i-miner-windows-FULL.zip
-Package SHA256:
-0f37feb66f60188822a1287b58e65eea156396ff5cf202725584f1bf526dd68d  lust-v31h2i-miner-windows-FULL.zip
-Windows geth EXE SHA256:
-d400ae4b00ce5e70d1a79b2d79ecf59be5f16384ec260570db5b329f479cb5c1  lust-geth-v31h2i-windows-amd64.exe
+Windows V7A30 package:
+https://downloads.lustchain.org/lust-v7a30-miner-windows.zip?v=20260622-v7a30-force-snapshot
+SHA256:
+AFTER_PROD1_SCRIPT_CHECK_SHA256SUMS_V7A30_TXT
 
-Ubuntu V31H2I FULL package:
-https://downloads.lustchain.org/lust-v31h2i-miner-ubuntu-FULL.tar.gz
-Package SHA256:
-10d990aaed5affc9060a0c1b922379e633ee69b1dc47380073f675016f80d23c  lust-v31h2i-miner-ubuntu-FULL.tar.gz
-Linux geth SHA256:
-b9b49c04586e685df1b80dea41b5cf1cbccc4ba40e99d209a615233c7a9859cf  lust-geth-linux-amd64
+Ubuntu / Linux V7A30 package:
+https://downloads.lustchain.org/lust-v7a30-miner-ubuntu.tar.gz?v=20260622-v7a30-force-snapshot
+SHA256:
+AFTER_PROD1_SCRIPT_CHECK_SHA256SUMS_V7A30_TXT
 
-Checksum files:
-https://downloads.lustchain.org/lust-v31h2i-miner-windows-FULL.zip.sha256
-https://downloads.lustchain.org/lust-v31h2i-miner-ubuntu-FULL.tar.gz.sha256
+Checksum file:
+https://downloads.lustchain.org/SHA256SUMS-V7A30.txt?v=20260622-v7a30-force-snapshot
 
-Register / Active helper:
-https://downloads.lustchain.org/lust-register-miner-v31.html?v=20260624-v31h2i
+Expected binary SHA256 values:
+Windows binary:
+afe9b209e5369bcd23af018f77bf0982e23b465e7626556a92f9162b0a43345f  bin/lust-geth-windows-amd64.exe
 
-Do not use old miners:
-- V7A30
-- old V31
-- V31H2C
-- V31H2D
-- V31H2E
-- raw geth EXE-only packages
+Linux binary:
+12193de6b86462f2ade00ee978393ec8f1423aadfad6c5864d13d0f4741fe9d2  bin/lust-geth-linux-amd64
 
-Reward rules V31H2I:
-- No public miners: official producers keep the chain alive and receive 2 LST.
-- 1 public miner: public miner has first deterministic chance. If official fallback produces, official receives 1.4 LST and the active public miner receives 0.6 LST.
-- 2+ public miners: block producer receives 1.4 LST and the other active public miners share 0.6 LST.
+Correct Windows start file:
+LUST_V7A30_WINDOWS_FULL/START-LUST-MINER-WINDOWS.bat
 
-Chance rule:
-- 1 registered active wallet = 1 chance.
-- CPU/GPU power does not increase chance.
-- Never enter seed phrase or private key.
-- Use only the public 0x wallet address.
+Correct Ubuntu start file:
+LUST_V7A30_UBUNTU_FULL/START-LUST-MINER-UBUNTU.sh
+
+Correct Windows package start banner:
+LUST MINER V7A30 - WINDOWS VALID ENODES
+Updating VALID bootnodes and resetting stale peer table...

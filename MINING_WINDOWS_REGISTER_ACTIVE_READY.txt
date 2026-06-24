@@ -1,0 +1,18 @@
+LUST V31H2I mining page updated for Windows Register / Active flow.
+
+Changed only mining.html plus this note file.
+
+The page now clearly says:
+1. Download Windows H2I full ZIP.
+2. Extract into a fresh folder.
+3. Open REGISTER-MINER-WINDOWS.bat.
+4. Connect MetaMask on LUST Chain.
+5. Claim faucet gas if needed.
+6. Click Register wallet and confirm in MetaMask.
+7. Click Activate / Heartbeat and confirm in MetaMask.
+8. Open START-LUST-MINER-WINDOWS.bat.
+9. Check STATUS-LUST-MINER-WINDOWS.bat and confirm any block on RPC/explorer.
+
+Downloads used:
+https://downloads.lustchain.org/lust-v31h2i-miner-windows-FULL.zip
+https://downloads.lustchain.org/lust-v31h2i-miner-ubuntu-FULL.tar.gz
