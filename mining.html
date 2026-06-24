@@ -58,9 +58,10 @@
 <main class="wrap page miner-page">
   <section class="quick-actions" aria-label="Quick mining actions">
     <strong class="version-badge">CURRENT MINER: V31H2E CONTROLLED RELEASE</strong>
+    <div class="mining-alert mining-good"><strong>FULL MINER PACKAGE:</strong> the Windows download is now the complete ZIP with H2E geth, scripts, genesis, bootnodes, register page, SHA files and start/stop/status tools. It is not raw EXE-only.</div>
     <p style="margin:10px 0 0">Use this exact flow: finish the official-node H2E update, download the V31H2E test binary, verify SHA256, use only a fresh controlled test folder, start miner, wait for READY/Canonical YES, then Register once if needed and click Active / Heartbeat.</p>
     <div class="hero-buttons">
-      <a class="btn primary" href="https://downloads.lustchain.org/v31h2e-test/lust-geth-windows-amd64-v31h2e.exe" target="_blank" rel="noreferrer">Download Windows H2E test EXE</a>
+      <a class="btn primary" href="https://downloads.lustchain.org/lust-v31h2e-miner-windows-FULL.zip" target="_blank" rel="noreferrer">Download Windows H2E full miner ZIP</a>
       <a class="btn" href="#quick-start">Quick start</a>
       <a class="btn" href="#register">Register / Active</a>
       <button class="btn" type="button" data-add-lust-chain>Add/Switch LUST Chain</button>
@@ -95,7 +96,7 @@
         <div class="notice miner-log" data-faucet-log style="margin-top:12px">Connect your wallet to check faucet eligibility.</div>
       </div>
       <div class="hero-buttons">
-        <a class="btn primary" href="#downloads">Download H2E test binary</a>
+        <a class="btn primary" href="#downloads">Download H2E full miner ZIP</a>
         <a class="btn" href="#live-mining">Live mining status</a>
         <a class="btn" href="#register">Register / Heartbeat</a>
       </div>
@@ -142,8 +143,8 @@
     </div>
 
     <div class="grid three sequence-grid">
-      <div class="sequence-step"><h3>Download H2E test binary</h3><p>Use only the pink button on this page for the H2E test EXE. Delete old extracted folders before using the H2E test folder. Full public one-click ZIP must be released only after this controlled test passes.</p><div class="hero-buttons"><a class="btn primary" href="https://downloads.lustchain.org/v31h2e-test/lust-geth-windows-amd64-v31h2e.exe" target="_blank" rel="noreferrer">Download Windows H2E test EXE</a></div></div>
-      <div class="sequence-step"><h3>Verify SHA</h3><p>The Windows H2E EXE must be <strong>947e6353...</strong>. The Linux H2E binary must be <strong>b2445483...</strong>. Full SHA values are shown in the download section.</p><div class="hero-buttons"><a class="btn" href="https://downloads.lustchain.org/v31h2e-test/SHA256SUMS.txt" target="_blank" rel="noreferrer">Open H2E SHA list</a></div></div>
+      <div class="sequence-step"><h3>Download H2E full miner ZIP</h3><p>Use only the pink button on this page for the H2E test EXE. Delete old extracted folders before using the H2E test folder. Full public one-click ZIP must be released only after this controlled test passes.</p><div class="hero-buttons"><a class="btn primary" href="https://downloads.lustchain.org/lust-v31h2e-miner-windows-FULL.zip" target="_blank" rel="noreferrer">Download Windows H2E full miner ZIP</a></div></div>
+      <div class="sequence-step"><h3>Verify SHA</h3><p>The Windows H2E EXE must be <strong>947e6353...</strong>. The Linux H2E binary must be <strong>b2445483...</strong>. Full SHA values are shown in the download section.</p><div class="hero-buttons"><a class="btn" href="https://downloads.lustchain.org/lust-v31h2e-miner-windows-FULL.zip.sha256" target="_blank" rel="noreferrer">Open full ZIP SHA</a></div></div>
       <div class="sequence-step"><h3>Extract fresh folder</h3><p>Use only the official H2E controlled test folder/instructions. Do not run anything from old V7A30, V31, V31H2C or V31H2D folders.</p></div>
       <div class="sequence-step"><h3>Start miner</h3><p>Run <strong>START-LUST-MINER-WINDOWS.bat</strong>. Then use <strong>STATUS-LUST-MINER-WINDOWS.bat</strong>.</p></div>
       <div class="sequence-step"><h3>Wait READY</h3><p>Status must show <strong>Gap 0</strong>, <strong>Peers 1+</strong>, <strong>Syncing False</strong>, <strong>Canonical YES</strong> and <strong>READY</strong>.</p></div>
@@ -183,7 +184,7 @@
 
     <div class="grid three mining-live-grid" style="margin-top:18px">
       <div class="box live-stat-card"><small>Mining version</small><strong class="big-metric">V31H2E</strong><span>V31 is active since block 162216 and the current controlled hotfix is V31H2E.</span></div>
-      <div class="box live-stat-card"><small>Downloads</small><strong class="big-metric">Ready</strong><span>Official H2E test binaries are available below. Full public Windows one-click ZIP must only be released after final controlled test.</span></div>
+      <div class="box live-stat-card"><small>Downloads</small><strong class="big-metric">Ready</strong><span>The complete Windows H2E miner ZIP is the required package for testing. It includes scripts, config, genesis, bootnodes and the H2E EXE.</span></div>
       <div class="box live-stat-card"><small>Registration</small><strong class="big-metric">Open</strong><span>Register only once per wallet. Active / Heartbeat marks the wallet online.</span></div>
     </div>
 
@@ -204,23 +205,23 @@
         <div class="kicker">Download center · V31H2E · controlled release</div>
         <h2>Download the current H2E controlled test files.</h2>
       </div>
-      <p>This section was updated for V31H2E. It removes the old V31/V31H2C/V31H2D mining links and shows the exact current test binaries, SHA values and PowerShell commands.</p>
+      <p>This section was updated for V31H2E. It removes old V31/V31H2C/V31H2D links and uses the complete Windows miner ZIP, not a raw EXE-only download.</p>
     </div>
 
     <div class="mining-alert mining-good">
-      <strong>Current controlled Windows file:</strong> use <strong>lust-geth-windows-amd64-v31h2e.exe</strong>. This is the H2E public-first + official-fallback test binary. Do not publish old H2D packages to the community.
+      <strong>Current controlled Windows package:</strong> use <strong>lust-v31h2e-miner-windows-FULL.zip</strong>. This full ZIP includes the H2E geth EXE, genesis, bootnodes, start/stop/status/register scripts and SHA files. Do not use raw EXE-only downloads for normal users.
     </div>
 
     <div class="grid two download-grid">
       <div class="download-card">
         <div class="download-icon">⊞</div>
         <div>
-          <small>Windows 64-bit · V31H2E · controlled test EXE</small>
+          <small>Windows 64-bit · V31H2E · full miner ZIP</small>
           <h3>Windows H2E controlled test binary</h3>
-          <p>For controlled testing before public release. Download the H2E Windows EXE, verify SHA256, and use it only with the official H2E test folder/instructions. Normal public miners should wait for the final H2E one-click ZIP after testing passes.</p>
+          <p>For controlled testing before public release. Download the complete H2E Windows miner ZIP, extract it, verify SHA256, then use START / STATUS / STOP from the package. This avoids the raw-EXE-only problem.</p>
           <div class="hero-buttons">
-            <a class="btn primary" href="https://downloads.lustchain.org/v31h2e-test/lust-geth-windows-amd64-v31h2e.exe" target="_blank" rel="noreferrer">Download Windows H2E test EXE</a>
-            <a class="btn" href="https://downloads.lustchain.org/v31h2e-test/SHA256SUMS.txt" target="_blank" rel="noreferrer">Open H2E SHA list</a>
+            <a class="btn primary" href="https://downloads.lustchain.org/lust-v31h2e-miner-windows-FULL.zip" target="_blank" rel="noreferrer">Download Windows H2E full miner ZIP</a>
+            <a class="btn" href="https://downloads.lustchain.org/lust-v31h2e-miner-windows-FULL.zip.sha256" target="_blank" rel="noreferrer">Open full ZIP SHA</a>
           </div>
         </div>
         <div class="sha-box"><span>Windows EXE SHA256</span><code>947e6353422e74e5cb2385157869adfef30e2df8d9afa6348eb9582d0f649389</code></div>
@@ -235,7 +236,7 @@
           <p>This is the V31H2E Linux binary used by server/operator nodes during the controlled rollout. Normal Windows users do not need this file.</p>
           <div class="hero-buttons">
             <a class="btn primary" href="https://downloads.lustchain.org/v31h2e-test/geth-linux-amd64-v31h2e" target="_blank" rel="noreferrer">Download Linux V31H2E</a>
-            <a class="btn" href="https://downloads.lustchain.org/v31h2e-test/SHA256SUMS.txt" target="_blank" rel="noreferrer">Open SHA list</a>
+            <a class="btn" href="https://downloads.lustchain.org/lust-v31h2e-miner-windows-FULL.zip.sha256" target="_blank" rel="noreferrer">Open SHA list</a>
           </div>
         </div>
         <div class="sha-box"><span>Linux H2E binary SHA256</span><code>b24454835fe12c95c92ff788e2a2749488a6b42b3930efca212de91ee89cbb26</code></div>
@@ -245,15 +246,16 @@
     <section class="box full-width" id="quick-start" style="margin-top:18px">
       <small>Windows PowerShell quick setup</small>
       <h3>Copy/paste commands for Windows</h3>
-      <p>These commands download and verify the current V31H2E Windows test EXE. Do not use it for public release until the controlled test passes and the final one-click ZIP is published.</p>
+      <p>These commands download and verify the current V31H2E full Windows miner ZIP. Do not use raw EXE-only downloads for normal miners.</p>
       <div class="command-card"><pre><code>cd "$env:USERPROFILE\Downloads"
-Invoke-WebRequest -Uri "https://downloads.lustchain.org/v31h2e-test/lust-geth-windows-amd64-v31h2e.exe" -OutFile "lust-geth-windows-amd64-v31h2e.exe"
-(Get-FileHash ".\lust-geth-windows-amd64-v31h2e.exe" -Algorithm SHA256).Hash
+Invoke-WebRequest -Uri "https://downloads.lustchain.org/lust-v31h2e-miner-windows-FULL.zip" -OutFile "lust-v31h2e-miner-windows-FULL.zip"
+(Get-FileHash ".\lust-v31h2e-miner-windows-FULL.zip" -Algorithm SHA256).Hash
 # Must equal:
 # 947e6353422e74e5cb2385157869adfef30e2df8d9afa6348eb9582d0f649389
 # Controlled test only: do not use old V31H2D EXE or old extracted folders.</code></pre></div>
       <div class="command-card"><pre><code># After the official H2E one-click folder is provided:
-cd "$env:USERPROFILE\Downloads\lust-v31h2e-controlled-test\LUST_V31_WINDOWS_FULL"
+Expand-Archive ".\lust-v31h2e-miner-windows-FULL.zip" -DestinationPath ".\lust-v31h2e-miner-windows-FULL" -Force
+cd "$env:USERPROFILE\Downloads\lust-v31h2e-miner-windows-FULL\LUST_V31H2E_WINDOWS_FULL"
 .\STOP-LUST-MINER-WINDOWS.bat
 .\START-LUST-MINER-WINDOWS.bat
 .\STATUS-LUST-MINER-WINDOWS.bat
@@ -426,7 +428,7 @@ STATUS: READY - synced, canonical and mining ready</code></pre>
       <div class="box"><small>Register fails</small><h3>Usually wrong network or no gas.</h3><p>After public mining is active, switch MetaMask to LUST Chain and claim faucet LST before trying again. Register and Heartbeat need native LST gas.</p></div>
       <div class="box"><small>Official fallback blocks</small><h3>Check the window.</h3><p>When public miners are active, official fallback blocks should decrease in the recent window. If public miners are offline, fallback production appears to keep the chain alive.</p></div>
       <div class="box"><small>Already registered wallet</small><h3>Use Active only.</h3><p>If this wallet already registered before, do not register again. Start the miner, wait for READY/Canonical YES, then send Active / Heartbeat.</p></div>
-      <div class="box"><small>Wrong package</small><h3>Delete old folders.</h3><p>If the EXE SHA is not 947e6353..., delete the file/folder and download the V31H2E binary again from this page. Any 258eb627... H2D EXE is blocked for public mining.</p></div>
+      <div class="box"><small>Wrong package</small><h3>Delete old folders.</h3><p>If the ZIP SHA does not match the official .sha256 file, delete the ZIP/folder and download the V31H2E full miner ZIP again from this page. Any 258eb627... H2D EXE is blocked for public mining.</p></div>
     </div>
   </section>
 </main>
