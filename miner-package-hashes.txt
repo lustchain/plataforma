@@ -1,38 +1,36 @@
-LUST Chain V7A30 VALID-ENODES miner downloads
+LUST V31H2J PUBLIC MINING PACKAGES
+Updated UTC: 2026-06-24
 
-Status:
-- Downloads are released on prod-1 under the final names below.
-- This valid-enodes fix removes the invalid short prod-1 enode that caused: invalid public key (wrong length, want 128 hex chars).
-- The packages contain only valid 128-hex enode public keys in bootnodes.txt / bootnodes-comma.txt.
-- The Windows package keeps the proven V7A29 PowerShell structure.
-- prod-2 snapshot updater must keep refreshing the public snapshot about every 1000 blocks.
+Windows full miner ZIP:
+https://downloads.lustchain.org/lust-v31h2j-miner-windows-FULL.zip
 
-Windows V7A30 package:
-https://downloads.lustchain.org/lust-v7a30-miner-windows.zip?v=20260622-v7a30-force-snapshot
-SHA256:
-AFTER_PROD1_SCRIPT_CHECK_SHA256SUMS_V7A30_TXT
+Windows ZIP SHA256 file:
+https://downloads.lustchain.org/lust-v31h2j-miner-windows-FULL.zip.sha256
 
-Ubuntu / Linux V7A30 package:
-https://downloads.lustchain.org/lust-v7a30-miner-ubuntu.tar.gz?v=20260622-v7a30-force-snapshot
-SHA256:
-AFTER_PROD1_SCRIPT_CHECK_SHA256SUMS_V7A30_TXT
+Windows H2J EXE SHA256:
+b7edfa2b7571c6fb4521c4ba46e34d983f9c8a8d977ca21742364ef413ac9aa8
 
-Checksum file:
-https://downloads.lustchain.org/SHA256SUMS-V7A30.txt?v=20260622-v7a30-force-snapshot
+Ubuntu full miner package:
+https://downloads.lustchain.org/lust-v31h2j-miner-ubuntu-FULL.tar.gz
 
-Expected binary SHA256 values:
-Windows binary:
-afe9b209e5369bcd23af018f77bf0982e23b465e7626556a92f9162b0a43345f  bin/lust-geth-windows-amd64.exe
+Ubuntu package SHA256 file:
+https://downloads.lustchain.org/lust-v31h2j-miner-ubuntu-FULL.tar.gz.sha256
 
-Linux binary:
-12193de6b86462f2ade00ee978393ec8f1423aadfad6c5864d13d0f4741fe9d2  bin/lust-geth-linux-amd64
+Linux / server H2J geth SHA256:
+497c81af52f6cb860574244ca872c201d09c0c75ec09fec699b836bb1775b138
 
-Correct Windows start file:
-LUST_V7A30_WINDOWS_FULL/START-LUST-MINER-WINDOWS.bat
+Full SHA list:
+https://downloads.lustchain.org/v31h2j/SHA256SUMS.txt
 
-Correct Ubuntu start file:
-LUST_V7A30_UBUNTU_FULL/START-LUST-MINER-UBUNTU.sh
+Release JSON:
+https://downloads.lustchain.org/lust-mining-release-v31h2j.json
 
-Correct Windows package start banner:
-LUST MINER V7A30 - WINDOWS VALID ENODES
-Updating VALID bootnodes and resetting stale peer table...
+Activation block:
+167893
+
+Important:
+- Use only V31H2J full packages.
+- Delete or rename old H2I / H2E / H2D / V31 / V7A30 miner folders.
+- Windows: run VERIFY-H2J-BINARY-WINDOWS.bat, then REGISTER-MINER-WINDOWS.bat, then START-LUST-MINER-WINDOWS.bat.
+- Send Active / Heartbeat again before testing mining.
+- Never enter seed phrase or private key.

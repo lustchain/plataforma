@@ -1,0 +1,12 @@
+DEPLOY ONLY THESE FILES FOR V31H2J MINING PAGE
+
+1. mining.html
+2. miner-package-hashes.txt
+
+Do not replace other working pages unless you intentionally changed them.
+
+The mining page points to:
+- https://downloads.lustchain.org/lust-v31h2j-miner-windows-FULL.zip
+- https://downloads.lustchain.org/lust-v31h2j-miner-ubuntu-FULL.tar.gz
+
+Activation block: 167893
