@@ -1,0 +1,15 @@
+Deploy only mining page from this ZIP
+
+This package is prepared with the V31H2I mining page and final download filenames.
+Do not replace other pages if they are already working.
+
+Final downloads already published:
+https://downloads.lustchain.org/lust-v31h2i-miner-windows-FULL.zip
+https://downloads.lustchain.org/lust-v31h2i-miner-ubuntu-FULL.tar.gz
+
+Suggested deployment:
+1. Backup current mining.html on the web server.
+2. Upload only plataforma-main/mining.html to the active site root.
+3. Optionally upload miner-package-hashes.txt.
+4. Reload nginx only if the server needs it. Static file replacement usually does not need restart.
+5. Open platform.lustchain.org/mining.html with Ctrl+F5.
