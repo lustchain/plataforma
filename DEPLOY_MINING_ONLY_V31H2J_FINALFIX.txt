@@ -1,0 +1,7 @@
+Deploy only these files if you want to update just the mining page:
+
+- mining.html
+- miner-package-hashes.txt
+
+Do not change other pages. The Windows download URL remains the same, with cache-buster on the page:
+https://downloads.lustchain.org/lust-v31h2j-miner-windows-FULL.zip?v=20260625-finalfix

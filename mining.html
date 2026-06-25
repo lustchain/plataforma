@@ -3,27 +3,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mining V31H2J | LUST Platform</title>
-  <meta name="description" content="Official LUST Chain V31H2J public mining page with complete Windows and Ubuntu miner packages, faucet gas, wallet registration, Active heartbeat, live status and safe setup sequence." />
+  <title>Mining V31H2J Final Fix | LUST Platform</title>
+  <meta name="description" content="Official LUST Chain V31H2J Final Fix mining page with clean Windows testing flow, downloads, hashes, faucet, Register and Active heartbeat." />
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
   <link rel="stylesheet" href="./styles.css?v=20260622-lust-footer-v3" />
   <style>
-    .miner-page{--pink:#f70375;--ok:#18d68b;--warn:#ffd166;--danger:#ff5a70;--panel:rgba(255,255,255,.045);--line:rgba(255,255,255,.14)}
-    .mining-alert{border:1px solid rgba(247,3,117,.55);padding:14px 16px;border-radius:18px;background:rgba(247,3,117,.08);margin-top:14px}.mining-alert strong{color:#fff}.mining-good{border-color:rgba(20,220,140,.52);background:rgba(20,220,140,.08)}.mining-warn{border-color:rgba(255,200,90,.58);background:rgba(255,200,90,.08)}.mining-danger{border-color:rgba(255,80,90,.58);background:rgba(255,80,90,.08)}
-    .version-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(20,220,140,.60);background:rgba(20,220,140,.12);color:#fff;border-radius:999px;padding:8px 12px;font-weight:900;letter-spacing:.02em}.mono,.bat-name,.sha-item code,.code-card code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.bat-name{color:#fff;background:rgba(247,3,117,.18);border:1px solid rgba(247,3,117,.35);border-radius:8px;padding:2px 6px;word-break:break-all}
-    .quick-actions{position:sticky;top:0;z-index:5;border:1px solid rgba(247,3,117,.42);background:rgba(13,13,18,.92);backdrop-filter:blur(12px);border-radius:20px;padding:14px;margin:0 0 18px}.quick-actions .hero-buttons{margin-top:10px}
-    .flow-panel{border:2px solid rgba(247,3,117,.78);border-radius:24px;background:linear-gradient(135deg,rgba(247,3,117,.16),rgba(255,255,255,.04));padding:20px;margin:18px 0;box-shadow:0 20px 55px rgba(247,3,117,.12)}.flow-panel h2{margin:6px 0 8px}
-    .step-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px;counter-reset:mineStep}.step-card{position:relative;border:1px solid var(--line);border-radius:18px;background:rgba(0,0,0,.18);padding:16px 14px 15px 56px}.step-card:before{counter-increment:mineStep;content:counter(mineStep);position:absolute;left:14px;top:16px;width:30px;height:30px;border-radius:999px;background:#f70375;color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center}.step-card h3{margin:0 0 8px}.step-card p{margin:0}.step-card strong{color:#fff}
-    .download-card,.stat-mini,.command-card,.sha-item{border:1px solid var(--line);border-radius:18px;background:var(--panel);padding:16px}.download-card .hero-buttons,.command-card{margin-top:12px}.download-icon{font-size:1.8rem;color:#f70375;margin-bottom:8px}.sha-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}.sha-item span{display:block;opacity:.72;font-size:.82rem;margin-bottom:6px}.sha-item code{word-break:break-all}
-    .stat-grid-six{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.stat-mini small{display:block;opacity:.72;margin-bottom:8px}.stat-mini strong{display:block;font-size:1.4rem;color:#fff;word-break:break-word}.stat-mini span{display:block;margin-top:6px;opacity:.72;font-size:.9rem}.stats-log{border:1px solid rgba(247,3,117,.35);background:rgba(247,3,117,.06);border-radius:18px;padding:14px;margin-top:14px}.stats-log[data-tone="ok"]{border-color:rgba(20,220,140,.45);background:rgba(20,220,140,.07)}.stats-log[data-tone="warn"]{border-color:rgba(255,200,90,.55);background:rgba(255,200,90,.08)}
-    .miner-status-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.miner-status-grid>div{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.04);padding:10px}.miner-status-grid span{display:block;opacity:.72;font-size:.82rem}.miner-status-grid strong{display:block;margin-top:4px;word-break:break-all}.heartbeat-actions .btn{min-width:170px}
-    .code-card>div{border-top:1px solid rgba(255,255,255,.10);padding:9px 0}.code-card>div:first-child{border-top:0}.code-card span{display:block;opacity:.72;font-size:.82rem;margin-bottom:4px}.code-card code{word-break:break-all}.command-card pre{white-space:pre-wrap;word-break:break-word;margin:0}.command-card code{font-size:.88rem}
-    .rules-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.rule-card{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.04);padding:16px}.rule-card small{opacity:.72}.rule-card h3{margin:.35rem 0 .45rem}
-    .checklist{margin:10px 0 0 18px;padding:0}.checklist li{margin:7px 0}.compact-address{font-size:.88rem;word-break:break-all}
-    @media(max-width:960px){.step-grid,.rules-grid,.stat-grid-six{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media(max-width:760px){.step-grid,.rules-grid,.stat-grid-six,.sha-grid,.miner-status-grid{grid-template-columns:1fr}.heartbeat-actions .btn{width:100%}.quick-actions{position:relative}}
+
+    .miner-page{--pink:#f70375;--ok:#19d98b;--warn:#ffd166;--danger:#ff6078;--panel:rgba(255,255,255,.045);--line:rgba(255,255,255,.13);--soft:rgba(247,3,117,.08)}
+    .miner-hero{border:1px solid rgba(247,3,117,.32);background:linear-gradient(135deg,rgba(247,3,117,.13),rgba(255,255,255,.035));border-radius:28px;padding:28px;margin-top:18px}
+    .badge-row{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 16px}.badge{display:inline-flex;align-items:center;border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:8px 12px;background:rgba(255,255,255,.055);font-weight:800}.badge.ok{border-color:rgba(25,217,139,.55);background:rgba(25,217,139,.10)}.badge.warn{border-color:rgba(255,209,102,.55);background:rgba(255,209,102,.10)}.badge.danger{border-color:rgba(255,96,120,.55);background:rgba(255,96,120,.10)}
+    .notice{border:1px solid rgba(255,255,255,.14);border-radius:18px;background:rgba(255,255,255,.045);padding:14px 16px;margin:12px 0}.notice strong{color:#fff}.notice.ok{border-color:rgba(25,217,139,.45);background:rgba(25,217,139,.08)}.notice.warn{border-color:rgba(255,209,102,.5);background:rgba(255,209,102,.08)}.notice.danger{border-color:rgba(255,96,120,.5);background:rgba(255,96,120,.08)}
+    .miner-section{margin-top:28px}.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:14px}.section-head p{max-width:660px;margin:0;opacity:.82}.section-head h2{margin:.25rem 0}.kicker{letter-spacing:.12em;text-transform:uppercase;color:#f70375;font-weight:900;font-size:.78rem}
+    .cards-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.cards-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.card{border:1px solid var(--line);border-radius:20px;background:var(--panel);padding:18px}.card h3{margin:.2rem 0 .5rem}.card small{opacity:.7}.card strong{color:#fff}.mono,.card code,.hash-box code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;word-break:break-all}.hash-box{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:14px}.hash-box div{border:1px solid var(--line);border-radius:14px;background:rgba(0,0,0,.15);padding:12px}.hash-box span{display:block;opacity:.72;font-size:.82rem;margin-bottom:6px}
+    .steps{counter-reset:step;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.step{position:relative;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.04);padding:16px 14px 14px 58px}.step:before{counter-increment:step;content:counter(step);position:absolute;left:14px;top:16px;width:32px;height:32px;border-radius:999px;background:#f70375;color:#fff;display:grid;place-items:center;font-weight:900}.step h3{margin:0 0 6px}.step p{margin:0;opacity:.84}
+    .download-title{display:flex;align-items:center;justify-content:space-between;gap:10px}.download-title b{font-size:1.05rem}.btn-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.btn-row .btn{min-width:160px}.stat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.stat{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.04);padding:14px}.stat span{display:block;opacity:.72;font-size:.82rem}.stat strong{display:block;margin-top:6px;font-size:1.2rem;word-break:break-word}.log-line{border:1px solid rgba(247,3,117,.28);border-radius:16px;background:rgba(247,3,117,.06);padding:12px;margin-top:12px}
+    .wallet-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.wallet-grid>div{border:1px solid var(--line);border-radius:14px;background:rgba(0,0,0,.13);padding:10px}.wallet-grid span{display:block;opacity:.72;font-size:.82rem}.wallet-grid strong{display:block;margin-top:4px;word-break:break-all}.checklist{margin:10px 0 0 18px;padding:0}.checklist li{margin:7px 0}.compact{font-size:.9rem;word-break:break-all}
+    @media(max-width:960px){.cards-3,.steps,.stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.section-head{display:block}.section-head p{margin-top:8px}}
+    @media(max-width:720px){.cards-2,.cards-3,.steps,.stat-grid,.hash-box,.wallet-grid{grid-template-columns:1fr}.miner-hero{padding:20px}.btn-row .btn{width:100%}}
+
   </style>
 </head>
 <body>
@@ -59,182 +58,155 @@
   </div>
 </header>
 
+
 <main class="wrap page miner-page">
-  <section class="quick-actions" aria-label="Quick mining actions">
-    <strong class="version-badge">CURRENT MINER: V31H2J PUBLIC MINING RELEASE</strong>
-    <div class="mining-alert mining-good"><strong>Ready for controlled testing:</strong> V31H2J is active from block <strong>167893</strong>. All official nodes were updated to the H2J binary and the post-activation audit showed the StateAt reward-committee error stopped after activation.</div>
-    <div class="mining-alert mining-danger"><strong>Use only the H2J full packages below.</strong> Delete or rename old H2I / H2E / H2D / V31 / V7A30 miner folders before testing. Do not use raw EXE-only files.</div>
-    <div class="hero-buttons">
-      <a class="btn primary" href="https://downloads.lustchain.org/lust-v31h2j-miner-windows-FULL.zip" target="_blank" rel="noreferrer">Download Windows H2J full ZIP</a>
-      <a class="btn primary" href="https://downloads.lustchain.org/lust-v31h2j-miner-ubuntu-FULL.tar.gz" target="_blank" rel="noreferrer">Download Ubuntu H2J full miner</a>
-      <a class="btn" href="./faucet.html">Open faucet</a>
-      <a class="btn" href="#register">Register / Active</a>
+  <section class="miner-hero" id="top">
+    <div class="badge-row">
+      <span class="badge ok">V31H2J Final Fix</span>
+      <span class="badge ok">Chain ID 0x1b0b required</span>
+      <span class="badge warn">Controlled test only</span>
     </div>
-  </section>
-
-  <section class="hero split mining-hero" id="top">
-    <div>
-      <div class="kicker">LUST mining · V31H2J public-first official-fallback</div>
-      <h1>Public mining test page, clean and complete.</h1>
-      <p>Follow the order exactly: download the full H2J package, extract to a fresh folder, verify the binary, open the register helper, send Active/Heartbeat from MetaMask, then start the miner and check STATUS.</p>
-      <div class="hero-actions">
-        <a class="btn primary" href="#windows-flow">Windows test flow</a>
-        <a class="btn" href="#downloads">Downloads</a>
-        <a class="btn" href="#rules">Reward rules</a>
+    <div class="split">
+      <div>
+        <div class="kicker">LUST Chain public mining</div>
+        <h1>Mining test page, clean and direct.</h1>
+        <p>Use the official V31H2J Final Fix package. The miner must show <strong>Chain ID 0x1b0b</strong>. If it shows <strong>0x1</strong> or local block <strong>0</strong>, stop and delete the folder.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="https://downloads.lustchain.org/lust-v31h2j-miner-windows-FULL.zip?v=20260625-finalfix" target="_blank" rel="noreferrer">Download Windows Final Fix</a>
+          <a class="btn" href="https://downloads.lustchain.org/lust-v31h2j-miner-ubuntu-FULL.tar.gz" target="_blank" rel="noreferrer">Download Ubuntu miner</a>
+          <a class="btn" href="./faucet.html">Open faucet</a>
+          <a class="btn" href="#register">Register / Active</a>
+        </div>
       </div>
-      <div class="mining-alert mining-warn"><strong>Do not mass release yet:</strong> first test one Windows PC cleanly and confirm the miner stays synced/canonical and rewards are visible by wallet balance/RPC, not only by local miner text.</div>
-    </div>
-    <div class="box network-card">
-      <small>Network</small>
-      <div class="row"><span>Chain ID</span><strong>6923 / 0x1b0b</strong></div>
-      <div class="row"><span>RPC</span><strong>https://rpc.lustchain.org</strong></div>
-      <div class="row"><span>Explorer</span><strong>https://explorer.lustchain.org</strong></div>
-      <div class="row"><span>Registry</span><strong class="compact-address">0x0000000000000000000000000000000000006923</strong></div>
-      <div class="row"><span>Consensus</span><strong>LQC · V31H2J active</strong></div>
-      <div class="row"><span>Activation</span><strong>Block 167893</strong></div>
+      <div class="card">
+        <small>Current release</small>
+        <h3>V31H2J-WINDOWS-FINALFIX</h3>
+        <p>Fixes wrong Chain ID 0x1, installs snapshot into the correct datadir, avoids gap-based snapshot reset, and does not restart after gap zero.</p>
+        <div class="notice warn"><strong>Important:</strong> download again with Ctrl+F5. Do not reuse old extracted folders.</div>
+      </div>
     </div>
   </section>
 
-  <section class="flow-panel" id="windows-flow">
-    <div class="kicker">Windows clean test · exact order</div>
-    <h2>Test with a fresh folder and the H2J ZIP only.</h2>
-    <p>Do not reuse the old H2I folder. The package asks only for your public 0x wallet address. Never enter seed phrase or private key.</p>
-    <div class="step-grid">
-      <div class="step-card"><h3>Delete old folder</h3><p>Rename/delete old <strong>LUST-Miner</strong>, H2I, H2E, H2D, V31 or V7A30 folders. Use a clean folder.</p></div>
-      <div class="step-card"><h3>Download H2J ZIP</h3><p>Download <span class="bat-name">lust-v31h2j-miner-windows-FULL.zip</span> from this page only.</p></div>
-      <div class="step-card"><h3>Extract All</h3><p>Right-click the ZIP and choose <strong>Extract All</strong>. Do not run files directly from inside the ZIP preview.</p></div>
-      <div class="step-card"><h3>Verify binary</h3><p>Run <span class="bat-name">VERIFY-H2J-BINARY-WINDOWS.bat</span>. The EXE SHA must match the value shown below.</p></div>
-      <div class="step-card"><h3>Open register helper</h3><p>Run <span class="bat-name">REGISTER-MINER-WINDOWS.bat</span>. It opens the official registration page in your browser.</p></div>
-      <div class="step-card"><h3>MetaMask actions</h3><p>Connect wallet, switch to LUST Chain, claim faucet gas if needed, then confirm <strong>Register wallet</strong> and <strong>Activate / Heartbeat</strong>.</p></div>
-      <div class="step-card"><h3>Start miner</h3><p>Run <span class="bat-name">START-LUST-MINER-WINDOWS.bat</span>. Paste only your public 0x reward wallet.</p></div>
-      <div class="step-card"><h3>Check status</h3><p>Run <span class="bat-name">STATUS-LUST-MINER-WINDOWS.bat</span>. Continue only with peers &gt; 0, Syncing False, Canonical YES and Gap low/0.</p></div>
-      <div class="step-card"><h3>Confirm on-chain</h3><p>If the miner says it found something, confirm by public RPC/explorer and wallet balance. Do not trust local text alone.</p></div>
+  <section class="miner-section" id="steps">
+    <div class="section-head">
+      <div><div class="kicker">Exact order</div><h2>Test in 6 steps.</h2></div>
+      <p>No old folder, no raw EXE, no repeated random changes.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><h3>Download again</h3><p>Use the Windows Final Fix ZIP button above. Use Ctrl+F5 before downloading.</p></div>
+      <div class="step"><h3>Extract clean</h3><p>Extract to a simple folder like <strong>C:\LUST-Miner-H2J</strong>. Do not use old Downloads folders.</p></div>
+      <div class="step"><h3>Faucet</h3><p>If using a new wallet, claim tiny LST gas first.</p></div>
+      <div class="step"><h3>Register</h3><p>Connect the same wallet, then Register once.</p></div>
+      <div class="step"><h3>Active / Heartbeat</h3><p>Send Active before starting or after being offline.</p></div>
+      <div class="step"><h3>Start and verify</h3><p>Start miner. It must show <strong>0x1b0b</strong> and local block near snapshot, not 0.</p></div>
     </div>
   </section>
 
   <section class="miner-section" id="downloads">
     <div class="section-head">
-      <div><div class="kicker">Download center · V31H2J</div><h2>Official complete miner packages.</h2></div>
-      <p>These packages include geth, genesis, bootnodes, scripts, register helpers, status checks and SHA files. Normal users should not download a raw binary.</p>
+      <div><div class="kicker">Downloads</div><h2>Official packages and hashes.</h2></div>
+      <p>The Windows link includes a cache-buster so users do not accidentally download an old ZIP.</p>
     </div>
-    <div class="grid two download-grid">
-      <div class="download-card">
-        <div class="download-icon">⊞</div>
-        <small>Windows 64-bit · full one-click miner ZIP</small>
-        <h3>Windows H2J full miner</h3>
-        <p>Use this for the first controlled Windows test. Extract fresh, verify, register/active, then start.</p>
-        <div class="hero-buttons"><a class="btn primary" href="https://downloads.lustchain.org/lust-v31h2j-miner-windows-FULL.zip" target="_blank" rel="noreferrer">Download Windows full ZIP</a><a class="btn" href="https://downloads.lustchain.org/lust-v31h2j-miner-windows-FULL.zip.sha256" target="_blank" rel="noreferrer">Open Windows ZIP SHA256</a></div>
-        <div class="sha-grid">
-          <div class="sha-item"><span>Windows H2J EXE SHA256</span><code>b7edfa2b7571c6fb4521c4ba46e34d983f9c8a8d977ca21742364ef413ac9aa8</code></div>
-          <div class="sha-item"><span>Package SHA file</span><code>https://downloads.lustchain.org/lust-v31h2j-miner-windows-FULL.zip.sha256</code></div>
+    <div class="cards-2">
+      <div class="card">
+        <div class="download-title"><b>Windows full miner</b><span class="badge ok">Final Fix</span></div>
+        <p>Includes geth, snapshot flow, start/stop/status scripts, Register helper, bootnodes and SHA checks.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="https://downloads.lustchain.org/lust-v31h2j-miner-windows-FULL.zip?v=20260625-finalfix" target="_blank" rel="noreferrer">Download Windows ZIP</a>
+          <a class="btn" href="https://downloads.lustchain.org/lust-v31h2j-miner-windows-FULL.zip.sha256?v=20260625-finalfix" target="_blank" rel="noreferrer">Package SHA</a>
+        </div>
+        <div class="hash-box">
+          <div><span>Windows package SHA256</span><code>37ad22ba555518cf70a7562f5f6590d116e741f7e736c254a747106ef8c352e6</code></div>
+          <div><span>Windows EXE SHA256</span><code>b7edfa2b7571c6fb4521c4ba46e34d983f9c8a8d977ca21742364ef413ac9aa8</code></div>
         </div>
       </div>
-      <div class="download-card">
-        <div class="download-icon">⌁</div>
-        <small>Ubuntu 64-bit · full miner package</small>
-        <h3>Ubuntu H2J full miner</h3>
-        <p>Use this for Linux/Ubuntu miners. Extract fresh, verify, register/active, then start/status.</p>
-        <div class="hero-buttons"><a class="btn primary" href="https://downloads.lustchain.org/lust-v31h2j-miner-ubuntu-FULL.tar.gz" target="_blank" rel="noreferrer">Download Ubuntu full miner</a><a class="btn" href="https://downloads.lustchain.org/lust-v31h2j-miner-ubuntu-FULL.tar.gz.sha256" target="_blank" rel="noreferrer">Open Ubuntu package SHA256</a></div>
-        <div class="sha-grid">
-          <div class="sha-item"><span>Linux H2J geth SHA256</span><code>497c81af52f6cb860574244ca872c201d09c0c75ec09fec699b836bb1775b138</code></div>
-          <div class="sha-item"><span>Full SHA list</span><code>https://downloads.lustchain.org/v31h2j/SHA256SUMS.txt</code></div>
+      <div class="card">
+        <div class="download-title"><b>Ubuntu full miner</b><span class="badge">H2J</span></div>
+        <p>Use for Linux testing only. Windows users should use the Windows Final Fix ZIP.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="https://downloads.lustchain.org/lust-v31h2j-miner-ubuntu-FULL.tar.gz" target="_blank" rel="noreferrer">Download Ubuntu TAR.GZ</a>
+          <a class="btn" href="https://downloads.lustchain.org/lust-v31h2j-miner-ubuntu-FULL.tar.gz.sha256" target="_blank" rel="noreferrer">Package SHA</a>
+        </div>
+        <div class="hash-box">
+          <div><span>Linux geth SHA256</span><code>497c81af52f6cb860574244ca872c201d09c0c75ec09fec699b836bb1775b138</code></div>
+          <div><span>Release JSON</span><code>https://downloads.lustchain.org/lust-mining-release-v31h2j.json</code></div>
         </div>
       </div>
     </div>
-    <div class="mining-alert mining-good"><strong>Release metadata:</strong> <a href="https://downloads.lustchain.org/lust-mining-release-v31h2j.json" target="_blank" rel="noreferrer">open V31H2J release JSON</a>. H2I download names on the server were redirected to the H2J package, but the correct public links are the H2J links above.</div>
+    <div class="notice danger"><strong>Do not use:</strong> V7A30, V31, H2C, H2D, H2E, H2I, old extracted folders, or any raw EXE-only package.</div>
   </section>
 
   <section class="miner-section" id="register">
     <div class="section-head">
-      <div><div class="kicker">Register and Active / Heartbeat</div><h2>Activate the same wallet used by your miner.</h2></div>
-      <p>Register is one time per wallet. Active / Heartbeat marks the wallet online. After an old test or after being offline, send Active / Heartbeat again before starting H2J mining.</p>
+      <div><div class="kicker">Wallet activation</div><h2>Register and Active / Heartbeat.</h2></div>
+      <p>Use the same public 0x wallet address inside the miner. Never enter seed phrase or private key.</p>
     </div>
-    <div class="grid two">
-      <div class="form miner-wallet-panel">
-        <small>Wallet mining control</small>
-        <div class="miner-status-grid">
+    <div class="cards-2">
+      <div class="card">
+        <small>Wallet control</small>
+        <div class="wallet-grid">
           <div><span>Connected wallet</span><strong data-v7a29-wallet data-v7a30-wallet>Not connected</strong></div>
           <div><span>Network</span><strong data-v7a29-chain data-v7a30-chain>Waiting</strong></div>
           <div><span>LST balance</span><strong data-v7a29-balance data-v7a30-balance>--</strong></div>
           <div><span>Current block</span><strong data-v7a29-block data-v7a30-block>Loading...</strong></div>
           <div><span>Registry</span><strong>0x...6923</strong></div>
-          <div><span>Status</span><strong data-v7a29-registration-status data-v7a30-registration-status>Ready when wallet connects</strong></div>
+          <div><span>Status</span><strong data-v7a29-registration-status data-v7a30-registration-status>Ready</strong></div>
         </div>
-        <div class="hero-buttons heartbeat-actions">
+        <div class="btn-row">
           <button class="btn primary" type="button" data-v7a29-register data-v7a30-register>Register wallet</button>
-          <button class="btn" type="button" data-v7a29-heartbeat data-v7a30-heartbeat>Activate / Heartbeat</button>
+          <button class="btn" type="button" data-v7a29-heartbeat data-v7a30-heartbeat>Active / Heartbeat</button>
           <button class="btn" type="button" data-add-lust-chain>Add/Switch LUST</button>
           <button class="btn" type="button" data-v7a29-refresh data-v7a30-refresh>Refresh</button>
-          <a class="btn" href="https://downloads.lustchain.org/lust-register-miner-v31.html?v=20260624-v31h2j" target="_blank" rel="noreferrer">Open standalone register page</a>
         </div>
-        <div class="notice miner-log" data-v7a29-log data-v7a30-log>Connect the same wallet used by the miner. Claim faucet gas first if needed, Register once, then send Activate / Heartbeat.</div>
+        <div class="notice" data-v7a29-log data-v7a30-log>Connect wallet, switch to LUST Chain, faucet if needed, Register once, then Active / Heartbeat.</div>
       </div>
-      <div class="box">
-        <small>Transaction data</small>
-        <div class="code-card">
-          <div><span>Registry</span><code>0x0000000000000000000000000000000000006923</code></div>
-          <div><span>Register V2 prefix</span><code>0x4c5143525f5632 + wallet address</code></div>
-          <div><span>Heartbeat V2 prefix</span><code>0x4c5143485f5632 + wallet address</code></div>
-          <div><span>Value</span><code>0 LST plus tiny gas</code></div>
-        </div>
-        <p><strong>Gas:</strong> use the faucet for a tiny amount of LST only. Mining is not a deposit system.</p>
-        <div class="hero-buttons"><a class="btn primary" href="./faucet.html">Open LST Faucet</a><a class="btn" href="#windows-flow">View Windows flow</a></div>
+      <div class="card">
+        <small>What must be true in Windows STATUS</small>
+        <ul class="checklist">
+          <li><strong>Chain ID:</strong> <span class="mono">0x1b0b</span></li>
+          <li><strong>Local block:</strong> not 0, near snapshot, then catching public block</li>
+          <li><strong>Peers:</strong> greater than 0 after a short wait</li>
+          <li><strong>Gap:</strong> can start high, but must go down</li>
+          <li><strong>Wrong Chain ID 0x1:</strong> stop, delete folder, download again</li>
+        </ul>
+        <div class="btn-row"><a class="btn primary" href="./faucet.html">Open faucet</a><a class="btn" href="https://downloads.lustchain.org/lust-register-miner-v31.html?v=20260624-v31h2j" target="_blank" rel="noreferrer">Standalone register page</a></div>
       </div>
     </div>
   </section>
 
   <section class="miner-section" id="live">
     <div class="section-head">
-      <div><div class="kicker">Live network status</div><h2>Watch public miners and pending actions.</h2></div>
-      <p>Use live stats as a guide. The final proof is always the canonical chain and wallet balance.</p>
+      <div><div class="kicker">Live status</div><h2>Network, miners and snapshot.</h2></div>
+      <p>Live stats are for checking. Final proof is canonical chain and wallet balance.</p>
     </div>
-    <div class="stat-grid-six">
-      <div class="stat-mini"><small>Registered miners</small><strong data-mining-registered>--</strong><span data-mining-scan-progress>Loading registry scan...</span></div>
-      <div class="stat-mini"><small>Active public miners</small><strong data-mining-active>--</strong><span>Recent active window</span></div>
-      <div class="stat-mini"><small>Public blocks last 200</small><strong data-mining-public-blocks>--</strong><span data-v7a30-public-state>Loading...</span></div>
-      <div class="stat-mini"><small>Official fallback last 200</small><strong data-mining-official-blocks>--</strong><span>Fallback keeps chain alive if public miners miss their window</span></div>
-      <div class="stat-mini"><small>Pending actions</small><strong data-mining-pending>--</strong><span>Register / heartbeat feed</span></div>
-      <div class="stat-mini"><small>Last public miner</small><strong class="compact-address" data-mining-last-public>--</strong><span data-mining-last-public-block>Waiting for public block data...</span></div>
+    <div class="stat-grid">
+      <div class="stat"><span>Registered miners</span><strong data-mining-registered>--</strong><small data-mining-scan-progress>Loading...</small></div>
+      <div class="stat"><span>Active public miners</span><strong data-mining-active>--</strong><small>Recent active window</small></div>
+      <div class="stat"><span>Public blocks last 200</span><strong data-mining-public-blocks>--</strong><small data-v7a30-public-state>Loading...</small></div>
+      <div class="stat"><span>Official fallback last 200</span><strong data-mining-official-blocks>--</strong><small>Fallback only if public miners miss</small></div>
+      <div class="stat"><span>Pending actions</span><strong data-mining-pending>--</strong><small>Register / heartbeat feed</small></div>
+      <div class="stat"><span>Last public miner</span><strong class="compact" data-mining-last-public>--</strong><small data-mining-last-public-block>Waiting...</small></div>
+      <div class="stat"><span>Snapshot block</span><strong data-snapshot-block>Loading...</strong><small>Auto-published</small></div>
+      <div class="stat"><span>Snapshot SHA</span><strong class="compact" data-snapshot-sha>Loading...</strong><small>Must match tar.gz</small></div>
+      <div class="stat"><span>Reward rule</span><strong>1 wallet = 1 chance</strong><small>CPU/GPU does not increase chance</small></div>
     </div>
-    <div class="stats-log" data-mining-stats-log>Loading live mining stats...</div>
-    <div class="hero-buttons" style="margin-top:14px"><a class="btn" href="https://rpc.lustchain.org/mining-stats" target="_blank" rel="noreferrer">Open mining-stats API</a><a class="btn" href="https://rpc.lustchain.org/pending-raw" target="_blank" rel="noreferrer">Open pending feed</a><button class="btn" type="button" data-v7a29-refresh data-v7a30-refresh>Refresh stats</button></div>
+    <div class="log-line" data-mining-stats-log>Loading live mining stats...</div>
+    <div class="btn-row"><a class="btn" href="https://rpc.lustchain.org/mining-stats" target="_blank" rel="noreferrer">Mining stats API</a><a class="btn" href="https://snapshot.lustchain.org/snapshot/snapshot-info.json" target="_blank" rel="noreferrer">Snapshot info</a><button class="btn" type="button" data-v7a29-refresh data-v7a30-refresh>Refresh</button></div>
   </section>
 
   <section class="miner-section" id="rules">
     <div class="section-head">
-      <div><div class="kicker">Reward and fairness rules</div><h2>One wallet, one deterministic chance.</h2></div>
-      <p>CPU/GPU power does not increase chance. The registered active wallet is what matters.</p>
+      <div><div class="kicker">Rules</div><h2>Reward logic.</h2></div>
+      <p>The explorer may show native custom rewards as 0. Confirm by wallet balance/RPC.</p>
     </div>
-    <div class="rules-grid">
-      <div class="rule-card"><small>No public miners active</small><h3>Official fallback only</h3><p>Official producers keep the chain alive and the producer receives the normal 2 LST block reward.</p></div>
-      <div class="rule-card"><small>One public miner active</small><h3>Public first chance</h3><p>The public miner has first deterministic chance. If official fallback produces, official receives 1.4 LST and the active public miner receives 0.6 LST.</p></div>
-      <div class="rule-card"><small>Two or more public miners</small><h3>70% / 30%</h3><p>The block producer receives 1.4 LST and other active public miners share 0.6 LST. Official wallets are excluded from the passive 30% when public miners are active.</p></div>
-    </div>
-    <div class="mining-alert mining-warn"><strong>Explorer note:</strong> Blockscout may show <strong>Reward 0 LST</strong> for custom native rewards. Confirm reward by wallet balance, RPC audit and canonical blocks.</div>
-  </section>
-
-  <section class="miner-section" id="snapshot">
-    <div class="section-head"><div><div class="kicker">Snapshot and fast sync</div><h2>Miners start from the latest official snapshot.</h2></div><p>The package downloads the latest snapshot if no local chain data exists. This makes first start faster.</p></div>
-    <div class="stat-grid-six">
-      <div class="stat-mini"><small>Snapshot block</small><strong data-snapshot-block>Loading...</strong><span>Auto-published by infra</span></div>
-      <div class="stat-mini"><small>Snapshot SHA</small><strong class="compact-address" data-snapshot-sha>Loading latest snapshot...</strong><span>Verify if troubleshooting</span></div>
-      <div class="stat-mini"><small>Rule</small><strong>Fresh</strong><span>Updated automatically around 1000-block gap</span></div>
-    </div>
-    <div class="hero-buttons" style="margin-top:14px"><a class="btn" href="https://snapshot.lustchain.org/snapshot/snapshot-info.json" target="_blank" rel="noreferrer">Open snapshot info</a><a class="btn" href="https://snapshot.lustchain.org/snapshot/lust-mainnet-snapshot-latest.tar.gz" target="_blank" rel="noreferrer">Download snapshot</a></div>
-  </section>
-
-  <section class="miner-section" id="troubleshooting">
-    <div class="section-head"><div><div class="kicker">Troubleshooting</div><h2>Fix the common test problems quickly.</h2></div><p>Do not improvise with old packages. Restart cleanly from the official H2J ZIP.</p></div>
-    <div class="grid two">
-      <div class="box"><small>Gap increases</small><h3>Stop and resync cleanly.</h3><p>Use STATUS first. If gap keeps increasing, stop miner, make sure it is H2J, delete only local chain data if instructed, then start from latest snapshot.</p></div>
-      <div class="box"><small>Peers are 0</small><h3>Network or firewall issue.</h3><p>Wait after restart. If it stays 0, check VPN, firewall, router and whether P2P connections are blocked.</p></div>
-      <div class="box"><small>Register fails</small><h3>Wrong network or no gas.</h3><p>Switch MetaMask to LUST Chain and claim faucet LST. Register/Heartbeat require tiny gas, not a deposit.</p></div>
-      <div class="box"><small>Already registered</small><h3>Use Active / Heartbeat.</h3><p>Do not register repeatedly. Start the H2J miner, then send Active / Heartbeat again from the same wallet.</p></div>
-      <div class="box"><small>Local says found block</small><h3>Confirm on public chain.</h3><p>Only count it if the block exists on public RPC/explorer and the wallet balance/reward audit confirms it.</p></div>
-      <div class="box"><small>Wrong package</small><h3>Delete old folder.</h3><p>Do not use V7A30, V31, V31H2C, V31H2D, V31H2E or V31H2I folders. Use V31H2J only.</p></div>
+    <div class="cards-3">
+      <div class="card"><small>No public miner</small><h3>Official fallback</h3><p>Official producer keeps the chain alive and receives 2 LST if it produces.</p></div>
+      <div class="card"><small>One public miner</small><h3>Public first</h3><p>The public miner has first chance. If official fallback produces, official receives 1.4 LST and the active public wallet receives 0.6 LST.</p></div>
+      <div class="card"><small>Two or more public miners</small><h3>70% / 30%</h3><p>Producer receives 1.4 LST; other active public wallets share 0.6 LST. Official wallets are excluded from passive 30%.</p></div>
     </div>
   </section>
 </main>
+
 
 <footer class="footer lust-footer" aria-label="LUST Chain footer">
   <div class="lust-footer__glow" aria-hidden="true"></div>
