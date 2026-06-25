@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mining | LUST Platform</title>
-  <meta name="description" content="Official LUST Chain public mining page with V31H2J stable-snapshot Windows package, faucet, register and Active/Heartbeat." />
+  <meta name="description" content="Official LUST Chain public mining page with H2K Windows and Ubuntu packages, faucet, register and Active/Heartbeat." />
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
@@ -46,7 +46,7 @@
   </style>
 </head>
 <body>
-<div class="promo-bar">LUST Chain Mining · V31H2J stable snapshot package · Faucet · Register · Active/Heartbeat.</div>
+<div class="promo-bar">LUST Chain Mining · H2K active · Windows and Ubuntu downloads · Faucet · Register / Active.</div>
 <header class="topbar">
   <a class="brand" href="./presale.html">
     <div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div>
@@ -84,18 +84,19 @@
   <section class="lmin-hero">
     <div>
       <div class="lmin-kicker">LUST Chain public mining</div>
-      <h1>Mining test package</h1>
-      <p>Use the official V31H2J Windows package with stable snapshot. Before mining, the wallet must have gas, must be registered, and must send Active/Heartbeat. The miner must show <strong>Chain ID 0x1b0b</strong>.</p>
+      <h1>Start mining with H2K</h1>
+      <p>Use only the official <strong>V31H2K</strong> miner packages. First get faucet gas, then register/activate your wallet, then run the miner. Use the same public <strong>0x wallet</strong> in all steps. Never paste your seed phrase or private key.</p>
 
       <div class="lmin-chips" aria-label="Mining status">
-        <span class="lmin-chip ok">V31H2J stable snapshot</span>
-        <span class="lmin-chip ok">Register + Active required</span>
-        <span class="lmin-chip warn">Controlled testing only</span>
+        <span class="lmin-chip ok">H2K active since block 174014</span>
+        <span class="lmin-chip ok">Windows + Ubuntu ready</span>
+        <span class="lmin-chip warn">Do not use old V7A29 / V31 / H2J miners</span>
       </div>
 
       <div class="lmin-actions">
-        <a class="lmin-btn primary" href="https://downloads.lustchain.org/lust-v31h2j-miner-windows-FULL.zip?v=stable-snapshot-171244" target="_blank" rel="noreferrer">Download Windows ZIP</a>
-        <a class="lmin-btn" href="https://downloads.lustchain.org/lust-register-miner-v31.html?v=20260624-v31h2j" target="_blank" rel="noreferrer">Register / Active inside page</a>
+        <a class="lmin-btn primary" href="https://downloads.lustchain.org/lust-v31h2k-miner-windows-FULL.zip" target="_blank" rel="noreferrer">Download Windows</a>
+        <a class="lmin-btn primary" href="https://downloads.lustchain.org/lust-v31h2k-miner-ubuntu-FULL.tar.gz" target="_blank" rel="noreferrer">Download Ubuntu</a>
+        <a class="lmin-btn" href="https://downloads.lustchain.org/lust-register-miner-v31h2k.html" target="_blank" rel="noreferrer">Register / Active</a>
         <a class="lmin-btn" href="./faucet.html">Open faucet</a>
       </div>
     </div>
@@ -103,98 +104,43 @@
     <aside class="lmin-panel">
       <div class="lmin-row"><span>Network</span><strong>LUST Chain</strong></div>
       <div class="lmin-row"><span>Chain ID</span><strong>6923 / 0x1b0b</strong></div>
-      <div class="lmin-row"><span>Windows package</span><strong>V31H2J stable snapshot</strong></div>
-      <div class="lmin-row"><span>Snapshot block</span><strong>171244</strong></div>
-      <div class="lmin-row"><span>Status</span><strong>Test only</strong></div>
+      <div class="lmin-row"><span>RPC</span><strong>https://rpc.lustchain.org</strong></div>
+      <div class="lmin-row"><span>Registry</span><strong>0x0000000000000000000000000000000000006923</strong></div>
+      <div class="lmin-row"><span>Current miner</span><strong>V31H2K</strong></div>
     </aside>
   </section>
 
-  <div class="lmin-alert bad"><strong>Stop if wrong chain.</strong> If the Windows miner shows Chain ID <strong>0x1</strong>, local block <strong>0</strong>, or no peers for a long time, stop the miner and delete the folder. It must show Chain ID <strong>0x1b0b</strong>.</div>
+  <div class="lmin-alert bad"><strong>Important:</strong> old miner packages are not valid anymore. Do not use V7A29, V7A30, V31, H2C, H2D or H2J. Use only the H2K downloads on this page.</div>
 
-
-  <section class="lmin-section" id="register-active">
+  <section class="lmin-section" id="quick-start">
     <div class="lmin-head">
       <div>
-        <div class="lmin-kicker">On-chain activation</div>
-        <h2>Register and Active / Heartbeat inside this page</h2>
+        <div class="lmin-kicker">Quick start</div>
+        <h2>Do these steps in order</h2>
       </div>
-      <p>Use the same wallet you will paste into the Windows miner. Do Faucet first, then Register, then Active/Heartbeat. Without Active/Heartbeat the miner can sync but may not participate.</p>
+      <p>Mining only works correctly when your wallet has gas and is registered/active on-chain.</p>
     </div>
 
-    <div class="lmin-inline-register">
-      <p class="note"><strong>Required:</strong> connect the wallet, confirm Register, then confirm Active/Heartbeat. If the embedded frame does not load in your browser, use the fallback button below.</p>
-      <div class="frame-wrap">
-        <iframe src="https://downloads.lustchain.org/lust-register-miner-v31.html?v=20260624-v31h2j-inline" title="LUST miner register and Active Heartbeat" loading="lazy"></iframe>
-      </div>
-      <div class="mini-actions">
-        <a class="lmin-btn primary" href="https://downloads.lustchain.org/lust-register-miner-v31.html?v=20260624-v31h2j-inline" target="_blank" rel="noreferrer">Open Register / Active in new tab</a>
-        <a class="lmin-btn" href="./faucet.html">Open faucet</a>
-        <a class="lmin-btn" href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">Open explorer</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="lmin-section" id="required">
-    <div class="lmin-head">
-      <div>
-        <div class="lmin-kicker">Required before mining</div>
-        <h2>Faucet, Register and Active</h2>
-      </div>
-      <p>The miner only participates correctly after the wallet is registered and active on-chain.</p>
-    </div>
-
-    <div class="lmin-grid">
+    <div class="lmin-grid four">
       <div class="lmin-card lmin-step" data-step="1">
         <h3>Get faucet gas</h3>
-        <p>Use the faucet to get a small amount of LST for gas on the wallet you will mine with.</p>
+        <p>Open the faucet and claim a small amount of LST for gas.</p>
         <a class="lmin-btn" href="./faucet.html">Open faucet</a>
       </div>
       <div class="lmin-card lmin-step" data-step="2">
-        <h3>Register wallet</h3>
-        <p>Open the register page and send the Register transaction from the same wallet.</p>
-        <a class="lmin-btn" href="https://downloads.lustchain.org/lust-register-miner-v31.html?v=20260624-v31h2j" target="_blank" rel="noreferrer">Register wallet</a>
+        <h3>Register / Active</h3>
+        <p>Connect MetaMask and send the Register / Active transaction from your mining wallet.</p>
+        <a class="lmin-btn" href="https://downloads.lustchain.org/lust-register-miner-v31h2k.html" target="_blank" rel="noreferrer">Register / Active</a>
       </div>
       <div class="lmin-card lmin-step" data-step="3">
-        <h3>Send Active / Heartbeat</h3>
-        <p>After Register is confirmed, send Active/Heartbeat. If you change wallet, repeat Faucet, Register and Active.</p>
-        <a class="lmin-btn" href="https://downloads.lustchain.org/lust-register-miner-v31.html?v=20260624-v31h2j" target="_blank" rel="noreferrer">Active / Heartbeat</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="lmin-section" id="windows">
-    <div class="lmin-head">
-      <div>
-        <div class="lmin-kicker">Windows flow</div>
-        <h2>Clean test steps</h2>
-      </div>
-      <p>Do not reuse old folders. Use one wallet and one clean folder for each test.</p>
-    </div>
-
-    <div class="lmin-grid">
-      <div class="lmin-card lmin-step" data-step="1">
-        <h3>Download fresh ZIP</h3>
-        <p>Download the Windows ZIP with the stable snapshot cache-buster and extract to a clean folder, for example <strong>C:\LUST-Miner-H2J</strong>.</p>
-      </div>
-      <div class="lmin-card lmin-step" data-step="2">
-        <h3>Start miner</h3>
-        <p>Run <strong>START-LUST-MINER-WINDOWS.bat</strong> and paste only the public 0x wallet. Never paste seed phrase or private key.</p>
-      </div>
-      <div class="lmin-card lmin-step" data-step="3">
-        <h3>Confirm Chain ID</h3>
-        <p>The terminal must say <strong>OK: local node is LUST Chain 0x1b0b</strong>. If it shows <strong>0x1</strong>, stop.</p>
+        <h3>Download miner</h3>
+        <p>Choose Windows or Ubuntu. Extract the package to a clean folder.</p>
+        <a class="lmin-btn" href="#downloads">Go to downloads</a>
       </div>
       <div class="lmin-card lmin-step" data-step="4">
-        <h3>Wait for sync</h3>
-        <p>Gap can be high at first. Let it fall naturally. The stable package should not reinstall old snapshots because of gap.</p>
-      </div>
-      <div class="lmin-card lmin-step" data-step="5">
-        <h3>Open Status</h3>
-        <p>Run <strong>STATUS-LUST-MINER-WINDOWS.bat</strong>. Good status: Chain ID 0x1b0b, peers above 0, local block not 0.</p>
-      </div>
-      <div class="lmin-card lmin-step" data-step="6">
-        <h3>Check rewards later</h3>
-        <p>Rewards are confirmed by wallet balance/RPC. The explorer can show native custom reward as 0 in some blocks.</p>
+        <h3>Start and check</h3>
+        <p>Run the start script, paste only your public 0x wallet, then open the status script.</p>
+        <div class="lmin-mono">Good status: SYNCED / MINING ACTIVE</div>
       </div>
     </div>
   </section>
@@ -202,34 +148,124 @@
   <section class="lmin-section" id="downloads">
     <div class="lmin-head">
       <div>
-        <div class="lmin-kicker">Downloads</div>
-        <h2>Official packages</h2>
+        <div class="lmin-kicker">Official downloads</div>
+        <h2>H2K miner packages</h2>
       </div>
-      <p>The Windows package now uses an immutable snapshot file instead of the moving latest snapshot.</p>
+      <p>These are the current official public miner packages for LUST Chain H2K.</p>
     </div>
 
     <div class="lmin-grid two">
       <div class="lmin-card">
-        <h3>Windows V31H2J Stable Snapshot</h3>
-        <p>Full Windows miner package with geth, genesis, bootnodes, register helper, status tool and stable snapshot logic.</p>
+        <h3>Windows V31H2K FULL</h3>
+        <p>Complete Windows package with geth, genesis, bootnodes, register page, start, stop and status scripts.</p>
         <div class="lmin-actions">
-          <a class="lmin-btn primary" href="https://downloads.lustchain.org/lust-v31h2j-miner-windows-FULL.zip?v=stable-snapshot-171244" target="_blank" rel="noreferrer">Download Windows ZIP</a>
-          <a class="lmin-btn" href="https://downloads.lustchain.org/lust-v31h2j-miner-windows-FULL.zip.sha256?v=stable-snapshot-171244" target="_blank" rel="noreferrer">ZIP SHA</a>
+          <a class="lmin-btn primary" href="https://downloads.lustchain.org/lust-v31h2k-miner-windows-FULL.zip" target="_blank" rel="noreferrer">Download Windows ZIP</a>
+          <a class="lmin-btn" href="https://downloads.lustchain.org/lust-v31h2k-miner-windows-FULL.zip.sha256" target="_blank" rel="noreferrer">ZIP SHA</a>
         </div>
-        <div class="lmin-mono">Windows ZIP SHA256: 050c855c6edd018e8958a86d64b06bf8c81a45233df90ef8f9c7d916c1f3d4eb</div>
-        <div class="lmin-mono">Windows EXE SHA256: b7edfa2b7571c6fb4521c4ba46e34d983f9c8a8d977ca21742364ef413ac9aa8</div>
-        <div class="lmin-mono">Stable snapshot: block 171244 · 37a41f0317168ea731f5c23233d0a846b70d9379ea14eeb0a7bced04a57d0aa0</div>
+        <div class="lmin-mono">ZIP SHA256: 9ac76c1b10a44d2787bef66ab385719dc26792bbe1102d9c7ade8550f522b13e</div>
+        <div class="lmin-mono">EXE SHA256: 720e121be64396e3a51ef8b6f86450c804d01a4d66d988adc47302c1d8e15f10</div>
       </div>
 
       <div class="lmin-card">
-        <h3>Ubuntu V31H2J</h3>
-        <p>Linux test package. Use only for controlled testing while the public miner is being finalized.</p>
+        <h3>Ubuntu V31H2K FULL</h3>
+        <p>Complete Ubuntu package with Linux geth, genesis, bootnodes, register page, start, stop and status scripts.</p>
         <div class="lmin-actions">
-          <a class="lmin-btn primary" href="https://downloads.lustchain.org/lust-v31h2j-miner-ubuntu-FULL.tar.gz" target="_blank" rel="noreferrer">Download Ubuntu</a>
-          <a class="lmin-btn" href="https://downloads.lustchain.org/lust-v31h2j-miner-ubuntu-FULL.tar.gz.sha256" target="_blank" rel="noreferrer">Ubuntu SHA</a>
+          <a class="lmin-btn primary" href="https://downloads.lustchain.org/lust-v31h2k-miner-ubuntu-FULL.tar.gz" target="_blank" rel="noreferrer">Download Ubuntu TAR.GZ</a>
+          <a class="lmin-btn" href="https://downloads.lustchain.org/lust-v31h2k-miner-ubuntu-FULL.tar.gz.sha256" target="_blank" rel="noreferrer">Ubuntu SHA</a>
         </div>
-        <div class="lmin-mono">Linux geth SHA256: 497c81af52f6cb860574244ca872c201d09c0c75ec09fec699b836bb1775b138</div>
+        <div class="lmin-mono">TAR.GZ SHA256: 7a71e73c7a440f0229b3edf614570e0b495dfd5cea0dc2496935e3aed87227e7</div>
+        <div class="lmin-mono">Linux geth SHA256: aa134062190a49a4c0f87e7464db81f01bcbc28d13894ae9e0ad477cd0090868</div>
       </div>
+    </div>
+
+    <div class="lmin-alert ok"><strong>Verify files:</strong> <a href="https://downloads.lustchain.org/SHA256SUMS-H2K-DOWNLOADS.txt" target="_blank" rel="noreferrer">open SHA256SUMS-H2K-DOWNLOADS.txt</a></div>
+  </section>
+
+  <section class="lmin-section" id="register-active">
+    <div class="lmin-head">
+      <div>
+        <div class="lmin-kicker">Register and activate</div>
+        <h2>Use the same wallet</h2>
+      </div>
+      <p>The wallet used to register/activate must be the same public wallet pasted into the miner.</p>
+    </div>
+
+    <div class="lmin-grid">
+      <div class="lmin-card">
+        <h3>1. Connect wallet</h3>
+        <p>Open the register page, connect MetaMask and switch/add LUST Chain.</p>
+      </div>
+      <div class="lmin-card">
+        <h3>2. Send Register / Active</h3>
+        <p>Confirm the transaction. This tells the chain your wallet wants to participate in public mining.</p>
+      </div>
+      <div class="lmin-card">
+        <h3>3. Start miner</h3>
+        <p>After confirmation, run the miner package and paste the same public wallet address.</p>
+      </div>
+    </div>
+
+    <div class="lmin-actions">
+      <a class="lmin-btn primary" href="https://downloads.lustchain.org/lust-register-miner-v31h2k.html" target="_blank" rel="noreferrer">Open Register / Active</a>
+      <a class="lmin-btn" href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">Open explorer</a>
+    </div>
+  </section>
+
+  <section class="lmin-section" id="windows">
+    <div class="lmin-head">
+      <div>
+        <div class="lmin-kicker">Windows</div>
+        <h2>Windows steps</h2>
+      </div>
+    </div>
+
+    <div class="lmin-grid">
+      <div class="lmin-card lmin-step" data-step="1"><h3>Extract ZIP</h3><p>Extract the H2K ZIP to a clean folder. Do not reuse an old miner folder.</p></div>
+      <div class="lmin-card lmin-step" data-step="2"><h3>Register wallet</h3><p>Run <strong>REGISTER-MINER-WINDOWS.bat</strong> or use the button on this page.</p></div>
+      <div class="lmin-card lmin-step" data-step="3"><h3>Start miner</h3><p>Run <strong>START-LUST-MINER-WINDOWS.bat</strong> and paste only your public 0x wallet.</p></div>
+      <div class="lmin-card lmin-step" data-step="4"><h3>Check status</h3><p>Run <strong>STATUS-LUST-MINER-WINDOWS.bat</strong>. Wait until it shows <strong>SYNCED / MINING ACTIVE</strong>.</p></div>
+      <div class="lmin-card lmin-step" data-step="5"><h3>Stop if needed</h3><p>Run <strong>STOP-LUST-MINER-WINDOWS.bat</strong> to stop the miner.</p></div>
+      <div class="lmin-card lmin-step" data-step="6"><h3>Wrong chain?</h3><p>If Chain ID is not <strong>0x1b0b</strong>, stop and use the H2K package from this page.</p></div>
+    </div>
+  </section>
+
+  <section class="lmin-section" id="ubuntu">
+    <div class="lmin-head">
+      <div>
+        <div class="lmin-kicker">Ubuntu</div>
+        <h2>Ubuntu steps</h2>
+      </div>
+    </div>
+
+    <div class="lmin-grid two">
+      <div class="lmin-card">
+        <h3>Install and start</h3>
+        <p>Extract the package, enter the folder and run the start script.</p>
+        <div class="lmin-mono">tar -xzf lust-v31h2k-miner-ubuntu-FULL.tar.gz<br>cd LUST_V31H2K_UBUNTU_FULL<br>./start-lust-miner-ubuntu.sh</div>
+      </div>
+      <div class="lmin-card">
+        <h3>Status and stop</h3>
+        <p>Use the status script to check sync and mining. Use stop when needed.</p>
+        <div class="lmin-mono">./status-lust-miner-ubuntu.sh<br>./stop-lust-miner-ubuntu.sh</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lmin-section" id="rules">
+    <div class="lmin-head">
+      <div>
+        <div class="lmin-kicker">Shares and rewards</div>
+        <h2>Simple reward rules</h2>
+      </div>
+    </div>
+
+    <div class="lmin-grid">
+      <div class="lmin-card"><h3>1 wallet = 1 chance</h3><p>Mining chance is per registered/active wallet. More CPU/GPU power does not multiply shares.</p></div>
+      <div class="lmin-card"><h3>One public miner</h3><p>If only one public miner is active and produces the block, it receives <strong>2 LST</strong> plus transaction fees.</p></div>
+      <div class="lmin-card"><h3>Two or more public miners</h3><p>The producer receives <strong>70% = 1.4 LST</strong>. Other active public miners share <strong>30% = 0.6 LST</strong>.</p></div>
+      <div class="lmin-card"><h3>Fees</h3><p>Transaction fees go to the block producer. Fees are not shared in the passive 30%.</p></div>
+      <div class="lmin-card"><h3>No public miners</h3><p>prod-1/prod-2 keep the network alive only as emergency producers.</p></div>
+      <div class="lmin-card"><h3>Stay active</h3><p>If your miner/wallet is offline or not active, it may stop participating until you activate again.</p></div>
     </div>
   </section>
 
@@ -245,21 +281,7 @@
       <div class="lmin-card lmin-live"><small>Latest block</small><strong data-live-block>--</strong></div>
       <div class="lmin-card lmin-live"><small>Chain ID</small><strong>0x1b0b</strong></div>
       <div class="lmin-card lmin-live"><small>RPC</small><strong data-live-rpc>checking</strong></div>
-      <div class="lmin-card lmin-live"><small>Register</small><strong><a href="https://downloads.lustchain.org/lust-register-miner-v31.html?v=20260624-v31h2j" target="_blank" rel="noreferrer">open</a></strong></div>
-    </div>
-  </section>
-
-  <section class="lmin-section" id="rules">
-    <div class="lmin-head">
-      <div>
-        <div class="lmin-kicker">Reward rules</div>
-        <h2>How mining rewards work</h2>
-      </div>
-    </div>
-    <div class="lmin-grid">
-      <div class="lmin-card"><h3>No public miners</h3><p>Official emergency producers keep the chain alive.</p></div>
-      <div class="lmin-card"><h3>Public active miners</h3><p>Producer receives 70% and active public participants share 30% when eligible.</p></div>
-      <div class="lmin-card"><h3>Fair chance</h3><p>One registered/active wallet equals one chance. CPU/GPU power does not multiply chances.</p></div>
+      <div class="lmin-card lmin-live"><small>Register</small><strong><a href="https://downloads.lustchain.org/lust-register-miner-v31h2k.html" target="_blank" rel="noreferrer">open</a></strong></div>
     </div>
   </section>
 </main>
@@ -318,7 +340,7 @@
   </div>
 </footer>
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
-<script type="module" src="./app.js?v=20260625-mining-stable-snapshot-clean"></script>
+<script type="module" src="./app.js?v=20260625-mining-h2k-simple"></script>
 <script>
 (async()=>{
   const el=document.querySelector('[data-live-block]');
