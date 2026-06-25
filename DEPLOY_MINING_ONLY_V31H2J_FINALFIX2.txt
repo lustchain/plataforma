@@ -1,0 +1,5 @@
+Deploy only these files if you want minimal site change:
+- mining.html
+- miner-package-hashes.txt
+
+The Windows download URL includes ?v=20260625-finalfix2 to avoid browser cache.

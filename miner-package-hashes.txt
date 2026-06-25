@@ -1,19 +1,10 @@
-LUST Chain V31H2J Final Fix mining package hashes
+LUST V31H2J Final Fix miner package hashes
 
-Windows full ZIP:
-https://downloads.lustchain.org/lust-v31h2j-miner-windows-FULL.zip?v=20260625-finalfix
-SHA256 package: 37ad22ba555518cf70a7562f5f6590d116e741f7e736c254a747106ef8c352e6
+Windows ZIP:
+37ad22ba555518cf70a7562f5f6590d116e741f7e736c254a747106ef8c352e6  lust-v31h2j-miner-windows-FULL.zip
 
-Windows EXE inside package:
-SHA256: b7edfa2b7571c6fb4521c4ba46e34d983f9c8a8d977ca21742364ef413ac9aa8
+Windows EXE:
+b7edfa2b7571c6fb4521c4ba46e34d983f9c8a8d977ca21742364ef413ac9aa8  lust-geth.exe
 
-Ubuntu full miner:
-https://downloads.lustchain.org/lust-v31h2j-miner-ubuntu-FULL.tar.gz
-Linux geth SHA256: 497c81af52f6cb860574244ca872c201d09c0c75ec09fec699b836bb1775b138
-
-Final fix behavior:
-- refuses wrong Chain ID 0x1
-- requires LUST Chain 0x1b0b
-- installs snapshot into correct datadir
-- no gap-based snapshot reset
-- no restart after gap zero
+Linux geth:
+497c81af52f6cb860574244ca872c201d09c0c75ec09fec699b836bb1775b138  lust-geth
