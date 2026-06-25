@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Mining | LUST Platform</title>
-  <meta name="description" content="Official LUST Chain public mining page with H2K Windows and Ubuntu packages, faucet, register and Active/Heartbeat." />
+  <meta name="description" content="Official LUST Chain H2K public mining page with stable snapshot downloads, faucet, wallet register and active heartbeat." />
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
@@ -14,39 +14,29 @@
     .lmin-page{--pink:#f70375;--green:#17d68b;--yellow:#ffd166;--red:#ff526e;--line:rgba(255,255,255,.14);--soft:rgba(255,255,255,.055);--txt:rgba(255,255,255,.78)}
     .lmin-hero{border:1px solid rgba(247,3,117,.45);border-radius:28px;background:radial-gradient(circle at 20% 10%,rgba(247,3,117,.24),transparent 35%),linear-gradient(135deg,rgba(247,3,117,.12),rgba(8,7,14,.98));padding:30px;margin:22px 0 18px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(280px,.70fr);gap:22px;align-items:stretch;max-width:100%;box-sizing:border-box}
     .lmin-kicker{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--pink);font-weight:900;margin-bottom:10px}
-    .lmin-hero h1{font-size:clamp(2.1rem,6vw,4.4rem);line-height:.96;margin:0 0 14px;color:#fff;max-width:760px}
-    .lmin-hero p{font-size:1.04rem;line-height:1.65;color:var(--txt);max-width:760px;margin:0}
+    .lmin-hero h1{font-size:clamp(2.1rem,6vw,4.2rem);line-height:.96;margin:0 0 14px;color:#fff;max-width:780px}
+    .lmin-hero p{font-size:1.04rem;line-height:1.62;color:var(--txt);max-width:780px;margin:0}
     .lmin-chips{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0 2px}
-    .lmin-chip{display:inline-flex!important;align-items:center;justify-content:center;width:auto!important;height:auto!important;min-width:0!important;min-height:0!important;max-width:100%;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);padding:8px 11px;color:#fff;font-weight:900;font-size:.86rem;line-height:1.1;white-space:normal}
+    .lmin-chip{display:inline-flex!important;align-items:center;justify-content:center;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);padding:8px 11px;color:#fff;font-weight:900;font-size:.86rem;line-height:1.1}
     .lmin-chip.ok{border-color:rgba(23,214,139,.55);background:rgba(23,214,139,.12)}
     .lmin-chip.warn{border-color:rgba(255,209,102,.55);background:rgba(255,209,102,.11)}
-    .lmin-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-    .lmin-btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:999px;border:1px solid rgba(255,255,255,.16);padding:12px 16px;background:rgba(255,255,255,.06);color:#fff!important;font-weight:900;line-height:1;transition:.15s ease}
-    .lmin-btn:hover{transform:translateY(-1px);border-color:rgba(247,3,117,.65)}
-    .lmin-btn.primary{background:var(--pink);border-color:var(--pink);box-shadow:0 10px 30px rgba(247,3,117,.22)}
-    .lmin-panel{border:1px solid var(--line);border-radius:22px;background:rgba(0,0,0,.24);padding:18px;min-width:0}
-    .lmin-row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid rgba(255,255,255,.1);padding:10px 0;color:var(--txt)}
-    .lmin-row:last-child{border-bottom:0}.lmin-row strong{color:#fff;text-align:right;word-break:break-word}
-    .lmin-alert{border:1px solid var(--line);border-radius:18px;background:var(--soft);padding:14px 16px;margin:14px 0;color:var(--txt);line-height:1.55}
-    .lmin-alert.ok{border-color:rgba(23,214,139,.5);background:rgba(23,214,139,.08)}.lmin-alert.warn{border-color:rgba(255,209,102,.55);background:rgba(255,209,102,.08)}.lmin-alert.bad{border-color:rgba(255,82,110,.55);background:rgba(255,82,110,.08)}
-    .lmin-section{margin:28px 0}.lmin-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-end;margin-bottom:14px}.lmin-head h2{margin:0;color:#fff;font-size:clamp(1.55rem,3.2vw,2.45rem)}.lmin-head p{margin:6px 0 0;color:rgba(255,255,255,.7);max-width:680px}
+    .lmin-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.lmin-actions.no-top{margin-top:0}
+    .lmin-btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:999px;border:1px solid rgba(255,255,255,.16);padding:12px 16px;background:rgba(255,255,255,.06);color:#fff!important;font-weight:900;line-height:1;transition:.15s ease;cursor:pointer;font-size:.94rem}
+    .lmin-btn:hover{transform:translateY(-1px);border-color:rgba(247,3,117,.65)}.lmin-btn.primary{background:var(--pink);border-color:var(--pink);box-shadow:0 10px 30px rgba(247,3,117,.22)}.lmin-btn.green{background:rgba(23,214,139,.18);border-color:rgba(23,214,139,.55)}.lmin-btn.yellow{background:rgba(255,209,102,.12);border-color:rgba(255,209,102,.45)}
+    .lmin-panel{border:1px solid var(--line);border-radius:22px;background:rgba(0,0,0,.24);padding:18px;min-width:0}.lmin-row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid rgba(255,255,255,.1);padding:10px 0;color:var(--txt)}.lmin-row:last-child{border-bottom:0}.lmin-row strong{color:#fff;text-align:right;word-break:break-word}
+    .lmin-alert{border:1px solid var(--line);border-radius:18px;background:var(--soft);padding:14px 16px;margin:14px 0;color:var(--txt);line-height:1.55}.lmin-alert.ok{border-color:rgba(23,214,139,.5);background:rgba(23,214,139,.08)}.lmin-alert.warn{border-color:rgba(255,209,102,.55);background:rgba(255,209,102,.08)}.lmin-alert.bad{border-color:rgba(255,82,110,.55);background:rgba(255,82,110,.08)}
+    .lmin-section{margin:28px 0}.lmin-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-end;margin-bottom:14px}.lmin-head h2{margin:0;color:#fff;font-size:clamp(1.55rem,3.2vw,2.35rem)}.lmin-head p{margin:6px 0 0;color:rgba(255,255,255,.7);max-width:720px}
     .lmin-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.lmin-grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.lmin-grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
-    .lmin-card{border:1px solid var(--line);border-radius:20px;background:var(--soft);padding:17px;min-width:0}.lmin-card h3{color:#fff;margin:0 0 9px;font-size:1.1rem}.lmin-card p{color:var(--txt);line-height:1.58;margin:0 0 10px}.lmin-card small{color:rgba(255,255,255,.62)}
+    .lmin-card{border:1px solid var(--line);border-radius:20px;background:var(--soft);padding:17px;min-width:0}.lmin-card h3{color:#fff;margin:0 0 9px;font-size:1.1rem}.lmin-card p,.lmin-card li{color:var(--txt);line-height:1.58;margin:0 0 9px}.lmin-card ul{margin:0;padding-left:18px}.lmin-card small{color:rgba(255,255,255,.62)}
     .lmin-step{position:relative;padding-left:58px}.lmin-step:before{content:attr(data-step);position:absolute;left:16px;top:16px;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--pink);color:#fff;font-weight:900}
     .lmin-mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.84rem;word-break:break-all;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px;color:#fff;margin-top:10px}
     .lmin-live strong{font-size:1.3rem;color:#fff;word-break:break-word}.lmin-live small{display:block;margin-bottom:6px}
-
-    .lmin-inline-register{border:1px solid rgba(247,3,117,.45);border-radius:22px;background:rgba(247,3,117,.055);padding:16px;overflow:hidden}
-    .lmin-inline-register .frame-wrap{border:1px solid rgba(255,255,255,.14);border-radius:18px;overflow:hidden;background:#08070e;min-height:720px}
-    .lmin-inline-register iframe{display:block;width:100%;height:760px;border:0;background:#08070e}
-    .lmin-inline-register .mini-actions{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 0}
-    .lmin-inline-register .note{color:rgba(255,255,255,.72);font-size:.94rem;line-height:1.55;margin:0 0 12px}
-
-    @media(max-width:960px){.lmin-hero,.lmin-grid,.lmin-grid.two,.lmin-grid.four{grid-template-columns:1fr}.lmin-head{display:block}.lmin-hero{padding:22px}.lmin-actions{display:grid}.lmin-btn{width:100%}}
+    .lmin-wallet{border:1px solid rgba(247,3,117,.45);border-radius:22px;background:rgba(247,3,117,.055);padding:18px;overflow:hidden}.lmin-wallet-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:14px}.lmin-status{min-height:92px;border:1px solid rgba(255,255,255,.13);border-radius:16px;background:rgba(0,0,0,.28);padding:14px;color:rgba(255,255,255,.78);line-height:1.55;white-space:pre-wrap;word-break:break-word}.lmin-status.ok{border-color:rgba(23,214,139,.45);color:#c9ffe8}.lmin-status.warn{border-color:rgba(255,209,102,.45);color:#fff0bd}.lmin-status.bad{border-color:rgba(255,82,110,.45);color:#ffd1d8}.lmin-form-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:10px}.lmin-wallet-note{color:rgba(255,255,255,.7);font-size:.94rem;line-height:1.55;margin:0 0 12px}
+    @media(max-width:960px){.lmin-hero,.lmin-grid,.lmin-grid.two,.lmin-grid.four,.lmin-wallet-grid,.lmin-form-row{grid-template-columns:1fr}.lmin-head{display:block}.lmin-hero{padding:22px}.lmin-actions{display:grid}.lmin-btn{width:100%}}
   </style>
 </head>
 <body>
-<div class="promo-bar">LUST Chain Mining · H2K active · Windows and Ubuntu downloads · Faucet · Register / Active.</div>
+<div class="promo-bar">LUST Chain Mining · H2K active · Download · Faucet · Register · Active/Heartbeat.</div>
 <header class="topbar">
   <a class="brand" href="./presale.html">
     <div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div>
@@ -78,195 +68,136 @@
   </div>
 </header>
 
-
-
 <main class="wrap page lmin-page">
   <section class="lmin-hero">
     <div>
       <div class="lmin-kicker">LUST Chain public mining</div>
-      <h1>Start mining with H2K</h1>
-      <p>Use only the official <strong>V31H2K</strong> miner packages. First get faucet gas, then register/activate your wallet, then run the miner. Use the same public <strong>0x wallet</strong> in all steps. Never paste your seed phrase or private key.</p>
-
+      <h1>Mine with one wallet, one chance</h1>
+      <p>Use the official H2K miner only. First get faucet gas, then register and activate your wallet on this page. After that, download the miner and start it with the same public 0x wallet.</p>
       <div class="lmin-chips" aria-label="Mining status">
         <span class="lmin-chip ok">H2K active since block 174014</span>
-        <span class="lmin-chip ok">Windows + Ubuntu ready</span>
-        <span class="lmin-chip warn">Do not use old V7A29 / V31 / H2J miners</span>
+        <span class="lmin-chip ok">Register + Active inside this page</span>
+        <span class="lmin-chip warn">Do not use old miners</span>
       </div>
-
       <div class="lmin-actions">
-        <a class="lmin-btn primary" href="https://downloads.lustchain.org/lust-v31h2k-miner-windows-FULL.zip" target="_blank" rel="noreferrer">Download Windows</a>
-        <a class="lmin-btn primary" href="https://downloads.lustchain.org/lust-v31h2k-miner-ubuntu-FULL.tar.gz" target="_blank" rel="noreferrer">Download Ubuntu</a>
-        <a class="lmin-btn" href="https://downloads.lustchain.org/lust-register-miner-v31h2k.html" target="_blank" rel="noreferrer">Register / Active</a>
-        <a class="lmin-btn" href="./faucet.html">Open faucet</a>
+        <a class="lmin-btn primary" href="https://downloads.lustchain.org/lust-v31h2k-miner-windows-FULL.zip?v=h2k-stable-snapshot-20260625-2341" target="_blank" rel="noreferrer">Download Windows</a>
+        <a class="lmin-btn" href="https://downloads.lustchain.org/lust-v31h2k-miner-ubuntu-FULL.tar.gz?v=h2k-stable-snapshot-20260625-2341" target="_blank" rel="noreferrer">Download Ubuntu</a>
+        <a class="lmin-btn" href="./faucet.html">Get faucet gas</a>
+        <a class="lmin-btn" href="#register-active">Register / Active</a>
       </div>
     </div>
-
     <aside class="lmin-panel">
       <div class="lmin-row"><span>Network</span><strong>LUST Chain</strong></div>
       <div class="lmin-row"><span>Chain ID</span><strong>6923 / 0x1b0b</strong></div>
-      <div class="lmin-row"><span>RPC</span><strong>https://rpc.lustchain.org</strong></div>
+      <div class="lmin-row"><span>Mining version</span><strong>V31H2K</strong></div>
       <div class="lmin-row"><span>Registry</span><strong>0x0000000000000000000000000000000000006923</strong></div>
-      <div class="lmin-row"><span>Current miner</span><strong>V31H2K</strong></div>
+      <div class="lmin-row"><span>Status</span><strong>Public mining active</strong></div>
     </aside>
+  <div class="lmin-alert warn"><strong>Windows users:</strong> after the snapshot fix, delete the old downloaded ZIP and the old <span class="lmin-mono" style="display:inline;padding:2px 6px;margin:0">LUST-Miner-H2K</span> folder, then download this package again from this page.</div>
   </section>
 
-  <div class="lmin-alert bad"><strong>Important:</strong> old miner packages are not valid anymore. Do not use V7A29, V7A30, V31, H2C, H2D or H2J. Use only the H2K downloads on this page.</div>
+  <div class="lmin-alert bad"><strong>Important:</strong> do not use V7A29, V31, H2J or any old miner package. Use only the H2K downloads on this page.</div>
 
-  <section class="lmin-section" id="quick-start">
+  <section class="lmin-section" id="register-active">
     <div class="lmin-head">
       <div>
-        <div class="lmin-kicker">Quick start</div>
-        <h2>Do these steps in order</h2>
+        <div class="lmin-kicker">Wallet setup</div>
+        <h2>Register and activate inside this page</h2>
       </div>
-      <p>Mining only works correctly when your wallet has gas and is registered/active on-chain.</p>
+      <p>No iframe and no separate register page. Use the buttons below with the same wallet you will paste into the miner.</p>
     </div>
 
-    <div class="lmin-grid four">
-      <div class="lmin-card lmin-step" data-step="1">
-        <h3>Get faucet gas</h3>
-        <p>Open the faucet and claim a small amount of LST for gas.</p>
-        <a class="lmin-btn" href="./faucet.html">Open faucet</a>
+    <div class="lmin-wallet">
+      <p class="lmin-wallet-note"><strong>Order:</strong> connect wallet → switch to LUST Chain → get faucet gas if needed → register miner → send Active / Heartbeat → start the miner.</p>
+      <div class="lmin-wallet-grid">
+        <div class="lmin-card">
+          <h3>On-chain actions</h3>
+          <div class="lmin-form-row">
+            <button class="lmin-btn" type="button" data-mining-connect>Connect wallet</button>
+            <button class="lmin-btn" type="button" data-mining-switch>Switch/Add LUST</button>
+          </div>
+          <div class="lmin-form-row">
+            <button class="lmin-btn primary" type="button" data-mining-register>Register miner</button>
+            <button class="lmin-btn green" type="button" data-mining-active>Activate / Heartbeat</button>
+          </div>
+          <div class="lmin-form-row">
+            <button class="lmin-btn yellow" type="button" data-mining-check>Check wallet</button>
+            <a class="lmin-btn" href="./faucet.html">Open faucet</a>
+          </div>
+          <p><small>Register and Active / Heartbeat use the official LUST miner registry. Confirm the transaction in your wallet. Never paste seed phrase or private key.</small></p>
+        </div>
+        <div>
+          <div class="lmin-status" data-mining-status>Status: waiting for wallet.</div>
+          <div class="lmin-mono">Registry: 0x0000000000000000000000000000000000006923</div>
+          <div class="lmin-mono">Chain: 6923 / 0x1b0b · RPC: https://rpc.lustchain.org</div>
+        </div>
       </div>
-      <div class="lmin-card lmin-step" data-step="2">
-        <h3>Register / Active</h3>
-        <p>Connect MetaMask and send the Register / Active transaction from your mining wallet.</p>
-        <a class="lmin-btn" href="https://downloads.lustchain.org/lust-register-miner-v31h2k.html" target="_blank" rel="noreferrer">Register / Active</a>
+    </div>
+  </section>
+
+  <section class="lmin-section" id="steps">
+    <div class="lmin-head">
+      <div>
+        <div class="lmin-kicker">Simple flow</div>
+        <h2>How to start mining</h2>
       </div>
-      <div class="lmin-card lmin-step" data-step="3">
-        <h3>Download miner</h3>
-        <p>Choose Windows or Ubuntu. Extract the package to a clean folder.</p>
-        <a class="lmin-btn" href="#downloads">Go to downloads</a>
-      </div>
-      <div class="lmin-card lmin-step" data-step="4">
-        <h3>Start and check</h3>
-        <p>Run the start script, paste only your public 0x wallet, then open the status script.</p>
-        <div class="lmin-mono">Good status: SYNCED / MINING ACTIVE</div>
-      </div>
+    </div>
+    <div class="lmin-grid">
+      <div class="lmin-card lmin-step" data-step="1"><h3>Get gas</h3><p>Open the faucet and claim a small amount of LST for gas.</p><a class="lmin-btn" href="./faucet.html">Open faucet</a></div>
+      <div class="lmin-card lmin-step" data-step="2"><h3>Register</h3><p>Connect the wallet above and click <strong>Register miner</strong>. Wait for confirmation.</p></div>
+      <div class="lmin-card lmin-step" data-step="3"><h3>Activate</h3><p>After register confirms, click <strong>Activate / Heartbeat</strong>. If you change wallet, repeat this flow.</p></div>
+      <div class="lmin-card lmin-step" data-step="4"><h3>Download</h3><p>Download the H2K miner for Windows or Ubuntu. Do not use old folders or old packages.</p></div>
+      <div class="lmin-card lmin-step" data-step="5"><h3>Start miner</h3><p>Start the miner and paste only your public 0x wallet. Use the same wallet that was registered and activated.</p></div>
+      <div class="lmin-card lmin-step" data-step="6"><h3>Check status</h3><p>The status tool should show <strong>Chain ID 0x1b0b</strong>, peers above 0, gap near 0, and <strong>SYNCED / MINING ACTIVE</strong>.</p></div>
     </div>
   </section>
 
   <section class="lmin-section" id="downloads">
     <div class="lmin-head">
       <div>
-        <div class="lmin-kicker">Official downloads</div>
-        <h2>H2K miner packages</h2>
+        <div class="lmin-kicker">Downloads</div>
+        <h2>Official H2K miner packages</h2>
       </div>
-      <p>These are the current official public miner packages for LUST Chain H2K.</p>
+      <p>These are the current public miner packages for LUST Chain H2K.</p>
     </div>
-
     <div class="lmin-grid two">
       <div class="lmin-card">
-        <h3>Windows V31H2K FULL</h3>
-        <p>Complete Windows package with geth, genesis, bootnodes, register page, start, stop and status scripts.</p>
-        <div class="lmin-actions">
-          <a class="lmin-btn primary" href="https://downloads.lustchain.org/lust-v31h2k-miner-windows-FULL.zip" target="_blank" rel="noreferrer">Download Windows ZIP</a>
-          <a class="lmin-btn" href="https://downloads.lustchain.org/lust-v31h2k-miner-windows-FULL.zip.sha256" target="_blank" rel="noreferrer">ZIP SHA</a>
+        <h3>Windows H2K FULL</h3>
+        <p>Full Windows package with geth, stable H2K snapshot, genesis, bootnodes, start, stop, status and register helper.</p>
+        <div class="lmin-actions no-top">
+          <a class="lmin-btn primary" href="https://downloads.lustchain.org/lust-v31h2k-miner-windows-FULL.zip?v=h2k-stable-snapshot-20260625-2341" target="_blank" rel="noreferrer">Download Windows ZIP</a>
+          <a class="lmin-btn" href="https://downloads.lustchain.org/lust-v31h2k-miner-windows-FULL.zip?v=h2k-stable-snapshot-20260625-2341.sha256" target="_blank" rel="noreferrer">Windows SHA</a>
         </div>
-        <div class="lmin-mono">ZIP SHA256: 9ac76c1b10a44d2787bef66ab385719dc26792bbe1102d9c7ade8550f522b13e</div>
+        <div class="lmin-mono">ZIP SHA256: open the Windows SHA button above. The package now uses the fixed H2K stable snapshot.</div>
         <div class="lmin-mono">EXE SHA256: 720e121be64396e3a51ef8b6f86450c804d01a4d66d988adc47302c1d8e15f10</div>
       </div>
-
       <div class="lmin-card">
-        <h3>Ubuntu V31H2K FULL</h3>
-        <p>Complete Ubuntu package with Linux geth, genesis, bootnodes, register page, start, stop and status scripts.</p>
-        <div class="lmin-actions">
-          <a class="lmin-btn primary" href="https://downloads.lustchain.org/lust-v31h2k-miner-ubuntu-FULL.tar.gz" target="_blank" rel="noreferrer">Download Ubuntu TAR.GZ</a>
-          <a class="lmin-btn" href="https://downloads.lustchain.org/lust-v31h2k-miner-ubuntu-FULL.tar.gz.sha256" target="_blank" rel="noreferrer">Ubuntu SHA</a>
+        <h3>Ubuntu H2K FULL</h3>
+        <p>Full Ubuntu package with Linux geth, stable H2K snapshot, genesis, bootnodes, start, stop and status scripts.</p>
+        <div class="lmin-actions no-top">
+          <a class="lmin-btn primary" href="https://downloads.lustchain.org/lust-v31h2k-miner-ubuntu-FULL.tar.gz?v=h2k-stable-snapshot-20260625-2341" target="_blank" rel="noreferrer">Download Ubuntu</a>
+          <a class="lmin-btn" href="https://downloads.lustchain.org/lust-v31h2k-miner-ubuntu-FULL.tar.gz?v=h2k-stable-snapshot-20260625-2341.sha256" target="_blank" rel="noreferrer">Ubuntu SHA</a>
         </div>
-        <div class="lmin-mono">TAR.GZ SHA256: 7a71e73c7a440f0229b3edf614570e0b495dfd5cea0dc2496935e3aed87227e7</div>
+        <div class="lmin-mono">TAR.GZ SHA256: open the Ubuntu SHA button above. The package now uses the fixed H2K stable snapshot.</div>
         <div class="lmin-mono">Linux geth SHA256: aa134062190a49a4c0f87e7464db81f01bcbc28d13894ae9e0ad477cd0090868</div>
       </div>
     </div>
-
-    <div class="lmin-alert ok"><strong>Verify files:</strong> <a href="https://downloads.lustchain.org/SHA256SUMS-H2K-DOWNLOADS.txt" target="_blank" rel="noreferrer">open SHA256SUMS-H2K-DOWNLOADS.txt</a></div>
-  </section>
-
-  <section class="lmin-section" id="register-active">
-    <div class="lmin-head">
-      <div>
-        <div class="lmin-kicker">Register and activate</div>
-        <h2>Use the same wallet</h2>
-      </div>
-      <p>The wallet used to register/activate must be the same public wallet pasted into the miner.</p>
-    </div>
-
-    <div class="lmin-grid">
-      <div class="lmin-card">
-        <h3>1. Connect wallet</h3>
-        <p>Open the register page, connect MetaMask and switch/add LUST Chain.</p>
-      </div>
-      <div class="lmin-card">
-        <h3>2. Send Register / Active</h3>
-        <p>Confirm the transaction. This tells the chain your wallet wants to participate in public mining.</p>
-      </div>
-      <div class="lmin-card">
-        <h3>3. Start miner</h3>
-        <p>After confirmation, run the miner package and paste the same public wallet address.</p>
-      </div>
-    </div>
-
-    <div class="lmin-actions">
-      <a class="lmin-btn primary" href="https://downloads.lustchain.org/lust-register-miner-v31h2k.html" target="_blank" rel="noreferrer">Open Register / Active</a>
-      <a class="lmin-btn" href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">Open explorer</a>
-    </div>
-  </section>
-
-  <section class="lmin-section" id="windows">
-    <div class="lmin-head">
-      <div>
-        <div class="lmin-kicker">Windows</div>
-        <h2>Windows steps</h2>
-      </div>
-    </div>
-
-    <div class="lmin-grid">
-      <div class="lmin-card lmin-step" data-step="1"><h3>Extract ZIP</h3><p>Extract the H2K ZIP to a clean folder. Do not reuse an old miner folder.</p></div>
-      <div class="lmin-card lmin-step" data-step="2"><h3>Register wallet</h3><p>Run <strong>REGISTER-MINER-WINDOWS.bat</strong> or use the button on this page.</p></div>
-      <div class="lmin-card lmin-step" data-step="3"><h3>Start miner</h3><p>Run <strong>START-LUST-MINER-WINDOWS.bat</strong> and paste only your public 0x wallet.</p></div>
-      <div class="lmin-card lmin-step" data-step="4"><h3>Check status</h3><p>Run <strong>STATUS-LUST-MINER-WINDOWS.bat</strong>. Wait until it shows <strong>SYNCED / MINING ACTIVE</strong>.</p></div>
-      <div class="lmin-card lmin-step" data-step="5"><h3>Stop if needed</h3><p>Run <strong>STOP-LUST-MINER-WINDOWS.bat</strong> to stop the miner.</p></div>
-      <div class="lmin-card lmin-step" data-step="6"><h3>Wrong chain?</h3><p>If Chain ID is not <strong>0x1b0b</strong>, stop and use the H2K package from this page.</p></div>
-    </div>
-  </section>
-
-  <section class="lmin-section" id="ubuntu">
-    <div class="lmin-head">
-      <div>
-        <div class="lmin-kicker">Ubuntu</div>
-        <h2>Ubuntu steps</h2>
-      </div>
-    </div>
-
-    <div class="lmin-grid two">
-      <div class="lmin-card">
-        <h3>Install and start</h3>
-        <p>Extract the package, enter the folder and run the start script.</p>
-        <div class="lmin-mono">tar -xzf lust-v31h2k-miner-ubuntu-FULL.tar.gz<br>cd LUST_V31H2K_UBUNTU_FULL<br>./start-lust-miner-ubuntu.sh</div>
-      </div>
-      <div class="lmin-card">
-        <h3>Status and stop</h3>
-        <p>Use the status script to check sync and mining. Use stop when needed.</p>
-        <div class="lmin-mono">./status-lust-miner-ubuntu.sh<br>./stop-lust-miner-ubuntu.sh</div>
-      </div>
-    </div>
+    <div class="lmin-alert ok"><strong>Verification:</strong> full SHA list is available at <a href="https://downloads.lustchain.org/SHA256SUMS-H2K-DOWNLOADS.txt?v=h2k-stable-snapshot-20260625-2341" target="_blank" rel="noreferrer">SHA256SUMS-H2K-DOWNLOADS.txt</a>.</div>
   </section>
 
   <section class="lmin-section" id="rules">
     <div class="lmin-head">
       <div>
         <div class="lmin-kicker">Shares and rewards</div>
-        <h2>Simple reward rules</h2>
+        <h2>How rewards work</h2>
       </div>
     </div>
-
     <div class="lmin-grid">
-      <div class="lmin-card"><h3>1 wallet = 1 chance</h3><p>Mining chance is per registered/active wallet. More CPU/GPU power does not multiply shares.</p></div>
-      <div class="lmin-card"><h3>One public miner</h3><p>If only one public miner is active and produces the block, it receives <strong>2 LST</strong> plus transaction fees.</p></div>
-      <div class="lmin-card"><h3>Two or more public miners</h3><p>The producer receives <strong>70% = 1.4 LST</strong>. Other active public miners share <strong>30% = 0.6 LST</strong>.</p></div>
-      <div class="lmin-card"><h3>Fees</h3><p>Transaction fees go to the block producer. Fees are not shared in the passive 30%.</p></div>
-      <div class="lmin-card"><h3>No public miners</h3><p>prod-1/prod-2 keep the network alive only as emergency producers.</p></div>
-      <div class="lmin-card"><h3>Stay active</h3><p>If your miner/wallet is offline or not active, it may stop participating until you activate again.</p></div>
+      <div class="lmin-card"><h3>One wallet = one chance</h3><p>Each registered and active wallet has one mining chance/share. Stronger CPU or GPU does not multiply your chance.</p></div>
+      <div class="lmin-card"><h3>One public miner</h3><p>If only one public miner is active and produces the block, that miner receives <strong>2 LST</strong> plus transaction fees.</p></div>
+      <div class="lmin-card"><h3>Two or more publics</h3><p>The block producer receives <strong>70% = 1.4 LST</strong>. Other active public miners share <strong>30% = 0.6 LST</strong>. Transaction fees go to the producer.</p></div>
     </div>
+    <div class="lmin-alert warn"><strong>Emergency producers:</strong> prod-1 and prod-2 only keep the chain alive when no public miner is eligible. When public miners are active, they are not the passive 30% public committee.</div>
   </section>
 
   <section class="lmin-section" id="live">
@@ -281,10 +212,11 @@
       <div class="lmin-card lmin-live"><small>Latest block</small><strong data-live-block>--</strong></div>
       <div class="lmin-card lmin-live"><small>Chain ID</small><strong>0x1b0b</strong></div>
       <div class="lmin-card lmin-live"><small>RPC</small><strong data-live-rpc>checking</strong></div>
-      <div class="lmin-card lmin-live"><small>Register</small><strong><a href="https://downloads.lustchain.org/lust-register-miner-v31h2k.html" target="_blank" rel="noreferrer">open</a></strong></div>
+      <div class="lmin-card lmin-live"><small>H2K</small><strong>active</strong></div>
     </div>
   </section>
 </main>
+
 <footer class="footer lust-footer" aria-label="LUST Chain footer">
   <div class="lust-footer__glow" aria-hidden="true"></div>
   <div class="lust-footer__inner">
@@ -302,51 +234,99 @@
         </div>
       </div>
     </section>
-
     <nav class="lust-footer__links" aria-label="Footer navigation">
-      <div>
-        <h2>Platform</h2>
-        <a href="./presale.html">Genesis Presale</a>
-        <a href="./bridge.html">LUSDT Bridge</a>
-        <a href="./swap.html">Swap</a>
-        <a href="./p2p.html">P2P Market</a>
-      </div>
-      <div>
-        <h2>Community</h2>
-        <a href="./mining.html">Mining</a>
-        <a href="./staking.html">Staking</a>
-        <a href="./nfts.html">NFTs</a>
-        <a href="./faucet.html">Gas Faucet</a>
-      </div>
-      <div>
-        <h2>Network</h2>
-        <a href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">Explorer</a>
-        <a href="https://rpc.lustchain.org" target="_blank" rel="noreferrer">RPC</a>
-        <a href="./docs.html">Docs</a>
-        <a href="https://lustchain.org" target="_blank" rel="noreferrer">Main Site</a>
-      </div>
-      <div>
-        <h2>Official</h2>
-        <a href="https://x.com/lust_chain" target="_blank" rel="noreferrer">X / Twitter</a>
-        <a href="https://github.com/lustchain" target="_blank" rel="noreferrer">GitHub</a>
-        <a href="mailto:contact@lustchain.org">contact@lustchain.org</a>
-      </div>
+      <div><h2>Platform</h2><a href="./presale.html">Genesis Presale</a><a href="./bridge.html">LUSDT Bridge</a><a href="./swap.html">Swap</a><a href="./p2p.html">P2P Market</a></div>
+      <div><h2>Community</h2><a href="./mining.html">Mining</a><a href="./staking.html">Staking</a><a href="./nfts.html">NFTs</a><a href="./faucet.html">Gas Faucet</a></div>
+      <div><h2>Network</h2><a href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">Explorer</a><a href="https://rpc.lustchain.org" target="_blank" rel="noreferrer">RPC</a><a href="./docs.html">Docs</a><a href="https://lustchain.org" target="_blank" rel="noreferrer">Main Site</a></div>
+      <div><h2>Official</h2><a href="https://x.com/lust_chain" target="_blank" rel="noreferrer">X / Twitter</a><a href="https://github.com/lustchain" target="_blank" rel="noreferrer">GitHub</a><a href="mailto:contact@lustchain.org">contact@lustchain.org</a></div>
     </nav>
   </div>
-
-  <div class="lust-footer__bottom">
-    <span>© 2026 LUST Chain. Built for public ownership and transparent on-chain activity.</span>
-    <span>X @lust_chain · GitHub lustchain · contact@lustchain.org</span>
-  </div>
+  <div class="lust-footer__bottom"><span>© 2026 LUST Chain. Built for public ownership and transparent on-chain activity.</span><span>X @lust_chain · GitHub lustchain · contact@lustchain.org</span></div>
 </footer>
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
-<script type="module" src="./app.js?v=20260625-mining-h2k-simple"></script>
+<script type="module" src="./app.js?v=20260625-mining-h2k-inline"></script>
 <script>
+const LUST_MINING = {
+  chainId: '0x1b0b',
+  chainName: 'LUST Chain',
+  rpcUrl: 'https://rpc.lustchain.org',
+  explorer: 'https://explorer.lustchain.org',
+  registry: '0x0000000000000000000000000000000000006923',
+  callData: '0x4c5143525f5632'
+};
+const miningStatus = document.querySelector('[data-mining-status]');
+function setMiningStatus(message, type){
+  if(!miningStatus) return;
+  miningStatus.className = 'lmin-status' + (type ? ' ' + type : '');
+  miningStatus.textContent = message;
+}
+function shortAddress(a){return a ? a.slice(0,6)+'...'+a.slice(-4) : '--';}
+function formatWei(hex){
+  try{
+    const wei = BigInt(hex || '0x0');
+    const whole = wei / 1000000000000000000n;
+    const frac = (wei % 1000000000000000000n).toString().padStart(18,'0').slice(0,6);
+    return whole.toString()+'.'+frac+' LST';
+  }catch(e){return '--';}
+}
+async function getAccounts(){
+  if(!window.ethereum) throw new Error('Wallet not found. Install MetaMask or use a browser wallet.');
+  const accounts = await ethereum.request({method:'eth_requestAccounts'});
+  if(!accounts || !accounts[0]) throw new Error('No wallet connected.');
+  return accounts;
+}
+async function switchToLust(){
+  if(!window.ethereum) throw new Error('Wallet not found.');
+  try{
+    await ethereum.request({method:'wallet_switchEthereumChain', params:[{chainId:LUST_MINING.chainId}]});
+  }catch(err){
+    if(err && err.code === 4902){
+      await ethereum.request({method:'wallet_addEthereumChain', params:[{
+        chainId:LUST_MINING.chainId,
+        chainName:LUST_MINING.chainName,
+        nativeCurrency:{name:'LUST',symbol:'LST',decimals:18},
+        rpcUrls:[LUST_MINING.rpcUrl],
+        blockExplorerUrls:[LUST_MINING.explorer]
+      }]});
+    }else{ throw err; }
+  }
+}
+async function checkMiningWallet(){
+  const accounts = await getAccounts();
+  await switchToLust();
+  const account = accounts[0];
+  const chainId = await ethereum.request({method:'eth_chainId'});
+  const balance = await ethereum.request({method:'eth_getBalance', params:[account,'latest']});
+  setMiningStatus('Wallet: '+shortAddress(account)+'\nChain ID: '+chainId+'\nBalance: '+formatWei(balance)+'\nStatus: ready for Register / Active if you have gas.', chainId===LUST_MINING.chainId ? 'ok' : 'warn');
+}
+async function sendMinerRegistryTx(label){
+  try{
+    const accounts = await getAccounts();
+    await switchToLust();
+    const account = accounts[0];
+    setMiningStatus(label+': waiting for wallet confirmation...','warn');
+    const tx = await ethereum.request({method:'eth_sendTransaction', params:[{
+      from: account,
+      to: LUST_MINING.registry,
+      value: '0x0',
+      data: LUST_MINING.callData,
+      gas: '0x249f0'
+    }]});
+    setMiningStatus(label+' sent.\nTx: '+tx+'\nWait for confirmation, then run Check wallet.\nExplorer: '+LUST_MINING.explorer+'/tx/'+tx, 'ok');
+  }catch(err){
+    setMiningStatus(label+' failed or rejected.\n'+(err && err.message ? err.message : String(err)), 'bad');
+  }
+}
+document.querySelector('[data-mining-connect]')?.addEventListener('click', async()=>{try{const a=await getAccounts();setMiningStatus('Connected wallet: '+a[0],'ok')}catch(e){setMiningStatus(e.message,'bad')}});
+document.querySelector('[data-mining-switch]')?.addEventListener('click', async()=>{try{await switchToLust();setMiningStatus('LUST Chain selected: 6923 / 0x1b0b','ok')}catch(e){setMiningStatus(e.message || String(e),'bad')}});
+document.querySelector('[data-mining-register]')?.addEventListener('click', ()=>sendMinerRegistryTx('Register miner'));
+document.querySelector('[data-mining-active]')?.addEventListener('click', ()=>sendMinerRegistryTx('Activate / Heartbeat'));
+document.querySelector('[data-mining-check]')?.addEventListener('click', async()=>{try{await checkMiningWallet()}catch(e){setMiningStatus(e.message || String(e),'bad')}});
 (async()=>{
   const el=document.querySelector('[data-live-block]');
   const rpc=document.querySelector('[data-live-rpc]');
   try{
-    const r=await fetch('https://rpc.lustchain.org',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'eth_blockNumber',params:[]})});
+    const r=await fetch(LUST_MINING.rpcUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'eth_blockNumber',params:[]})});
     const j=await r.json();
     el.textContent=parseInt(j.result,16).toLocaleString('en-US');
     rpc.textContent='online';
