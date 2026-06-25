@@ -1,13 +1,14 @@
-LUST V31H2J Stable Snapshot miner package hashes
+LUST V31H2J stable snapshot miner downloads
 
 Windows ZIP:
-050c855c6edd018e8958a86d64b06bf8c81a45233df90ef8f9c7d916c1f3d4eb  lust-v31h2j-miner-windows-FULL.zip
+https://downloads.lustchain.org/lust-v31h2j-miner-windows-FULL.zip?v=stable-snapshot-171244
+SHA256: 050c855c6edd018e8958a86d64b06bf8c81a45233df90ef8f9c7d916c1f3d4eb
 
-Windows EXE:
-b7edfa2b7571c6fb4521c4ba46e34d983f9c8a8d977ca21742364ef413ac9aa8  lust-geth.exe
+Windows EXE SHA256:
+b7edfa2b7571c6fb4521c4ba46e34d983f9c8a8d977ca21742364ef413ac9aa8
 
-Stable snapshot:
-37a41f0317168ea731f5c23233d0a846b70d9379ea14eeb0a7bced04a57d0aa0  lust-mainnet-snapshot-171244-37a41f0317168ea731f5c23233d0a846b70d9379ea14eeb0a7bced04a57d0aa0.tar.gz
+Stable snapshot block 171244 SHA256:
+37a41f0317168ea731f5c23233d0a846b70d9379ea14eeb0a7bced04a57d0aa0
 
-Linux geth:
-497c81af52f6cb860574244ca872c201d09c0c75ec09fec699b836bb1775b138  lust-geth
+Register / Active embedded page:
+https://downloads.lustchain.org/lust-register-miner-v31.html?v=20260624-v31h2j-inline

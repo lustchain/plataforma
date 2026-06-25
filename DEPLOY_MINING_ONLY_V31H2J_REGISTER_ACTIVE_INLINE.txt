@@ -1,0 +1,1 @@
+Deploy only mining.html and miner-package-hashes.txt if desired. This version embeds Register and Active/Heartbeat inside the mining page via iframe, with fallback link. Windows download uses stable-snapshot-171244.

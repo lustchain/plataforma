@@ -35,6 +35,13 @@
     .lmin-step{position:relative;padding-left:58px}.lmin-step:before{content:attr(data-step);position:absolute;left:16px;top:16px;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--pink);color:#fff;font-weight:900}
     .lmin-mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.84rem;word-break:break-all;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px;color:#fff;margin-top:10px}
     .lmin-live strong{font-size:1.3rem;color:#fff;word-break:break-word}.lmin-live small{display:block;margin-bottom:6px}
+
+    .lmin-inline-register{border:1px solid rgba(247,3,117,.45);border-radius:22px;background:rgba(247,3,117,.055);padding:16px;overflow:hidden}
+    .lmin-inline-register .frame-wrap{border:1px solid rgba(255,255,255,.14);border-radius:18px;overflow:hidden;background:#08070e;min-height:720px}
+    .lmin-inline-register iframe{display:block;width:100%;height:760px;border:0;background:#08070e}
+    .lmin-inline-register .mini-actions{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 0}
+    .lmin-inline-register .note{color:rgba(255,255,255,.72);font-size:.94rem;line-height:1.55;margin:0 0 12px}
+
     @media(max-width:960px){.lmin-hero,.lmin-grid,.lmin-grid.two,.lmin-grid.four{grid-template-columns:1fr}.lmin-head{display:block}.lmin-hero{padding:22px}.lmin-actions{display:grid}.lmin-btn{width:100%}}
   </style>
 </head>
@@ -88,7 +95,7 @@
 
       <div class="lmin-actions">
         <a class="lmin-btn primary" href="https://downloads.lustchain.org/lust-v31h2j-miner-windows-FULL.zip?v=stable-snapshot-171244" target="_blank" rel="noreferrer">Download Windows ZIP</a>
-        <a class="lmin-btn" href="https://downloads.lustchain.org/lust-register-miner-v31.html?v=20260624-v31h2j" target="_blank" rel="noreferrer">Register / Active page</a>
+        <a class="lmin-btn" href="https://downloads.lustchain.org/lust-register-miner-v31.html?v=20260624-v31h2j" target="_blank" rel="noreferrer">Register / Active inside page</a>
         <a class="lmin-btn" href="./faucet.html">Open faucet</a>
       </div>
     </div>
@@ -103,6 +110,29 @@
   </section>
 
   <div class="lmin-alert bad"><strong>Stop if wrong chain.</strong> If the Windows miner shows Chain ID <strong>0x1</strong>, local block <strong>0</strong>, or no peers for a long time, stop the miner and delete the folder. It must show Chain ID <strong>0x1b0b</strong>.</div>
+
+
+  <section class="lmin-section" id="register-active">
+    <div class="lmin-head">
+      <div>
+        <div class="lmin-kicker">On-chain activation</div>
+        <h2>Register and Active / Heartbeat inside this page</h2>
+      </div>
+      <p>Use the same wallet you will paste into the Windows miner. Do Faucet first, then Register, then Active/Heartbeat. Without Active/Heartbeat the miner can sync but may not participate.</p>
+    </div>
+
+    <div class="lmin-inline-register">
+      <p class="note"><strong>Required:</strong> connect the wallet, confirm Register, then confirm Active/Heartbeat. If the embedded frame does not load in your browser, use the fallback button below.</p>
+      <div class="frame-wrap">
+        <iframe src="https://downloads.lustchain.org/lust-register-miner-v31.html?v=20260624-v31h2j-inline" title="LUST miner register and Active Heartbeat" loading="lazy"></iframe>
+      </div>
+      <div class="mini-actions">
+        <a class="lmin-btn primary" href="https://downloads.lustchain.org/lust-register-miner-v31.html?v=20260624-v31h2j-inline" target="_blank" rel="noreferrer">Open Register / Active in new tab</a>
+        <a class="lmin-btn" href="./faucet.html">Open faucet</a>
+        <a class="lmin-btn" href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">Open explorer</a>
+      </div>
+    </div>
+  </section>
 
   <section class="lmin-section" id="required">
     <div class="lmin-head">
