@@ -1,0 +1,14 @@
+Deploy only these files for the LUST mining page stable snapshot update:
+
+- mining.html
+- miner-package-hashes.txt
+
+Do not replace unrelated pages.
+
+Windows download URL:
+https://downloads.lustchain.org/lust-v31h2j-miner-windows-FULL.zip?v=stable-snapshot-171244
+
+Register / Active URL:
+https://downloads.lustchain.org/lust-register-miner-v31.html?v=20260624-v31h2j
+
+This page keeps Faucet, Register and Active/Heartbeat visible and fixes the broken tall chip layout by using unique mining CSS class names.

@@ -1,10 +1,13 @@
-LUST V31H2J Final Fix miner package hashes
+LUST V31H2J Stable Snapshot miner package hashes
 
 Windows ZIP:
-37ad22ba555518cf70a7562f5f6590d116e741f7e736c254a747106ef8c352e6  lust-v31h2j-miner-windows-FULL.zip
+050c855c6edd018e8958a86d64b06bf8c81a45233df90ef8f9c7d916c1f3d4eb  lust-v31h2j-miner-windows-FULL.zip
 
 Windows EXE:
 b7edfa2b7571c6fb4521c4ba46e34d983f9c8a8d977ca21742364ef413ac9aa8  lust-geth.exe
+
+Stable snapshot:
+37a41f0317168ea731f5c23233d0a846b70d9379ea14eeb0a7bced04a57d0aa0  lust-mainnet-snapshot-171244-37a41f0317168ea731f5c23233d0a846b70d9379ea14eeb0a7bced04a57d0aa0.tar.gz
 
 Linux geth:
 497c81af52f6cb860574244ca872c201d09c0c75ec09fec699b836bb1775b138  lust-geth
