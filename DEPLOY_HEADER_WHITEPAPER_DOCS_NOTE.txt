@@ -1,0 +1,1 @@
+Added Whitepaper to the top header navigation on platform pages and upgraded docs.html into a documentation hub. Legal pages remain in the footer only. Deploy the whole folder and hard refresh if cache persists.

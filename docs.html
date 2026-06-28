@@ -8,7 +8,7 @@
     <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-<link rel="stylesheet" href="./styles.css?v=20260628-legal-footer-v1" />
+<link rel="stylesheet" href="./styles.css?v=20260628-header-wp-docs-v2" />
   <!-- Google tag (gtag.js) - GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8N7M5DTF4"></script>
   <script>
@@ -17,6 +17,19 @@
     gtag('js', new Date());
     gtag('config', 'G-Z8N7M5DTF4');
   </script>
+
+  <style>
+    .docs-page{--pink:#f70375;--line:rgba(247,3,117,.28);--soft:rgba(255,255,255,.055);--muted:rgba(255,255,255,.72)}
+    .docs-hero{border:1px solid rgba(247,3,117,.45);border-radius:30px;background:radial-gradient(circle at 18% 8%,rgba(247,3,117,.22),transparent 36%),linear-gradient(135deg,rgba(247,3,117,.08),rgba(6,5,10,.98));padding:30px;margin:22px 0 16px;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:18px;align-items:stretch}
+    .docs-kicker{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--pink);font-weight:900;margin-bottom:10px}
+    .docs-hero h1{margin:0 0 12px;color:#fff;font-size:clamp(2.3rem,6vw,4.8rem);line-height:.92;letter-spacing:-.04em;text-transform:uppercase}.docs-hero h1 span{color:var(--pink);display:block}.docs-hero p{margin:0;color:var(--muted);font-size:1.02rem;line-height:1.65;max-width:820px}
+    .docs-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.docs-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#fff!important;text-decoration:none;font-weight:900}.docs-btn.primary{background:var(--pink);border-color:var(--pink);box-shadow:0 12px 28px rgba(247,3,117,.18)}.docs-btn:hover{transform:translateY(-1px);border-color:rgba(247,3,117,.6)}
+    .docs-panel{border:1px solid rgba(255,255,255,.13);border-radius:24px;background:rgba(0,0,0,.28);padding:18px}.docs-panel h2{margin:0 0 12px;color:#fff;font-size:1rem;letter-spacing:.14em;text-transform:uppercase}.docs-row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.09);color:var(--muted)}.docs-row:last-child{border-bottom:0}.docs-row strong{color:#fff;text-align:right;word-break:break-word}
+    .docs-section{margin:26px 0}.docs-section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:14px}.docs-section-head h2{margin:0;color:#fff;font-size:clamp(1.55rem,3.2vw,2.35rem)}.docs-section-head p{margin:6px 0 0;color:var(--muted);max-width:760px;line-height:1.55}
+    .docs-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.docs-grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.docs-card{border:1px solid var(--line);border-radius:22px;background:var(--soft);padding:18px;min-width:0}.docs-card h3{margin:0 0 8px;color:#fff;font-size:1.08rem}.docs-card p{margin:0 0 12px;color:var(--muted);line-height:1.58}.docs-card a{color:#fff;text-decoration:none;font-weight:900}.docs-card a:hover{color:var(--pink)}.docs-chipline{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.docs-chip{display:inline-flex;border:1px solid rgba(247,3,117,.42);border-radius:999px;padding:7px 10px;color:#fff;font-size:.78rem;font-weight:900;background:rgba(247,3,117,.07)}
+    .docs-address{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.82rem;word-break:break-all;color:#fff;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:9px;margin-top:8px}
+    @media(max-width:980px){.docs-hero,.docs-grid,.docs-grid.two{grid-template-columns:1fr}.docs-actions{display:grid}.docs-btn{width:100%}.docs-section-head{display:block}.docs-hero{padding:22px}}
+  </style>
 </head>
 <body>
 <div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
@@ -51,6 +64,7 @@
       <a class="" href="./staking.html">Staking</a>
       <a class="" href="./factory.html">Factory</a>
       <a class="" href="./explorer.html">Explorer</a>
+    <a class="" href="./whitepaper.html">Whitepaper</a>
       <a class="active" href="./docs.html">Docs</a>
   </nav>
 
@@ -66,9 +80,88 @@
   </div>
 </header>
 
-<main class="wrap page">
-<section class="hero"><div class="kicker">Docs</div><h1>Network details.</h1><p>Official connection details and basic network information for LUST Chain.</p><div class="box"><div class="row"><span>Network name</span><strong>LUST Chain</strong></div><div class="row"><span>Chain ID</span><strong>6923</strong></div><div class="row"><span>Hex Chain ID</span><strong>0x1b0b</strong></div><div class="row"><span>Currency</span><strong>LST</strong></div><div class="row"><span>RPC</span><strong>https://rpc.lustchain.org</strong></div><div class="row"><span>Backup RPC</span><strong>https://rpc-backup.lustchain.org</strong></div><div class="row"><span>Explorer</span><strong>https://explorer.lustchain.org</strong></div></div></section>
+
+<main class="wrap page docs-page">
+  <section class="docs-hero">
+    <div>
+      <div class="docs-kicker">Official Documentation</div>
+      <h1>LUST <span>Docs</span></h1>
+      <p>Official network details, public documents, contract references and user guides for the LUST Chain ecosystem. Whitepaper is available in the header for quick access; legal pages remain in the footer.</p>
+      <div class="docs-actions">
+        <a class="docs-btn primary" href="./whitepaper.html">Read Whitepaper</a>
+        <a class="docs-btn" href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">Open Explorer</a>
+        <a class="docs-btn" href="./faucet.html">Gas Faucet</a>
+      </div>
+    </div>
+    <div class="docs-panel" aria-label="LUST Chain network details">
+      <h2>Network details</h2>
+      <div class="docs-row"><span>Network name</span><strong>LUST Chain</strong></div>
+      <div class="docs-row"><span>Chain ID</span><strong>6923</strong></div>
+      <div class="docs-row"><span>Hex Chain ID</span><strong>0x1b0b</strong></div>
+      <div class="docs-row"><span>Native currency</span><strong>LST</strong></div>
+      <div class="docs-row"><span>Decimals</span><strong>18</strong></div>
+      <div class="docs-row"><span>Primary RPC</span><strong>https://rpc.lustchain.org</strong></div>
+      <div class="docs-row"><span>Backup RPC</span><strong>https://rpc-backup.lustchain.org</strong></div>
+      <div class="docs-row"><span>Explorer</span><strong>https://explorer.lustchain.org</strong></div>
+    </div>
+  </section>
+
+  <section class="docs-section">
+    <div class="docs-section-head">
+      <div>
+        <h2>Protocol documents</h2>
+        <p>Core public documents. The whitepaper is also available in the top header; legal and risk documents stay in the footer as requested.</p>
+      </div>
+    </div>
+    <div class="docs-grid two">
+      <article class="docs-card">
+        <h3><a href="./whitepaper.html">Whitepaper</a></h3>
+        <p>Complete LUST Chain protocol document covering LQC, H3B mining protection, tokenomics, treasury, contracts, staking, bridge, WLST/LUSDT liquidity, NFTs and roadmap.</p>
+        <div class="docs-chipline"><span class="docs-chip">LQC</span><span class="docs-chip">H3B</span><span class="docs-chip">Tokenomics</span><span class="docs-chip">Contracts</span></div>
+      </article>
+      <article class="docs-card">
+        <h3>Legal footer pages</h3>
+        <p>Privacy Policy, Terms and Conditions, and Risk Disclosure are available in the footer on every page so users can access them without crowding the header.</p>
+        <div class="docs-chipline"><span class="docs-chip">Privacy</span><span class="docs-chip">Terms</span><span class="docs-chip">Risk</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="docs-section">
+    <div class="docs-section-head">
+      <div>
+        <h2>User guides</h2>
+        <p>Fast links to the main public modules of the platform.</p>
+      </div>
+    </div>
+    <div class="docs-grid">
+      <article class="docs-card"><h3><a href="./presale.html">Genesis Presale</a></h3><p>Buy LST with LUSDT, understand bonus phases, refunds and WLST/LUSDT liquidity launch rules.</p></article>
+      <article class="docs-card"><h3><a href="./bridge.html">LUSDT Bridge</a></h3><p>Bridge LUSDT between Polygon, BSC and LUST Chain using the official bridge infrastructure.</p></article>
+      <article class="docs-card"><h3><a href="./mining.html">Public Mining</a></h3><p>Learn register, active heartbeat, one-wallet-one-chance, 70/30 rewards, fallback mode and H3B protection.</p></article>
+      <article class="docs-card"><h3><a href="./staking.html">Staking</a></h3><p>Official staking page. Staking opens after liquidity launch and uses a fixed 5,000,000 LST reward reserve.</p></article>
+      <article class="docs-card"><h3><a href="./swap.html">Swap</a></h3><p>WLST/LUSDT swap infrastructure and future ecosystem trading routes.</p></article>
+      <article class="docs-card"><h3><a href="./nfts.html">NFTs</a></h3><p>LUST Rabbit Club, Pioneer Rewards and future NFT community infrastructure.</p></article>
+    </div>
+  </section>
+
+  <section class="docs-section">
+    <div class="docs-section-head">
+      <div>
+        <h2>Core contracts</h2>
+        <p>Important deployed addresses for quick verification. Full explanations are in the whitepaper.</p>
+      </div>
+    </div>
+    <div class="docs-grid two">
+      <article class="docs-card"><h3>LUSDT</h3><p>Official LUSDT token on LUST Chain.</p><div class="docs-address">0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE</div></article>
+      <article class="docs-card"><h3>WLST</h3><p>Wrapped LST for ERC-20 compatible DeFi and swap infrastructure.</p><div class="docs-address">0xF8E57f2ee77B13F6673155308C9c431Ce9F90D86</div></article>
+      <article class="docs-card"><h3>Genesis Liquidity Event</h3><p>Presale and initial WLST/LUSDT liquidity structure.</p><div class="docs-address">0x6AD87104DDC8F7CEd9267F115EE107F44AA9f936</div></article>
+      <article class="docs-card"><h3>Community Staking Vault</h3><p>Fixed 5,000,000 LST staking rewards pool.</p><div class="docs-address">0x300D30d1585BE7865dC5005Eb3C08dd6Ec1C73f1</div></article>
+      <article class="docs-card"><h3>Creator Vesting</h3><p>2,000,000 LST locked for creator vesting, starting only after community launch is set.</p><div class="docs-address">0xDA389505bFCf1e11b894CF0A7Ef0116DbC436e8A</div></article>
+      <article class="docs-card"><h3>Community Treasury</h3><p>Public community treasury and bootstrap/public rewards address.</p><div class="docs-address">0x30aF2866A6e1A193e17a95924C15aA19d13E759F</div></article>
+    </div>
+  </section>
 </main>
+
 
 <footer class="footer lust-footer" aria-label="LUST Chain footer">
   <div class="lust-footer__glow" aria-hidden="true"></div>
