@@ -2262,3 +2262,168 @@ button.btn[disabled], .btn[disabled] {
   }
 }
 
+
+/* LUST Home page v20260628-home-v1
+   Scope: index.html only through .home-* classes. Does not alter dApp scripts/forms. */
+.home-page{
+  width:min(1460px,100%);
+  margin:0 auto;
+  padding:clamp(18px,3vw,38px);
+}
+.home-hero{
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(340px,.65fr);
+  gap:24px;
+  align-items:stretch;
+  min-height:clamp(520px,64vh,720px);
+}
+.home-hero-copy,
+.home-status-card,
+.home-step-card,
+.home-app-card,
+.home-panel,
+.home-contract-strip{
+  border:4px solid rgba(247,3,117,.42);
+  background:radial-gradient(circle at 18% 10%,rgba(247,3,117,.13),rgba(0,0,0,.92) 42%),#050007;
+  box-shadow:0 22px 54px rgba(0,0,0,.34);
+}
+.home-hero-copy{
+  border-radius:34px;
+  padding:clamp(28px,5vw,58px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  overflow:hidden;
+  position:relative;
+}
+.home-hero-copy::after{
+  content:"";
+  position:absolute;
+  inset:auto -8% -42% 18%;
+  height:320px;
+  background:radial-gradient(circle,rgba(247,3,117,.16),transparent 68%);
+  pointer-events:none;
+}
+.home-kicker,
+.home-section-head small,
+.home-panel small,
+.home-status-grid small,
+.home-step-card span,
+.home-app-card small,
+.home-contract-strip small{
+  color:var(--pink2);
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  font-size:12px;
+  font-weight:950;
+}
+.home-hero-copy h1{
+  margin:16px 0 18px;
+  font-size:clamp(46px,7vw,106px);
+  line-height:.9;
+  letter-spacing:-.07em;
+  max-width:980px;
+}
+.home-hero-copy p{
+  margin:0;
+  color:#fff;
+  font-size:clamp(15px,1.4vw,19px);
+  line-height:1.85;
+  max-width:820px;
+}
+.home-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px;position:relative;z-index:1}
+.home-alert{
+  margin-top:22px;
+  max-width:820px;
+  border:2px solid rgba(247,3,117,.36);
+  border-radius:18px;
+  padding:14px 16px;
+  color:#fff;
+  background:rgba(247,3,117,.08);
+  line-height:1.65;
+  position:relative;
+  z-index:1;
+}
+.home-status-card{
+  border-radius:34px;
+  padding:24px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:18px;
+}
+.home-logo-panel{
+  min-height:220px;
+  border:3px solid rgba(247,3,117,.30);
+  border-radius:28px;
+  display:grid;
+  place-items:center;
+  background:radial-gradient(circle at 50% 46%,rgba(247,3,117,.17),rgba(0,0,0,.94) 64%);
+  overflow:hidden;
+}
+.home-logo-panel img{width:min(360px,86%);max-height:220px;object-fit:contain;filter:drop-shadow(0 0 24px rgba(247,3,117,.23))}
+.home-status-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.home-status-grid div,
+.home-token-grid div{
+  border:2px solid rgba(247,3,117,.28);
+  border-radius:18px;
+  padding:14px;
+  background:rgba(255,255,255,.035);
+}
+.home-status-grid strong,
+.home-token-grid strong{
+  display:block;
+  margin:7px 0 5px;
+  color:#fff;
+  font-size:20px;
+}
+.home-status-grid span,
+.home-token-grid span{color:var(--muted);font-size:13px;line-height:1.55}
+.home-start-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:24px}
+.home-step-card{border-radius:28px;padding:22px;display:grid;gap:12px;align-content:start}
+.home-step-card.featured{border-color:rgba(247,3,117,.72);box-shadow:0 0 0 1px rgba(247,3,117,.18),0 24px 60px rgba(247,3,117,.11)}
+.home-step-card h2{margin:0;color:#fff;font-size:28px;letter-spacing:-.03em}
+.home-step-card p{margin:0;color:var(--muted);line-height:1.75}
+.home-step-card .btn{width:max-content;margin-top:4px}
+.home-section-head{text-align:center;max-width:820px;margin:54px auto 22px}
+.home-section-head h2{margin:10px 0 10px;font-size:clamp(34px,5vw,64px);line-height:.96;letter-spacing:-.06em}
+.home-section-head p{margin:0;color:var(--muted);line-height:1.8}
+.home-app-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.home-app-card{min-height:178px;border-radius:26px;padding:18px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .18s ease,border-color .18s ease,background .18s ease}
+.home-app-card:hover{transform:translateY(-2px);border-color:rgba(247,3,117,.78);background:radial-gradient(circle at 20% 10%,rgba(247,3,117,.18),rgba(0,0,0,.92) 48%),#050007}
+.home-app-card.hot{border-color:rgba(247,3,117,.80)}
+.home-app-card.locked{border-style:dashed}
+.home-app-card strong{display:block;color:#fff;font-size:22px;letter-spacing:-.03em;margin:8px 0}
+.home-app-card span{color:var(--muted);line-height:1.65;font-size:14px}
+.home-split{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
+.home-panel{border-radius:30px;padding:24px}
+.home-panel h2{margin:10px 0 18px;font-size:clamp(30px,4vw,50px);line-height:1;letter-spacing:-.06em}
+.home-token-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.home-token-grid strong{font-size:18px;color:var(--pink2)}
+.home-check-list{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:10px}
+.home-check-list li{border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:13px 14px;color:var(--muted);line-height:1.7;background:rgba(255,255,255,.03)}
+.home-check-list strong{color:#fff}
+.home-contract-strip{border-radius:28px;margin-top:22px;padding:16px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.home-contract-strip a{border:1px solid rgba(247,3,117,.25);border-radius:16px;padding:12px;background:rgba(255,255,255,.025);min-width:0}
+.home-contract-strip a:hover{border-color:rgba(247,3,117,.70)}
+.home-contract-strip strong{display:block;margin-top:7px;color:#fff;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:1180px){
+  .home-hero{grid-template-columns:1fr;min-height:0}
+  .home-status-card{display:grid;grid-template-columns:.8fr 1.2fr;align-items:center}
+  .home-logo-panel{min-height:180px}.home-logo-panel img{max-height:180px}
+  .home-app-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .home-contract-strip{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:820px){
+  .home-page{padding:12px}
+  .home-hero-copy,.home-status-card,.home-panel{border-radius:24px;padding:18px}
+  .home-hero-copy h1{font-size:44px}
+  .home-start-grid,.home-split,.home-status-card{grid-template-columns:1fr}
+  .home-app-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .home-contract-strip{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+  .home-actions .btn,.home-step-card .btn{width:100%}
+  .home-app-grid,.home-token-grid,.home-status-grid,.home-contract-strip{grid-template-columns:1fr}
+  .home-app-card{min-height:150px}
+}

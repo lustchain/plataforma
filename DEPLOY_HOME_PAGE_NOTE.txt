@@ -1,0 +1,18 @@
+LUST Platform Home Page Update
+
+Changes:
+- Replaced root index.html redirect with a premium HOME page.
+- Added Home link to public header navigation.
+- Brand/logo now links to ./index.html on public pages.
+- Footer logo now links to ./index.html.
+- Added Home link to Platform column in footer.
+- Kept Privacy Policy, Terms, Risk Disclosure in footer only.
+- Did not change contract logic, dApp JS, presale/mining/staking/swap/bridge functional scripts.
+
+Test after deploy:
+- https://platform.lustchain.org/
+- https://platform.lustchain.org/index.html
+- https://platform.lustchain.org/presale.html
+- https://platform.lustchain.org/docs.html
+
+If the old redirect still appears, clear cache or force refresh (Ctrl+F5).
