@@ -1,0 +1,6 @@
+Footer v8 clean luxury layout:
+- Replaced previous boxed footer with cleaner premium structure.
+- Top row: brand + official socials.
+- Middle row: navigation columns + network quick facts card.
+- Kept Telegram, X, GitHub, email.
+- Footer-only change. No dApp scripts or contract interactions changed.
