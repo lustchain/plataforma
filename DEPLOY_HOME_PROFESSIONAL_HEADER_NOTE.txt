@@ -1,0 +1,8 @@
+HOME professional revision v3:
+- Reworked only index.html HOME content and home-* CSS.
+- Removed unprofessional copy and boxed hero logo.
+- Added professional value proposition, CTA flow, compact hero, product steps and proof blocks.
+- Standardized topbar navigation across public HTML pages with Home, Presale, Bridge, Swap, P2P, NFTs, Mining, Faucet, Staking, Factory, Explorer, Whitepaper and Docs.
+- Legal pages remain linked in footer only.
+- No dApp logic, contract addresses, app.js, bridge/presale/mining/staking scripts changed.
+- CSS cache-bust: styles.css?v=20260628-home-v3-professional.
