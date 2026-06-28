@@ -2159,7 +2159,7 @@ button.btn[disabled], .btn[disabled] {
 }
 .lust-footer__links{
   display:grid;
-  grid-template-columns:repeat(4,minmax(145px,1fr));
+  grid-template-columns:repeat(5,minmax(130px,1fr));
   gap:14px;
   min-width:0;
 }

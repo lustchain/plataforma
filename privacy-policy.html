@@ -1,0 +1,575 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Privacy Policy | LUST Platform</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+      <style>
+        :root {
+          --bg: #000000;
+          --pink: rgb(215, 46, 126);
+          --white: #ffffff;
+          --border: rgba(215, 46, 126, 0.45);
+          --border-strong: rgba(215, 46, 126, 0.72);
+          --shadow: 0 18px 44px rgba(215, 46, 126, 0.18);
+          --font: "Oxanium", sans-serif;
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+          margin: 0;
+          background: var(--bg);
+          color: var(--white);
+          font-family: var(--font);
+          min-height: 100vh;
+        }
+        .lust-doc-shell {
+          width: 100%;
+          padding: 16px;
+          background: #000;
+        }
+        .lust-doc-inner {
+          width: min(1440px, 100%);
+          margin: 0 auto;
+          background: #000;
+          border: 3px solid var(--border);
+          border-radius: 32px;
+          box-shadow: var(--shadow);
+          overflow: hidden;
+        }
+        .lust-doc-header {
+          padding: 28px;
+          background: #000;
+          border-bottom: 3px solid rgba(215, 46, 126, 0.18);
+        }
+        .lust-doc-kicker {
+          display: inline-flex;
+          align-items: center;
+          padding: 9px 14px;
+          border: 3px solid var(--border-strong);
+          border-radius: 999px;
+          color: var(--white);
+          font-size: 11px;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          font-weight: 700;
+        }
+        .lust-doc-hero {
+          display: grid;
+          grid-template-columns: 1.2fr 0.8fr;
+          gap: 24px;
+          margin-top: 20px;
+          align-items: start;
+        }
+        .lust-doc-title h1 {
+          margin: 0;
+          font-size: clamp(42px, 7vw, 84px);
+          line-height: 0.92;
+          letter-spacing: -0.05em;
+          text-transform: uppercase;
+          font-weight: 900;
+          color: var(--white);
+        }
+        .lust-doc-title h1 span {
+          display: block;
+          color: var(--pink);
+        }
+        .lust-doc-title p { color: var(--white);
+          font-size: 15px;
+          line-height: 1.9;
+          max-width: 880px;
+        }
+        .lust-doc-card {
+          background: #000;
+          border: 3px solid var(--border);
+          border-radius: 24px;
+          padding: 18px;
+        }
+        .lust-doc-card h2 { color: var(--white);
+          font-size: 13px;
+          text-transform: uppercase;
+          letter-spacing: 0.16em;
+          font-weight: 800;
+        }
+        .lust-doc-pills {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-bottom: 16px;
+        }
+        .lust-doc-pill {
+          border: 3px solid rgba(215, 46, 126, 0.34);
+          border-radius: 999px;
+          padding: 8px 12px;
+          color: var(--white);
+          font-size: 11px;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          white-space: nowrap;
+          background: #000;
+        }
+        .lust-doc-actions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+        .lust-doc-btn {
+          min-height: 46px;
+          padding: 0 18px;
+          border-radius: 999px;
+          border: 3px solid var(--border-strong);
+          font-family: var(--font);
+          font-size: 12px;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.12em;
+          cursor: pointer;
+          transition: 0.18s ease;
+          background: var(--pink);
+          color: #fff;
+        }
+        .lust-doc-btn:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 10px 24px rgba(215, 46, 126, 0.18);
+        }
+        .lust-doc-body {
+          display: grid;
+          grid-template-columns: 310px minmax(0, 1fr);
+          gap: 22px;
+          padding: 24px 28px 28px;
+        }
+        .lust-doc-nav {
+          position: sticky;
+          top: 12px;
+          align-self: start;
+          background: #000;
+          border: 3px solid var(--border);
+          border-radius: 24px;
+          padding: 18px;
+          max-height: calc(100vh - 40px);
+          overflow: auto;
+        }
+        .lust-doc-nav h3 { color: var(--white);
+          font-size: 12px;
+          text-transform: uppercase;
+          letter-spacing: 0.16em;
+        }
+        .lust-doc-nav ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: grid;
+          gap: 6px;
+        }
+        .lust-doc-nav button {
+          width: 100%;
+          background: transparent;
+          border: 0;
+          border-radius: 12px;
+          padding: 10px 12px;
+          text-align: left;
+          color: var(--white);
+          font-family: var(--font);
+          font-size: 12px;
+          cursor: pointer;
+          transition: 0.18s ease;
+        }
+        .lust-doc-nav button:hover {
+          background: rgba(215, 46, 126, 0.10);
+        }
+        .lust-doc-nav button.active {
+          background: rgba(215, 46, 126, 0.14);
+          color: var(--white);
+          box-shadow: inset 0 0 0 3px rgba(215, 46, 126, 0.34);
+        }
+        .lust-doc-content {
+          background: #000;
+          border: 3px solid var(--border);
+          border-radius: 28px;
+          padding: 24px;
+        }
+        .lust-doc-section { display: none; }
+        .lust-doc-section.active { display: block; }
+        .lust-doc-section h2 {
+          margin: 0 0 12px;
+          color: var(--white);
+          font-size: 32px;
+          line-height: 1.05;
+          letter-spacing: -0.04em;
+          font-weight: 900;
+        }
+        .lust-doc-section h3 { color: var(--white);
+          font-size: 16px;
+          line-height: 1.35;
+          letter-spacing: 0.02em;
+        }
+        .lust-doc-section p,
+        .lust-doc-section li { color: var(--white);
+          font-size: 14px;
+          line-height: 1.95;
+          letter-spacing: 0.01em;
+        }
+        .lust-doc-section p { margin: 0 0 12px; }
+        .lust-doc-section ul,
+        .lust-doc-section ol {
+          margin: 0 0 16px 20px;
+          padding: 0;
+        }
+        .lust-doc-section li + li { margin-top: 6px; }
+        .lust-doc-section strong { color: var(--white); }
+        .lust-doc-section code {
+          display: inline-block;
+          padding: 2px 6px;
+          border-radius: 6px;
+          background: rgba(215, 46, 126, 0.10);
+          color: var(--white);
+        }
+        @media (max-width: 1120px) {
+          .lust-doc-hero,
+          .lust-doc-body { grid-template-columns: 1fr; }
+          .lust-doc-nav { position: relative; top: 0; max-height: none; }
+        }
+        @media (max-width: 720px) {
+          .lust-doc-shell { padding: 8px; }
+          .lust-doc-header,
+          .lust-doc-body { padding-left: 14px; padding-right: 14px; }
+          .lust-doc-header { padding-top: 18px; padding-bottom: 16px; }
+          .lust-doc-content { padding: 16px 14px 20px; border-radius: 22px; }
+          .lust-doc-card,
+          .lust-doc-nav { border-radius: 20px; }
+          .lust-doc-title h1 { font-size: 36px; }
+          .lust-doc-title p,
+          .lust-doc-section p,
+          .lust-doc-section li { font-size: 13px; line-height: 1.85; }
+          .lust-doc-section h2 { font-size: 24px; }
+          .lust-doc-section h3 { font-size: 14px; }
+          .lust-doc-nav button { font-size: 11px; padding: 9px 10px; }
+          .lust-doc-pill { font-size: 10px; padding: 7px 9px; }
+          .lust-doc-actions { flex-direction: column; }
+          .lust-doc-btn { width: 100%; }
+        }
+      </style>
+    
+  <meta name="description" content="Privacy Policy for the official LUST Chain platform and services." />
+  <link rel="icon" href="./assets/favicon.ico">
+  <link rel="icon" type="image/png" href="./assets/favicon.png">
+  <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="./styles.css?v=20260628-legal-footer-v1" />
+  <!-- Google tag (gtag.js) - GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8N7M5DTF4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Z8N7M5DTF4');
+  </script>
+</head>
+    <body>
+<div class="promo-bar">LUST Chain official documents · Transparent rules, risks and protocol information.</div>
+<header class="topbar">
+  <a class="brand" href="./presale.html">
+    <div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div>
+    <div>
+      <strong>LUST</strong>
+      <span>Platform</span>
+    </div>
+  </a>
+  <nav class="nav">
+    <a class="" href="./presale.html">Presale</a>
+    <a class="" href="./bridge.html">Bridge</a>
+    <a class="" href="./swap.html">Swap</a>
+    <a class="" href="./p2p.html">P2P</a>
+    <details class="nav-nft-menu">
+      <summary>NFTs</summary>
+      <div class="nav-nft-dropdown" role="menu" aria-label="NFT collections">
+        <a href="./nfts.html" role="menuitem"><strong>LUST Rabbit Club</strong><span>Premium NFT collection</span></a>
+        <a href="./pioneer.html" role="menuitem"><strong>Pioneer Rewards</strong><span>Free reward campaign</span></a>
+      </div>
+    </details>
+    <a class="" href="./mining.html">Mining</a>
+    <a class="" href="./faucet.html">Faucet</a>
+    <a class="" href="./staking.html">Staking</a>
+    <a class="" href="./factory.html">Factory</a>
+    <a class="" href="./explorer.html">Explorer</a>
+    <a class="" href="./docs.html">Docs</a>
+  </nav>
+  <div class="actions">
+    <button class="btn connect-btn" type="button" data-connect-wallet aria-label="Connect wallet">
+      <div class="connect-icon">◫</div>
+      <div class="connect-copy">
+        <strong>Connect wallet</strong>
+        <span>Wallet not connected</span>
+      </div>
+      <div class="connect-caret">⌄</div>
+    </button>
+  </div>
+</header>
+
+      <section class="lust-doc-shell">
+        <div class="lust-doc-inner">
+          <header class="lust-doc-header">
+            <div class="lust-doc-kicker">PRIVACY POLICY</div>
+            <div class="lust-doc-hero">
+              <div class="lust-doc-title">
+                <h1>LUST <span>Privacy Policy</span></h1>
+                <p>A premium black-and-pink policy presentation for the official LUST Chain service layer, designed in the same visual system as the finished whitepaper: no logo, strong hierarchy, Orbitron typography, premium borders, and clean long-form reading.</p>
+              </div>
+              <div class="lust-doc-card">
+                <h2>Service Layer</h2>
+                <div class="lust-doc-pills">
+                  <span class="lust-doc-pill">Website: lustchain.org</span>
+<span class="lust-doc-pill">Explorer: explorer.lustchain.org</span>
+<span class="lust-doc-pill">RPC: rpc.lustchain.org</span>
+<span class="lust-doc-pill">Backup RPC: rpc-backup.lustchain.org</span>
+<span class="lust-doc-pill">Platform: platform.lustchain.org</span>
+                </div>
+                <div class="lust-doc-actions">
+                  <button type="button" id="lust-doc-copy-btn" class="lust-doc-btn">Copy Policy</button>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <div class="lust-doc-body">
+            <nav class="lust-doc-nav" aria-label="Privacy Policy sections">
+              <h3>Sections</h3>
+              <ul><li><button type="button" data-target="overview" class="active">Overview</button></li>
+<li><button type="button" data-target="scope">1. Scope & Controller</button></li>
+<li><button type="button" data-target="data">2. Data We Collect</button></li>
+<li><button type="button" data-target="use">3. How We Use Data</button></li>
+<li><button type="button" data-target="cookies">4. Cookies & Analytics</button></li>
+<li><button type="button" data-target="onchain">5. On-Chain & Public Data</button></li>
+<li><button type="button" data-target="sharing">6. Sharing & Third Parties</button></li>
+<li><button type="button" data-target="storage">7. Storage, Security & Retention</button></li>
+<li><button type="button" data-target="rights">8. Your Rights & Choices</button></li>
+<li><button type="button" data-target="children">9. Children’s Privacy</button></li>
+<li><button type="button" data-target="changes">10. Changes to this Policy</button></li>
+<li><button type="button" data-target="contact">11. Contact</button></li></ul>
+            </nav>
+
+            <main class="lust-doc-content" id="lust-doc-content">
+              <article id="overview" class="lust-doc-section active">
+  <h2>Overview</h2>
+
+<p>LUST Chain is an experimental, community-driven blockchain project. This Privacy Policy explains how LUST Chain and its related websites and services — including <strong>lustchain.org</strong>, <strong>explorer.lustchain.org</strong>, <strong>rpc.lustchain.org</strong>, <strong>rpc-backup.lustchain.org</strong>, and <strong>platform.lustchain.org</strong> (collectively, the “Services”) — collect, use, and protect information.</p>
+<p>The project aims to collect as little personal data as reasonably possible while still operating, improving, and securing the ecosystem. By using the Services, you agree to the practices described in this Policy.</p>
+
+</article>
+<article id="scope" class="lust-doc-section">
+  <h2>1. Scope & Controller</h2>
+
+<p>This Policy applies to the official LUST Chain website, official explorer, public RPC endpoints, and ecosystem application hub operated under the LUST domains.</p>
+<p>LUST Chain is an open-source, community-first project. Some infrastructure may also be operated by third parties outside core control. This Policy only covers Services directly controlled by the LUST Chain core team.</p>
+<p>For the official Services, the practical data controller is the founder and the small core team coordinating infrastructure and development.</p>
+
+</article>
+<article id="data" class="lust-doc-section">
+  <h2>2. Data We Collect</h2>
+
+<h3>2.1 Information You Provide Voluntarily</h3>
+<ul>
+<li>Emails, support messages, or direct contact requests.</li>
+<li>Builder, contributor, partner, or collaborator applications.</li>
+<li>Any information you choose to submit through official forms or communication channels.</li>
+</ul>
+<h3>2.2 Automatically Collected Information</h3>
+<ul>
+<li>IP address and approximate region derived from IP.</li>
+<li>Browser type, operating system, and basic device information.</li>
+<li>Pages visited, referring URLs, request timing, and basic performance data.</li>
+<li>Technical logs related to explorer usage, RPC requests, security, and uptime.</li>
+</ul>
+<h3>2.3 On-Chain Data</h3>
+<p>Transactions, wallet addresses, contract interactions, and related metadata on LUST Chain are public by design and may be indexed by anyone through explorers, nodes, or third-party analytics.</p>
+
+</article>
+<article id="use" class="lust-doc-section">
+  <h2>3. How We Use Data</h2>
+
+<p>We may use collected information to operate and maintain the Services, monitor uptime and security, detect abuse, improve infrastructure, review contributor applications, respond to support requests, and protect the ecosystem from malicious activity or technical disruption.</p>
+
+</article>
+<article id="cookies" class="lust-doc-section">
+  <h2>4. Cookies & Analytics</h2>
+
+<p>The Services may use cookies or similar technologies to remember basic preferences, support security controls, and measure aggregate usage.</p>
+<p>Privacy-focused analytics tools may be used to understand ecosystem traffic and infrastructure performance while avoiding unnecessary collection of personal data.</p>
+
+</article>
+<article id="onchain" class="lust-doc-section">
+  <h2>5. On-Chain & Public Data</h2>
+
+<p>LUST Chain is a public blockchain. When you broadcast a transaction, your wallet address, amounts, contract calls, and related metadata become public and can be read, indexed, and analyzed by anyone.</p>
+<p>Because blockchain history is generally immutable, the project cannot erase or rewrite confirmed on-chain data.</p>
+
+</article>
+<article id="sharing" class="lust-doc-section">
+  <h2>6. Sharing & Third Parties</h2>
+
+<p>The project may rely on third-party providers for hosting, analytics, delivery, monitoring, or infrastructure support. Wallets, bridges, exchanges, explorers, and dApps that interact with LUST Chain but are not official LUST Services may have separate terms and privacy policies.</p>
+<p>Information may also be disclosed when reasonably necessary for security, legal compliance, or abuse prevention.</p>
+
+</article>
+<article id="storage" class="lust-doc-section">
+  <h2>7. Storage, Security & Retention</h2>
+
+<p>Reasonable technical and organizational measures are used to protect data under official project control. However, no system is perfectly secure, and you remain responsible for protecting your own wallets, devices, private keys, and seed phrases.</p>
+<p>Operational logs and related off-chain data are retained only for as long as reasonably necessary for security, analytics, debugging, legal, or infrastructure purposes.</p>
+
+</article>
+<article id="rights" class="lust-doc-section">
+  <h2>8. Your Rights & Choices</h2>
+
+<p>For off-chain information voluntarily provided to the project, you may request access, correction, or deletion where technically possible.</p>
+<p>On-chain data cannot generally be modified or deleted because it is public and immutable by design.</p>
+
+</article>
+<article id="children" class="lust-doc-section">
+  <h2>9. Children’s Privacy</h2>
+
+<p>The Services are not directed to children under the age required by local law to provide valid consent to data processing. If you believe that a child has submitted personal information through official channels, contact the project so the matter can be reviewed.</p>
+
+</article>
+<article id="changes" class="lust-doc-section">
+  <h2>10. Changes to this Policy</h2>
+
+<p>This Privacy Policy may be updated from time to time to reflect changes in the project, infrastructure, legal obligations, or ecosystem structure. Continued use of the Services after an update means you accept the revised Policy.</p>
+
+</article>
+<article id="contact" class="lust-doc-section">
+  <h2>11. Contact</h2>
+
+<ul>
+<li><strong>Website:</strong> https://lustchain.org</li>
+<li><strong>Explorer:</strong> https://explorer.lustchain.org</li>
+<li><strong>Platform:</strong> https://platform.lustchain.org</li>
+</ul>
+<p>Because LUST Chain is a community-driven project, response times may vary, but reasonable privacy-related requests will be reviewed in good faith.</p>
+
+</article>
+            </main>
+          </div>
+        </div>
+      </section>
+
+      <script>
+        (function () {
+          var navButtons = document.querySelectorAll(".lust-doc-nav button[data-target]");
+          var sections = document.querySelectorAll(".lust-doc-section");
+
+          function setActive(targetId) {
+            sections.forEach(function (sec) {
+              sec.classList.toggle("active", sec.id === targetId);
+            });
+            navButtons.forEach(function (btn) {
+              btn.classList.toggle("active", btn.getAttribute("data-target") === targetId);
+            });
+          }
+
+          navButtons.forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              var target = btn.getAttribute("data-target");
+              if (target) setActive(target);
+            });
+          });
+
+          var copyBtn = document.getElementById("lust-doc-copy-btn");
+          if (copyBtn) {
+            copyBtn.addEventListener("click", function () {
+              var content = document.getElementById("lust-doc-content");
+              if (!content) return;
+
+              var range = document.createRange();
+              range.selectNodeContents(content);
+
+              var selection = window.getSelection();
+              selection.removeAllRanges();
+              selection.addRange(range);
+
+              var ok = false;
+              try {
+                ok = document.execCommand("copy");
+              } catch (e) {
+                ok = false;
+              }
+              selection.removeAllRanges();
+
+              var old = copyBtn.textContent;
+              copyBtn.textContent = ok ? "COPIED ✔" : "COPY ERROR";
+              setTimeout(function () {
+                copyBtn.textContent = old;
+              }, 2000);
+            });
+          }
+        })();
+      </script>
+    <footer class="footer lust-footer" aria-label="LUST Chain footer">
+  <div class="lust-footer__glow" aria-hidden="true"></div>
+  <div class="lust-footer__inner">
+    <section class="lust-footer__brand" aria-label="LUST Chain summary">
+      <a class="lust-footer__logo" href="./presale.html" aria-label="LUST Chain home">
+        <img src="./assets/lust-logo.png" alt="LUST Chain logo" loading="lazy" />
+      </a>
+      <div>
+        <strong>LUST Chain</strong>
+        <p>Independent L1 for LST, LUSDT, NFTs, swap, P2P and community mining.</p>
+        <div class="lust-footer__badges" aria-label="Network details">
+          <span>Chain ID 6923</span>
+          <span>Native LST</span>
+          <span>LQC Network</span>
+        </div>
+      </div>
+    </section>
+
+    <nav class="lust-footer__links" aria-label="Footer navigation">
+      <div>
+        <h2>Platform</h2>
+        <a href="./presale.html">Genesis Presale</a>
+        <a href="./bridge.html">LUSDT Bridge</a>
+        <a href="./swap.html">Swap</a>
+        <a href="./p2p.html">P2P Market</a>
+      </div>
+      <div>
+        <h2>Community</h2>
+        <a href="./mining.html">Mining</a>
+        <a href="./staking.html">Staking</a>
+        <a href="./nfts.html">NFTs</a>
+        <a href="./faucet.html">Gas Faucet</a>
+      </div>
+      <div>
+        <h2>Network</h2>
+        <a href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">Explorer</a>
+        <a href="https://rpc.lustchain.org" target="_blank" rel="noreferrer">RPC</a>
+        <a href="https://rpc-backup.lustchain.org" target="_blank" rel="noreferrer">Backup RPC</a>
+        <a href="./docs.html">Docs</a>
+        <a href="https://lustchain.org" target="_blank" rel="noreferrer">Main Site</a>
+      </div>
+      <div>
+        <h2>Legal</h2>
+        <a href="./whitepaper.html">Whitepaper</a>
+        <a href="./privacy-policy.html">Privacy Policy</a>
+        <a href="./terms-and-conditions.html">Terms and Conditions</a>
+        <a href="./risk-disclosure.html">Risk Disclosure</a>
+      </div>
+      <div>
+        <h2>Official</h2>
+        <a href="https://x.com/lust_chain" target="_blank" rel="noreferrer">X / Twitter</a>
+        <a href="https://github.com/lustchain" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="mailto:contact@lustchain.org">contact@lustchain.org</a>
+      </div>
+    </nav>
+  </div>
+
+  <div class="lust-footer__bottom">
+    <span>© 2026 LUST Chain. Built for public ownership and transparent on-chain activity.</span>
+    <span>X @lust_chain · GitHub lustchain · contact@lustchain.org</span>
+  </div>
+</footer>
+<button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
+<script type="module" src="./app.js?v20260613-lustswap-v1"></script>
+<script src="./nft-menu.js?v=20260616-hover-v5"></script>
+</body>
+    </html>

@@ -1,0 +1,12 @@
+LUST platform update: whitepaper and legal footer pages added.
+
+Added root files:
+- whitepaper.html
+- privacy-policy.html
+- terms-and-conditions.html
+- risk-disclosure.html
+
+Footer updated on all existing pages that already had the LUST premium footer.
+Legal column contains: Whitepaper, Privacy Policy, Terms and Conditions, Risk Disclosure.
+
+No page scripts or working contract logic were changed. Only footer markup, footer CSS column layout, cache-busted styles.css link, and the new static document pages were added.

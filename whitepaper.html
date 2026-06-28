@@ -8,7 +8,7 @@
   <link rel="icon" href="./assets/favicon.ico">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="./styles.css?v=20260628-whitepaper-v1" />
+  <link rel="stylesheet" href="./styles.css?v=20260628-legal-footer-v1" />
   <!-- Google tag (gtag.js) - GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8N7M5DTF4"></script>
   <script>
@@ -17,8 +17,7 @@
     gtag('js', new Date());
     gtag('config', 'G-Z8N7M5DTF4');
   </script>
-  <style>
-
+<style>
     :root {
       --bg: #000000;
       --card: #07070c;
@@ -90,15 +89,15 @@
       .wp-shell { padding: 8px; } .wp-header, .wp-body { padding-left: 14px; padding-right: 14px; } .wp-header { padding-top: 16px; padding-bottom: 14px; } .wp-content { padding: 16px 14px 20px; border-radius: 22px; } .wp-card, .wp-nav { border-radius: 20px; } .wp-title h1 { font-size: 38px; } .wp-title p, .lust-wp-section p, .lust-wp-section li { font-size: 13px; line-height: 1.82; } .lust-wp-section h2 { font-size: 26px; } .lust-wp-section h3 { font-size: 15px; } .wp-nav button { font-size: 11px; padding: 9px 10px; } .wp-pill { font-size: 10px; padding: 7px 9px; } .wp-stats { grid-template-columns: 1fr 1fr; }
       table.wp-table { min-width: 680px; } .wp-logo-badge { width: 54px; height: 54px; }
     }
-  
-  
+  </style>
+  <style>
     .lust-whitepaper-page { max-width: 1480px; }
     .lust-whitepaper-page .wp-shell { padding-left: 0; padding-right: 0; }
     @media (max-width: 720px) { .lust-whitepaper-page { padding-left: 8px; padding-right: 8px; } }
   </style>
 </head>
 <body>
-<div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
+<div class="promo-bar">LUST Chain official documents · Transparent rules, risks and protocol information.</div>
 <header class="topbar">
   <a class="brand" href="./presale.html">
     <div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div>
@@ -107,32 +106,25 @@
       <span>Platform</span>
     </div>
   </a>
-    <nav class="nav">
-      <a class="" href="./presale.html">Presale</a>
-      <a class="" href="./bridge.html">Bridge</a>
-      <a class="" href="./swap.html">Swap</a>
-      <a class="" href="./p2p.html">P2P</a>
-      <details class="nav-nft-menu">
-
-              <summary>NFTs</summary>
-
-              <div class="nav-nft-dropdown" role="menu" aria-label="NFT collections">
-
-                <a href="./nfts.html" role="menuitem"><strong>LUST Rabbit Club</strong><span>Premium NFT collection</span></a>
-
-                <a href="./pioneer.html" role="menuitem"><strong>Pioneer Rewards</strong><span>Free reward campaign</span></a>
-
-              </div>
-
-            </details>
-      <a class="" href="./mining.html">Mining</a>
-      <a class="" href="./faucet.html">Faucet</a>
-      <a class="" href="./staking.html">Staking</a>
-      <a class="" href="./factory.html">Factory</a>
-      <a class="" href="./explorer.html">Explorer</a>
-      <a class="" href="./docs.html">Docs</a>
+  <nav class="nav">
+    <a class="" href="./presale.html">Presale</a>
+    <a class="" href="./bridge.html">Bridge</a>
+    <a class="" href="./swap.html">Swap</a>
+    <a class="" href="./p2p.html">P2P</a>
+    <details class="nav-nft-menu">
+      <summary>NFTs</summary>
+      <div class="nav-nft-dropdown" role="menu" aria-label="NFT collections">
+        <a href="./nfts.html" role="menuitem"><strong>LUST Rabbit Club</strong><span>Premium NFT collection</span></a>
+        <a href="./pioneer.html" role="menuitem"><strong>Pioneer Rewards</strong><span>Free reward campaign</span></a>
+      </div>
+    </details>
+    <a class="" href="./mining.html">Mining</a>
+    <a class="" href="./faucet.html">Faucet</a>
+    <a class="" href="./staking.html">Staking</a>
+    <a class="" href="./factory.html">Factory</a>
+    <a class="" href="./explorer.html">Explorer</a>
+    <a class="" href="./docs.html">Docs</a>
   </nav>
-
   <div class="actions">
     <button class="btn connect-btn" type="button" data-connect-wallet aria-label="Connect wallet">
       <div class="connect-icon">◫</div>
@@ -912,8 +904,24 @@
       </div>
     </div>
   </section>
-</main>
 
+  <script>
+    (function () {
+      const buttons = document.querySelectorAll(".wp-nav button[data-target]");
+      const sections = document.querySelectorAll(".lust-wp-section");
+      function setActive(targetId) {
+        sections.forEach((sec) => sec.classList.toggle("active", sec.id === targetId));
+        buttons.forEach((btn) => btn.classList.toggle("active", btn.getAttribute("data-target") === targetId));
+      }
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const target = btn.getAttribute("data-target");
+          if (target) setActive(target);
+        });
+      });
+    })();
+  </script>
+</main>
 <footer class="footer lust-footer" aria-label="LUST Chain footer">
   <div class="lust-footer__glow" aria-hidden="true"></div>
   <div class="lust-footer__inner">
@@ -951,9 +959,16 @@
         <h2>Network</h2>
         <a href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">Explorer</a>
         <a href="https://rpc.lustchain.org" target="_blank" rel="noreferrer">RPC</a>
+        <a href="https://rpc-backup.lustchain.org" target="_blank" rel="noreferrer">Backup RPC</a>
         <a href="./docs.html">Docs</a>
-        <a href="./whitepaper.html">Whitepaper</a>
         <a href="https://lustchain.org" target="_blank" rel="noreferrer">Main Site</a>
+      </div>
+      <div>
+        <h2>Legal</h2>
+        <a href="./whitepaper.html">Whitepaper</a>
+        <a href="./privacy-policy.html">Privacy Policy</a>
+        <a href="./terms-and-conditions.html">Terms and Conditions</a>
+        <a href="./risk-disclosure.html">Risk Disclosure</a>
       </div>
       <div>
         <h2>Official</h2>
@@ -969,26 +984,24 @@
     <span>X @lust_chain · GitHub lustchain · contact@lustchain.org</span>
   </div>
 </footer>
-
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
-
 <script type="module" src="./app.js?v20260613-lustswap-v1"></script>
 <script src="./nft-menu.js?v=20260616-hover-v5"></script>
 <script>
 (function () {
-      const buttons = document.querySelectorAll(".wp-nav button[data-target]");
-      const sections = document.querySelectorAll(".lust-wp-section");
-      function setActive(targetId) {
-        sections.forEach((sec) => sec.classList.toggle("active", sec.id === targetId));
-        buttons.forEach((btn) => btn.classList.toggle("active", btn.getAttribute("data-target") === targetId));
-      }
-      buttons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const target = btn.getAttribute("data-target");
-          if (target) setActive(target);
-        });
-      });
-    })();
+  const buttons = document.querySelectorAll(".wp-nav button[data-target]");
+  const sections = document.querySelectorAll(".lust-wp-section");
+  function setActive(targetId) {
+    sections.forEach((sec) => sec.classList.toggle("active", sec.id === targetId));
+    buttons.forEach((btn) => btn.classList.toggle("active", btn.getAttribute("data-target") === targetId));
+  }
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const target = btn.getAttribute("data-target");
+      if (target) setActive(target);
+    });
+  });
+})();
 </script>
 </body>
 </html>
