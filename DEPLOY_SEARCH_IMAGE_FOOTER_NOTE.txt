@@ -1,0 +1,5 @@
+Updated package:
+- Replaced social/SEO search preview image with the user-provided LUST Chain lounge image (cropped to 1200x630) at assets/lust-og-search.jpg and updated og/twitter tags.
+- Refined footer alignment and page grouping.
+- Refreshed favicon and touch/android icons using a transparent explorer-style logo for better browser-tab visibility.
+Force refresh after deploy if browser cache keeps old meta image, footer CSS or favicon.

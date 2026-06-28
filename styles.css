@@ -2962,3 +2962,52 @@ button.btn[disabled], .btn[disabled] {
   .lust-footer__brand strong{font-size:25px;}
   .back-to-top{right:16px !important;bottom:16px !important;width:44px !important;height:44px !important;border-radius:16px !important;}
 }
+
+/* LUST footer refinement v20260628-v7
+   Appended only. Improves alignment and keeps current pages intact. */
+.lust-footer__inner{
+  width:min(1280px, 94vw) !important;
+  grid-template-columns:minmax(320px,1.08fr) minmax(0,1.28fr) !important;
+  gap:26px !important;
+  align-items:start !important;
+}
+.lust-footer__brand{
+  grid-template-columns:86px minmax(0,1fr) !important;
+  gap:18px !important;
+}
+.lust-footer__logo{width:86px !important;height:86px !important;align-self:start !important;}
+.lust-footer__logo img{width:86px !important;height:86px !important;filter:drop-shadow(0 0 16px rgba(247,3,117,.2)) !important;}
+.lust-footer__brand strong{font-size:32px !important;}
+.lust-footer__brand p{max-width:540px !important;font-size:14px !important;line-height:1.7 !important;}
+.lust-footer__badges{margin-top:14px !important;}
+.lust-footer__badges span{padding:9px 13px !important;}
+.lust-footer__socials{margin-top:14px !important;gap:10px !important;}
+.lust-footer__social{min-height:42px !important;padding:0 14px !important;background:rgba(255,255,255,.05) !important;border-color:rgba(255,255,255,.12) !important;}
+.lust-footer__social span{white-space:nowrap;}
+.lust-footer__links{
+  grid-template-columns:repeat(4, minmax(0, 1fr)) !important;
+  gap:14px !important;
+  align-items:stretch !important;
+}
+.lust-footer__links > div{
+  display:flex !important;
+  flex-direction:column !important;
+  min-height:238px !important;
+  justify-content:flex-start !important;
+  padding:18px 18px 16px !important;
+}
+.lust-footer__links h2{margin-bottom:10px !important;}
+.lust-footer__links a{font-size:14px !important;padding:7px 0 7px 14px !important;}
+.lust-footer__bottom{width:min(1280px,94vw) !important;padding:16px 0 22px !important;}
+@media(max-width:1120px){
+  .lust-footer__inner{grid-template-columns:1fr !important;}
+  .lust-footer__links{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+}
+@media(max-width:760px){
+  .lust-footer__brand{grid-template-columns:1fr !important;}
+  .lust-footer__logo{width:74px !important;height:74px !important;}
+  .lust-footer__logo img{width:74px !important;height:74px !important;}
+  .lust-footer__links{grid-template-columns:1fr !important;}
+  .lust-footer__links > div{min-height:0 !important;}
+}
+
