@@ -1,0 +1,1 @@
+This package overwrites assets/lust-og.png itself with the new user-provided image preview, so https://platform.lustchain.org/assets/lust-og.png should change directly after deploy. It also updates all OG/Twitter meta tags to use lust-og.png, and refines footer alignment. If old image appears, deployment did not replace the file or browser/CDN cache is serving old asset.
