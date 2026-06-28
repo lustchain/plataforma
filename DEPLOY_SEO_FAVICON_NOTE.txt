@@ -1,0 +1,6 @@
+SEO and favicon update:
+- Explorer-style transparent favicon from LUST logo.
+- Added Open Graph/Twitter image at /assets/lust-og.png.
+- Added title, meta description, canonical, robots, Open Graph, Twitter Card, theme-color, manifest and JSON-LD to public pages.
+- Added robots.txt and sitemap.xml at site root.
+- Submit https://platform.lustchain.org/sitemap.xml in Google Search Console after deployment.
