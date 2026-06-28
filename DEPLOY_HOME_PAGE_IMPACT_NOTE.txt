@@ -1,0 +1,1 @@
+Updated HOME only: removed boxed hero logo, made hero more compact and impactful, added sensual black/pink distribution, preserved all existing pages and functionality. Force refresh after deploy if CSS cache persists.

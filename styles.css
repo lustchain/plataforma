@@ -2427,3 +2427,204 @@ button.btn[disabled], .btn[disabled] {
   .home-app-grid,.home-token-grid,.home-status-grid,.home-contract-strip{grid-template-columns:1fr}
   .home-app-card{min-height:150px}
 }
+
+/* LUST Home page v20260628-home-v2-impact
+   Home-only visual upgrade: removes boxed hero logo, reduces empty space,
+   adds more sensual/impactful layout while preserving the rest of the site. */
+.home-hero{
+  grid-template-columns:minmax(0,1.12fr) minmax(360px,.88fr);
+  gap:20px;
+  min-height:0;
+  align-items:stretch;
+}
+.home-hero-copy,
+.home-status-card{
+  position:relative;
+  overflow:hidden;
+}
+.home-hero-copy{
+  padding:clamp(26px,4vw,42px);
+  justify-content:flex-start;
+  gap:0;
+}
+.home-hero-copy::before{
+  content:"";
+  position:absolute;
+  inset:-30% auto auto -12%;
+  width:360px;
+  height:360px;
+  background:radial-gradient(circle, rgba(247,3,117,.17), transparent 68%);
+  pointer-events:none;
+}
+.home-hero-copy::after{
+  inset:auto -12% -46% 18%;
+  height:280px;
+}
+.home-title-stack{
+  position:relative;
+  z-index:1;
+  margin-top:10px;
+  margin-bottom:8px;
+}
+.home-title-stack h1{
+  margin:0;
+  font-size:clamp(56px,8vw,110px);
+  line-height:.84;
+  letter-spacing:-.08em;
+}
+.home-title-stack h1 span{
+  display:block;
+  color:#fff;
+}
+.home-title-stack h1{color:var(--pink2)}
+.home-lead{
+  margin:18px 0 0 !important;
+  color:#ffd7e9 !important;
+  font-size:clamp(15px,1.55vw,20px) !important;
+  line-height:1.7 !important;
+  max-width:720px !important;
+}
+.home-hero-copy > p:last-of-type{
+  max-width:760px;
+}
+.home-feature-pills{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:18px;
+  position:relative;
+  z-index:1;
+}
+.home-feature-pills span,
+.home-mini-badge{
+  display:inline-flex;
+  align-items:center;
+  min-height:40px;
+  padding:0 14px;
+  border:2px solid rgba(247,3,117,.34);
+  border-radius:999px;
+  background:rgba(255,255,255,.03);
+  color:#fff;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.home-status-card{
+  padding:22px;
+  gap:16px;
+  border-radius:34px;
+}
+.home-card-watermark{
+  position:absolute;
+  right:-40px;
+  top:-12px;
+  width:240px;
+  opacity:.12;
+  pointer-events:none;
+  filter:drop-shadow(0 0 24px rgba(247,3,117,.18));
+}
+.home-card-watermark img{width:100%;height:auto;display:block}
+.home-card-top{
+  position:relative;
+  z-index:1;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+}
+.home-card-top h2{
+  margin:8px 0 0;
+  font-size:clamp(24px,3vw,38px);
+  line-height:1;
+  letter-spacing:-.05em;
+}
+.home-card-flow{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  position:relative;
+  z-index:1;
+}
+.home-card-flow div{
+  border:2px solid rgba(247,3,117,.22);
+  border-radius:18px;
+  padding:14px 12px;
+  background:rgba(255,255,255,.03);
+  min-width:0;
+}
+.home-card-flow span{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  background:rgba(247,3,117,.18);
+  color:var(--pink2);
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+.home-card-flow strong{
+  display:block;
+  color:#fff;
+  font-size:15px;
+  margin-bottom:5px;
+}
+.home-card-flow small{
+  display:block;
+  color:var(--muted);
+  line-height:1.55;
+  text-transform:none;
+  letter-spacing:.01em;
+  font-size:12px;
+  font-weight:600;
+}
+.home-card-actions{
+  display:flex;
+  gap:10px;
+  position:relative;
+  z-index:1;
+}
+.home-card-actions .btn{flex:1;justify-content:center}
+.home-logo-panel{display:none !important}
+.home-status-grid{
+  position:relative;
+  z-index:1;
+  gap:12px;
+}
+.home-start-grid{
+  margin-top:18px;
+}
+.home-step-card,
+.home-app-card,
+.home-panel{
+  backdrop-filter:blur(4px);
+}
+.home-step-card{
+  min-height:210px;
+}
+.home-app-card{
+  min-height:164px;
+}
+.home-section-head{
+  margin:42px auto 18px;
+}
+.home-section-head h2{
+  margin:8px 0 8px;
+}
+@media(max-width:1180px){
+  .home-status-card{
+    display:flex;
+  }
+  .home-card-flow{grid-template-columns:repeat(3,minmax(0,1fr));}
+}
+@media(max-width:820px){
+  .home-hero-copy{padding:20px}
+  .home-title-stack h1{font-size:48px}
+  .home-feature-pills span,
+  .home-mini-badge{font-size:10px;letter-spacing:.09em;padding:0 12px;min-height:36px}
+  .home-card-flow{grid-template-columns:1fr}
+  .home-card-actions{flex-direction:column}
+}
