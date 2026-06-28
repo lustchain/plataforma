@@ -1,0 +1,1 @@
+Footer upgraded with cleaner professional layout, social icons, Telegram link, logo without square frame, and refreshed favicon/apple icons. Force refresh after deploy if footer or favicon cache persists.
