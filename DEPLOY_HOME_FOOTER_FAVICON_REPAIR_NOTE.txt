@@ -1,0 +1,8 @@
+LUST Platform repair package 2026-06-28:
+- Started from stable HOME professional package, not the broken footer-only package.
+- Kept HOME CSS intact; this fixes the unstyled HOME/large-logo issue.
+- Footer upgraded with cleaner premium layout, social icon pills, Telegram, X, GitHub and Email.
+- Footer logo no longer has a square/card around it.
+- Back-to-top button redesigned as a smaller premium floating control.
+- Favicon rebuilt as a high-contrast circular X icon for better browser-tab visibility.
+- CSS and favicon cache-busting updated. Use Ctrl+F5 after deploy if cache persists.
