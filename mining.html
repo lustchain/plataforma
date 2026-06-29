@@ -382,7 +382,7 @@
   </div>
 </footer>
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
-<script type="module" src="./app.js?v=20260628-mining-h3b-downloads"></script>
+<script type="module" src="./app.js?v=20260629-mining-h3b-register-fix"></script>
 <script>
 const LUST_MINING = {
   chainId: '0x1b0b',
@@ -390,7 +390,11 @@ const LUST_MINING = {
   rpcUrl: 'https://rpc.lustchain.org',
   explorer: 'https://explorer.lustchain.org',
   registry: '0x0000000000000000000000000000000000006923',
-  callData: '0x4c5143525f5632'
+  // H3B canonical registry format:
+  // register_v2 = ASCII LQCR_V2 + 20-byte operator address
+  // heartbeat = ASCII LQCH_V1
+  registerMagicV2: '0x4c5143525f5632',
+  heartbeatData: '0x4c5143485f5631'
 };
 const miningStatus = document.querySelector('[data-mining-status]');
 function setMiningStatus(message, type){
@@ -437,17 +441,26 @@ async function checkMiningWallet(){
   const balance = await ethereum.request({method:'eth_getBalance', params:[account,'latest']});
   setMiningStatus('Wallet: '+shortAddress(account)+'\nChain ID: '+chainId+'\nBalance: '+formatWei(balance)+'\nStatus: ready for Register / Active if you have gas.', chainId===LUST_MINING.chainId ? 'ok' : 'warn');
 }
-async function sendMinerRegistryTx(label){
+function cleanHexAddress(addr){
+  return String(addr || '').toLowerCase().replace(/^0x/,'');
+}
+function registerDataForAccount(account){
+  const clean = cleanHexAddress(account);
+  if(!/^[0-9a-f]{40}$/.test(clean)) throw new Error('Invalid wallet address.');
+  return LUST_MINING.registerMagicV2 + clean;
+}
+async function sendMinerRegistryTx(label, action){
   try{
     const accounts = await getAccounts();
     await switchToLust();
     const account = accounts[0];
+    const data = action === 'heartbeat' ? LUST_MINING.heartbeatData : registerDataForAccount(account);
     setMiningStatus(label+': waiting for wallet confirmation...','warn');
     const tx = await ethereum.request({method:'eth_sendTransaction', params:[{
       from: account,
       to: LUST_MINING.registry,
       value: '0x0',
-      data: LUST_MINING.callData,
+      data: data,
       gas: '0x249f0'
     }]});
     setMiningStatus(label+' sent.\nTx: '+tx+'\nWait for confirmation, then run Check wallet.\nExplorer: '+LUST_MINING.explorer+'/tx/'+tx, 'ok');
@@ -457,8 +470,8 @@ async function sendMinerRegistryTx(label){
 }
 document.querySelector('[data-mining-connect]')?.addEventListener('click', async()=>{try{const a=await getAccounts();setMiningStatus('Connected wallet: '+a[0],'ok')}catch(e){setMiningStatus(e.message,'bad')}});
 document.querySelector('[data-mining-switch]')?.addEventListener('click', async()=>{try{await switchToLust();setMiningStatus('LUST Chain selected: 6923 / 0x1b0b','ok')}catch(e){setMiningStatus(e.message || String(e),'bad')}});
-document.querySelector('[data-mining-register]')?.addEventListener('click', ()=>sendMinerRegistryTx('Register miner'));
-document.querySelector('[data-mining-active]')?.addEventListener('click', ()=>sendMinerRegistryTx('Activate / Heartbeat'));
+document.querySelector('[data-mining-register]')?.addEventListener('click', ()=>sendMinerRegistryTx('Register miner', 'register'));
+document.querySelector('[data-mining-active]')?.addEventListener('click', ()=>sendMinerRegistryTx('Activate / Heartbeat', 'heartbeat'));
 document.querySelector('[data-mining-check]')?.addEventListener('click', async()=>{try{await checkMiningWallet()}catch(e){setMiningStatus(e.message || String(e),'bad')}});
 (async()=>{
   const el=document.querySelector('[data-live-block]');
