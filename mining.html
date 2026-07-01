@@ -269,7 +269,7 @@
             <button class="lmin-btn primary" type="button" data-mining-register>Register</button>
           </div>
           <div class="lmin-form-row">
-            <button class="lmin-btn green" type="button" data-mining-active>Active</button>
+            <button class="lmin-btn green" type="button" data-mining-active-action>Active</button>
             <a class="lmin-btn" href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">Open explorer</a>
           </div>
           <p><small>After Active confirms, wait about 64 blocks before the wallet fully enters the public mining rotation.</small></p>
@@ -334,7 +334,7 @@
         <div class="lmin-kicker">Public mining stats</div>
         <h2>Registry and recent blocks</h2>
       </div>
-      <p>These values are live when the mining stats API is available.</p>
+      <p>These values update when the mining stats API is available. The Register and Active buttons work independently from this live stats panel.</p>
     </div>
     <div class="lmin-grid four">
       <div class="lmin-card lmin-live"><small>Registered miners</small><strong data-mining-registered>--</strong></div>
@@ -435,7 +435,7 @@
   </div>
 </footer>
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
-<script type="module" src="./app.js?v=20260701-mining-final9-complete"></script>
+<script type="module" src="./app.js?v=20260701-mining-final9-active-rpc-fix"></script>
 <script>
 const LUST_MINING = {
   chainId: '0x1b0b',
@@ -530,20 +530,62 @@ async function sendMinerRegistryTx(label, action){
 document.querySelector('[data-mining-connect]')?.addEventListener('click', async()=>{try{const a=await getAccounts();setMiningStatus('Connected wallet: '+a[0],'ok')}catch(e){setMiningStatus(e.message,'bad')}});
 document.querySelector('[data-mining-switch]')?.addEventListener('click', async()=>{try{await switchToLust();setMiningStatus('LUST Chain selected: 6923 / 0x1b0b','ok')}catch(e){setMiningStatus(e.message || String(e),'bad')}});
 document.querySelector('[data-mining-register]')?.addEventListener('click', ()=>sendMinerRegistryTx('Register miner', 'register'));
-document.querySelector('[data-mining-active]')?.addEventListener('click', ()=>sendMinerRegistryTx('Active', 'heartbeat'));
+document.querySelector('[data-mining-active-action]')?.addEventListener('click', ()=>sendMinerRegistryTx('Active', 'heartbeat'));
 document.querySelector('[data-mining-check]')?.addEventListener('click', async()=>{try{await checkMiningWallet()}catch(e){setMiningStatus(e.message || String(e),'bad')}});
+async function fetchLatestBlockFromRpc(url){
+  const payload = JSON.stringify({jsonrpc:'2.0',id:1,method:'eth_getBlockByNumber',params:['latest',false]});
+  const r = await fetch(url, {
+    method: 'POST',
+    // text/plain avoids browser preflight on some RPC proxies.
+    headers: {'Content-Type':'text/plain;charset=UTF-8'},
+    body: payload,
+    cache: 'no-store'
+  });
+  const j = await r.json();
+  if(!j || !j.result || !j.result.number) throw new Error('empty RPC response');
+  return j.result;
+}
+async function fetchLatestBlockFromExplorer(){
+  const urls = [
+    'https://explorer.lustchain.org/api/v2/blocks?type=block',
+    'https://explorer.lustchain.org/api/v2/main-page/blocks'
+  ];
+  for(const url of urls){
+    try{
+      const r = await fetch(url, {cache:'no-store'});
+      const j = await r.json();
+      const item = Array.isArray(j?.items) ? j.items[0] : null;
+      if(item){
+        return {
+          number: '0x' + Number(item.height || item.number || item.block_number || 0).toString(16),
+          miner: item.miner?.hash || item.miner_hash || item.miner || item.rewards?.[0]?.address?.hash || ''
+        };
+      }
+    }catch(_e){}
+  }
+  throw new Error('explorer unavailable');
+}
 (async()=>{
   const el=document.querySelector('[data-live-block]');
   const minerEl=document.querySelector('[data-live-miner]');
   const rpc=document.querySelector('[data-live-rpc]');
+  const sources = [LUST_MINING.rpcUrl, 'https://rpc-backup.lustchain.org'];
   try{
-    const r=await fetch(LUST_MINING.rpcUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'eth_getBlockByNumber',params:['latest',false]})});
-    const j=await r.json();
-    const b=j && j.result ? j.result : null;
+    let b = null;
+    let source = 'RPC';
+    for(const url of sources){
+      try{ b = await fetchLatestBlockFromRpc(url); source = url.includes('backup') ? 'backup online' : 'online'; break; }catch(_e){}
+    }
+    if(!b){ b = await fetchLatestBlockFromExplorer(); source = 'explorer online'; }
     el.textContent=b && b.number ? parseInt(b.number,16).toLocaleString('en-US') : '--';
     minerEl.textContent=b && b.miner ? shortAddress(b.miner) : '--';
-    rpc.textContent='online';
-  }catch(e){ el.textContent='--'; if(minerEl) minerEl.textContent='--'; rpc.textContent='error'; }
+    rpc.textContent=source;
+  }catch(e){
+    el.textContent='--';
+    if(minerEl) minerEl.textContent='--';
+    // Do not show scary "error" to users; wallet/miner can still work even if browser live widget is blocked by CORS.
+    rpc.textContent='check explorer';
+  }
 })();
 </script>
 <script src="./nft-menu.js?v=20260616-hover-v5"></script>

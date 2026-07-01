@@ -1,0 +1,14 @@
+LUST Mining page FINAL9 fix
+
+Changed only the Mining page package.
+
+Fixes:
+- Active button no longer shares the same data attribute as the live Active Public Miners counter.
+- Live RPC widget now tries main RPC, backup RPC, explorer fallback, and shows "check explorer" instead of a scary "error" if browser CORS blocks the widget.
+- FINAL9 Windows and Ubuntu download links and SHA256 hashes remain correct.
+- Register and Active wallet actions remain on the page.
+
+Deploy only these files if doing a selective deploy:
+- mining.html
+- miner-package-hashes.txt
+- DEPLOY_MINING_ONLY_FINAL9_ACTIVE_RPC_FIX.txt
