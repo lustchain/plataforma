@@ -421,7 +421,7 @@
 <script type="module" src="./app.js?v=20260622-faucet-api-restored-v2"></script>
 
 <script type="module">
-/* LUST Presale direct fallback v20260701
+/* LUST Presale direct fallback v20260701-no-blink
    This script lives only in presale.html. It keeps the countdown and buy flow working
    even if the shared app bundle or wallet UI fails to initialize. */
 (async () => {
@@ -471,9 +471,34 @@
     return;
   }
 
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  function sharedPresaleControllerLooksStable() {
+    const status = String(document.querySelector('[data-presale-status]')?.textContent || '').trim();
+    const values = Array.from(document.querySelectorAll('[data-presale-countdown] b')).map((el) => String(el.textContent || '').trim());
+    const hasNumericCountdown = values.some((v) => /^\d+$/.test(v));
+    const stillLoading = !status || /loading|rpc unavailable/i.test(status) || values.some((v) => v === '--');
+    return Boolean(window.lustPresale && window.lustPresale.refresh && hasNumericCountdown && !stillLoading);
+  }
+
+  // The shared app.js also controls the presale. If it already loaded the countdown,
+  // keep this direct RPC script in standby to avoid two timers updating the same numbers.
+  await wait(2200);
+  if (sharedPresaleControllerLooksStable()) {
+    console.info('Presale direct fallback is on standby; app.js countdown is active.');
+    return;
+  }
+
   const $all = (selector) => Array.from(document.querySelectorAll(selector));
-  const setText = (selector, value) => $all(selector).forEach((el) => { el.textContent = value; });
-  const setLog = (selector, value, tone = '') => $all(selector).forEach((el) => { el.textContent = value; el.dataset.tone = tone; });
+  const setText = (selector, value) => $all(selector).forEach((el) => {
+    const next = String(value);
+    if (el.textContent !== next) el.textContent = next;
+  });
+  const setLog = (selector, value, tone = '') => $all(selector).forEach((el) => {
+    const next = String(value);
+    if (el.textContent !== next) el.textContent = next;
+    if (el.dataset.tone !== tone) el.dataset.tone = tone;
+  });
 
   function trimUnits(text, decimals = 4) {
     const [a, b = ''] = String(text || '0').split('.');
@@ -506,7 +531,8 @@
     if (!box) return;
     const values = targetSeconds ? countdownParts(targetSeconds) : ['--', '--', '--', '--'];
     box.querySelectorAll('b').forEach((el, i) => {
-      el.textContent = typeof values[i] === 'number' ? String(values[i]).padStart(i === 0 ? 1 : 2, '0') : values[i];
+      const next = typeof values[i] === 'number' ? String(values[i]).padStart(i === 0 ? 1 : 2, '0') : String(values[i]);
+      if (el.textContent !== next) el.textContent = next;
     });
   }
 
