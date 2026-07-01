@@ -566,7 +566,7 @@
 </script>
 <script type="module" src="./app.js?v20260612-lusdt-bridge-v35-anti-stuck"></script>
 
-<script type="module" id="bridge-lusdt-sell-balance-fix-v40">
+<script type="module" id="bridge-lusdt-sell-balance-fix-v41-no-blink">
   import { ethers } from "https://esm.sh/ethers@6.16.0";
 
   const LUST_CHAIN_ID = "0x1b0b";
@@ -582,17 +582,54 @@
   const BALANCE_OF_SELECTOR = "0x70a08231";
 
   let lastRawLusdtBalance = null;
+  let lastBalanceText = "";
   let refreshInFlight = false;
+  let isolatedBalance = false;
 
   const q = (selector) => document.querySelector(selector);
   const qa = (selector) => Array.from(document.querySelectorAll(selector));
 
   function setText(selector, value) {
-    qa(selector).forEach((el) => { el.textContent = value; });
+    qa(selector).forEach((el) => {
+      if (el.textContent !== value) el.textContent = value;
+    });
   }
 
   function isBridgePage() {
     return Boolean(q("[data-lusdt-bridge]"));
+  }
+
+  function balanceEl() {
+    return q("[data-withdraw-source-balance-stable]") || q("[data-withdraw-source-balance]");
+  }
+
+  function setBalanceText(value) {
+    lastBalanceText = value;
+    const el = balanceEl();
+    if (el && el.textContent !== value) el.textContent = value;
+  }
+
+  // O app.js global também escreve em [data-withdraw-source-balance].
+  // Para não piscar, a bridge cria um elemento invisível para o app.js escrever
+  // e mantém o saldo visível em data-withdraw-source-balance-stable.
+  function isolateWithdrawBalanceDisplay() {
+    if (isolatedBalance) return;
+    const visible = q("[data-withdraw-source-balance]");
+    if (!visible) return;
+
+    const current = String(visible.textContent || "").trim();
+    visible.removeAttribute("data-withdraw-source-balance");
+    visible.setAttribute("data-withdraw-source-balance-stable", "");
+    visible.setAttribute("data-bridge-balance-no-blink", "true");
+
+    const sink = document.createElement("span");
+    sink.setAttribute("data-withdraw-source-balance", "");
+    sink.setAttribute("aria-hidden", "true");
+    sink.style.cssText = "display:none!important;visibility:hidden!important;width:0!important;height:0!important;overflow:hidden!important;";
+    sink.textContent = current || "--";
+    visible.after(sink);
+
+    isolatedBalance = true;
   }
 
   function normalizeHexChain(value) {
@@ -716,8 +753,9 @@
     return await ethCallViaRpc(account);
   }
 
-  async function refreshLusdtSellBalance({ allowSwitch = false, force = false } = {}) {
+  async function refreshLusdtSellBalance({ allowSwitch = false, force = false, quiet = false } = {}) {
     if (!isBridgePage()) return;
+    isolateWithdrawBalanceDisplay();
     if (refreshInFlight && !force) return;
 
     refreshInFlight = true;
@@ -725,28 +763,30 @@
       const account = await connectedAccount();
       if (!account) {
         lastRawLusdtBalance = null;
-        setText("[data-withdraw-source-balance]", "Connect wallet");
+        setBalanceText("Connect wallet");
         return;
       }
 
       const chainId = await currentChainId();
-      if (chainId && chainId !== LUST_CHAIN_ID && allowSwitch) {
-        setText("[data-withdraw-source-balance]", "Switching...");
-      } else if (chainId && chainId !== LUST_CHAIN_ID) {
-        setText("[data-withdraw-source-balance]", "Switch to LUST");
-      } else {
-        setText("[data-withdraw-source-balance]", "Reading...");
+      if (!quiet && lastRawLusdtBalance === null) {
+        if (chainId && chainId !== LUST_CHAIN_ID && allowSwitch) {
+          setBalanceText("Switching...");
+        } else if (chainId && chainId !== LUST_CHAIN_ID) {
+          setBalanceText("Switch to LUST");
+        } else {
+          setBalanceText("Reading...");
+        }
       }
 
       const raw = await readLusdtBalance(account, allowSwitch);
       lastRawLusdtBalance = BigInt(raw);
-      setText("[data-withdraw-source-balance]", formatLusdt(lastRawLusdtBalance));
+      setBalanceText(formatLusdt(lastRawLusdtBalance));
     } catch (err) {
       console.warn("LUSDT sell balance fix failed", err);
       if (lastRawLusdtBalance !== null) {
-        setText("[data-withdraw-source-balance]", formatLusdt(lastRawLusdtBalance));
-      } else {
-        setText("[data-withdraw-source-balance]", "Refresh needed");
+        setBalanceText(formatLusdt(lastRawLusdtBalance));
+      } else if (!quiet) {
+        setBalanceText("Refresh needed");
       }
     } finally {
       refreshInFlight = false;
@@ -768,42 +808,33 @@
     event.preventDefault();
     event.stopImmediatePropagation();
 
-    setText("[data-withdraw-source-balance]", "Reading...");
+    if (lastRawLusdtBalance === null) setBalanceText("Reading...");
     await refreshLusdtSellBalance({ allowSwitch: true, force: true });
     setWithdrawMaxFromBalance();
   }, true);
 
   function startSellBalanceFix() {
     if (!isBridgePage()) return;
+    isolateWithdrawBalanceDisplay();
 
     refreshLusdtSellBalance({ force: true });
-    setTimeout(() => refreshLusdtSellBalance({ force: true }), 800);
-    setTimeout(() => refreshLusdtSellBalance({ force: true }), 2200);
+    setTimeout(() => refreshLusdtSellBalance({ force: true, quiet: true }), 900);
+    setTimeout(() => refreshLusdtSellBalance({ force: true, quiet: true }), 2500);
 
-    setInterval(() => refreshLusdtSellBalance(), 2000);
+    // Atualização leve, sem escrever "Reading...", para não piscar.
+    setInterval(() => refreshLusdtSellBalance({ quiet: true }), 15000);
 
-    q("[data-bridge-destination]")?.addEventListener("change", () => setTimeout(() => refreshLusdtSellBalance({ force: true }), 200));
+    q("[data-bridge-destination]")?.addEventListener("change", () => setTimeout(() => refreshLusdtSellBalance({ force: true, quiet: true }), 200));
     qa("[data-bridge-tab]").forEach((btn) => {
-      btn.addEventListener("click", () => setTimeout(() => refreshLusdtSellBalance({ force: true }), 250));
+      btn.addEventListener("click", () => setTimeout(() => refreshLusdtSellBalance({ force: true, quiet: true }), 250));
     });
-
-    const balanceEl = q("[data-withdraw-source-balance]");
-    if (balanceEl) {
-      const observer = new MutationObserver(() => {
-        const text = String(balanceEl.textContent || "").trim().toLowerCase();
-        if (["-", "--", "refresh needed"].includes(text)) {
-          setTimeout(() => refreshLusdtSellBalance({ force: true }), 80);
-        }
-      });
-      observer.observe(balanceEl, { childList: true, characterData: true, subtree: true });
-    }
   }
 
   document.addEventListener("DOMContentLoaded", startSellBalanceFix);
-  window.addEventListener("load", () => setTimeout(() => refreshLusdtSellBalance({ force: true }), 300));
-  window.addEventListener("focus", () => refreshLusdtSellBalance({ force: true }));
+  window.addEventListener("load", () => setTimeout(() => refreshLusdtSellBalance({ force: true, quiet: true }), 300));
+  window.addEventListener("focus", () => refreshLusdtSellBalance({ force: true, quiet: true }));
   document.addEventListener("visibilitychange", () => {
-    if (!document.hidden) refreshLusdtSellBalance({ force: true });
+    if (!document.hidden) refreshLusdtSellBalance({ force: true, quiet: true });
   });
   window.ethereum?.on?.("accountsChanged", () => setTimeout(() => refreshLusdtSellBalance({ force: true }), 250));
   window.ethereum?.on?.("chainChanged", () => setTimeout(() => refreshLusdtSellBalance({ force: true }), 700));
