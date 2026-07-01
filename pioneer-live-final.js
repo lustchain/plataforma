@@ -298,6 +298,27 @@ async function fetchBackendStatus() {
   return json;
 }
 
+async function findMintedTokenForWallet(address) {
+  if (!ethers.isAddress(address)) return 0;
+  try {
+    const topic = readContract.interface.getEvent('PioneerMinted').topicHash;
+    const walletTopic = ethers.zeroPadValue(address, 32);
+    const logs = await readProvider.getLogs({
+      address: CONTRACT_ADDRESS,
+      topics: [topic, walletTopic],
+      fromBlock: Number(CONFIG.deploymentBlock || 0),
+      toBlock: 'latest'
+    });
+    const last = logs[logs.length - 1];
+    if (!last) return 0;
+    const parsed = readContract.interface.parseLog(last);
+    return Number(parsed?.args?.tokenId || 0);
+  } catch (error) {
+    console.warn('Could not auto-discover Pioneer token by wallet', error);
+    return 0;
+  }
+}
+
 async function safeWalletHasMinted(address) {
   try { return await readContract.walletHasMinted(address); }
   catch (_) { return false; }
@@ -355,12 +376,23 @@ async function refreshContractState({ quiet = false } = {}) {
     if (state.wallet) {
       const alreadyMinted = await safeWalletHasMinted(state.wallet);
       if (alreadyMinted && !state.tokenId) {
-        const stored = localStorage.getItem(`lustPioneerToken:${state.wallet.toLowerCase()}`);
-        if (stored) await loadToken(Number(stored), { quiet: true });
+        const storageKey = `lustPioneerToken:${state.wallet.toLowerCase()}`;
+        const stored = localStorage.getItem(storageKey);
+        if (stored) {
+          await loadToken(Number(stored), { quiet: true });
+        } else {
+          const discoveredTokenId = await findMintedTokenForWallet(state.wallet);
+          if (discoveredTokenId > 0) {
+            localStorage.setItem(storageKey, String(discoveredTokenId));
+            await loadToken(discoveredTokenId, { quiet: true });
+          }
+        }
       }
       if (mintButton) mintButton.disabled = !mintOpen || alreadyMinted;
       if (alreadyMinted) {
-        setLog(state.tokenId ? `This wallet already minted ${formatTokenId(state.tokenId)}.` : "This wallet has already minted one Pioneer NFT.", "ok");
+        setLog(state.tokenId
+          ? `This wallet already minted ${formatTokenId(state.tokenId)}. Use this page as the official Pioneer viewer.`
+          : "This wallet has already minted one Pioneer NFT. Use the token ID box to load it on this page.", "ok");
       } else if (!quiet && mintOpen) {
         setLog("Mint is open. Complete the X fields and all five confirmations.", "ok");
       }
@@ -508,7 +540,7 @@ async function loadToken(tokenIdValue, { quiet = false } = {}) {
       await refreshWalletState();
       const ownerMatches = state.wallet && ethers.isAddress(owner) && owner.toLowerCase() === state.wallet.toLowerCase();
       renderToken(tokenId, reward, claimed, state.claimsOpen, ownerMatches);
-      if (!quiet) setLog(ownerMatches ? `Loaded your NFT ${formatTokenId(tokenId)}.` : `Loaded ${formatTokenId(tokenId)} from metadata.`, ownerMatches ? "ok" : "warn");
+      if (!quiet) setLog(ownerMatches ? `Loaded your NFT ${formatTokenId(tokenId)} on the official Pioneer viewer.` : `Loaded ${formatTokenId(tokenId)} from metadata.`, ownerMatches ? "ok" : "warn");
     } catch (metadataError) {
       console.error(metadataError);
       if (!quiet) setLog(metadataError?.shortMessage || metadataError?.message || error?.shortMessage || error?.message || "NFT not found.", "warn");

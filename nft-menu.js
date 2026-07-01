@@ -1,7 +1,7 @@
 (() => {
   const desktopPointer = window.matchMedia('(hover: hover) and (pointer: fine)');
   const menus = Array.from(document.querySelectorAll('.nav-nft-menu'));
-  const CLOSE_DELAY_MS = 320;
+  const CLOSE_DELAY_MS = 120;
 
   const isDesktop = () => desktopPointer.matches;
 
@@ -34,8 +34,8 @@
       }, CLOSE_DELAY_MS);
     };
 
-    // Desktop hover behavior. The delay prevents the dropdown from closing
-    // while the pointer moves from the NFTs label into the menu panel.
+    // Desktop hover behavior. Use a short delay so the menu does not feel sticky,
+    // but still stays open while the pointer moves into the dropdown panel.
     menu.addEventListener('pointerenter', openDesktop);
     menu.addEventListener('pointerleave', scheduleCloseDesktop);
     summary.addEventListener('pointerenter', openDesktop);
