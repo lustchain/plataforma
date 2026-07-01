@@ -1,0 +1,12 @@
+Mining page only update.
+
+Changed files:
+- mining.html
+- miner-package-hashes.txt
+
+Purpose:
+- Replace old FINAL7/V31 download references with FINAL9 public mining downloads.
+- Add Windows and Ubuntu user instructions.
+- Make Register / Active flow easier.
+- Add correct reward/share rules: one active wallet = one chance, public block rewards to public wallet, official rewards to Treasury path.
+- Preserve the rest of the site, header, footer, pages and assets.

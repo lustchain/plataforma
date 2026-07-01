@@ -1,14 +1,20 @@
-LUST V31H2J stable snapshot miner downloads
+LUST FINAL9 public mining downloads
 
-Windows ZIP:
-https://downloads.lustchain.org/lust-v31h2j-miner-windows-FULL.zip?v=stable-snapshot-171244
-SHA256: 050c855c6edd018e8958a86d64b06bf8c81a45233df90ef8f9c7d916c1f3d4eb
+Windows full miner ZIP:
+https://snapshot.lustchain.org/downloads/lust-final9-miner-windows-amd64.zip
+SHA256: 5b37c5ed9a3891fbd9f3d9b5519777fee5b903864b060d4f43775d728e955828
 
-Windows EXE SHA256:
-b7edfa2b7571c6fb4521c4ba46e34d983f9c8a8d977ca21742364ef413ac9aa8
+Ubuntu full miner TAR.GZ:
+https://snapshot.lustchain.org/downloads/lust-final9-miner-ubuntu-amd64.tar.gz
+SHA256: b7bd246df2d2bafb73227285005c066bedc53e396e9c5998a1e1827e660b5be1
 
-Stable snapshot block 171244 SHA256:
-37a41f0317168ea731f5c23233d0a846b70d9379ea14eeb0a7bced04a57d0aa0
+SHA256SUMS:
+https://snapshot.lustchain.org/downloads/SHA256SUMS-FINAL9.txt
 
-Register / Active embedded page:
-https://downloads.lustchain.org/lust-register-miner-v31.html?v=20260624-v31h2j-inline
+FINAL9 rules:
+- One active public reward wallet = one mining chance.
+- More CPU/GPU does not multiply chances.
+- Public miner block rewards go to the public reward wallet.
+- PROD1/PROD2 have no wallet privilege in FINAL9.
+- Official producer rewards use the Treasury path.
+- After Active, wait about 64 blocks before the miner fully enters rotation.
