@@ -1,0 +1,16 @@
+LUST Mining page FINAL9 complete eligibility update
+
+Files intended for deploy:
+- mining.html
+- miner-package-hashes.txt
+
+Scope:
+- Mining page only.
+- Adds professional explanation of Register, Active, Operator Address and the 64-block eligibility/maturity period.
+- Explains why the delay exists: anti-spam, anti-wallet-rotation, stable on-chain rotation and propagation.
+- Keeps FINAL9 download hashes current.
+- No other site pages changed intentionally.
+
+Current FINAL9 package hashes:
+Windows ZIP: dce1dc8bbc6ce1d1f96753b5e27cb241620672bd6784727876fa0b95efde8598
+Ubuntu TAR.GZ: b7bd246df2d2bafb73227285005c066bedc53e396e9c5998a1e1827e660b5be1

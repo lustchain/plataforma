@@ -1,0 +1,14 @@
+LUST Mining FINAL9 professional update
+
+Changed only mining-related files:
+- mining.html
+- miner-package-hashes.txt
+
+Purpose:
+- Remove test/beta language from the public page.
+- Use the latest Windows FINAL9 hash after full live status update.
+- Explain Register + Active in a user-friendly flow.
+- Explain full Windows live status dashboard.
+- Explain transparent on-chain reward verification.
+
+Deploy only these files if the rest of the site is already stable.

@@ -18,9 +18,3 @@ FINAL9 rules:
 - PROD1/PROD2 have no wallet privilege in FINAL9.
 - Official producer rewards use the Treasury path.
 - After Active, wait about 64 blocks before the miner fully enters rotation.
-
-Windows package status files:
-- STATUS-LUST-MINER-WINDOWS.bat
-- LIVE-STATUS-LUST-MINER-WINDOWS.bat
-- RESET-STATUS-COUNTERS-FINAL9.bat
-- STATUS-FINAL9.ps1
