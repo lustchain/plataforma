@@ -565,6 +565,164 @@
   });
 </script>
 <script type="module" src="./app.js?v20260612-lusdt-bridge-v35-anti-stuck"></script>
+
+<script type="module" id="bridge-lusdt-balance-reader-v39">
+  import { ethers } from "https://esm.sh/ethers@6.16.0";
+
+  const LUST_RPC = "https://rpc.lustchain.org";
+  const POLYGON_RPC = "https://polygon-bor-rpc.publicnode.com";
+  const BSC_RPC = "https://bsc-rpc.publicnode.com";
+
+  const LUSDT_ADDRESS = "0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE";
+  const POLYGON_USDT_ADDRESS = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F";
+  const BSC_USDT_ADDRESS = "0x55d398326f99059fF775485246999027B3197955";
+
+  const ERC20_BALANCE_ABI = [
+    "function balanceOf(address account) view returns (uint256)"
+  ];
+
+  const bridgeBalanceState = {
+    account: "",
+    sourceRaw: null,
+    sourceDecimals: 6,
+    lusdtRaw: null
+  };
+
+  const q = (selector) => document.querySelector(selector);
+  const qa = (selector) => Array.from(document.querySelectorAll(selector));
+
+  function setText(selector, value) {
+    qa(selector).forEach((el) => { el.textContent = value; });
+  }
+
+  function trimFixed(value, maxDecimals = 6) {
+    const n = String(value || "0");
+    if (!n.includes(".")) return n;
+    const [a, b = ""] = n.split(".");
+    const cut = b.slice(0, maxDecimals).replace(/0+$/, "");
+    return cut ? `${a}.${cut}` : a;
+  }
+
+  function formatToken(raw, decimals, symbol) {
+    try {
+      return `${trimFixed(ethers.formatUnits(BigInt(raw || 0), decimals), 6)} ${symbol}`;
+    } catch (_) {
+      return `0 ${symbol}`;
+    }
+  }
+
+  function valueForInput(raw, decimals) {
+    try {
+      return trimFixed(ethers.formatUnits(BigInt(raw || 0), decimals), 6);
+    } catch (_) {
+      return "0";
+    }
+  }
+
+  async function currentAccount() {
+    try {
+      if (!window.ethereum?.request) return "";
+      const accounts = await window.ethereum.request({ method: "eth_accounts" });
+      return ethers.getAddress(accounts?.[0] || "");
+    } catch (_) {
+      return "";
+    }
+  }
+
+  function selectedSource() {
+    return q("[data-bridge-source]")?.value === "bsc" ? "bsc" : "polygon";
+  }
+
+  function sourceConfig() {
+    const source = selectedSource();
+    return source === "bsc"
+      ? { rpc: BSC_RPC, token: BSC_USDT_ADDRESS, decimals: 18, label: "USDT" }
+      : { rpc: POLYGON_RPC, token: POLYGON_USDT_ADDRESS, decimals: 6, label: "USDT" };
+  }
+
+  async function readTokenBalance(rpc, tokenAddress, account) {
+    const provider = new ethers.JsonRpcProvider(rpc);
+    const token = new ethers.Contract(tokenAddress, ERC20_BALANCE_ABI, provider);
+    return await token.balanceOf(account);
+  }
+
+  async function refreshBridgeTokenBalances() {
+    if (!q("[data-lusdt-bridge]")) return;
+
+    const account = await currentAccount();
+    bridgeBalanceState.account = account;
+
+    if (!account) {
+      setText("[data-bridge-source-balance]", "Connect wallet");
+      setText("[data-withdraw-source-balance]", "Connect wallet");
+      return;
+    }
+
+    try {
+      const cfg = sourceConfig();
+      const raw = await readTokenBalance(cfg.rpc, cfg.token, account);
+      bridgeBalanceState.sourceRaw = BigInt(raw);
+      bridgeBalanceState.sourceDecimals = cfg.decimals;
+      setText("[data-bridge-source-balance]", formatToken(raw, cfg.decimals, cfg.label));
+    } catch (err) {
+      console.warn("Bridge source USDT balance read failed", err);
+      setText("[data-bridge-source-balance]", "Refresh needed");
+    }
+
+    try {
+      const raw = await readTokenBalance(LUST_RPC, LUSDT_ADDRESS, account);
+      bridgeBalanceState.lusdtRaw = BigInt(raw);
+      setText("[data-withdraw-source-balance]", formatToken(raw, 6, "LUSDT"));
+    } catch (err) {
+      console.warn("Bridge LUSDT balance read failed", err);
+      setText("[data-withdraw-source-balance]", "Refresh needed");
+    }
+  }
+
+  function setInputAndRefresh(selector, value) {
+    const input = q(selector);
+    if (!input) return;
+    input.value = value;
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+
+  document.addEventListener("click", async (event) => {
+    const maxDeposit = event.target.closest("[data-bridge-max-deposit]");
+    const maxWithdraw = event.target.closest("[data-bridge-max-withdraw]");
+    if (!maxDeposit && !maxWithdraw) return;
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    await refreshBridgeTokenBalances();
+
+    if (maxDeposit) {
+      if (bridgeBalanceState.sourceRaw === null) return;
+      setInputAndRefresh("[data-bridge-amount]", valueForInput(bridgeBalanceState.sourceRaw, bridgeBalanceState.sourceDecimals));
+    }
+
+    if (maxWithdraw) {
+      if (bridgeBalanceState.lusdtRaw === null) return;
+      setInputAndRefresh("[data-withdraw-amount]", valueForInput(bridgeBalanceState.lusdtRaw, 6));
+    }
+  }, true);
+
+  document.addEventListener("DOMContentLoaded", () => {
+    q("[data-bridge-source]")?.addEventListener("change", () => refreshBridgeTokenBalances());
+    q("[data-bridge-destination]")?.addEventListener("change", () => refreshBridgeTokenBalances());
+    qa("[data-bridge-tab]").forEach((btn) => btn.addEventListener("click", () => {
+      setTimeout(refreshBridgeTokenBalances, 250);
+    }));
+
+    setTimeout(refreshBridgeTokenBalances, 900);
+    setTimeout(refreshBridgeTokenBalances, 2500);
+    setInterval(refreshBridgeTokenBalances, 15000);
+  });
+
+  window.ethereum?.on?.("accountsChanged", () => setTimeout(refreshBridgeTokenBalances, 300));
+  window.ethereum?.on?.("chainChanged", () => setTimeout(refreshBridgeTokenBalances, 700));
+</script>
 <script src="./nft-menu.js?v=20260616-hover-v5"></script>
 </body>
 </html>
