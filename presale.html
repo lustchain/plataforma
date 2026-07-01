@@ -419,6 +419,362 @@
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 <script type="module" src="./app.js?v=20260622-faucet-api-restored-v2"></script>
+
+<script type="module">
+/* LUST Presale direct fallback v20260701
+   This script lives only in presale.html. It keeps the countdown and buy flow working
+   even if the shared app bundle or wallet UI fails to initialize. */
+(async () => {
+  if (!document.querySelector('[data-presale-page]')) return;
+  if (window.__LUST_PRESALE_DIRECT_FALLBACK__) return;
+  window.__LUST_PRESALE_DIRECT_FALLBACK__ = true;
+
+  const PRESALE = '0x6AD87104DDC8F7CEd9267F115EE107F44AA9f936';
+  const LUSDT = '0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE';
+  const LUST_CHAIN_ID_DEC = 6923;
+  const LUST_CHAIN_ID_HEX = '0x1b0b';
+  const RPCS = ['https://rpc.lustchain.org', 'https://rpc-backup.lustchain.org'];
+
+  // Used only if the browser cannot read RPC data for a moment.
+  // Official scheduled start previously set on-chain: 2026-06-24 20:00 BRT.
+  const FALLBACK_START = 1782342000n;
+  const SALE_DURATION = 60n * 24n * 60n * 60n;
+
+  const PRESALE_ABI = [
+    'function saleTimes() view returns (bool scheduled,bool finalized,uint256 start,uint256 end,uint256 liquidityLimit,uint256 currentTime)',
+    'function saleProgress() view returns (uint256 raisedLUSDT,uint256 softcapLUSDT,uint256 hardcapLUSDT,uint256 netForLiquidityLUSDT,uint256 feesLUSDT,uint256 soldLST,uint256 bonusLSTAmount)',
+    'function userInfo(address account) view returns (uint256 contributed,uint256 purchased,uint256 bonus,uint256 purchasedClaimed,uint256 bonusClaimed,uint256 purchasedAvailable,uint256 bonusAvailable,bool hasRefunded)',
+    'function quoteBuy(uint256 lusdtAmount) view returns (uint256 feeAmount,uint256 netForLiquidity,uint256 purchasedAmountLST,uint256 bonusAmountLST,uint256 bonusBps)',
+    'function isSaleActive() view returns (bool)',
+    'function isRefundAvailable() view returns (bool)',
+    'function liquidityCreated() view returns (bool)',
+    'function currentBonusBps() view returns (uint256)',
+    'function nativeReserveStatus() view returns (uint256 currentNativeBalance,uint256 requiredNative,bool enoughNativeFunded)',
+    'function contributedLUSDT(address account) view returns (uint256)',
+    'function claimablePurchased(address account) view returns (uint256)',
+    'function buy(uint256 lusdtAmount)',
+    'function claimPurchased()',
+    'function claimBonus()',
+    'function refund()'
+  ];
+  const ERC20_ABI = [
+    'function balanceOf(address) view returns (uint256)',
+    'function allowance(address owner,address spender) view returns (uint256)',
+    'function approve(address spender,uint256 amount) returns (bool)'
+  ];
+
+  let ethers;
+  try {
+    ({ ethers } = await import('https://esm.sh/ethers@6.16.0'));
+  } catch (err) {
+    console.warn('Presale fallback could not load ethers:', err);
+    return;
+  }
+
+  const $all = (selector) => Array.from(document.querySelectorAll(selector));
+  const setText = (selector, value) => $all(selector).forEach((el) => { el.textContent = value; });
+  const setLog = (selector, value, tone = '') => $all(selector).forEach((el) => { el.textContent = value; el.dataset.tone = tone; });
+
+  function trimUnits(text, decimals = 4) {
+    const [a, b = ''] = String(text || '0').split('.');
+    const cut = b.slice(0, decimals).replace(/0+$/, '');
+    return cut ? `${a}.${cut}` : a;
+  }
+  function fmt(value, decimals = 18, precision = 4) {
+    try { return trimUnits(ethers.formatUnits(BigInt(value || 0), decimals), precision); }
+    catch (_) { return '0'; }
+  }
+  const fmtLusdt = (v, p = 2) => `${fmt(v, 6, p)} LUSDT`;
+  const fmtLst = (v, p = 2) => `${fmt(v, 18, p)} LST`;
+
+  function parseLusdt(raw) {
+    const value = String(raw || '').trim().replace(',', '.');
+    if (!value || Number(value) <= 0 || !Number.isFinite(Number(value))) throw new Error('Enter a valid LUSDT amount.');
+    return ethers.parseUnits(value, 6);
+  }
+
+  function countdownParts(targetSeconds) {
+    const now = Math.floor(Date.now() / 1000);
+    let total = Math.max(0, Number(targetSeconds || 0n) - now);
+    const days = Math.floor(total / 86400); total -= days * 86400;
+    const hours = Math.floor(total / 3600); total -= hours * 3600;
+    const mins = Math.floor(total / 60); total -= mins * 60;
+    return [days, hours, mins, total];
+  }
+  function renderCountdown(targetSeconds) {
+    const box = document.querySelector('[data-presale-countdown]');
+    if (!box) return;
+    const values = targetSeconds ? countdownParts(targetSeconds) : ['--', '--', '--', '--'];
+    box.querySelectorAll('b').forEach((el, i) => {
+      el.textContent = typeof values[i] === 'number' ? String(values[i]).padStart(i === 0 ? 1 : 2, '0') : values[i];
+    });
+  }
+
+  let state = { target: 0n, active: false, raised: 0n, hardcap: 30_000_000000n };
+  let rpcIndex = 0;
+  const provider = () => new ethers.JsonRpcProvider(RPCS[rpcIndex], LUST_CHAIN_ID_DEC);
+  const readContract = () => new ethers.Contract(PRESALE, PRESALE_ABI, provider());
+  const readLusdt = () => new ethers.Contract(LUSDT, ERC20_ABI, provider());
+
+  async function withRpc(fn) {
+    let lastErr;
+    for (let i = 0; i < RPCS.length; i++) {
+      rpcIndex = i;
+      try { return await fn(provider()); }
+      catch (err) { lastErr = err; }
+    }
+    throw lastErr;
+  }
+
+  function renderFallbackClock(err) {
+    const now = BigInt(Math.floor(Date.now() / 1000));
+    const fallbackEnd = FALLBACK_START + SALE_DURATION;
+    let target = FALLBACK_START;
+    let status = 'Starts soon';
+    let log = 'Countdown is running from the official scheduled start. Refresh on-chain data to confirm live contract data.';
+    if (now >= FALLBACK_START && now < fallbackEnd) {
+      status = 'Sale active';
+      target = fallbackEnd;
+      log = 'Sale window should be active by schedule. Refresh on-chain data or connect wallet to verify the live contract state.';
+    } else if (now >= fallbackEnd) {
+      status = 'Sale ended';
+      target = 0n;
+      log = 'Scheduled sale window ended. Contract finalization/liquidity/refund state must be checked on-chain.';
+    }
+    state.target = target;
+    setText('[data-presale-status]', status);
+    setLog('[data-presale-log]', log, 'warn');
+    renderCountdown(target);
+    console.warn('Presale RPC fallback used:', err);
+  }
+
+  function renderStatus(times, active, refundAvailable, liquidityCreated) {
+    const scheduled = Boolean(times?.[0]);
+    const finalized = Boolean(times?.[1]);
+    const start = BigInt(times?.[2] || 0);
+    const end = BigInt(times?.[3] || 0);
+    const liquidityLimit = BigInt(times?.[4] || 0);
+    const chainNow = BigInt(times?.[5] || Math.floor(Date.now() / 1000));
+
+    let status = 'Ready · Not scheduled';
+    let target = 0n;
+    let log = 'Contract is verified and funded. Waiting for on-chain schedule.';
+    let tone = '';
+
+    if (liquidityCreated) {
+      status = 'Liquidity created · Claim open';
+      log = 'The initial WLST/LUSDT liquidity was created. Purchased LST can be claimed now.';
+      tone = 'ok';
+    } else if (!scheduled) {
+      status = 'Ready · Not scheduled';
+    } else if (active) {
+      status = 'Sale active';
+      target = end;
+      log = 'Sale is active. Buying is open until the end time or hardcap.';
+      tone = 'ok';
+    } else if (chainNow < start) {
+      status = 'Starts soon';
+      target = start;
+      log = 'Countdown is live. Buying opens automatically at the contract start time.';
+    } else if (refundAvailable) {
+      status = 'Refund available';
+      log = 'Refund is available by contract rule. Participants can withdraw their LUSDT.';
+      tone = 'warn';
+    } else if (finalized) {
+      status = 'Finalized · Awaiting liquidity';
+      target = liquidityLimit;
+      log = 'Sale is finalized and waiting for liquidity creation inside the grace period.';
+    } else if (chainNow >= end) {
+      status = 'Sale ended';
+      target = liquidityLimit;
+      log = 'Sale time ended. Finalization is the next step before liquidity creation or refund state.';
+    }
+
+    state = { ...state, scheduled, finalized, start, end, liquidityLimit, active, refundAvailable, liquidityCreated, target };
+    setText('[data-presale-status]', status);
+    setLog('[data-presale-log]', log, tone);
+    renderCountdown(target);
+
+    const buyBtn = document.querySelector('[data-presale-buy]');
+    if (buyBtn && !window.lustPresale) {
+      buyBtn.textContent = active ? 'Buy LST with LUSDT' : (target ? 'Buying opens at contract start time' : 'Presale not active');
+    }
+  }
+
+  async function updateQuote() {
+    const input = document.querySelector('[data-presale-amount]');
+    if (!input || !input.value) return;
+    try {
+      const amount = parseLusdt(input.value);
+      const c = readContract();
+      const [fee, net, purchased, bonus] = await c.quoteBuy(amount);
+      setText('[data-presale-quote-lst]', fmtLst(purchased, 2));
+      setText('[data-presale-quote-bonus]', fmtLst(bonus, 2));
+      setText('[data-presale-quote-fee]', fmtLusdt(fee, 4));
+      setText('[data-presale-quote-net]', fmtLusdt(net, 4));
+    } catch (_) {}
+  }
+
+  async function updateAll() {
+    try {
+      await withRpc(async () => {
+        const c = readContract();
+        const [times, progress, active, refundAvailable, liquidityCreated, bonusBps, reserve] = await Promise.all([
+          c.saleTimes(), c.saleProgress(), c.isSaleActive(), c.isRefundAvailable(), c.liquidityCreated(), c.currentBonusBps().catch(() => 0n), c.nativeReserveStatus().catch(() => null)
+        ]);
+        renderStatus(times, active, refundAvailable, liquidityCreated);
+
+        const [raised, softcap, hardcap, net, fees, sold, bonusTotal] = progress;
+        state.raised = BigInt(raised || 0);
+        state.hardcap = BigInt(hardcap || 30_000_000000n);
+        const pct = Number((BigInt(raised || 0) * 10000n) / (BigInt(hardcap || 1) || 1n)) / 100;
+        const bar = document.querySelector('[data-presale-progress-bar]');
+        if (bar) bar.style.width = `${Math.max(0, Math.min(100, pct))}%`;
+        setText('[data-presale-progress-pct]', `${Math.max(0, Math.min(100, pct)).toFixed(2)}%`);
+        setText('[data-presale-raised]', `${fmtLusdt(raised, 2)} raised`);
+        setText('[data-presale-net-liquidity]', fmtLusdt(net, 2));
+        setText('[data-presale-sold-lst]', fmtLst(sold, 2));
+        setText('[data-presale-bonus-total]', fmtLst(bonusTotal, 2));
+        const bonusPct = Number(BigInt(bonusBps || 0)) / 100;
+        setText('[data-presale-bonus-chip]', `${bonusPct.toFixed(bonusPct % 1 ? 2 : 0)}% Genesis bonus now`);
+        if (reserve?.[2] && !active && !liquidityCreated && !refundAvailable) {
+          setLog('[data-presale-action-log]', 'Reserve funded. Waiting for the contract sale window.', 'ok');
+        }
+
+        const account = window.ethereum ? (await window.ethereum.request({ method: 'eth_accounts' }).catch(() => []))[0] : '';
+        if (account) {
+          const [balance, info, claimablePurchased] = await Promise.all([
+            readLusdt().balanceOf(account).catch(() => 0n),
+            c.userInfo(account).catch(() => null),
+            c.claimablePurchased(account).catch(() => 0n)
+          ]);
+          setText('[data-presale-lusdt-balance]', fmtLusdt(balance, 4));
+          if (info) {
+            const contributed = BigInt(info[0] || 0);
+            const remaining = 500_000000n > contributed ? 500_000000n - contributed : 0n;
+            setText('[data-presale-user-contributed]', fmtLusdt(info[0], 2));
+            setText('[data-presale-user-purchased]', fmtLst(info[1], 2));
+            setText('[data-presale-user-bonus]', fmtLst(info[2], 2));
+            setText('[data-presale-user-claimable]', fmtLst(claimablePurchased, 2));
+            setText('[data-presale-user-bonus-available]', fmtLst(info[6], 2));
+            setText('[data-presale-remaining-wallet]', fmtLusdt(remaining, 2));
+          }
+        } else {
+          setText('[data-presale-lusdt-balance]', 'Connect wallet');
+          setText('[data-presale-remaining-wallet]', 'Connect wallet');
+        }
+        await updateQuote();
+      });
+    } catch (err) {
+      renderFallbackClock(err);
+    }
+  }
+
+  async function switchToLust() {
+    if (!window.ethereum) throw new Error('MetaMask or injected wallet not found.');
+    try {
+      await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: LUST_CHAIN_ID_HEX }] });
+    } catch (err) {
+      if (err && err.code === 4902) {
+        await window.ethereum.request({ method: 'wallet_addEthereumChain', params: [{
+          chainId: LUST_CHAIN_ID_HEX,
+          chainName: 'LUST Chain',
+          nativeCurrency: { name: 'LST', symbol: 'LST', decimals: 18 },
+          rpcUrls: ['https://rpc.lustchain.org'],
+          blockExplorerUrls: ['https://explorer.lustchain.org']
+        }] });
+      } else {
+        throw err;
+      }
+    }
+  }
+  async function signer() {
+    if (!window.ethereum) throw new Error('MetaMask or injected wallet not found.');
+    await window.ethereum.request({ method: 'eth_requestAccounts' });
+    await switchToLust();
+    return new ethers.BrowserProvider(window.ethereum).getSigner();
+  }
+
+  async function buy() {
+    try {
+      const amount = parseLusdt(document.querySelector('[data-presale-amount]')?.value || '');
+      if (amount < 10_000000n) throw new Error('Minimum buy is 10 LUSDT.');
+      const s = await signer();
+      const buyer = await s.getAddress();
+      const read = readContract();
+      if (!(await read.isSaleActive())) throw new Error('Sale is not active yet.');
+      const already = await read.contributedLUSDT(buyer).catch(() => 0n);
+      if (BigInt(already || 0) + amount > 500_000000n) throw new Error('Maximum per wallet is 500 LUSDT.');
+      const token = new ethers.Contract(LUSDT, ERC20_ABI, s);
+      const allowance = await token.allowance(buyer, PRESALE);
+      if (allowance < amount) {
+        setLog('[data-presale-action-log]', 'Approval needed. Confirm LUSDT approval in your wallet...');
+        const approveTx = await token.approve(PRESALE, amount);
+        setLog('[data-presale-action-log]', `Approval sent: ${approveTx.hash}. Waiting confirmation...`);
+        await approveTx.wait();
+      }
+      setLog('[data-presale-action-log]', 'Opening buy confirmation in your wallet...');
+      const tx = await new ethers.Contract(PRESALE, PRESALE_ABI, s).buy(amount);
+      setLog('[data-presale-action-log]', `Buy sent: ${tx.hash}. Waiting confirmation...`);
+      await tx.wait();
+      setLog('[data-presale-action-log]', `Genesis LST purchase confirmed: ${tx.hash}`, 'ok');
+      await updateAll();
+    } catch (err) {
+      setLog('[data-presale-action-log]', err?.shortMessage || err?.message || 'Buy failed or was rejected.', 'warn');
+      console.warn(err);
+    }
+  }
+  async function claim(method, label) {
+    try {
+      const s = await signer();
+      setLog('[data-presale-action-log]', `Opening ${label} in your wallet...`);
+      const tx = await new ethers.Contract(PRESALE, PRESALE_ABI, s)[method]();
+      setLog('[data-presale-action-log]', `Transaction sent: ${tx.hash}. Waiting confirmation...`);
+      await tx.wait();
+      setLog('[data-presale-action-log]', `${label} confirmed: ${tx.hash}`, 'ok');
+      await updateAll();
+    } catch (err) {
+      setLog('[data-presale-action-log]', err?.shortMessage || err?.message || `${label} failed.`, 'warn');
+    }
+  }
+  async function useMax() {
+    try {
+      const s = await signer();
+      const account = await s.getAddress();
+      const [balance, contributed] = await Promise.all([readLusdt().balanceOf(account), readContract().contributedLUSDT(account).catch(() => 0n)]);
+      const remainingWallet = 500_000000n > BigInt(contributed || 0) ? 500_000000n - BigInt(contributed || 0) : 0n;
+      const remainingHardcap = 30_000_000000n > state.raised ? 30_000_000000n - state.raised : 0n;
+      const max = [BigInt(balance || 0), remainingWallet, remainingHardcap].reduce((a, b) => a < b ? a : b);
+      const input = document.querySelector('[data-presale-amount]');
+      if (input) input.value = fmt(max, 6, 6);
+      await updateQuote();
+    } catch (err) {
+      setLog('[data-presale-action-log]', err?.message || 'Could not read max LUSDT.', 'warn');
+    }
+  }
+
+  function wireFallbackActionsIfNeeded() {
+    if (window.lustPresale && window.lustPresale.refresh) return;
+    document.querySelector('[data-presale-refresh]')?.addEventListener('click', updateAll);
+    document.querySelector('[data-presale-amount]')?.addEventListener('input', () => setTimeout(updateQuote, 80));
+    document.querySelector('[data-presale-buy]')?.addEventListener('click', buy);
+    document.querySelector('[data-presale-claim]')?.addEventListener('click', () => claim('claimPurchased', 'purchased LST claim'));
+    document.querySelector('[data-presale-claim-bonus]')?.addEventListener('click', () => claim('claimBonus', 'bonus claim'));
+    document.querySelector('[data-presale-refund]')?.addEventListener('click', () => claim('refund', 'LUSDT refund'));
+    document.querySelector('[data-presale-max]')?.addEventListener('click', useMax);
+    document.querySelector('[data-connect-wallet]')?.addEventListener('click', async () => {
+      try { await signer(); await updateAll(); } catch (_) {}
+    });
+  }
+
+  window.lustPresaleDirectFallback = { refresh: updateAll };
+  setTimeout(wireFallbackActionsIfNeeded, 1800);
+  setInterval(() => renderCountdown(state.target), 1000);
+  setInterval(updateAll, 30000);
+  await updateAll();
+})();
+</script>
+
 <script src="./nft-menu.js?v=20260616-hover-v5"></script>
 </body>
 </html>
