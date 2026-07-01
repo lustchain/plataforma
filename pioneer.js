@@ -251,13 +251,42 @@ async function refreshWalletState() {
   return state.wallet;
 }
 
+async function fetchBackendStatus() {
+  if (!CONFIG.statusEndpoint) throw new Error("Status endpoint is not configured.");
+  const response = await fetch(CONFIG.statusEndpoint, { cache: "no-store" });
+  const json = await response.json().catch(() => ({}));
+  if (!response.ok || !json.ok) throw new Error(json.message || `Status failed (HTTP ${response.status}).`);
+  return json;
+}
+
+async function safeWalletHasMinted(address) {
+  try { return await readContract.walletHasMinted(address); }
+  catch (_) { return false; }
+}
+
 async function refreshContractState({ quiet = false } = {}) {
   try {
-    const [mintStarted, mintClosed, mintOpen, claimsOpen, metadataFrozen, totalMinted, totalAssigned, totalClaimed, stock] = await Promise.all([
-      readContract.mintStarted(), readContract.mintClosed(), readContract.mintOpen(), readContract.claimsOpen(),
-      readContract.metadataFrozen(), readContract.totalMinted(), readContract.totalRewardAssigned(), readContract.totalRewardClaimed(),
-      readContract.remainingRewardStock()
-    ]);
+    let mintStarted, mintClosed, mintOpen, claimsOpen, metadataFrozen, totalMinted, totalAssigned, totalClaimed, stock;
+
+    try {
+      const status = await fetchBackendStatus();
+      mintStarted = Boolean(status.mintStarted);
+      mintClosed = Boolean(status.mintClosed);
+      mintOpen = Boolean(status.mintOpen);
+      claimsOpen = Boolean(status.claimsOpen);
+      metadataFrozen = Boolean(status.metadataFrozen);
+      totalMinted = BigInt(status.totalMinted || 0);
+      totalAssigned = BigInt(status.totalRewardAssigned || 0);
+      totalClaimed = BigInt(status.totalRewardClaimed || 0);
+      stock = status.stock || {};
+    } catch (backendError) {
+      const onchain = await Promise.all([
+        readContract.mintStarted(), readContract.mintClosed(), readContract.mintOpen(), readContract.claimsOpen(),
+        readContract.metadataFrozen(), readContract.totalMinted(), readContract.totalRewardAssigned(), readContract.totalRewardClaimed(),
+        readContract.remainingRewardStock()
+      ]);
+      [mintStarted, mintClosed, mintOpen, claimsOpen, metadataFrozen, totalMinted, totalAssigned, totalClaimed, stock] = onchain;
+    }
 
     const minted = Number(totalMinted);
     const remaining = MAX_SUPPLY - minted;
@@ -283,7 +312,7 @@ async function refreshContractState({ quiet = false } = {}) {
 
     await refreshWalletState();
     if (state.wallet) {
-      const alreadyMinted = await readContract.walletHasMinted(state.wallet);
+      const alreadyMinted = await safeWalletHasMinted(state.wallet);
       if (alreadyMinted && !state.tokenId) {
         const stored = localStorage.getItem(`lustPioneerToken:${state.wallet.toLowerCase()}`);
         if (stored) await loadToken(Number(stored), { quiet: true });
@@ -292,16 +321,16 @@ async function refreshContractState({ quiet = false } = {}) {
       if (alreadyMinted) {
         setLog(state.tokenId ? `This wallet already minted ${formatTokenId(state.tokenId)}.` : "This wallet has already minted one Pioneer NFT.", "ok");
       } else if (!quiet && mintOpen) {
-        setLog("Wallet eligible. Complete the X fields and all five confirmations.", "ok");
+        setLog("Mint is open. Complete the X fields and all five confirmations.", "ok");
       }
     } else if (!quiet) {
-      setLog("Connect your wallet and complete all requirements.");
+      setLog(mintOpen ? "Mint is open. Connect your wallet and complete all requirements." : "Connect your wallet and complete all requirements.");
     }
   } catch (error) {
     console.error(error);
     const pill = qs("[data-pioneer-live-pill]");
-    if (pill) { pill.textContent = "RPC unavailable"; pill.dataset.tone = "warn"; }
-    if (!quiet) setLog(error?.shortMessage || error?.message || "Could not read the NFT contract.", "warn");
+    if (pill) { pill.textContent = "Status unavailable"; pill.dataset.tone = "warn"; }
+    if (!quiet) setLog(error?.shortMessage || error?.message || "Could not read the NFT contract status.", "warn");
   }
 }
 
@@ -327,8 +356,11 @@ async function mintPioneer() {
     setText("[data-pioneer-wallet]", shortAddress(address));
 
     const contractState = state.contract || {};
-    if (!contractState.mintOpen) throw new Error("The Pioneer mint is not open yet.");
-    if (await readContract.walletHasMinted(address)) throw new Error("This wallet has already minted one Pioneer NFT.");
+    if (!contractState.mintOpen) {
+      await refreshContractState({ quiet: true });
+      if (!state.contract?.mintOpen) throw new Error("The Pioneer mint is not open yet.");
+    }
+    if (await safeWalletHasMinted(address)) throw new Error("This wallet has already minted one Pioneer NFT.");
 
     const handle = normalizeXHandle(qs("[data-pioneer-x-handle]")?.value);
     const postUrl = normalizePostUrl(qs("[data-pioneer-post-url]")?.value);
