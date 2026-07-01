@@ -1,0 +1,37 @@
+LUST Mining FINAL9 definitive page update
+
+Changed only Mining-related files:
+- mining.html
+- miner-package-hashes.txt
+- DEPLOY_MINING_FINAL9_DEFINITIVE_20260701.txt
+
+Purpose:
+- Update Windows FINAL9 ZIP SHA256 after adding the full live status dashboard.
+- Keep Ubuntu FINAL9 SHA256 unchanged.
+- Keep Register and Active buttons on the Mining page.
+- Keep RPC live widget fallback so users do not see a scary error if a browser blocks RPC/CORS.
+- Explain the full Windows live status:
+  STATUS-LUST-MINER-WINDOWS.bat
+  LIVE-STATUS-LUST-MINER-WINDOWS.bat
+  RESET-STATUS-COUNTERS-FINAL9.bat
+  STATUS-FINAL9.ps1
+- Explain correct mining flow:
+  Download -> Start -> copy Operator Address -> Connect wallet -> Register -> Active -> wait about 64 blocks -> mine.
+- Explain fair shares:
+  One active wallet = one chance.
+  Public block reward goes to the public reward wallet.
+  PROD1/PROD2 have no wallet privilege in FINAL9.
+
+Current official downloads:
+Windows ZIP:
+https://snapshot.lustchain.org/downloads/lust-final9-miner-windows-amd64.zip
+SHA256:
+dce1dc8bbc6ce1d1f96753b5e27cb241620672bd6784727876fa0b95efde8598
+
+Ubuntu TAR.GZ:
+https://snapshot.lustchain.org/downloads/lust-final9-miner-ubuntu-amd64.tar.gz
+SHA256:
+b7bd246df2d2bafb73227285005c066bedc53e396e9c5998a1e1827e660b5be1
+
+Deploy recommendation:
+Upload only mining.html and miner-package-hashes.txt to the live site if the rest of the site is already working.

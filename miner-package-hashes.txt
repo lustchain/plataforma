@@ -2,7 +2,7 @@ LUST FINAL9 public mining downloads
 
 Windows full miner ZIP:
 https://snapshot.lustchain.org/downloads/lust-final9-miner-windows-amd64.zip
-SHA256: 5b37c5ed9a3891fbd9f3d9b5519777fee5b903864b060d4f43775d728e955828
+SHA256: dce1dc8bbc6ce1d1f96753b5e27cb241620672bd6784727876fa0b95efde8598
 
 Ubuntu full miner TAR.GZ:
 https://snapshot.lustchain.org/downloads/lust-final9-miner-ubuntu-amd64.tar.gz
@@ -18,3 +18,9 @@ FINAL9 rules:
 - PROD1/PROD2 have no wallet privilege in FINAL9.
 - Official producer rewards use the Treasury path.
 - After Active, wait about 64 blocks before the miner fully enters rotation.
+
+Windows package status files:
+- STATUS-LUST-MINER-WINDOWS.bat
+- LIVE-STATUS-LUST-MINER-WINDOWS.bat
+- RESET-STATUS-COUNTERS-FINAL9.bat
+- STATUS-FINAL9.ps1

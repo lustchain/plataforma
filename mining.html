@@ -194,10 +194,11 @@
           <a class="lmin-btn primary" href="https://snapshot.lustchain.org/downloads/lust-final9-miner-windows-amd64.zip" target="_blank" rel="noreferrer">Download Windows ZIP</a>
           <a class="lmin-btn" href="https://snapshot.lustchain.org/downloads/SHA256SUMS-FINAL9.txt" target="_blank" rel="noreferrer">SHA256 file</a>
         </div>
-        <div class="lmin-mono">SHA256 ZIP: 5b37c5ed9a3891fbd9f3d9b5519777fee5b903864b060d4f43775d728e955828</div>
+        <div class="lmin-mono">SHA256 ZIP: dce1dc8bbc6ce1d1f96753b5e27cb241620672bd6784727876fa0b95efde8598</div>
         <ul>
           <li><strong>START</strong> asks for your public 0x reward wallet and starts sync/mining.</li>
-          <li><strong>STATUS</strong> shows local block, public block, gap, peers and sync state.</li>
+          <li><strong>STATUS</strong> opens the full FINAL9 live dashboard: wallet, operator, blocks mined, latest miner, gap, peers, txpool, balance and estimated rewards.</li>
+          <li><strong>LIVE STATUS</strong> auto-refreshes every 10 seconds. <strong>RESET STATUS COUNTERS</strong> resets only the local display counters.</li>
           <li><strong>STOP</strong> stops the miner only when you want to stop mining.</li>
         </ul>
       </div>
@@ -288,14 +289,37 @@
     <div class="lmin-head">
       <div>
         <div class="lmin-kicker">After Active</div>
-        <h2>How to check mining</h2>
+        <h2>Check the miner with the full live status</h2>
       </div>
-      <p>The miner must stay open. If Gap is 0, peers are connected and sync is false, the local miner is synchronized.</p>
+      <p>The miner must stay open. When Gap is 0, peers are connected and Syncing is false, the local miner is synchronized and active.</p>
     </div>
     <div class="lmin-grid">
-      <div class="lmin-card"><h3>Windows status</h3><p>Run <strong>STATUS-LUST-MINER-WINDOWS.bat</strong>. It shows Local Block, Public Block, Gap, Peers and Syncing.</p></div>
-      <div class="lmin-card"><h3>Ubuntu status</h3><p>Run <strong>STATUS-LUST-MINER-UBUNTU.sh</strong> from the Ubuntu package folder.</p></div>
-      <div class="lmin-card"><h3>Explorer proof</h3><p>When your wallet produces a block, the latest block miner or explorer block history shows your reward wallet address.</p></div>
+      <div class="lmin-card">
+        <h3>Windows full live status</h3>
+        <p>Run <strong>STATUS-LUST-MINER-WINDOWS.bat</strong> or <strong>LIVE-STATUS-LUST-MINER-WINDOWS.bat</strong>. It opens <strong>STATUS-FINAL9.ps1</strong> and shows Account, Sync, Network, Your Mining Session, Rewards / Balance and auto-refreshes every 10 seconds.</p>
+        <div class="lmin-mono">STATUS-LUST-MINER-WINDOWS.bat<br>LIVE-STATUS-LUST-MINER-WINDOWS.bat<br>RESET-STATUS-COUNTERS-FINAL9.bat<br>STATUS-FINAL9.ps1</div>
+        <div class="lmin-mono">STATUS: SYNCED / MINING ACTIVE</div>
+      </div>
+      <div class="lmin-card">
+        <h3>What the status shows</h3>
+        <p>Wallet, Operator, Chain ID, Local Block, Public Block, Gap, Peers, Syncing, Latest Miner, Latest is you, local txpool, blocks mined by you, last mined block, producer estimate, real gain and current wallet balance.</p>
+      </div>
+      <div class="lmin-card">
+        <h3>Reset only counters</h3>
+        <p>Run <strong>RESET-STATUS-COUNTERS-FINAL9.bat</strong> only if you want to reset the local session counters. It does not stop mining and does not touch your wallet or blockchain history.</p>
+      </div>
+      <div class="lmin-card">
+        <h3>Ubuntu status</h3>
+        <p>Run <strong>STATUS-LUST-MINER-UBUNTU.sh</strong> from the Ubuntu package folder. If the local miner is synced, the explorer is the final proof of mined blocks and rewards.</p>
+      </div>
+      <div class="lmin-card">
+        <h3>Explorer proof</h3>
+        <p>When your wallet produces a block, the latest block miner or explorer block history shows your public reward wallet address. The final truth is always the wallet balance and explorer history.</p>
+      </div>
+      <div class="lmin-card">
+        <h3>Status warning</h3>
+        <p>If a browser or local RPC temporarily returns empty data, the miner can still be running. Check that the miner window remains open and that the status shows Process running, peers and Gap close to 0.</p>
+      </div>
     </div>
   </section>
 
@@ -435,7 +459,7 @@
   </div>
 </footer>
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
-<script type="module" src="./app.js?v=20260701-mining-final9-active-rpc-fix"></script>
+<script type="module" src="./app.js?v=20260701-mining-final9-definitive-live-status"></script>
 <script>
 const LUST_MINING = {
   chainId: '0x1b0b',
