@@ -6,7 +6,7 @@ SHA256: dce1dc8bbc6ce1d1f96753b5e27cb241620672bd6784727876fa0b95efde8598
 
 Ubuntu full miner TAR.GZ:
 https://snapshot.lustchain.org/downloads/lust-final9-miner-ubuntu-amd64.tar.gz
-SHA256: b7bd246df2d2bafb73227285005c066bedc53e396e9c5998a1e1827e660b5be1
+SHA256: 8145bb57d1bce096265010f87e92e80df3f4e17b4e4a33e6210b108a6a624e04
 
 SHA256SUMS:
 https://snapshot.lustchain.org/downloads/SHA256SUMS-FINAL9.txt
@@ -18,3 +18,8 @@ FINAL9 rules:
 - PROD1/PROD2 have no wallet privilege in FINAL9.
 - Official producer rewards use the Treasury path.
 - After Active, wait about 64 blocks before the miner fully enters rotation.
+- The maturity period helps protect the network against instant wallet rotation and spam registrations.
+
+Package status:
+- Windows package includes full live status.
+- Ubuntu package includes START, STATUS, LIVE STATUS, STOP and RESET scripts.

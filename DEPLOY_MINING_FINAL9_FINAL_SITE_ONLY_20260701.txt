@@ -1,0 +1,35 @@
+LUST Mining FINAL9 final page update - 2026-07-01
+
+Purpose:
+- Update only the Mining page and miner-package hash file.
+- Preserve the user's latest site ZIP and Bridge changes.
+- Do not edit Bridge, Presale, Swap, NFTs, Staking, Docs, Home or shared components.
+
+Upload only these files to the site:
+1) mining.html
+2) miner-package-hashes.txt
+
+Final download hashes:
+Windows ZIP:
+dce1dc8bbc6ce1d1f96753b5e27cb241620672bd6784727876fa0b95efde8598
+
+Ubuntu TAR.GZ:
+8145bb57d1bce096265010f87e92e80df3f4e17b4e4a33e6210b108a6a624e04
+
+Important page content included:
+- Professional public mining language, no test/provisional wording.
+- Register and Active flow.
+- Operator Address explanation.
+- About 64 blocks maturity after Active and why it exists.
+- One active wallet = one mining chance.
+- More devices with the same reward wallet do not increase chance.
+- FINAL9 payment rules.
+- Windows full live status scripts.
+- Ubuntu START / STATUS / LIVE STATUS / STOP / RESET scripts.
+- RPC live widget with fallback messaging.
+
+Validation status:
+- Windows miner was tested on real PC and mined blocks.
+- Public reward payment audited: public producer wallet receives 1.4 LST and active public peer receives 0.6 LST.
+- Official PROD1/PROD2 blocks route reward to Treasury.
+- Ubuntu public package was completed and now includes required scripts. Full external Ubuntu mining test still requires an Ubuntu machine, but package structure, scripts and public hash are updated.
