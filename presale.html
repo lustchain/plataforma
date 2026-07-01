@@ -120,7 +120,7 @@
   </div>
 </header>
 
-<main class="presale-page" data-presale-page>
+<main class="presale-page" data-presale-standalone>
   <section class="presale-hero">
     <div class="presale-hero-copy">
       <small class="presale-kicker">Genesis liquidity event</small>
@@ -135,14 +135,14 @@
 
     <aside class="presale-countdown-card">
       <small>Status</small>
-      <strong data-presale-status>Loading...</strong>
+      <strong data-presale-status-stable>Loading...</strong>
       <div class="presale-countdown" data-presale-countdown-stable>
         <div><b>--</b><span>days</span></div>
         <div><b>--</b><span>hours</span></div>
         <div><b>--</b><span>mins</span></div>
         <div><b>--</b><span>secs</span></div>
       </div>
-      <div class="presale-log" data-presale-log>Connecting to LUST Chain RPC...</div>
+      <div class="presale-log" data-presale-log-stable>Loading countdown...</div>
     </aside>
   </section>
 
@@ -420,169 +420,6 @@
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 <script type="module" src="./app.js?v=20260622-faucet-api-restored-v2"></script>
 
-<script type="module">
-/* LUST Presale stable countdown v20260701-single-owner
-   IMPORTANT: this controls only the countdown box on presale.html.
-   The shared app.js still controls wallet, buy, claim, refund and all other presale data.
-   The countdown box intentionally uses data-presale-countdown-stable so app.js cannot
-   also write to the same numbers and cause blinking. */
-(async () => {
-  const box = document.querySelector('[data-presale-countdown-stable]');
-  if (!box || window.__LUST_STABLE_PRESALE_COUNTDOWN__) return;
-  window.__LUST_STABLE_PRESALE_COUNTDOWN__ = true;
-
-  const PRESALE = '0x6AD87104DDC8F7CEd9267F115EE107F44AA9f936';
-  const RPCS = ['https://rpc.lustchain.org', 'https://rpc-backup.lustchain.org'];
-  const CHAIN_ID = 6923;
-
-  // Safe fallback based on the scheduled on-chain start already used by the launch.
-  // It is used only while the RPC is loading, so the countdown never flashes to --.
-  const FALLBACK_START = 1782342000n;
-  const SALE_DURATION = 60n * 24n * 60n * 60n;
-  const FALLBACK_END = FALLBACK_START + SALE_DURATION;
-
-  const ABI = [
-    'function saleTimes() view returns (bool scheduled,bool finalized,uint256 start,uint256 end,uint256 liquidityLimit,uint256 currentTime)',
-    'function isSaleActive() view returns (bool)',
-    'function isRefundAvailable() view returns (bool)',
-    'function liquidityCreated() view returns (bool)'
-  ];
-
-  const statusEl = document.querySelector('[data-presale-status]');
-  const logEl = document.querySelector('[data-presale-log]');
-  const cells = Array.from(box.querySelectorAll('b'));
-  let ethersLib = null;
-  let target = FALLBACK_END;
-  let chainOffsetMs = 0;
-  let lastRendered = '';
-  let lastStatus = '';
-  let lastLog = '';
-  let lastTone = '';
-
-  function setStatus(text, log = '', tone = '') {
-    if (statusEl && text && lastStatus !== text) {
-      statusEl.textContent = text;
-      lastStatus = text;
-    }
-    if (logEl && log && (lastLog !== log || lastTone !== tone)) {
-      logEl.textContent = log;
-      logEl.dataset.tone = tone;
-      lastLog = log;
-      lastTone = tone;
-    }
-  }
-
-  function parts(secondsLeft) {
-    let total = Math.max(0, Number(secondsLeft || 0));
-    const days = Math.floor(total / 86400); total -= days * 86400;
-    const hours = Math.floor(total / 3600); total -= hours * 3600;
-    const mins = Math.floor(total / 60); total -= mins * 60;
-    return [days, hours, mins, total];
-  }
-
-  function render() {
-    const nowMs = Date.now() + chainOffsetMs;
-    const targetMs = Number(target) * 1000;
-    const values = target > 0n ? parts(Math.floor((targetMs - nowMs) / 1000)) : [0, 0, 0, 0];
-    const key = values.join(':');
-    if (key === lastRendered) return;
-    lastRendered = key;
-    cells.forEach((el, i) => {
-      const next = String(values[i]).padStart(i === 0 ? 1 : 2, '0');
-      if (el.textContent !== next) el.textContent = next;
-    });
-  }
-
-  function fallbackTarget() {
-    const now = BigInt(Math.floor(Date.now() / 1000));
-    if (now < FALLBACK_START) {
-      target = FALLBACK_START;
-      setStatus('Starts soon', 'Countdown is live. Buying opens automatically at the contract start time.');
-    } else if (now < FALLBACK_END) {
-      target = FALLBACK_END;
-      setStatus('Sale active', 'The Genesis sale is active. Buy LST with LUSDT while the cap is available.', 'ok');
-    } else {
-      target = 0n;
-      setStatus('Sale ended', 'Sale time ended. Check finalization, liquidity creation or refund state on-chain.');
-    }
-    render();
-  }
-
-  async function getEthers() {
-    if (ethersLib) return ethersLib;
-    const mod = await import('https://esm.sh/ethers@6.16.0');
-    ethersLib = mod.ethers;
-    return ethersLib;
-  }
-
-  async function refreshFromChain() {
-    try {
-      const ethers = await getEthers();
-      let lastErr = null;
-      for (const rpc of RPCS) {
-        try {
-          const provider = new ethers.JsonRpcProvider(rpc, CHAIN_ID);
-          const contract = new ethers.Contract(PRESALE, ABI, provider);
-          const [times, active, refundAvailable, liqCreated] = await Promise.all([
-            contract.saleTimes(),
-            contract.isSaleActive(),
-            contract.isRefundAvailable(),
-            contract.liquidityCreated()
-          ]);
-
-          const scheduled = Boolean(times[0]);
-          const finalized = Boolean(times[1]);
-          const start = BigInt(times[2] || 0);
-          const end = BigInt(times[3] || 0);
-          const liquidityLimit = BigInt(times[4] || 0);
-          const chainNow = BigInt(times[5] || 0);
-          chainOffsetMs = Number(chainNow) * 1000 - Date.now();
-
-          if (liqCreated) {
-            target = 0n;
-            setStatus('Liquidity created · Claim open', 'The initial WLST/LUSDT liquidity was created. Purchased LST can be claimed now.', 'ok');
-          } else if (!scheduled) {
-            target = 0n;
-            setStatus('Ready · Not scheduled', 'Contract is verified and ready. The public start time has not been scheduled yet.');
-          } else if (active) {
-            target = end;
-            setStatus('Sale active', 'The Genesis sale is active. Buy LST with LUSDT while the cap is available.', 'ok');
-          } else if (chainNow < start) {
-            target = start;
-            setStatus('Starts soon', 'Countdown is live. Buying opens automatically at the contract start time.');
-          } else if (refundAvailable) {
-            target = 0n;
-            setStatus('Refund available', 'Refund is available by contract rule. Participants can withdraw their LUSDT.', 'warn');
-          } else if (finalized) {
-            target = liquidityLimit;
-            setStatus('Finalized · Awaiting liquidity', 'Sale is finalized and waiting for liquidity creation inside the grace period.');
-          } else if (chainNow >= end) {
-            target = liquidityLimit;
-            setStatus('Sale ended', 'Sale time ended. Finalization is the next step before liquidity creation or refund state.');
-          } else {
-            fallbackTarget();
-          }
-
-          render();
-          return;
-        } catch (err) {
-          lastErr = err;
-        }
-      }
-      throw lastErr;
-    } catch (err) {
-      console.warn('Stable presale countdown RPC fallback:', err);
-      fallbackTarget();
-    }
-  }
-
-  fallbackTarget();
-  await refreshFromChain();
-  setInterval(render, 1000);
-  setInterval(refreshFromChain, 30000);
-  document.querySelector('[data-presale-refresh]')?.addEventListener('click', refreshFromChain);
-})();
-</script>
 <script src="./nft-menu.js?v=20260616-hover-v5"></script>
 </body>
 </html>
