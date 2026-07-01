@@ -61,7 +61,7 @@
       <small>Launch helper</small>
       <h1>Pioneer NFT owner setup.</h1>
       <p>This page uses your connected owner wallet to prepare the already deployed Pioneer contract. It never asks for a private key. The backend signer private key stays only on the downloads/faucet server.</p>
-      <div class="owner-warning"><strong>Order:</strong> backend online → set mint authorizer → set metadata → freeze metadata → fund 10,000 LST → start mint. Do not freeze before the metadata URL is working.</div>
+      <div class="owner-warning"><strong>Order:</strong> backend online at pioneer.lustchain.org → set mint authorizer → set metadata → freeze metadata → fund 10,000 LST → start mint. Do not freeze before the metadata URL is working.</div>
     </section>
 
     <section class="owner-grid">
@@ -78,7 +78,7 @@
         <div class="owner-row"><span>claimsOpen</span><strong id="claimsOpen">checking...</strong></div>
         <div class="owner-row"><span>totalMinted</span><strong id="totalMinted">checking...</strong></div>
         <div class="owner-row"><span>Contract balance</span><strong id="contractBalance">checking...</strong></div>
-        <div class="owner-actions"><button class="btn" type="button" id="refreshAll">Refresh</button><a class="btn" href="https://downloads.lustchain.org/pioneer/health" target="_blank" rel="noopener">Open backend health</a></div>
+        <div class="owner-actions"><button class="btn" type="button" id="refreshAll">Refresh</button><a class="btn" href="https://pioneer.lustchain.org/pioneer/health" target="_blank" rel="noopener">Open backend health</a></div>
         <div class="owner-log" id="ownerLog">Open this page with the owner wallet.</div>
       </article>
 
@@ -96,10 +96,10 @@
         <small>Step 2</small><h2>Metadata</h2>
         <p>These are the final URLs for automatic explorer/wallet metadata.</p>
         <div class="owner-form">
-          <label><span>Base token URI</span><input class="input" id="baseTokenURI" value="https://downloads.lustchain.org/pioneer/metadata/"></label>
-          <label><span>Collection metadata URI</span><input class="input" id="collectionURI" value="https://downloads.lustchain.org/pioneer/collection.json"></label>
+          <label><span>Base token URI</span><input class="input" id="baseTokenURI" value="https://pioneer.lustchain.org/pioneer/metadata/"></label>
+          <label><span>Collection metadata URI</span><input class="input" id="collectionURI" value="https://pioneer.lustchain.org/pioneer/collection.json"></label>
         </div>
-        <div class="owner-actions"><button class="btn primary" type="button" id="setMetadata">Set metadata</button><a class="btn" href="https://downloads.lustchain.org/pioneer/collection.json" target="_blank" rel="noopener">Test collection.json</a></div>
+        <div class="owner-actions"><button class="btn primary" type="button" id="setMetadata">Set metadata</button><a class="btn" href="https://pioneer.lustchain.org/pioneer/collection.json" target="_blank" rel="noopener">Test collection.json</a></div>
         <div class="owner-warning owner-danger"><strong>Freeze only after testing the backend.</strong> Once frozen, metadata cannot be changed.</div>
         <div class="owner-actions"><button class="btn" type="button" id="freezeMetadata">Freeze metadata</button></div>
       </article>

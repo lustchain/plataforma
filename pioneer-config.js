@@ -4,8 +4,8 @@ window.LUST_PIONEER_CONFIG = Object.freeze({
   rpcUrl: "https://rpc.lustchain.org",
   explorerUrl: "https://explorer.lustchain.org",
   contractAddress: "0xCb207489E4dbd6D4e3bf75CA947D0C43d621Fef1",
-  authorizeEndpoint: "https://downloads.lustchain.org/pioneer/authorize",
-  statusEndpoint: "https://downloads.lustchain.org/pioneer/status",
+  authorizeEndpoint: "https://pioneer.lustchain.org/pioneer/authorize",
+  statusEndpoint: "https://pioneer.lustchain.org/pioneer/status",
   faucetUrl: "./faucet.html",
   presaleUrl: "https://platform.lustchain.org/presale.html",
 
