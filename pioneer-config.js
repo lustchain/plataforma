@@ -6,6 +6,7 @@ window.LUST_PIONEER_CONFIG = Object.freeze({
   contractAddress: "0xCb207489E4dbd6D4e3bf75CA947D0C43d621Fef1",
   authorizeEndpoint: "https://pioneer.lustchain.org/pioneer/authorize",
   statusEndpoint: "https://pioneer.lustchain.org/pioneer/status",
+  metadataBaseUrl: "https://pioneer.lustchain.org/pioneer/metadata/",
   faucetUrl: "./faucet.html",
   presaleUrl: "https://platform.lustchain.org/presale.html",
 
