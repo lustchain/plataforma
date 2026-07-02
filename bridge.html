@@ -200,8 +200,8 @@
         </div>
 
         <div class="bridge-action-grid two-actions">
-          <button class="btn primary" type="button" data-bridge-deposit>⚡ Approve + Deposit</button>
-          <button class="btn" type="button" data-bridge-mint disabled>Mint claim</button>
+          <button class="btn primary" type="button" data-bridge-deposit>1 · Deposit USDT</button>
+          <button class="btn" type="button" data-bridge-mint disabled>2 · Mint on LUST</button>
         </div>
 
         <div class="bridge-pro-status">
@@ -233,7 +233,7 @@
         <div class="bridge-pro-steps">
           <div class="active"><b>1</b><span><strong>Approve & burn</strong><small>Burn LUSDT on LUST Chain.</small></span></div>
           <div><b>2</b><span><strong>Wait for release</strong><small>The bridge prepares the release automatically.</small></span></div>
-          <div><b>3</b><span><strong>Release USDT</strong><small>Confirm on Polygon or BSC.</small></span></div>
+          <div><b>3</b><span><strong>2 · Release USDT</strong><small>Confirm on Polygon or BSC.</small></span></div>
         </div>
 
         <div class="bridge-route-box">
@@ -280,8 +280,8 @@
         </div>
 
         <div class="bridge-action-grid two-actions">
-          <button class="btn primary" type="button" data-bridge-burn>⚡ Approve + Burn</button>
-          <button class="btn" type="button" data-bridge-release disabled>Release USDT</button>
+          <button class="btn primary" type="button" data-bridge-burn>1 · Burn LUSDT</button>
+          <button class="btn" type="button" data-bridge-release disabled>2 · Release USDT</button>
         </div>
 
         <div class="bridge-pro-status">
@@ -564,7 +564,7 @@
     $("[data-bsc-recover-mint]")?.addEventListener("click", mintRecoveredClaim);
   });
 </script>
-<script type="module" src="./app.js?v20260702-lusdt-bridge-idle-fix"></script>
+<script type="module" src="./app.js?v20260702-release-ux-final"></script>
 
 <script type="module" id="bridge-lusdt-sell-balance-fix-v41-no-blink">
   import { ethers } from "https://esm.sh/ethers@6.16.0";
