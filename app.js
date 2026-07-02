@@ -894,8 +894,15 @@ function bridgeReleaseLog(message, tone = "") {
 function setBridgeButtonState(selector, state = "default", label = "") {
   const btn = document.querySelector(selector);
   if (!btn) return;
+
   if (!btn.dataset.defaultText) btn.dataset.defaultText = btn.textContent.trim();
+
   btn.classList.remove("is-ready", "is-waiting", "is-loading");
+  btn.dataset.bridgeState = state || "default";
+
+  const fixedLabel = bridgeActionLabel(selector, state === "ready");
+  btn.textContent = fixedLabel;
+
   if (state === "ready") {
     btn.classList.add("is-ready");
     btn.removeAttribute("disabled");
@@ -910,9 +917,18 @@ function setBridgeButtonState(selector, state = "default", label = "") {
   } else {
     btn.removeAttribute("disabled");
   }
-  if (label) btn.textContent = label;
-  else if (state === "default" || state === "disabled") btn.textContent = btn.dataset.defaultText;
+
+  // Keep the button visually stable. Show step changes in the status row instead.
+  const step = String(label || "").replace(/\.\.\.$/, "").trim();
+  if (step && step !== fixedLabel) {
+    if (selector.includes("mint") || selector.includes("deposit")) {
+      setText("[data-bridge-claim-state]", step);
+    } else if (selector.includes("release") || selector.includes("burn")) {
+      setText("[data-bridge-release-state]", step);
+    }
+  }
 }
+
 
 function bridgeActionLabel(selector, ready = false) {
   if (selector.includes("mint")) return ready ? "Mint on LUST" : "Mint on LUST";

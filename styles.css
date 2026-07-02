@@ -3375,3 +3375,146 @@ button.btn[disabled], .btn[disabled] {
     transition:none!important;
   }
 }
+
+
+/* v34 bridge objective buttons: fixed color, fixed label, no flicker */
+.bridge-action-grid.two-actions .btn,
+.bridge-action-grid.two-actions .btn.primary,
+.bridge-action-grid.two-actions .btn.is-ready,
+.bridge-action-grid.two-actions .btn.is-loading,
+.bridge-action-grid.two-actions .btn.is-waiting {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  min-height: 56px !important;
+  border-radius: 16px !important;
+  border: 2px solid rgba(255, 78, 168, .54) !important;
+  background: #f70375 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+  text-shadow: none !important;
+}
+
+.bridge-action-grid.two-actions .btn:hover,
+.bridge-action-grid.two-actions .btn.primary:hover,
+.bridge-action-grid.two-actions .btn.is-ready:hover,
+.bridge-action-grid.two-actions .btn.is-loading:hover,
+.bridge-action-grid.two-actions .btn.is-waiting:hover,
+.bridge-action-grid.two-actions .btn:active,
+.bridge-action-grid.two-actions .btn:focus {
+  background: #f70375 !important;
+  border-color: rgba(255, 78, 168, .54) !important;
+  box-shadow: none !important;
+  transform: none !important;
+  outline: none !important;
+}
+
+.bridge-action-grid.two-actions .btn:disabled,
+.bridge-action-grid.two-actions .btn[disabled],
+.bridge-action-grid.two-actions .btn.is-loading,
+.bridge-action-grid.two-actions .btn.is-waiting {
+  cursor: not-allowed !important;
+}
+
+.bridge-action-grid.two-actions .btn:not(:disabled),
+.bridge-action-grid.two-actions .btn.is-ready:not(:disabled) {
+  cursor: pointer !important;
+}
+
+.bridge-action-grid.two-actions .btn.is-loading::before,
+.bridge-action-grid.two-actions .btn.is-waiting::before,
+.bridge-action-grid.two-actions .btn.is-ready::before,
+.bridge-action-grid.two-actions .btn::before,
+.bridge-action-grid.two-actions .btn::after {
+  content: none !important;
+  display: none !important;
+  animation: none !important;
+}
+
+.bridge-status-title span {
+  min-width: 128px !important;
+  text-align: right !important;
+}
+
+.bridge-status-title span::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin-right: 7px;
+  background: #f70375;
+  vertical-align: 1px;
+}
+
+@media (max-width: 720px) {
+  .bridge-status-title {
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+  .bridge-status-title span {
+    min-width: 0 !important;
+    text-align: left !important;
+  }
+}
+
+
+/* v35 bridge executive buttons: one stable visual style, no color changes */
+.bridge-action-grid.two-actions .btn,
+.bridge-action-grid.two-actions .btn.primary,
+.bridge-action-grid.two-actions .btn.is-ready,
+.bridge-action-grid.two-actions .btn.is-loading,
+.bridge-action-grid.two-actions .btn.is-waiting,
+.bridge-action-grid.two-actions .btn:disabled,
+.bridge-action-grid.two-actions .btn[disabled],
+.bridge-action-grid.two-actions .btn:hover,
+.bridge-action-grid.two-actions .btn.primary:hover,
+.bridge-action-grid.two-actions .btn.is-ready:hover,
+.bridge-action-grid.two-actions .btn.is-loading:hover,
+.bridge-action-grid.two-actions .btn.is-waiting:hover,
+.bridge-action-grid.two-actions .btn:active,
+.bridge-action-grid.two-actions .btn:focus {
+  min-height: 56px !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(247, 3, 117, .58) !important;
+  background: rgba(18, 18, 24, .82) !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+
+.bridge-action-grid.two-actions .btn:not(:disabled),
+.bridge-action-grid.two-actions .btn.is-ready:not(:disabled) {
+  cursor: pointer !important;
+}
+
+.bridge-action-grid.two-actions .btn:disabled,
+.bridge-action-grid.two-actions .btn[disabled],
+.bridge-action-grid.two-actions .btn.is-loading,
+.bridge-action-grid.two-actions .btn.is-waiting {
+  cursor: default !important;
+}
+
+.bridge-action-grid.two-actions .btn::before,
+.bridge-action-grid.two-actions .btn::after,
+.bridge-action-grid.two-actions .btn.is-ready::before,
+.bridge-action-grid.two-actions .btn.is-ready::after,
+.bridge-action-grid.two-actions .btn.is-loading::before,
+.bridge-action-grid.two-actions .btn.is-loading::after,
+.bridge-action-grid.two-actions .btn.is-waiting::before,
+.bridge-action-grid.two-actions .btn.is-waiting::after {
+  content: none !important;
+  display: none !important;
+  animation: none !important;
+}
