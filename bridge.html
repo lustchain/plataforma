@@ -112,36 +112,41 @@
     <a href="./docs.html">Docs</a>
   </nav>
   <div class="actions">
-    <button class="btn connect-btn" type="button" data-connect-wallet aria-label="Connect wallet">
+    <button class="btn connect-btn" type="button" data-connect-wallet aria-label="Connect wallet" disabled aria-disabled="true">
       <div class="connect-icon">◫</div>
-      <div class="connect-copy"><strong>Connect wallet</strong><span>Wallet not connected</span></div>
+      <div class="connect-copy"><strong>Bridge paused</strong><span>Wallet connect disabled here</span></div>
       <div class="connect-caret">⌄</div>
     </button>
   </div>
 </header>
 
-<main class="bridge-pro-page" data-lusdt-bridge>
+<main class="bridge-pro-page bridge-pro-page--paused" data-lusdt-bridge data-bridge-paused="true">
   <section class="bridge-pro-intro">
     <div class="bridge-pro-intro-copy">
       <small class="bridge-pro-kicker">Bridge</small>
-      <h1>Move stable liquidity.</h1>
-      <p>Fast LUSDT transfers between Polygon, BSC and LUST. Choose a direction, confirm in your wallet, then finish the claim or release on the same screen.</p>
-      <span>Buy on Polygon, sell on BSC — only when the destination reserve has enough USDT.</span>
+      <h1>LUSDT Bridge temporarily paused.</h1>
+      <p>The LUSDT Bridge is paused while the server is under maintenance. Deposits, burns, claims and releases are disabled until after the Presale.</p>
+      <span>No funds should be sent to the bridge lockboxes during this pause.</span>
     </div>
     <div class="bridge-pro-pills">
       <div><small>Fee</small><strong data-bridge-fee-percent>0.20%</strong></div>
-      <div><small>Security</small><strong data-bridge-validator-summary>2/4</strong></div>
+      <div><small>Status</small><strong data-bridge-validator-summary>Paused</strong></div>
       <div><small>Chain</small><strong>6923</strong></div>
     </div>
   </section>
 
   <section class="bridge-pro-shell" aria-label="LUSDT bridge app">
     <div class="bridge-pro-card">
+      <div class="bridge-inline-warning" data-bridge-paused-notice style="margin-bottom:16px;border-color:rgba(247,3,117,.45);background:rgba(247,3,117,.10);">
+        <strong>Bridge paused until after Presale.</strong><br>
+        LUSDT bridge operations are temporarily disabled while the bridge server is under maintenance. Buy, sell, claim, release and recovery actions are locked for user safety.
+      </div>
+
       <div class="bridge-pro-card-head bridge-pro-card-head--simple">
         <div>
           <small>Transfer</small>
-          <h1><span data-bridge-title-action>Buy</span> LUSDT</h1>
-          <p>Simple bridge flow with Polygon, BSC and LUST liquidity routes.</p>
+          <h1><span data-bridge-title-action>Bridge</span> Paused</h1>
+          <p>Bridge actions are locked and will reopen only after the Presale.</p>
         </div>
       </div>
 
@@ -165,17 +170,17 @@
               <div class="asset-copy"><strong>USDT</strong><em><img class="chain-inline-logo" data-bridge-source-logo src="./assets/polygon-logo.png" alt="Polygon"><span data-bridge-source-name>Polygon</span></em></div>
               <div class="asset-chain-box">
                 <small>Chain</small>
-                <button class="network-select-pill" type="button" data-bridge-network-cycle="source" onclick="window.lustBridgeCycleNetwork && window.lustBridgeCycleNetwork('source')" aria-label="Change source network">
+                <button class="network-select-pill" type="button" data-bridge-network-cycle="source" onclick="window.lustBridgeCycleNetwork && window.lustBridgeCycleNetwork('source')" aria-label="Change source network" disabled aria-disabled="true">
                   <img data-bridge-source-pill-logo src="./assets/polygon-logo.png" alt="Polygon"><span class="sr-only" data-bridge-source-pill-name>Polygon</span><b>⌄</b>
                 </button>
               </div>
-              <select class="input compact-select bridge-network-select" data-bridge-source>
+              <select class="input compact-select bridge-network-select" data-bridge-source disabled>
                 <option value="polygon">Polygon</option>
                 <option value="bsc">BSC</option>
               </select>
             </div>
           </div>
-          <button class="bridge-arrow" type="button" data-bridge-switch aria-label="Switch direction">↓</button>
+          <button class="bridge-arrow" type="button" data-bridge-switch aria-label="Switch direction" disabled aria-disabled="true">↓</button>
           <div class="bridge-asset-card">
             <small>To</small>
             <div class="bridge-asset-main">
@@ -187,42 +192,42 @@
         </div>
 
         <div class="bridge-amount-box">
-          <div class="bridge-amount-head"><small>Amount</small><button type="button" data-bridge-max-deposit>MAX</button></div>
+          <div class="bridge-amount-head"><small>Amount</small><button type="button" data-bridge-max-deposit disabled aria-disabled="true">MAX</button></div>
           <div class="bridge-amount-row">
-            <input class="input" data-bridge-amount type="number" min="0" step="0.01" value="1" />
+            <input class="input" data-bridge-amount type="number" min="0" step="0.01" value="1" / disabled>
             <span class="bridge-token-pill"><img src="./assets/usdt-logo.png" alt="USDT">USDT</span>
           </div>
           <div class="bridge-quote-grid">
-            <div class="result"><span>You receive</span><strong data-bridge-receive>0.998000 LUSDT</strong></div>
-            <div class="result"><span>Fee</span><strong data-bridge-fee>0.002000 LUSDT</strong></div>
-            <div class="result"><span>Balance</span><strong data-bridge-source-balance>-</strong></div>
+            <div class="result"><span>You receive</span><strong data-bridge-receive>Paused</strong></div>
+            <div class="result"><span>Fee</span><strong data-bridge-fee>-</strong></div>
+            <div class="result"><span>Balance</span><strong data-bridge-source-balance>Paused</strong></div>
           </div>
         </div>
 
         <div class="bridge-action-grid two-actions">
-          <button class="btn primary" type="button" data-bridge-deposit>⚡ Approve + Deposit</button>
-          <button class="btn" type="button" data-bridge-mint disabled>Mint claim</button>
+          <button class="btn primary" type="button" data-bridge-deposit disabled aria-disabled="true">⏸ Paused until Presale</button>
+          <button class="btn" type="button" data-bridge-mint disabled aria-disabled="true">Mint paused</button>
         </div>
 
         <div class="bridge-pro-status">
-          <div class="bridge-status-title"><strong>Claim status</strong><span data-bridge-claim-state>Waiting</span></div>
-          <p data-bridge-claim-log>Ready. Connect wallet and choose an amount.</p>
+          <div class="bridge-status-title"><strong>Claim status</strong><span data-bridge-claim-state>Paused</span></div>
+          <p data-bridge-claim-log>Bridge operations are paused until after Presale. Do not deposit USDT while maintenance is active.</p>
           <details>
             <summary>Need manual recovery?</summary>
-            <div class="bridge-inline-warning" data-bridge-manual-help>The bridge checks your claim automatically after the deposit confirms. If needed, this area also shows recent local recovery hints from your browser.</div>
+            <div class="bridge-inline-warning" data-bridge-manual-help>Manual recovery is paused during bridge maintenance.</div>
             <div class="claim-list" data-bridge-pending-claims>
-              <div class="claim-item muted">Open this section to review recent claims and local recovery hints.</div>
+              <div class="claim-item muted">Recovery is paused until the bridge is reopened.</div>
             </div>
             <div class="claim-item" style="margin-top:12px; display:block; border-style:dashed;">
               <div style="display:grid; gap:8px;">
                 <strong>Recover BSC deposit by transaction hash</strong>
-                <small>Use this only if a BSC deposit was confirmed but the claim did not appear automatically.</small>
-                <input class="input" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="Paste BSC tx hash 0x..." data-bsc-recover-tx>
+                <small>Recovery is temporarily disabled during bridge maintenance.</small>
+                <input class="input" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="Paste BSC tx hash 0x..." data-bsc-recover-tx disabled>
                 <div class="bridge-action-grid two-actions" style="margin-top:0;">
-                  <button class="btn" type="button" data-bsc-recover-btn>Recover claim</button>
-                  <button class="btn primary" type="button" data-bsc-recover-mint disabled>Mint recovered claim</button>
+                  <button class="btn" type="button" data-bsc-recover-btn disabled aria-disabled="true">Recovery paused</button>
+                  <button class="btn primary" type="button" data-bsc-recover-mint disabled aria-disabled="true">Mint paused</button>
                 </div>
-                <div class="bridge-inline-warning" data-bsc-recover-status>Paste a BSC deposit transaction hash if automatic claim detection fails.</div>
+                <div class="bridge-inline-warning" data-bsc-recover-status>Recovery is paused until after Presale.</div>
               </div>
             </div>
           </details>
@@ -245,7 +250,7 @@
               <span class="bridge-mini-tag">Burn</span>
             </div>
           </div>
-          <button class="bridge-arrow" type="button" data-bridge-switch aria-label="Switch direction">↓</button>
+          <button class="bridge-arrow" type="button" data-bridge-switch aria-label="Switch direction" disabled aria-disabled="true">↓</button>
           <div class="bridge-asset-card">
             <small>To</small>
             <div class="bridge-asset-main">
@@ -253,11 +258,11 @@
               <div class="asset-copy"><strong>USDT</strong><em><img class="chain-inline-logo" data-bridge-destination-logo src="./assets/polygon-logo.png" alt="Polygon"><span data-bridge-destination-name>Polygon</span></em></div>
               <div class="asset-chain-box">
                 <small>Chain</small>
-                <button class="network-select-pill" type="button" data-bridge-network-cycle="destination" onclick="window.lustBridgeCycleNetwork && window.lustBridgeCycleNetwork('destination')" aria-label="Change destination network">
+                <button class="network-select-pill" type="button" data-bridge-network-cycle="destination" onclick="window.lustBridgeCycleNetwork && window.lustBridgeCycleNetwork('destination')" aria-label="Change destination network" disabled aria-disabled="true">
                   <img data-bridge-destination-pill-logo src="./assets/polygon-logo.png" alt="Polygon"><span class="sr-only" data-bridge-destination-pill-name>Polygon</span><b>⌄</b>
                 </button>
               </div>
-              <select class="input compact-select bridge-network-select" data-bridge-destination>
+              <select class="input compact-select bridge-network-select" data-bridge-destination disabled>
                 <option value="polygon">Polygon</option>
                 <option value="bsc">BSC</option>
               </select>
@@ -266,31 +271,31 @@
         </div>
 
         <div class="bridge-amount-box">
-          <div class="bridge-amount-head"><small>Amount</small><button type="button" data-bridge-max-withdraw>MAX</button></div>
+          <div class="bridge-amount-head"><small>Amount</small><button type="button" data-bridge-max-withdraw disabled aria-disabled="true">MAX</button></div>
           <div class="bridge-amount-row">
-            <input class="input" data-withdraw-amount type="number" min="0" step="0.01" value="1" />
+            <input class="input" data-withdraw-amount type="number" min="0" step="0.01" value="1" / disabled>
             <span class="bridge-token-pill"><img src="./assets/lusdt-logo.png" alt="LUSDT">LUSDT</span>
           </div>
           <div class="bridge-quote-grid">
-            <div class="result"><span>You receive</span><strong data-withdraw-receive>0.998000 USDT</strong></div>
-            <div class="result"><span>Fee</span><strong data-withdraw-fee>0.002000 LUSDT</strong></div>
-            <div class="result"><span>Balance</span><strong data-withdraw-source-balance>-</strong></div>
+            <div class="result"><span>You receive</span><strong data-withdraw-receive>Paused</strong></div>
+            <div class="result"><span>Fee</span><strong data-withdraw-fee>-</strong></div>
+            <div class="result"><span>Balance</span><strong data-withdraw-source-balance>Paused</strong></div>
           </div>
-          <div class="bridge-inline-warning" data-bridge-destination-warning>Checking destination liquidity before burn...</div>
+          <div class="bridge-inline-warning" data-bridge-destination-warning>Bridge liquidity checks are paused. Do not burn LUSDT until bridge reopening.</div>
         </div>
 
         <div class="bridge-action-grid two-actions">
-          <button class="btn primary" type="button" data-bridge-burn>⚡ Approve + Burn</button>
-          <button class="btn" type="button" data-bridge-release disabled>Release USDT</button>
+          <button class="btn primary" type="button" data-bridge-burn disabled aria-disabled="true">⏸ Paused until Presale</button>
+          <button class="btn" type="button" data-bridge-release disabled aria-disabled="true">Release paused</button>
         </div>
 
         <div class="bridge-pro-status">
-          <div class="bridge-status-title"><strong>Release status</strong><span data-bridge-release-state>Waiting</span></div>
-          <p data-bridge-release-log>Ready. Burn LUSDT and the bridge will check the release automatically.</p>
+          <div class="bridge-status-title"><strong>Release status</strong><span data-bridge-release-state>Paused</span></div>
+          <p data-bridge-release-log>Bridge release is paused until after Presale. Do not burn LUSDT while maintenance is active.</p>
           <details open>
             <summary>Ready releases</summary>
             <div class="claim-list" data-bridge-pending-releases>
-              <div class="claim-item muted">Burn LUSDT and wait. The bridge checks the release automatically after confirmations.</div>
+              <div class="claim-item muted">Releases are paused until the bridge is reopened.</div>
             </div>
           </details>
         </div>
@@ -300,9 +305,9 @@
     <aside class="bridge-pro-side">
       <div class="bridge-side-card">
         <small>Live bridge</small>
-        <div class="row"><span>API</span><strong data-bridge-api-state>Checking...</strong></div>
-        <div class="row"><span>Threshold</span><strong data-bridge-threshold>2 of 4</strong></div>
-        <div class="row"><span>Deposits</span><strong data-bridge-deposits-state>Controlled</strong></div>
+        <div class="row"><span>API</span><strong data-bridge-api-state>Paused</strong></div>
+        <div class="row"><span>Threshold</span><strong data-bridge-threshold>Paused</strong></div>
+        <div class="row"><span>Deposits</span><strong data-bridge-deposits-state>Paused</strong></div>
         <div class="row"><span>LUSDT</span><strong data-bridge-lusdt-short>0x1E86...C19AE</strong></div>
         <div class="row"><span>Executor</span><strong data-bridge-executor-short>0xbBC8...f380</strong></div>
         <div class="row"><span>Fee treasury</span><strong data-bridge-fee-recipient>0x5feb...f9D7</strong></div>
@@ -310,10 +315,10 @@
 
       <div class="bridge-side-card">
         <small>Liquidity reserves</small>
-        <div class="bridge-reserve-mini polygon"><span><img class="reserve-logo" src="./assets/polygon-logo.png" alt="Polygon">Polygon USDT</span><strong data-liquidity-polygon>Loading...</strong></div>
-        <div class="bridge-reserve-mini bsc"><span><img class="reserve-logo" src="./assets/bsc-logo.png" alt="BSC">BSC USDT</span><strong data-liquidity-bsc>Loading...</strong></div>
-        <div class="bridge-liquidity-status" data-liquidity-polygon-status>Checking Polygon liquidity...</div>
-        <div class="bridge-liquidity-status" data-liquidity-bsc-status>Checking BSC liquidity...</div>
+        <div class="bridge-reserve-mini polygon"><span><img class="reserve-logo" src="./assets/polygon-logo.png" alt="Polygon">Polygon USDT</span><strong data-liquidity-polygon>Paused</strong></div>
+        <div class="bridge-reserve-mini bsc"><span><img class="reserve-logo" src="./assets/bsc-logo.png" alt="BSC">BSC USDT</span><strong data-liquidity-bsc>Paused</strong></div>
+        <div class="bridge-liquidity-status" data-liquidity-polygon-status>Paused until bridge reopening.</div>
+        <div class="bridge-liquidity-status" data-liquidity-bsc-status>Paused until bridge reopening.</div>
       </div>
 
       <details class="bridge-side-details">
@@ -417,427 +422,25 @@
 </footer>
 
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
-<script type="module">
-  import { ethers } from "https://esm.sh/ethers@6.16.0";
 
-  const BSC_RECOVER_API = "https://lusdt-bridge.lustchain.org/api/recover/bsc/";
-  const LUST_CHAIN_ID = "0x1b0b";
-  const LUST_CHAIN_PARAMS = {
-    chainId: LUST_CHAIN_ID,
-    chainName: "LUST Chain",
-    nativeCurrency: { name: "LST", symbol: "LST", decimals: 18 },
-    rpcUrls: ["https://rpc.lustchain.org"],
-    blockExplorerUrls: ["https://explorer.lustchain.org"]
-  };
-  const LUSDT_EXECUTOR = "0xbBC818f161D1B7190f85bE258CDB568a5A63f380";
-  const EXECUTOR_ABI = [
-    "function mintFromExternalDeposit(address user,uint256 amount,bytes32 depositId,uint256 sourceChainId,uint256 deadline,bytes[] signatures) external"
-  ];
+<!-- LUSDT bridge operational script paused until after Presale. -->
 
-  let recoveredClaim = null;
+<!-- LUSDT bridge operational script paused until after Presale. -->
 
-  const $ = (sel) => document.querySelector(sel);
-  const statusEl = () => $("[data-bsc-recover-status]");
-  const mintBtn = () => $("[data-bsc-recover-mint]");
 
-  function setRecoverStatus(message, ok = false) {
-    const el = statusEl();
-    if (!el) return;
-    el.textContent = message;
-    el.style.borderColor = ok ? "rgba(38,255,160,.45)" : "rgba(255,214,0,.35)";
-  }
-
-  function shortHash(x) {
-    const v = String(x || "");
-    return v.length > 14 ? `${v.slice(0, 8)}...${v.slice(-6)}` : v;
-  }
-
-  async function ensureLustChain() {
-    if (!window.ethereum) throw new Error("Wallet not found. Open with MetaMask/Rabby or another EVM wallet.");
-    try {
-      await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: LUST_CHAIN_ID }] });
-    } catch (err) {
-      if (err && (err.code === 4902 || String(err.message || "").includes("Unrecognized chain"))) {
-        await window.ethereum.request({ method: "wallet_addEthereumChain", params: [LUST_CHAIN_PARAMS] });
-        await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: LUST_CHAIN_ID }] });
-      } else {
-        throw err;
-      }
-    }
-  }
-
-  async function recoverBscClaim() {
-    const input = $("[data-bsc-recover-tx]");
-    const txHash = String(input?.value || "").trim();
-
-    if (!/^0x[a-fA-F0-9]{64}$/.test(txHash)) {
-      setRecoverStatus("Invalid BSC transaction hash. It must start with 0x and have 64 hex characters.");
-      return;
-    }
-
-    recoveredClaim = null;
-    if (mintBtn()) mintBtn().disabled = true;
-    setRecoverStatus("Checking BSC transaction and bridge claim...");
-
-    try {
-      const res = await fetch(`${BSC_RECOVER_API}${txHash}?t=${Date.now()}`, {
-        method: "GET",
-        mode: "cors",
-        credentials: "omit",
-        cache: "no-store",
-        headers: { accept: "application/json" }
+<!-- LUSDT bridge operational script paused until after Presale. -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("[data-bridge-tab]").forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        var name = tab.getAttribute("data-bridge-tab");
+        document.querySelectorAll("[data-bridge-tab]").forEach(function (item) { item.classList.toggle("active", item === tab); });
+        document.querySelectorAll("[data-bridge-panel]").forEach(function (panel) { panel.classList.toggle("hidden", panel.getAttribute("data-bridge-panel") !== name); });
       });
-      const data = await res.json().catch(() => ({}));
-
-      if (!res.ok || !data.ok) {
-        throw new Error(data.error || `Recover failed with HTTP ${res.status}`);
-      }
-
-      const claim = data.claim;
-      if (!claim) throw new Error("Recover returned no claim data.");
-
-      try {
-        localStorage.setItem("lustLastDepositId", claim.depositId || data.depositId || "");
-        sessionStorage.setItem("lustBridgePending_claim", JSON.stringify({
-          value: String(claim.depositId || data.depositId || ""),
-          ts: Date.now(),
-          source: "bsc",
-          recovered: true
-        }));
-      } catch (_) {}
-
-      if (claim.used || String(claim.status || "").toLowerCase().includes("mint")) {
-        setRecoverStatus(`BSC claim found but already minted: ${shortHash(claim.depositId || data.depositId)}.`, true);
-        return;
-      }
-
-      if (String(claim.status || "").toLowerCase() !== "ready") {
-        setRecoverStatus(`Claim found, but status is ${claim.status || "unknown"}. Refresh in a few seconds.`);
-        return;
-      }
-
-      recoveredClaim = claim;
-      if (mintBtn()) mintBtn().disabled = false;
-      setRecoverStatus(`Claim recovered and ready: ${Number(BigInt(claim.amount || "0")) / 1_000_000} LUSDT. You can mint now on LUST Chain.`, true);
-    } catch (err) {
-      setRecoverStatus(err?.message || "Could not recover BSC claim.");
-    }
-  }
-
-  async function mintRecoveredClaim() {
-    if (!recoveredClaim) {
-      setRecoverStatus("Recover a ready BSC claim first.");
-      return;
-    }
-
-    try {
-      if (mintBtn()) mintBtn().disabled = true;
-      setRecoverStatus("Switching to LUST Chain...");
-      await ensureLustChain();
-
-      setRecoverStatus("Opening wallet confirmation to mint recovered LUSDT...");
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const signer = await provider.getSigner();
-      const exec = new ethers.Contract(LUSDT_EXECUTOR, EXECUTOR_ABI, signer);
-
-      const tx = await exec.mintFromExternalDeposit(
-        recoveredClaim.recipient,
-        BigInt(recoveredClaim.amount),
-        recoveredClaim.depositId,
-        BigInt(recoveredClaim.sourceChainId),
-        BigInt(recoveredClaim.deadline),
-        recoveredClaim.signatures
-      );
-
-      setRecoverStatus(`Mint sent: ${tx.hash}. Waiting confirmation...`, true);
-      await tx.wait();
-      setRecoverStatus(`LUSDT minted successfully: ${shortHash(tx.hash)}.`, true);
-      recoveredClaim = null;
-    } catch (err) {
-      if (mintBtn()) mintBtn().disabled = false;
-      setRecoverStatus(err?.shortMessage || err?.message || "Mint failed or was rejected.");
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    $("[data-bsc-recover-btn]")?.addEventListener("click", recoverBscClaim);
-    $("[data-bsc-recover-mint]")?.addEventListener("click", mintRecoveredClaim);
+    });
+    var backToTop = document.getElementById("backToTop");
+    if (backToTop) backToTop.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
   });
-</script>
-<script type="module" src="./app.js?v20260612-lusdt-bridge-v35-anti-stuck"></script>
-
-<script type="module" id="bridge-lusdt-sell-balance-fix-v41-no-blink">
-  import { ethers } from "https://esm.sh/ethers@6.16.0";
-
-  const LUST_CHAIN_ID = "0x1b0b";
-  const LUST_CHAIN_PARAMS = {
-    chainId: LUST_CHAIN_ID,
-    chainName: "LUST Chain",
-    nativeCurrency: { name: "LST", symbol: "LST", decimals: 18 },
-    rpcUrls: ["https://rpc.lustchain.org", "https://rpc-backup.lustchain.org"],
-    blockExplorerUrls: ["https://explorer.lustchain.org"]
-  };
-  const LUSDT_ADDRESS = "0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE";
-  const LUST_RPCS = ["https://rpc.lustchain.org", "https://rpc-backup.lustchain.org"];
-  const BALANCE_OF_SELECTOR = "0x70a08231";
-
-  let lastRawLusdtBalance = null;
-  let lastBalanceText = "";
-  let refreshInFlight = false;
-  let isolatedBalance = false;
-
-  const q = (selector) => document.querySelector(selector);
-  const qa = (selector) => Array.from(document.querySelectorAll(selector));
-
-  function setText(selector, value) {
-    qa(selector).forEach((el) => {
-      if (el.textContent !== value) el.textContent = value;
-    });
-  }
-
-  function isBridgePage() {
-    return Boolean(q("[data-lusdt-bridge]"));
-  }
-
-  function balanceEl() {
-    return q("[data-withdraw-source-balance-stable]") || q("[data-withdraw-source-balance]");
-  }
-
-  function setBalanceText(value) {
-    lastBalanceText = value;
-    const el = balanceEl();
-    if (el && el.textContent !== value) el.textContent = value;
-  }
-
-  // O app.js global também escreve em [data-withdraw-source-balance].
-  // Para não piscar, a bridge cria um elemento invisível para o app.js escrever
-  // e mantém o saldo visível em data-withdraw-source-balance-stable.
-  function isolateWithdrawBalanceDisplay() {
-    if (isolatedBalance) return;
-    const visible = q("[data-withdraw-source-balance]");
-    if (!visible) return;
-
-    const current = String(visible.textContent || "").trim();
-    visible.removeAttribute("data-withdraw-source-balance");
-    visible.setAttribute("data-withdraw-source-balance-stable", "");
-    visible.setAttribute("data-bridge-balance-no-blink", "true");
-
-    const sink = document.createElement("span");
-    sink.setAttribute("data-withdraw-source-balance", "");
-    sink.setAttribute("aria-hidden", "true");
-    sink.style.cssText = "display:none!important;visibility:hidden!important;width:0!important;height:0!important;overflow:hidden!important;";
-    sink.textContent = current || "--";
-    visible.after(sink);
-
-    isolatedBalance = true;
-  }
-
-  function normalizeHexChain(value) {
-    if (!value) return "";
-    const v = String(value).toLowerCase();
-    if (v.startsWith("0x")) return v;
-    const n = Number(v);
-    return Number.isFinite(n) ? `0x${n.toString(16)}` : v;
-  }
-
-  function trimFixed(value, maxDecimals = 6) {
-    const text = String(value || "0");
-    if (!text.includes(".")) return text;
-    const [a, b = ""] = text.split(".");
-    const cut = b.slice(0, maxDecimals).replace(/0+$/, "");
-    return cut ? `${a}.${cut}` : a;
-  }
-
-  function formatLusdt(raw, suffix = true) {
-    try {
-      const value = trimFixed(ethers.formatUnits(BigInt(raw || 0), 6), 6);
-      return suffix ? `${value} LUSDT` : value;
-    } catch (_) {
-      return suffix ? "0 LUSDT" : "0";
-    }
-  }
-
-  function balanceOfData(account) {
-    const address = String(account || "").replace(/^0x/i, "").toLowerCase().padStart(64, "0");
-    return `${BALANCE_OF_SELECTOR}${address}`;
-  }
-
-  async function connectedAccount() {
-    try {
-      const injected = await window.ethereum?.request?.({ method: "eth_accounts" });
-      if (injected?.[0]) return ethers.getAddress(injected[0]);
-    } catch (_) {}
-
-    try {
-      const fromAppKit = window.lustAppKit?.getAddress?.();
-      if (fromAppKit) return ethers.getAddress(fromAppKit);
-    } catch (_) {}
-
-    return "";
-  }
-
-  async function currentChainId() {
-    try {
-      return normalizeHexChain(await window.ethereum?.request?.({ method: "eth_chainId" }));
-    } catch (_) {
-      return "";
-    }
-  }
-
-  async function ensureLustChain() {
-    if (!window.ethereum?.request) throw new Error("Wallet provider not found.");
-    const current = await currentChainId();
-    if (current === LUST_CHAIN_ID) return;
-
-    try {
-      await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: LUST_CHAIN_ID }] });
-    } catch (err) {
-      if (err?.code === 4902 || String(err?.message || "").toLowerCase().includes("unrecognized")) {
-        await window.ethereum.request({ method: "wallet_addEthereumChain", params: [LUST_CHAIN_PARAMS] });
-        await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: LUST_CHAIN_ID }] });
-      } else {
-        throw err;
-      }
-    }
-  }
-
-  async function ethCallViaWallet(account, allowSwitch = false) {
-    if (!window.ethereum?.request) return null;
-
-    const chainId = await currentChainId();
-    if (chainId !== LUST_CHAIN_ID) {
-      if (!allowSwitch) return null;
-      await ensureLustChain();
-    }
-
-    const result = await window.ethereum.request({
-      method: "eth_call",
-      params: [{ to: LUSDT_ADDRESS, data: balanceOfData(account) }, "latest"]
-    });
-
-    if (!result || result === "0x") return 0n;
-    return BigInt(result);
-  }
-
-  async function ethCallViaRpc(account) {
-    const payload = {
-      jsonrpc: "2.0",
-      id: Date.now(),
-      method: "eth_call",
-      params: [{ to: LUSDT_ADDRESS, data: balanceOfData(account) }, "latest"]
-    };
-
-    let lastError = null;
-    for (const rpc of LUST_RPCS) {
-      try {
-        const res = await fetch(rpc, {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify(payload),
-          cache: "no-store"
-        });
-        const json = await res.json();
-        if (!res.ok || json.error) throw new Error(json.error?.message || `RPC HTTP ${res.status}`);
-        if (!json.result || json.result === "0x") return 0n;
-        return BigInt(json.result);
-      } catch (err) {
-        lastError = err;
-      }
-    }
-    throw lastError || new Error("LUST RPC balance read failed.");
-  }
-
-  async function readLusdtBalance(account, allowSwitch = false) {
-    const viaWallet = await ethCallViaWallet(account, allowSwitch).catch(() => null);
-    if (viaWallet !== null) return viaWallet;
-    return await ethCallViaRpc(account);
-  }
-
-  async function refreshLusdtSellBalance({ allowSwitch = false, force = false, quiet = false } = {}) {
-    if (!isBridgePage()) return;
-    isolateWithdrawBalanceDisplay();
-    if (refreshInFlight && !force) return;
-
-    refreshInFlight = true;
-    try {
-      const account = await connectedAccount();
-      if (!account) {
-        lastRawLusdtBalance = null;
-        setBalanceText("Connect wallet");
-        return;
-      }
-
-      const chainId = await currentChainId();
-      if (!quiet && lastRawLusdtBalance === null) {
-        if (chainId && chainId !== LUST_CHAIN_ID && allowSwitch) {
-          setBalanceText("Switching...");
-        } else if (chainId && chainId !== LUST_CHAIN_ID) {
-          setBalanceText("Switch to LUST");
-        } else {
-          setBalanceText("Reading...");
-        }
-      }
-
-      const raw = await readLusdtBalance(account, allowSwitch);
-      lastRawLusdtBalance = BigInt(raw);
-      setBalanceText(formatLusdt(lastRawLusdtBalance));
-    } catch (err) {
-      console.warn("LUSDT sell balance fix failed", err);
-      if (lastRawLusdtBalance !== null) {
-        setBalanceText(formatLusdt(lastRawLusdtBalance));
-      } else if (!quiet) {
-        setBalanceText("Refresh needed");
-      }
-    } finally {
-      refreshInFlight = false;
-    }
-  }
-
-  function setWithdrawMaxFromBalance() {
-    const input = q("[data-withdraw-amount]");
-    if (!input || lastRawLusdtBalance === null) return;
-    input.value = formatLusdt(lastRawLusdtBalance, false);
-    input.dispatchEvent(new Event("input", { bubbles: true }));
-    input.dispatchEvent(new Event("change", { bubbles: true }));
-  }
-
-  document.addEventListener("click", async (event) => {
-    const maxWithdraw = event.target.closest("[data-bridge-max-withdraw]");
-    if (!maxWithdraw) return;
-
-    event.preventDefault();
-    event.stopImmediatePropagation();
-
-    if (lastRawLusdtBalance === null) setBalanceText("Reading...");
-    await refreshLusdtSellBalance({ allowSwitch: true, force: true });
-    setWithdrawMaxFromBalance();
-  }, true);
-
-  function startSellBalanceFix() {
-    if (!isBridgePage()) return;
-    isolateWithdrawBalanceDisplay();
-
-    refreshLusdtSellBalance({ force: true });
-    setTimeout(() => refreshLusdtSellBalance({ force: true, quiet: true }), 900);
-    setTimeout(() => refreshLusdtSellBalance({ force: true, quiet: true }), 2500);
-
-    // Atualização leve, sem escrever "Reading...", para não piscar.
-    setInterval(() => refreshLusdtSellBalance({ quiet: true }), 15000);
-
-    q("[data-bridge-destination]")?.addEventListener("change", () => setTimeout(() => refreshLusdtSellBalance({ force: true, quiet: true }), 200));
-    qa("[data-bridge-tab]").forEach((btn) => {
-      btn.addEventListener("click", () => setTimeout(() => refreshLusdtSellBalance({ force: true, quiet: true }), 250));
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", startSellBalanceFix);
-  window.addEventListener("load", () => setTimeout(() => refreshLusdtSellBalance({ force: true, quiet: true }), 300));
-  window.addEventListener("focus", () => refreshLusdtSellBalance({ force: true, quiet: true }));
-  document.addEventListener("visibilitychange", () => {
-    if (!document.hidden) refreshLusdtSellBalance({ force: true, quiet: true });
-  });
-  window.ethereum?.on?.("accountsChanged", () => setTimeout(() => refreshLusdtSellBalance({ force: true }), 250));
-  window.ethereum?.on?.("chainChanged", () => setTimeout(() => refreshLusdtSellBalance({ force: true }), 700));
 </script>
 <script src="./nft-menu.js?v=20260616-hover-v5"></script>
 </body>
