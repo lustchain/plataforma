@@ -72,75 +72,8 @@
   ]
 }
   </script>
-<link rel="stylesheet" href="./styles.css?v=LUST_FORCE_PINK_V38" />
-<style id="bridge-critical-buttons-v37">
-/* Critical bridge button fix v37: force LUST pink buttons, no flicker, no black fallback */
-.bridge-action-grid.two-actions .btn,
-.bridge-action-grid.two-actions .btn.primary,
-.bridge-action-grid.two-actions .btn.is-ready,
-.bridge-action-grid.two-actions .btn.is-loading,
-.bridge-action-grid.two-actions .btn.is-waiting,
-.bridge-action-grid.two-actions .btn:not(:disabled),
-.bridge-action-grid.two-actions .btn.primary:not(:disabled),
-.bridge-action-grid.two-actions .btn.is-ready:not(:disabled) {
-  min-height: 58px !important;
-  border-radius: 18px !important;
-  border: 2px solid rgba(255, 118, 196, .72) !important;
-  background: linear-gradient(135deg, #ff1784 0%, #f70375 48%, #d90068 100%) !important;
-  color: #fff !important;
-  box-shadow: 0 16px 34px rgba(247, 3, 117, .28) !important;
-  opacity: 1 !important;
-  filter: none !important;
-  transform: none !important;
-  animation: none !important;
-  transition: box-shadow .16s ease, border-color .16s ease, filter .16s ease !important;
-}
-.bridge-action-grid.two-actions .btn:hover,
-.bridge-action-grid.two-actions .btn.primary:hover,
-.bridge-action-grid.two-actions .btn.is-ready:hover,
-.bridge-action-grid.two-actions .btn.is-loading:hover,
-.bridge-action-grid.two-actions .btn.is-waiting:hover,
-.bridge-action-grid.two-actions .btn:focus,
-.bridge-action-grid.two-actions .btn:active {
-  background: linear-gradient(135deg, #ff1784 0%, #f70375 48%, #d90068 100%) !important;
-  border-color: rgba(255, 164, 218, .92) !important;
-  box-shadow: 0 18px 40px rgba(247, 3, 117, .34) !important;
-  transform: none !important;
-  animation: none !important;
-  outline: none !important;
-}
-.bridge-action-grid.two-actions .btn:disabled:not(.is-loading):not(.is-waiting),
-.bridge-action-grid.two-actions .btn[disabled]:not(.is-loading):not(.is-waiting) {
-  background: linear-gradient(135deg, rgba(247,3,117,.28) 0%, rgba(247,3,117,.18) 100%) !important;
-  border-color: rgba(247, 3, 117, .38) !important;
-  color: rgba(255, 230, 244, .58) !important;
-  box-shadow: none !important;
-  cursor: not-allowed !important;
-}
-.bridge-action-grid.two-actions .btn::after,
-.bridge-action-grid.two-actions .btn.is-ready::before,
-.bridge-action-grid.two-actions .btn.is-ready::after,
-.bridge-action-grid.two-actions .btn.is-waiting::after,
-.bridge-action-grid.two-actions .btn.is-loading::after {
-  content: none !important;
-  display: none !important;
-}
-.bridge-action-grid.two-actions .btn.is-loading::before,
-.bridge-action-grid.two-actions .btn.is-waiting::before {
-  content: "" !important;
-  width: 15px !important;
-  height: 15px !important;
-  flex: 0 0 15px !important;
-  border-radius: 999px !important;
-  border: 2px solid rgba(255,255,255,.38) !important;
-  border-top-color: #fff !important;
-  display: inline-block !important;
-  margin-right: 8px !important;
-  animation: bridgeSpin .9s linear infinite !important;
-}
-</style>
-
-  <!-- Google tag (gtag.js) - GA4 -->
+<link rel="stylesheet" href="./styles.css?v=LUST_BRIDGE_ACTIONS_V39_PRO" />
+<!-- Google tag (gtag.js) - GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8N7M5DTF4"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -266,9 +199,23 @@
           </div>
         </div>
 
-        <div class="bridge-action-grid two-actions">
-          <button class="btn primary" type="button" data-bridge-deposit style="background:linear-gradient(135deg,#ff1784 0%,#f70375 52%,#d90068 100%) !important;border:1px solid rgba(255,138,207,.88) !important;color:#fff !important;box-shadow:0 14px 34px rgba(247,3,117,.30) !important;opacity:1 !important;filter:none !important;animation:none !important;transform:none !important;transition:box-shadow .15s ease, filter .15s ease !important;">Deposit USDT</button>
-          <button class="btn" type="button" data-bridge-mint disabled style="background:linear-gradient(135deg,rgba(247,3,117,.42) 0%,rgba(180,0,85,.28) 100%) !important;border:1px solid rgba(247,3,117,.50) !important;color:rgba(255,235,245,.74) !important;box-shadow:none !important;opacity:1 !important;filter:none !important;animation:none !important;transform:none !important;transition:none !important;">Mint on LUST</button>
+        <div class="bridge-action-grid two-actions bridge-flow-actions" data-bridge-action-flow="deposit">
+          <div class="bridge-action-card" data-bridge-card="deposit">
+            <div class="bridge-action-card-head">
+              <span class="bridge-step-pill">Step 1</span>
+              <strong>Send USDT</strong>
+            </div>
+            <p>Approve and deposit from the selected network.</p>
+            <button class="btn primary bridge-main-action" type="button" data-bridge-deposit>Deposit USDT</button>
+          </div>
+          <div class="bridge-action-card" data-bridge-card="mint">
+            <div class="bridge-action-card-head">
+              <span class="bridge-step-pill">Step 2</span>
+              <strong>Claim on LUST</strong>
+            </div>
+            <p>This unlocks automatically after the deposit claim is ready.</p>
+            <button class="btn bridge-main-action" type="button" data-bridge-mint disabled>Mint on LUST</button>
+          </div>
         </div>
 
         <div class="bridge-pro-status">
@@ -346,9 +293,23 @@
           <div class="bridge-inline-warning" data-bridge-destination-warning>Checking destination liquidity before burn...</div>
         </div>
 
-        <div class="bridge-action-grid two-actions">
-          <button class="btn primary" type="button" data-bridge-burn style="background:linear-gradient(135deg,#ff1784 0%,#f70375 52%,#d90068 100%) !important;border:1px solid rgba(255,138,207,.88) !important;color:#fff !important;box-shadow:0 14px 34px rgba(247,3,117,.30) !important;opacity:1 !important;filter:none !important;animation:none !important;transform:none !important;transition:box-shadow .15s ease, filter .15s ease !important;">Burn LUSDT</button>
-          <button class="btn" type="button" data-bridge-release disabled style="background:linear-gradient(135deg,rgba(247,3,117,.42) 0%,rgba(180,0,85,.28) 100%) !important;border:1px solid rgba(247,3,117,.50) !important;color:rgba(255,235,245,.74) !important;box-shadow:none !important;opacity:1 !important;filter:none !important;animation:none !important;transform:none !important;transition:none !important;">Release USDT</button>
+        <div class="bridge-action-grid two-actions bridge-flow-actions" data-bridge-action-flow="withdraw">
+          <div class="bridge-action-card" data-bridge-card="burn">
+            <div class="bridge-action-card-head">
+              <span class="bridge-step-pill">Step 1</span>
+              <strong>Burn on LUST</strong>
+            </div>
+            <p>Burn LUSDT on LUST Chain and wait for release signatures.</p>
+            <button class="btn primary bridge-main-action" type="button" data-bridge-burn>Burn LUSDT</button>
+          </div>
+          <div class="bridge-action-card" data-bridge-card="release">
+            <div class="bridge-action-card-head">
+              <span class="bridge-step-pill">Step 2</span>
+              <strong>Receive USDT</strong>
+            </div>
+            <p>This unlocks automatically when the release is ready.</p>
+            <button class="btn bridge-main-action" type="button" data-bridge-release disabled>Release USDT</button>
+          </div>
         </div>
 
         <div class="bridge-pro-status">
@@ -631,7 +592,7 @@
     $("[data-bsc-recover-mint]")?.addEventListener("click", mintRecoveredClaim);
   });
 </script>
-<script type="module" src="./app.js?v=LUST_FORCE_PINK_V38"></script>
+<script type="module" src="./app.js?v=LUST_BRIDGE_ACTIONS_V39_PRO"></script>
 
 <script type="module" id="bridge-lusdt-sell-balance-fix-v41-no-blink">
   import { ethers } from "https://esm.sh/ethers@6.16.0";
@@ -908,143 +869,194 @@
 </script>
 <script src="./nft-menu.js?v=20260616-hover-v5"></script>
 
-<!-- LUST_FORCE_PINK_V38_START -->
-<style id="lust-force-pink-buttons-v38">
-  /* v38 force: final bridge action buttons: pink brand, no black, no flicker */
-  :root { --lust-pink: #F70375; }
-  button[data-bridge-deposit],
-  button[data-bridge-burn],
-  button[data-bridge-mint]:not([disabled]),
-  button[data-bridge-release]:not([disabled]),
-  .bridge-action-grid.two-actions button[data-bridge-deposit],
-  .bridge-action-grid.two-actions button[data-bridge-burn],
-  .bridge-action-grid.two-actions button[data-bridge-mint]:not([disabled]),
-  .bridge-action-grid.two-actions button[data-bridge-release]:not([disabled]) {
-    min-height: 56px !important;
-    border-radius: 16px !important;
-    background: linear-gradient(135deg, #ff1784 0%, #F70375 52%, #d90068 100%) !important;
-    border: 1px solid rgba(255, 138, 207, .88) !important;
+
+<!-- LUST_BRIDGE_ACTIONS_V39_PRO_START -->
+<style id="lust-bridge-actions-v39-pro">
+  :root { --lust-pink: #F70375; --lust-pink-hot:#ff1784; --lust-pink-deep:#b90058; }
+  .bridge-flow-actions {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+    margin-top: 18px !important;
+    align-items: stretch !important;
+  }
+  .bridge-action-card {
+    position: relative !important;
+    display: grid !important;
+    gap: 10px !important;
+    padding: 16px !important;
+    border-radius: 22px !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018)) !important;
+    border: 1px solid rgba(247,3,117,.28) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.05) !important;
+    overflow: hidden !important;
+  }
+  .bridge-action-card::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 0 auto 0 !important;
+    height: 2px !important;
+    background: linear-gradient(90deg, transparent, rgba(247,3,117,.8), transparent) !important;
+    opacity: .55 !important;
+  }
+  .bridge-action-card.is-ready {
+    border-color: rgba(247,3,117,.72) !important;
+    background: linear-gradient(180deg, rgba(247,3,117,.095), rgba(255,255,255,.025)) !important;
+  }
+  .bridge-action-card.is-processing {
+    border-color: rgba(255,132,202,.92) !important;
+    background: linear-gradient(180deg, rgba(247,3,117,.13), rgba(255,255,255,.035)) !important;
+  }
+  .bridge-action-card-head {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+  }
+  .bridge-action-card-head strong {
     color: #fff !important;
-    box-shadow: 0 14px 34px rgba(247, 3, 117, .30) !important;
+    font-size: 14px !important;
+    letter-spacing: .01em !important;
+    text-align: right !important;
+  }
+  .bridge-step-pill {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 24px !important;
+    padding: 0 10px !important;
+    border-radius: 999px !important;
+    background: rgba(247,3,117,.16) !important;
+    border: 1px solid rgba(247,3,117,.42) !important;
+    color: #ffd7ea !important;
+    font-size: 11px !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    letter-spacing: .08em !important;
+    white-space: nowrap !important;
+  }
+  .bridge-action-card p {
+    margin: 0 !important;
+    min-height: 34px !important;
+    color: rgba(255,232,244,.72) !important;
+    font-size: 12px !important;
+    line-height: 1.42 !important;
+  }
+  .bridge-main-action.btn,
+  .bridge-action-grid.two-actions .bridge-main-action.btn,
+  button[data-bridge-deposit].bridge-main-action,
+  button[data-bridge-burn].bridge-main-action,
+  button[data-bridge-mint].bridge-main-action,
+  button[data-bridge-release].bridge-main-action {
+    width: 100% !important;
+    min-height: 58px !important;
+    border-radius: 18px !important;
+    background: linear-gradient(135deg, var(--lust-pink-hot) 0%, var(--lust-pink) 52%, var(--lust-pink-deep) 100%) !important;
+    border: 1px solid rgba(255,165,218,.92) !important;
+    color: #fff !important;
+    box-shadow: 0 16px 34px rgba(247,3,117,.32), inset 0 1px 0 rgba(255,255,255,.22) !important;
     opacity: 1 !important;
     filter: none !important;
     transform: none !important;
     animation: none !important;
     text-shadow: none !important;
-    transition: box-shadow .15s ease, filter .15s ease !important;
+    font-weight: 950 !important;
+    letter-spacing: .01em !important;
+    transition: filter .16s ease, box-shadow .16s ease !important;
   }
-  button[data-bridge-mint][disabled]:not(.is-loading):not(.is-waiting),
-  button[data-bridge-release][disabled]:not(.is-loading):not(.is-waiting) {
-    min-height: 56px !important;
-    border-radius: 16px !important;
-    background: linear-gradient(135deg, rgba(247,3,117,.42) 0%, rgba(180,0,85,.28) 100%) !important;
-    border: 1px solid rgba(247, 3, 117, .50) !important;
-    color: rgba(255, 235, 245, .74) !important;
+  .bridge-main-action.btn:hover:not(:disabled) {
+    filter: brightness(1.04) !important;
+    box-shadow: 0 18px 38px rgba(247,3,117,.38), inset 0 1px 0 rgba(255,255,255,.24) !important;
+  }
+  .bridge-main-action.btn:disabled:not(.is-loading) {
+    background: rgba(247,3,117,.105) !important;
+    border: 1px solid rgba(247,3,117,.28) !important;
+    color: rgba(255,218,238,.46) !important;
     box-shadow: none !important;
-    opacity: 1 !important;
-    filter: none !important;
-    transform: none !important;
-    animation: none !important;
     cursor: not-allowed !important;
   }
-  button[data-bridge-deposit].is-loading,
-  button[data-bridge-burn].is-loading,
-  button[data-bridge-mint].is-loading,
-  button[data-bridge-release].is-loading,
-  button[data-bridge-deposit].is-waiting,
-  button[data-bridge-burn].is-waiting,
-  button[data-bridge-mint].is-waiting,
-  button[data-bridge-release].is-waiting {
-    background: linear-gradient(135deg, #ff1784 0%, #F70375 52%, #d90068 100%) !important;
-    border-color: rgba(255, 180, 224, .95) !important;
+  .bridge-main-action.btn.is-waiting {
+    background: rgba(247,3,117,.105) !important;
+    border-color: rgba(247,3,117,.34) !important;
+    color: rgba(255,218,238,.58) !important;
+    box-shadow: none !important;
+    cursor: wait !important;
+  }
+  .bridge-main-action.btn.is-loading {
+    background: linear-gradient(135deg, var(--lust-pink-hot) 0%, var(--lust-pink) 52%, var(--lust-pink-deep) 100%) !important;
+    border-color: rgba(255,190,228,.96) !important;
     color: #fff !important;
-    box-shadow: 0 14px 34px rgba(247, 3, 117, .30) !important;
-    opacity: 1 !important;
     cursor: progress !important;
+    box-shadow: 0 16px 34px rgba(247,3,117,.32), inset 0 1px 0 rgba(255,255,255,.22) !important;
   }
-  button[data-bridge-deposit]:hover,
-  button[data-bridge-burn]:hover,
-  button[data-bridge-mint]:not([disabled]):hover,
-  button[data-bridge-release]:not([disabled]):hover {
-    background: linear-gradient(135deg, #ff1784 0%, #F70375 52%, #d90068 100%) !important;
-    filter: brightness(1.035) !important;
-    transform: none !important;
-    box-shadow: 0 16px 38px rgba(247, 3, 117, .36) !important;
-  }
-  button[data-bridge-deposit]::after,
-  button[data-bridge-burn]::after,
-  button[data-bridge-mint]::after,
-  button[data-bridge-release]::after,
-  button[data-bridge-deposit].is-ready::before,
-  button[data-bridge-burn].is-ready::before,
-  button[data-bridge-mint].is-ready::before,
-  button[data-bridge-release].is-ready::before {
+  .bridge-main-action.btn::after,
+  .bridge-main-action.btn.is-ready::before,
+  .bridge-main-action.btn.is-ready::after,
+  .bridge-main-action.btn.is-waiting::before,
+  .bridge-main-action.btn.is-waiting::after {
     content: none !important;
     display: none !important;
     animation: none !important;
   }
-  button[data-bridge-deposit].is-loading::before,
-  button[data-bridge-burn].is-loading::before,
-  button[data-bridge-mint].is-loading::before,
-  button[data-bridge-release].is-loading::before,
-  button[data-bridge-deposit].is-waiting::before,
-  button[data-bridge-burn].is-waiting::before,
-  button[data-bridge-mint].is-waiting::before,
-  button[data-bridge-release].is-waiting::before {
+  .bridge-main-action.btn.is-loading::before {
     content: "" !important;
     display: inline-block !important;
-    width: 15px !important;
-    height: 15px !important;
-    margin-right: 8px !important;
+    width: 16px !important;
+    height: 16px !important;
+    margin-right: 10px !important;
+    vertical-align: -2px !important;
     border-radius: 50% !important;
     border: 2px solid rgba(255,255,255,.42) !important;
     border-top-color: #fff !important;
-    animation: bridgeSpin .9s linear infinite !important;
+    animation: bridgeSpin .85s linear infinite !important;
+  }
+  .bridge-pro-status {
+    border-color: rgba(247,3,117,.22) !important;
+    background: linear-gradient(180deg, rgba(247,3,117,.055), rgba(255,255,255,.018)) !important;
+  }
+  .bridge-status-title span {
+    border-radius: 999px !important;
+    padding: 4px 10px !important;
+    background: rgba(247,3,117,.13) !important;
+    border: 1px solid rgba(247,3,117,.28) !important;
+    color: #ffd7ea !important;
+  }
+  @media (max-width: 760px) {
+    .bridge-flow-actions { grid-template-columns: 1fr !important; }
+    .bridge-action-card p { min-height: auto !important; }
   }
 </style>
-<script id="lust-force-pink-buttons-v38">
+<script id="lust-bridge-actions-v39-pro">
 (function(){
-  const activeBg = 'linear-gradient(135deg, #ff1784 0%, #F70375 52%, #d90068 100%)';
-  const disabledBg = 'linear-gradient(135deg, rgba(247,3,117,.42) 0%, rgba(180,0,85,.28) 100%)';
-  const actionSelectors = '[data-bridge-deposit],[data-bridge-burn],[data-bridge-mint],[data-bridge-release]';
-  function important(el, prop, value){ el.style.setProperty(prop, value, 'important'); }
-  function paintButton(btn){
-    if (!btn) return;
-    const inactive = btn.disabled && !btn.classList.contains('is-loading') && !btn.classList.contains('is-waiting');
-    important(btn, 'min-height', '56px');
-    important(btn, 'border-radius', '16px');
-    important(btn, 'opacity', '1');
-    important(btn, 'filter', 'none');
-    important(btn, 'transform', 'none');
-    important(btn, 'animation', 'none');
-    important(btn, 'text-shadow', 'none');
-    if (inactive) {
-      important(btn, 'background', disabledBg);
-      important(btn, 'border', '1px solid rgba(247, 3, 117, .50)');
-      important(btn, 'color', 'rgba(255,235,245,.74)');
-      important(btn, 'box-shadow', 'none');
-    } else {
-      important(btn, 'background', activeBg);
-      important(btn, 'border', '1px solid rgba(255, 138, 207, .88)');
-      important(btn, 'color', '#fff');
-      important(btn, 'box-shadow', '0 14px 34px rgba(247, 3, 117, .30)');
+  const pairs = [
+    ['deposit', '[data-bridge-deposit]'],
+    ['mint', '[data-bridge-mint]'],
+    ['burn', '[data-bridge-burn]'],
+    ['release', '[data-bridge-release]']
+  ];
+  function cardFor(key){ return document.querySelector('[data-bridge-card="' + key + '"]'); }
+  function syncCards(){
+    for (const [key, sel] of pairs) {
+      const btn = document.querySelector(sel);
+      const card = cardFor(key);
+      if (!btn || !card) continue;
+      card.classList.toggle('is-processing', btn.classList.contains('is-loading'));
+      card.classList.toggle('is-ready', !btn.disabled && !btn.classList.contains('is-loading'));
+      card.classList.toggle('is-locked', btn.disabled && !btn.classList.contains('is-loading'));
     }
   }
-  function paintAll(){ document.querySelectorAll(actionSelectors).forEach(paintButton); }
-  document.addEventListener('DOMContentLoaded', paintAll);
-  window.addEventListener('load', paintAll);
-  setTimeout(paintAll, 50);
-  setTimeout(paintAll, 500);
-  setTimeout(paintAll, 1500);
-  const mo = new MutationObserver(paintAll);
+  document.addEventListener('DOMContentLoaded', syncCards);
+  window.addEventListener('load', syncCards);
+  setInterval(syncCards, 800);
+  const mo = new MutationObserver(syncCards);
   document.addEventListener('DOMContentLoaded', function(){
-    const target = document.querySelector('.bridge-pro-page') || document.body;
-    if (target) mo.observe(target, { attributes:true, childList:true, subtree:true, attributeFilter:['class','disabled','style'] });
-    paintAll();
+    const target = document.querySelector('[data-lusdt-bridge]') || document.body;
+    if (target) mo.observe(target, { attributes:true, childList:true, subtree:true, attributeFilter:['class','disabled'] });
+    syncCards();
   });
 })();
 </script>
-<!-- LUST_FORCE_PINK_V38_END -->
+<!-- LUST_BRIDGE_ACTIONS_V39_PRO_END -->
 
 </body>
 </html>

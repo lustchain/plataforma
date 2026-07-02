@@ -929,7 +929,7 @@ function setBridgeButtonState(selector, state = "default", label = "") {
   if (state === "waiting") {
     btn.classList.add("is-waiting");
     btn.setAttribute("disabled", "disabled");
-    btn.textContent = bridgeButtonBusyLabel(selector);
+    btn.textContent = baseLabel;
     return;
   }
 

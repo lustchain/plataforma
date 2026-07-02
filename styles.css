@@ -3714,3 +3714,6 @@ button[data-bridge-deposit].is-waiting,button[data-bridge-burn].is-waiting,butto
   background:linear-gradient(135deg,#ff1784 0%,#F70375 52%,#d90068 100%)!important;
   color:#fff!important;
 }
+
+
+/* LUST_BRIDGE_ACTIONS_V39_PRO: bridge step cards and stable pink actions. Main enforcement is inline in bridge.html. */

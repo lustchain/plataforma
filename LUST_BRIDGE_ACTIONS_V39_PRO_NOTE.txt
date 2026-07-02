@@ -1,0 +1,1 @@
+V39 bridge action UI: pro step cards, pink stable buttons, waiting states without spinner, spinner only while user action is processing. Only bridge.html, app.js, styles.css changed.
