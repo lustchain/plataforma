@@ -1384,6 +1384,84 @@ async function findClaimByDepositId(depositId) {
   return null;
 }
 
+
+function normalizeClaimRecoverSource(source) {
+  const s = String(source || "").toLowerCase();
+  if (s === "bsc" || s === "bnb" || s === "binance") return "bsc";
+  if (s === "polygon" || s === "matic") return "polygon";
+  return "";
+}
+
+function isBridgeTxHash(value) {
+  return /^0x[a-fA-F0-9]{64}$/.test(String(value || ""));
+}
+
+async function findClaimBySourceTx(source, txHash) {
+  source = normalizeClaimRecoverSource(source);
+  if (!source || !isBridgeTxHash(txHash)) return null;
+
+  try {
+    const data = await bridgeFetch(`/api/claim/tx/${source}/${txHash}`);
+    const claim = data?.claim || normalizeApiItems(data, "claims")[0];
+    if (claim?.depositId || claim?.status) return claim;
+  } catch (_) {}
+
+  return null;
+}
+
+async function recoverClaimBySourceTx(source, txHash) {
+  source = normalizeClaimRecoverSource(source);
+  if (!source || !isBridgeTxHash(txHash)) return null;
+
+  try {
+    const data = await bridgeFetch(`/api/recover/${source}/${txHash}`);
+    const claim = data?.claim || normalizeApiItems(data, "claims")[0];
+    if (claim?.depositId || claim?.status) return claim;
+  } catch (_) {}
+
+  return null;
+}
+
+async function prepareClaimFromRecoveredTx(claim, account, txHash = "") {
+  if (!claim) return null;
+  if (claim.recipient && !sameAddress(claim.recipient, account)) return null;
+  if (txHash && claim.depositId) localStorage.setItem("lustLastDepositId", claim.depositId);
+
+  const minted = claim.used || String(claim.status || "").toLowerCase().includes("mint") || await isMintedOnChain(claim.depositId);
+  if (minted) {
+    markLocallyMinted(claim.depositId);
+    resetClaimUiToIdle("LUSDT already minted. Ready for a new buy.");
+    refreshBridgeWalletBalances().catch(() => {});
+    return null;
+  }
+
+  if (claim.status === "ready" && sameAddress(claim.recipient, account)) {
+    setBridgePending("claim", claim.depositId, {
+      source: normalizeClaimRecoverSource(claim.source) || (String(claim.sourceChainId) === "56" ? "bsc" : "polygon"),
+      txHash
+    });
+    await prepareActiveClaim(claim, "ok");
+    return claim;
+  }
+
+  return null;
+}
+
+async function findOrRecoverPendingClaimByTx(account) {
+  const item = bridgePendingItem("claim");
+  const source = normalizeClaimRecoverSource(item?.source || localStorage.getItem("lustLastDepositSource"));
+  const txHash = String(item?.txHash || item?.transactionHash || localStorage.getItem("lustLastDepositTxHash") || "").trim();
+
+  if (!source || !isBridgeTxHash(txHash)) return null;
+
+  const existing = await findClaimBySourceTx(source, txHash);
+  const preparedExisting = await prepareClaimFromRecoveredTx(existing, account, txHash);
+  if (preparedExisting) return preparedExisting;
+
+  const recovered = await recoverClaimBySourceTx(source, txHash);
+  return await prepareClaimFromRecoveredTx(recovered, account, txHash);
+}
+
 function updateBridgeQuote() {
   const depositAmount = document.querySelector("[data-bridge-amount]")?.value || "0";
   const withdrawAmount = document.querySelector("[data-withdraw-amount]")?.value || "0";
@@ -1523,6 +1601,10 @@ async function depositToLusdt() {
     const lockbox = new ethers.Contract(token.lockbox, token.lockboxAbi, signer);
     bridgeClaimLog(`Opening ${chain.name} deposit confirmation...`, "");
     const tx = await lockbox.deposit(amount);
+    try {
+      localStorage.setItem("lustLastDepositTxHash", tx.hash);
+      localStorage.setItem("lustLastDepositSource", kind);
+    } catch (_) {}
     setText("[data-bridge-last-deposit]", bridgeShort(tx.hash));
     setBridgeButtonState("[data-bridge-deposit]", "loading", "Waiting deposit...");
     bridgeClaimLog(`Deposit sent: ${tx.hash}. Waiting confirmation...`, "");
@@ -1541,18 +1623,18 @@ async function depositToLusdt() {
 
     if (depositId) {
       localStorage.setItem("lustLastDepositId", depositId);
-      setBridgePending("claim", depositId, { amount: String(amount), source: kind });
-      setBridgePending("claim", "pending");
+      setBridgePending("claim", depositId, { amount: String(amount), source: kind, txHash: tx.hash });
       setText("[data-bridge-claim-state]", "Preparing claim");
       setBridgeButtonState("[data-bridge-deposit]", "default", "⚡ Approve + Deposit");
       setBridgeButtonState("[data-bridge-mint]", "waiting", "Preparing claim...");
       bridgeClaimLog(`Deposit confirmed. DepositId: ${depositId}. Waiting for bridge signatures automatically.`, "ok");
       autoFindClaimSoon();
     } else {
+      setBridgePending("claim", "pending", { amount: String(amount), source: kind, txHash: tx.hash });
       setText("[data-bridge-claim-state]", "Preparing claim");
       setBridgeButtonState("[data-bridge-deposit]", "default", "⚡ Approve + Deposit");
       setBridgeButtonState("[data-bridge-mint]", "waiting", "Preparing claim...");
-      bridgeClaimLog("Deposit confirmed. Waiting for bridge signatures automatically.", "ok");
+      bridgeClaimLog(`Deposit confirmed. Waiting for bridge signatures automatically. Tx: ${tx.hash}`, "ok");
       autoFindClaimSoon();
     }
   } catch (err) {
@@ -1739,6 +1821,9 @@ async function findClaim(options = {}) {
         return directClaim;
       }
     }
+
+    const recoveredFromTx = await findOrRecoverPendingClaimByTx(account);
+    if (recoveredFromTx) return recoveredFromTx;
 
     const entries = await loadClaimsForAccount(account);
 
