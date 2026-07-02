@@ -915,10 +915,10 @@ function setBridgeButtonState(selector, state = "default", label = "") {
 }
 
 function bridgeActionLabel(selector, ready = false) {
-  if (selector.includes("mint")) return ready ? "2 · Mint on LUST" : "2 · Mint on LUST";
-  if (selector.includes("release")) return ready ? "2 · Release USDT" : "2 · Release USDT";
-  if (selector.includes("burn")) return "1 · Burn LUSDT";
-  if (selector.includes("deposit")) return "1 · Deposit USDT";
+  if (selector.includes("mint")) return ready ? "Mint on LUST" : "Mint on LUST";
+  if (selector.includes("release")) return ready ? "Release USDT" : "Release USDT";
+  if (selector.includes("burn")) return "Burn LUSDT";
+  if (selector.includes("deposit")) return "Deposit USDT";
   return "Continue";
 }
 
@@ -938,12 +938,10 @@ async function waitBridgeTxWithProgress(tx, options = {}) {
   const startedAt = Date.now();
   let tick = 0;
 
-  if (selector) setBridgeButtonState(selector, "loading", `${baseLabel}...`);
+  if (selector) setBridgeButtonState(selector, "loading", baseLabel);
 
   const timer = setInterval(() => {
     tick += 1;
-    const seconds = Math.max(1, Math.floor((Date.now() - startedAt) / 1000));
-    if (selector) setBridgeButtonState(selector, "loading", `${baseLabel} · ${seconds}s`);
     if (tick === 2 && txHash) logFn(`Still waiting for block confirmation. Tx: ${txHash}`, "warn");
   }, 3000);
 
@@ -1289,7 +1287,7 @@ function resetClaimUiToIdle(message = "Ready for a new buy.") {
   clearBridgePending("claim");
   clearStoredDepositRecovery();
   setBridgeActionReady("[data-bridge-mint]", false);
-  setBridgeButtonState("[data-bridge-deposit]", "default", "1 · Deposit USDT");
+  setBridgeButtonState("[data-bridge-deposit]", "default", "Deposit USDT");
   setText("[data-bridge-claim-state]", "Waiting");
   bridgeClaimLog(message, "ok");
 }
@@ -1298,7 +1296,7 @@ function resetReleaseUiToIdle(message = "Ready for a new sell.") {
   activeRelease = null;
   clearBridgePending("release");
   setBridgeActionReady("[data-bridge-release]", false);
-  setBridgeButtonState("[data-bridge-burn]", "default", "1 · Burn LUSDT");
+  setBridgeButtonState("[data-bridge-burn]", "default", "Burn LUSDT");
   setText("[data-bridge-release-state]", "Waiting");
   bridgeReleaseLog(message, "ok");
 }
@@ -1506,7 +1504,7 @@ async function findOrRecoverPendingClaimByTx(account, options = {}) {
 
   if (visible) {
     setText("[data-bridge-claim-state]", "Checking claim");
-    setBridgeButtonState("[data-bridge-mint]", "loading", "2 · Checking claim...");
+    setBridgeButtonState("[data-bridge-mint]", "loading", "Checking claim");
     bridgeClaimLog(`Checking bridge claim for ${source.toUpperCase()} tx ${bridgeShort(txHash)}...`, "");
   }
 
@@ -1516,7 +1514,7 @@ async function findOrRecoverPendingClaimByTx(account, options = {}) {
 
   if (visible) {
     setText("[data-bridge-claim-state]", "Recovering claim");
-    setBridgeButtonState("[data-bridge-mint]", "loading", "2 · Recovering claim...");
+    setBridgeButtonState("[data-bridge-mint]", "loading", "Recovering claim");
     bridgeClaimLog(`Claim not listed yet. Calling secure ${source.toUpperCase()} recovery now...`, "");
   }
 
@@ -1649,7 +1647,7 @@ async function refreshBridgeStatus() {
 
 async function depositToLusdt() {
   try {
-    setBridgeButtonState("[data-bridge-deposit]", "loading", "1 · Checking network...");
+    setBridgeButtonState("[data-bridge-deposit]", "loading", "Checking wallet...");
     setBridgeActionReady("[data-bridge-mint]", false);
 
     const kind = selectedSource();
@@ -1660,18 +1658,18 @@ async function depositToLusdt() {
     bridgeClaimLog(`Preparing ${chain.name} deposit...`, "");
     await ensureWalletChain(chain);
 
-    setBridgeButtonState("[data-bridge-deposit]", "loading", "1 · Checking approval...");
+    setBridgeButtonState("[data-bridge-deposit]", "loading", "Checking allowance...");
     const signer = await browserSigner();
     const account = await signer.getAddress();
 
     const approvalTx = await approveIfNeeded(token.address, token.lockbox, amount, signer);
     if (approvalTx) {
-      setBridgeButtonState("[data-bridge-deposit]", "loading", "1 · Approval confirmed");
+      setBridgeButtonState("[data-bridge-deposit]", "loading", "Allowance ready");
       bridgeClaimLog("Approval confirmed. Next step: deposit confirmation.", "ok");
     }
 
     const lockbox = new ethers.Contract(token.lockbox, token.lockboxAbi, signer);
-    setBridgeButtonState("[data-bridge-deposit]", "loading", "1 · Confirm in wallet...");
+    setBridgeButtonState("[data-bridge-deposit]", "loading", "Confirm deposit");
     bridgeClaimLog(`Opening ${chain.name} deposit confirmation...`, "");
 
     const tx = await lockbox.deposit(amount);
@@ -1681,8 +1679,8 @@ async function depositToLusdt() {
     } catch (_) {}
 
     setText("[data-bridge-last-deposit]", bridgeShort(tx.hash));
-    setBridgeButtonState("[data-bridge-deposit]", "loading", "1 · Waiting external block...");
-    setBridgeButtonState("[data-bridge-mint]", "waiting", "2 · Waiting deposit...");
+    setBridgeButtonState("[data-bridge-deposit]", "loading", "Deposit pending");
+    setBridgeButtonState("[data-bridge-mint]", "waiting", "Waiting deposit");
     bridgeClaimLog(`Deposit sent: ${tx.hash}. Waiting on-chain confirmation...`, "");
 
     const receipt = await tx.wait();
@@ -1706,8 +1704,8 @@ async function depositToLusdt() {
     }
 
     setText("[data-bridge-claim-state]", "Creating claim");
-    setBridgeButtonState("[data-bridge-deposit]", "default", "1 · Deposit USDT");
-    setBridgeButtonState("[data-bridge-mint]", "loading", "2 · Creating claim...");
+    setBridgeButtonState("[data-bridge-deposit]", "default", "Deposit USDT");
+    setBridgeButtonState("[data-bridge-mint]", "loading", "Preparing claim");
     bridgeClaimLog(
       depositId
         ? `Deposit confirmed. DepositId: ${depositId}. Creating claim now...`
@@ -1717,19 +1715,19 @@ async function depositToLusdt() {
 
     const recoveredNow = await findOrRecoverPendingClaimByTx(account, { visible: true, allowLocalFallback: true });
     if (recoveredNow) {
-      setBridgeButtonState("[data-bridge-deposit]", "default", "1 · Deposit USDT");
+      setBridgeButtonState("[data-bridge-deposit]", "default", "Deposit USDT");
       return;
     }
 
     setText("[data-bridge-claim-state]", "Preparing claim");
-    setBridgeButtonState("[data-bridge-mint]", "waiting", "2 · Auto-checking...");
+    setBridgeButtonState("[data-bridge-mint]", "waiting", "Checking claim");
     bridgeClaimLog("Claim is not ready yet. Auto-recover is running in the background; keep this page open.", "warn");
     autoFindClaimSoon();
   } catch (err) {
     console.error(err);
-    setBridgeButtonState("[data-bridge-deposit]", "default", "1 · Deposit USDT");
+    setBridgeButtonState("[data-bridge-deposit]", "default", "Deposit USDT");
     if (activeClaim) setBridgeActionReady("[data-bridge-mint]", true);
-    else setBridgeButtonState("[data-bridge-mint]", "disabled", "2 · Mint on LUST");
+    else setBridgeButtonState("[data-bridge-mint]", "disabled", "Mint on LUST");
     bridgeClaimLog(err?.shortMessage || err?.message || "Deposit failed or rejected.", "warn");
   }
 }
@@ -1946,7 +1944,7 @@ async function findClaim(options = {}) {
     } else if (hasPendingClaim) {
       if (mayUpdateSilentClaimUi) {
         setText("[data-bridge-claim-state]", "Preparing claim");
-        setBridgeButtonState("[data-bridge-mint]", "waiting", "2 · Preparing claim...");
+        setBridgeButtonState("[data-bridge-mint]", "waiting", "Preparing claim");
       }
     } else {
       setText("[data-bridge-claim-state]", "Waiting");
@@ -1987,7 +1985,7 @@ async function mintClaim() {
   try {
     if (!activeClaim) await findClaim();
     if (!activeClaim) return;
-    setBridgeButtonState("[data-bridge-mint]", "loading", "2 · Confirm in wallet...");
+    setBridgeButtonState("[data-bridge-mint]", "loading", "Confirm mint");
     await ensureWalletChain(BRIDGE_CHAINS.lust);
     const signer = await browserSigner();
     const exec = new ethers.Contract(LUSDT_EXECUTOR_ADDRESS, EXECUTOR_ABI, signer);
@@ -2003,17 +2001,17 @@ async function mintClaim() {
     bridgeClaimLog(`Mint sent: ${tx.hash}. Waiting confirmation...`, "");
     await waitBridgeTxWithProgress(tx, {
       selector: "[data-bridge-mint]",
-      baseLabel: "2 · Waiting LUST block",
+      baseLabel: "Mint pending on LUST",
       logFn: bridgeClaimLog
     });
-    setBridgeButtonState("[data-bridge-mint]", "loading", "2 · Finalizing...");
+    setBridgeButtonState("[data-bridge-mint]", "loading", "Finalizing");
     markLocallyMinted(activeClaim.depositId);
     clearBridgePending("claim");
     bridgeClaimLog(`LUSDT minted successfully. Tx: ${tx.hash}`, "ok");
     setText("[data-bridge-claim-state]", "Minted successfully");
     activeClaim = null;
     setBridgeActionReady("[data-bridge-mint]", false);
-    setBridgeButtonState("[data-bridge-deposit]", "default", "1 · Deposit USDT");
+    setBridgeButtonState("[data-bridge-deposit]", "default", "Deposit USDT");
     setTimeout(() => findClaim({ silent: true }).catch(() => {}), 2500);
   } catch (err) {
     console.error(err);
@@ -2024,7 +2022,7 @@ async function mintClaim() {
 
 async function burnForRelease() {
   try {
-    setBridgeButtonState("[data-bridge-burn]", "loading", "1 · Confirm in wallet...");
+    setBridgeButtonState("[data-bridge-burn]", "loading", "Confirm burn");
     setBridgeActionReady("[data-bridge-release]", false);
     const destination = selectedDestination();
     const chainId = destination === "bsc" ? 56 : 137;
@@ -2050,8 +2048,8 @@ async function burnForRelease() {
     const account = await signer.getAddress();
     bridgeReleaseLog("Opening LUST burn confirmation...", "");
     const tx = await exec.burnForExternalRelease(account, amount, BigInt(chainId), nonce, deadline);
-    setBridgeButtonState("[data-bridge-burn]", "loading", "1 · Waiting LUST block...");
-    setBridgeButtonState("[data-bridge-release]", "waiting", "2 · Waiting burn...");
+    setBridgeButtonState("[data-bridge-burn]", "loading", "Burn pending on LUST");
+    setBridgeButtonState("[data-bridge-release]", "waiting", "Waiting burn");
     setText("[data-bridge-last-burn]", bridgeShort(tx.hash));
     localStorage.setItem("lustLastBurnNonce", String(nonce));
     setBridgePending("release", String(nonce), { destination, amount: String(amount), txHash: tx.hash });
@@ -2059,12 +2057,12 @@ async function burnForRelease() {
     bridgeReleaseLog(`Burn sent: ${tx.hash}. Waiting LUST confirmation...`, "");
     await waitBridgeTxWithProgress(tx, {
       selector: "[data-bridge-burn]",
-      baseLabel: "1 · Waiting LUST block",
+      baseLabel: "Burn pending on LUST",
       logFn: bridgeReleaseLog
     });
 
-    setBridgeButtonState("[data-bridge-burn]", "default", "1 · Burn LUSDT");
-    setBridgeButtonState("[data-bridge-release]", "loading", "2 · Creating release...");
+    setBridgeButtonState("[data-bridge-burn]", "default", "Burn LUSDT");
+    setBridgeButtonState("[data-bridge-release]", "loading", "Preparing release");
     setText("[data-bridge-release-state]", "Creating release");
     bridgeReleaseLog("Burn confirmed. Creating release signatures now...", "ok");
 
@@ -2072,14 +2070,14 @@ async function burnForRelease() {
     if (releaseNow) return;
 
     setText("[data-bridge-release-state]", "Waiting signatures");
-    setBridgeButtonState("[data-bridge-release]", "waiting", "2 · Waiting signatures...");
+    setBridgeButtonState("[data-bridge-release]", "waiting", "Waiting signatures");
     bridgeReleaseLog("Release is not ready yet. Auto-check is running; keep this page open.", "warn");
     autoFindReleaseSoon({ visible: true });
   } catch (err) {
     console.error(err);
-    setBridgeButtonState("[data-bridge-burn]", "default", "1 · Burn LUSDT");
+    setBridgeButtonState("[data-bridge-burn]", "default", "Burn LUSDT");
     if (activeRelease) setBridgeActionReady("[data-bridge-release]", true);
-    else if (bridgeHasPending("release")) setBridgeButtonState("[data-bridge-release]", "waiting", "2 · Resume check");
+    else if (bridgeHasPending("release")) setBridgeButtonState("[data-bridge-release]", "waiting", "Resume release");
     else setBridgeActionReady("[data-bridge-release]", false);
     bridgeReleaseLog(err?.shortMessage || err?.message || "Burn failed or rejected.", "warn");
   }
@@ -2095,7 +2093,7 @@ async function findRelease(options = {}) {
     if (!options.silent) bridgeReleaseLog("Searching release signatures...", "");
     if (mayUpdateSilentReleaseUi && hasPendingReleaseAtStart && !activeRelease) {
       setText("[data-bridge-release-state]", "Checking release");
-      setBridgeButtonState("[data-bridge-release]", "loading", "2 · Checking release...");
+      setBridgeButtonState("[data-bridge-release]", "loading", "Checking release");
     }
 
     if (hasPendingReleaseAtStart && await releasePendingWasUsed(account)) {
@@ -2117,7 +2115,7 @@ async function findRelease(options = {}) {
         setBridgeActionReady("[data-bridge-release]", false);
       } else if (hasPendingRelease) {
         setText("[data-bridge-release-state]", "Waiting signatures");
-        setBridgeButtonState("[data-bridge-release]", "waiting", "2 · Waiting signatures...");
+        setBridgeButtonState("[data-bridge-release]", "waiting", "Waiting signatures");
       } else {
         setText("[data-bridge-release-state]", "Waiting");
         setBridgeActionReady("[data-bridge-release]", false);
@@ -2139,7 +2137,7 @@ async function findRelease(options = {}) {
     console.error(err);
     if (bridgeHasPending("release")) {
       setText("[data-bridge-release-state]", "Retrying release");
-      setBridgeButtonState("[data-bridge-release]", "waiting", "2 · Retrying release...");
+      setBridgeButtonState("[data-bridge-release]", "waiting", "Retrying release");
     }
     if (!options.silent) bridgeReleaseLog(err?.message || "Could not find release.", "warn");
     return null;
@@ -2149,20 +2147,20 @@ async function findRelease(options = {}) {
 async function executeRelease() {
   try {
     if (!activeRelease) {
-      setBridgeButtonState("[data-bridge-release]", "loading", "2 · Finding release...");
+      setBridgeButtonState("[data-bridge-release]", "loading", "Finding release");
       await findRelease({ silent: false, autoRetry: true });
     }
     if (!activeRelease) {
       if (bridgeHasPending("release")) {
         setText("[data-bridge-release-state]", "Waiting signatures");
-        setBridgeButtonState("[data-bridge-release]", "waiting", "2 · Waiting signatures...");
+        setBridgeButtonState("[data-bridge-release]", "waiting", "Waiting signatures");
       } else {
         setBridgeActionReady("[data-bridge-release]", false);
       }
       return;
     }
 
-    setBridgeButtonState("[data-bridge-release]", "loading", "2 · Switch network...");
+    setBridgeButtonState("[data-bridge-release]", "loading", "Switch network");
     const destination = releaseDestinationKey(activeRelease);
     const chain = bridgeChainFor(destination);
     const lockboxAddress = destination === "bsc" ? LUSDT_BSC_LOCKBOX : LUSDT_POLYGON_LOCKBOX;
@@ -2172,7 +2170,7 @@ async function executeRelease() {
     const signer = await browserSigner();
     const lockbox = new ethers.Contract(lockboxAddress, abi, signer);
 
-    setBridgeButtonState("[data-bridge-release]", "loading", "2 · Confirm in wallet...");
+    setBridgeButtonState("[data-bridge-release]", "loading", "Confirm release");
     bridgeReleaseLog(`Opening ${chain.name} release confirmation...`, "");
     const tx = await lockbox.release(
       activeRelease.recipient,
@@ -2181,26 +2179,26 @@ async function executeRelease() {
       BigInt(activeRelease.deadline),
       activeRelease.signatures
     );
-    setBridgeButtonState("[data-bridge-release]", "loading", "2 · Waiting destination block...");
+    setBridgeButtonState("[data-bridge-release]", "loading", "Release pending");
     bridgeReleaseLog(`Release sent: ${tx.hash}. Waiting confirmation...`, "");
     await waitBridgeTxWithProgress(tx, {
       selector: "[data-bridge-release]",
-      baseLabel: `2 · Waiting ${chain.name} block`,
+      baseLabel: `Release pending on ${chain.name}`,
       logFn: bridgeReleaseLog
     });
-    setBridgeButtonState("[data-bridge-release]", "loading", "2 · Finalizing...");
+    setBridgeButtonState("[data-bridge-release]", "loading", "Finalizing");
     clearBridgePending("release");
     try { localStorage.removeItem("lustLastBurnNonce"); } catch (_) {}
     bridgeReleaseLog(`USDT released successfully. Tx: ${tx.hash}`, "ok");
     setText("[data-bridge-release-state]", "Released successfully");
     activeRelease = null;
     setBridgeActionReady("[data-bridge-release]", false);
-    setBridgeButtonState("[data-bridge-burn]", "default", "1 · Burn LUSDT");
+    setBridgeButtonState("[data-bridge-burn]", "default", "Burn LUSDT");
     setTimeout(() => findRelease({ silent: true }).catch(() => {}), 2500);
   } catch (err) {
     console.error(err);
     if (activeRelease) setBridgeActionReady("[data-bridge-release]", true);
-    else if (bridgeHasPending("release")) setBridgeButtonState("[data-bridge-release]", "waiting", "2 · Retry check");
+    else if (bridgeHasPending("release")) setBridgeButtonState("[data-bridge-release]", "waiting", "Retry release");
     bridgeReleaseLog(err?.shortMessage || err?.message || "Release failed or rejected.", "warn");
   }
 }
@@ -2382,7 +2380,7 @@ function wireLusdtBridge() {
     if (entry && !entry.used) {
       const originalText = btn.textContent;
       btn.disabled = true;
-      btn.textContent = "2 · Opening release...";
+      btn.textContent = "Opening release";
       try {
         await prepareActiveRelease(entry.release, "ok");
         await executeRelease();
