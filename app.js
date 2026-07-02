@@ -1447,16 +1447,29 @@ async function prepareClaimFromRecoveredTx(claim, account, txHash = "") {
   return null;
 }
 
-async function findOrRecoverPendingClaimByTx(account) {
+async function findOrRecoverPendingClaimByTx(account, options = {}) {
   const item = bridgePendingItem("claim");
   const source = normalizeClaimRecoverSource(item?.source || localStorage.getItem("lustLastDepositSource"));
   const txHash = String(item?.txHash || item?.transactionHash || localStorage.getItem("lustLastDepositTxHash") || "").trim();
+  const visible = options.visible !== false;
 
   if (!source || !isBridgeTxHash(txHash)) return null;
+
+  if (visible) {
+    setText("[data-bridge-claim-state]", "Checking claim");
+    setBridgeButtonState("[data-bridge-mint]", "loading", "Checking claim...");
+    bridgeClaimLog(`Checking bridge claim for ${source.toUpperCase()} tx ${bridgeShort(txHash)}...`, "");
+  }
 
   const existing = await findClaimBySourceTx(source, txHash);
   const preparedExisting = await prepareClaimFromRecoveredTx(existing, account, txHash);
   if (preparedExisting) return preparedExisting;
+
+  if (visible) {
+    setText("[data-bridge-claim-state]", "Recovering claim");
+    setBridgeButtonState("[data-bridge-mint]", "loading", "Recovering claim...");
+    bridgeClaimLog(`Claim not listed yet. Calling secure ${source.toUpperCase()} recovery now...`, "");
+  }
 
   const recovered = await recoverClaimBySourceTx(source, txHash);
   return await prepareClaimFromRecoveredTx(recovered, account, txHash);
@@ -1587,27 +1600,42 @@ async function refreshBridgeStatus() {
 
 async function depositToLusdt() {
   try {
-    setBridgeButtonState("[data-bridge-deposit]", "loading", "Confirm in wallet...");
+    setBridgeButtonState("[data-bridge-deposit]", "loading", "Checking network...");
     setBridgeActionReady("[data-bridge-mint]", false);
+
     const kind = selectedSource();
     const token = sourceToken(kind);
     const chain = bridgeChainFor(kind);
     const amount = parseAmount(document.querySelector("[data-bridge-amount]")?.value, token.decimals);
 
+    bridgeClaimLog(`Preparing ${chain.name} deposit...`, "");
     await ensureWalletChain(chain);
+
+    setBridgeButtonState("[data-bridge-deposit]", "loading", "Checking approval...");
     const signer = await browserSigner();
-    await approveIfNeeded(token.address, token.lockbox, amount, signer);
+    const account = await signer.getAddress();
+
+    const approvalTx = await approveIfNeeded(token.address, token.lockbox, amount, signer);
+    if (approvalTx) {
+      setBridgeButtonState("[data-bridge-deposit]", "loading", "Approval confirmed");
+      bridgeClaimLog("Approval confirmed. Next step: deposit confirmation.", "ok");
+    }
 
     const lockbox = new ethers.Contract(token.lockbox, token.lockboxAbi, signer);
+    setBridgeButtonState("[data-bridge-deposit]", "loading", "Confirm deposit...");
     bridgeClaimLog(`Opening ${chain.name} deposit confirmation...`, "");
+
     const tx = await lockbox.deposit(amount);
     try {
       localStorage.setItem("lustLastDepositTxHash", tx.hash);
       localStorage.setItem("lustLastDepositSource", kind);
     } catch (_) {}
+
     setText("[data-bridge-last-deposit]", bridgeShort(tx.hash));
-    setBridgeButtonState("[data-bridge-deposit]", "loading", "Waiting deposit...");
-    bridgeClaimLog(`Deposit sent: ${tx.hash}. Waiting confirmation...`, "");
+    setBridgeButtonState("[data-bridge-deposit]", "loading", "Confirming deposit...");
+    setBridgeButtonState("[data-bridge-mint]", "waiting", "Waiting deposit...");
+    bridgeClaimLog(`Deposit sent: ${tx.hash}. Waiting on-chain confirmation...`, "");
+
     const receipt = await tx.wait();
 
     let depositId = "";
@@ -1624,23 +1652,35 @@ async function depositToLusdt() {
     if (depositId) {
       localStorage.setItem("lustLastDepositId", depositId);
       setBridgePending("claim", depositId, { amount: String(amount), source: kind, txHash: tx.hash });
-      setText("[data-bridge-claim-state]", "Preparing claim");
-      setBridgeButtonState("[data-bridge-deposit]", "default", "⚡ Approve + Deposit");
-      setBridgeButtonState("[data-bridge-mint]", "waiting", "Preparing claim...");
-      bridgeClaimLog(`Deposit confirmed. DepositId: ${depositId}. Waiting for bridge signatures automatically.`, "ok");
-      autoFindClaimSoon();
     } else {
       setBridgePending("claim", "pending", { amount: String(amount), source: kind, txHash: tx.hash });
-      setText("[data-bridge-claim-state]", "Preparing claim");
-      setBridgeButtonState("[data-bridge-deposit]", "default", "⚡ Approve + Deposit");
-      setBridgeButtonState("[data-bridge-mint]", "waiting", "Preparing claim...");
-      bridgeClaimLog(`Deposit confirmed. Waiting for bridge signatures automatically. Tx: ${tx.hash}`, "ok");
-      autoFindClaimSoon();
     }
+
+    setText("[data-bridge-claim-state]", "Creating claim");
+    setBridgeButtonState("[data-bridge-deposit]", "default", "⚡ Approve + Deposit");
+    setBridgeButtonState("[data-bridge-mint]", "loading", "Creating claim...");
+    bridgeClaimLog(
+      depositId
+        ? `Deposit confirmed. DepositId: ${depositId}. Creating claim now...`
+        : `Deposit confirmed. Creating claim now from tx: ${tx.hash}`,
+      "ok"
+    );
+
+    const recoveredNow = await findOrRecoverPendingClaimByTx(account);
+    if (recoveredNow) {
+      setBridgeButtonState("[data-bridge-deposit]", "default", "⚡ Approve + Deposit");
+      return;
+    }
+
+    setText("[data-bridge-claim-state]", "Preparing claim");
+    setBridgeButtonState("[data-bridge-mint]", "waiting", "Auto-retrying...");
+    bridgeClaimLog("Claim is not ready yet. Auto-recover is running in the background; keep this page open.", "warn");
+    autoFindClaimSoon();
   } catch (err) {
     console.error(err);
     setBridgeButtonState("[data-bridge-deposit]", "default", "⚡ Approve + Deposit");
     if (activeClaim) setBridgeActionReady("[data-bridge-mint]", true);
+    else setBridgeButtonState("[data-bridge-mint]", "disabled", "Mint claim");
     bridgeClaimLog(err?.shortMessage || err?.message || "Deposit failed or rejected.", "warn");
   }
 }
@@ -1872,9 +1912,9 @@ async function findClaim(options = {}) {
 }
 
 async function autoFindClaimSoon() {
-  const attempts = [2000, 4000, 6500, 9000, 12000, 16000, 22000, 30000, 45000, 60000, 90000, 120000];
+  const attempts = [0, 1500, 3000, 5000, 8000, 12000, 18000, 25000, 35000, 50000, 70000, 95000, 120000];
   for (const ms of attempts) {
-    setTimeout(() => findClaim({ silent: true }).catch(() => {}), ms);
+    setTimeout(() => findClaim({ silent: true, autoRetry: true }).catch(() => {}), ms);
   }
 }
 
