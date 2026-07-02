@@ -1,0 +1,1 @@
+V38 force pink bridge buttons. Verify live bridge.html contains LUST_FORCE_PINK_V38.

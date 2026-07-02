@@ -3690,3 +3690,27 @@ button.btn[disabled], .btn[disabled] {
   margin-right: 8px !important;
   animation: bridgeSpin .9s linear infinite !important;
 }
+
+
+/* LUST_FORCE_PINK_V38 - appended last: direct action button color fix */
+button[data-bridge-deposit], button[data-bridge-burn], button[data-bridge-mint]:not([disabled]), button[data-bridge-release]:not([disabled]){
+  background:linear-gradient(135deg,#ff1784 0%,#F70375 52%,#d90068 100%)!important;
+  border:1px solid rgba(255,138,207,.88)!important;
+  color:#fff!important;
+  box-shadow:0 14px 34px rgba(247,3,117,.30)!important;
+  opacity:1!important;
+  animation:none!important;
+  transform:none!important;
+}
+button[data-bridge-mint][disabled]:not(.is-loading):not(.is-waiting), button[data-bridge-release][disabled]:not(.is-loading):not(.is-waiting){
+  background:linear-gradient(135deg,rgba(247,3,117,.42) 0%,rgba(180,0,85,.28) 100%)!important;
+  border:1px solid rgba(247,3,117,.50)!important;
+  color:rgba(255,235,245,.74)!important;
+  box-shadow:none!important;
+  opacity:1!important;
+}
+button[data-bridge-deposit].is-loading,button[data-bridge-burn].is-loading,button[data-bridge-mint].is-loading,button[data-bridge-release].is-loading,
+button[data-bridge-deposit].is-waiting,button[data-bridge-burn].is-waiting,button[data-bridge-mint].is-waiting,button[data-bridge-release].is-waiting{
+  background:linear-gradient(135deg,#ff1784 0%,#F70375 52%,#d90068 100%)!important;
+  color:#fff!important;
+}
