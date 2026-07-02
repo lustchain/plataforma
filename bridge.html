@@ -72,7 +72,74 @@
   ]
 }
   </script>
-<link rel="stylesheet" href="./styles.css?v=bridge-executive-buttons-v35" />
+<link rel="stylesheet" href="./styles.css?v=bridge-pink-fixed-v37" />
+<style id="bridge-critical-buttons-v37">
+/* Critical bridge button fix v37: force LUST pink buttons, no flicker, no black fallback */
+.bridge-action-grid.two-actions .btn,
+.bridge-action-grid.two-actions .btn.primary,
+.bridge-action-grid.two-actions .btn.is-ready,
+.bridge-action-grid.two-actions .btn.is-loading,
+.bridge-action-grid.two-actions .btn.is-waiting,
+.bridge-action-grid.two-actions .btn:not(:disabled),
+.bridge-action-grid.two-actions .btn.primary:not(:disabled),
+.bridge-action-grid.two-actions .btn.is-ready:not(:disabled) {
+  min-height: 58px !important;
+  border-radius: 18px !important;
+  border: 2px solid rgba(255, 118, 196, .72) !important;
+  background: linear-gradient(135deg, #ff1784 0%, #f70375 48%, #d90068 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 16px 34px rgba(247, 3, 117, .28) !important;
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  animation: none !important;
+  transition: box-shadow .16s ease, border-color .16s ease, filter .16s ease !important;
+}
+.bridge-action-grid.two-actions .btn:hover,
+.bridge-action-grid.two-actions .btn.primary:hover,
+.bridge-action-grid.two-actions .btn.is-ready:hover,
+.bridge-action-grid.two-actions .btn.is-loading:hover,
+.bridge-action-grid.two-actions .btn.is-waiting:hover,
+.bridge-action-grid.two-actions .btn:focus,
+.bridge-action-grid.two-actions .btn:active {
+  background: linear-gradient(135deg, #ff1784 0%, #f70375 48%, #d90068 100%) !important;
+  border-color: rgba(255, 164, 218, .92) !important;
+  box-shadow: 0 18px 40px rgba(247, 3, 117, .34) !important;
+  transform: none !important;
+  animation: none !important;
+  outline: none !important;
+}
+.bridge-action-grid.two-actions .btn:disabled:not(.is-loading):not(.is-waiting),
+.bridge-action-grid.two-actions .btn[disabled]:not(.is-loading):not(.is-waiting) {
+  background: linear-gradient(135deg, rgba(247,3,117,.28) 0%, rgba(247,3,117,.18) 100%) !important;
+  border-color: rgba(247, 3, 117, .38) !important;
+  color: rgba(255, 230, 244, .58) !important;
+  box-shadow: none !important;
+  cursor: not-allowed !important;
+}
+.bridge-action-grid.two-actions .btn::after,
+.bridge-action-grid.two-actions .btn.is-ready::before,
+.bridge-action-grid.two-actions .btn.is-ready::after,
+.bridge-action-grid.two-actions .btn.is-waiting::after,
+.bridge-action-grid.two-actions .btn.is-loading::after {
+  content: none !important;
+  display: none !important;
+}
+.bridge-action-grid.two-actions .btn.is-loading::before,
+.bridge-action-grid.two-actions .btn.is-waiting::before {
+  content: "" !important;
+  width: 15px !important;
+  height: 15px !important;
+  flex: 0 0 15px !important;
+  border-radius: 999px !important;
+  border: 2px solid rgba(255,255,255,.38) !important;
+  border-top-color: #fff !important;
+  display: inline-block !important;
+  margin-right: 8px !important;
+  animation: bridgeSpin .9s linear infinite !important;
+}
+</style>
+
   <!-- Google tag (gtag.js) - GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8N7M5DTF4"></script>
   <script>
@@ -564,7 +631,7 @@
     $("[data-bsc-recover-mint]")?.addEventListener("click", mintRecoveredClaim);
   });
 </script>
-<script type="module" src="./app.js?v=bridge-pro-pink-buttons-v36"></script>
+<script type="module" src="./app.js?v=bridge-pink-fixed-v37"></script>
 
 <script type="module" id="bridge-lusdt-sell-balance-fix-v41-no-blink">
   import { ethers } from "https://esm.sh/ethers@6.16.0";

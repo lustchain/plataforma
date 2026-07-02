@@ -891,101 +891,67 @@ function bridgeReleaseLog(message, tone = "") {
   bridgeLog(message, tone, "release");
 }
 
-function setBridgeButtonState(selector, state = "default", label = "") {
-  const btn = document.querySelector(selector);
-  if (!btn) return;
-
-  if (!btn.dataset.defaultText) btn.dataset.defaultText = btn.textContent.trim();
-
-  btn.classList.remove("is-ready", "is-waiting", "is-loading");
-  btn.dataset.bridgeState = state || "default";
-
-  const fixedLabel = bridgeActionLabel(selector, state === "ready");
-  btn.textContent = bridgeButtonLabel(selector, state, label);
-
-  if (state === "ready") {
-    btn.classList.add("is-ready");
-    btn.removeAttribute("disabled");
-  } else if (state === "waiting") {
-    btn.classList.add("is-waiting");
-    btn.setAttribute("disabled", "disabled");
-  } else if (state === "loading") {
-    btn.classList.add("is-loading");
-    btn.setAttribute("disabled", "disabled");
-  } else if (state === "disabled") {
-    btn.setAttribute("disabled", "disabled");
-  } else {
-    btn.removeAttribute("disabled");
-  }
-
-  // The button stays visually stable. The detailed step appears in the status badge.
-  const step = bridgeStepLabel(label || fixedLabel);
-  if (step && step !== fixedLabel) {
-    if (selector.includes("mint") || selector.includes("deposit")) {
-      setText("[data-bridge-claim-state]", step);
-    } else if (selector.includes("release") || selector.includes("burn")) {
-      setText("[data-bridge-release-state]", step);
-    }
-  }
+function bridgeButtonBaseLabel(selector) {
+  if (selector.includes("deposit")) return "Deposit USDT";
+  if (selector.includes("mint") && selector.includes("recover")) return "Mint recovered claim";
+  if (selector.includes("mint")) return "Mint on LUST";
+  if (selector.includes("burn")) return "Burn LUSDT";
+  if (selector.includes("release")) return "Release USDT";
+  if (selector.includes("recover")) return "Recover claim";
+  return "Continue";
 }
 
-function bridgeButtonLabel(selector, state = "default", label = "") {
-  const fixedLabel = bridgeActionLabel(selector, state === "ready");
-  if (state !== "loading") return fixedLabel;
-
-  const raw = String(label || "").toLowerCase();
-  if (raw.includes("confirm")) return "Confirm in wallet";
-  if (raw.includes("switch")) return "Switch network";
+function bridgeButtonBusyLabel(selector) {
   if (selector.includes("deposit")) return "Depositing...";
   if (selector.includes("mint")) return "Minting...";
   if (selector.includes("burn")) return "Burning...";
   if (selector.includes("release")) return "Releasing...";
+  if (selector.includes("recover")) return "Recovering...";
   return "Processing...";
 }
 
-function bridgeStepLabel(label = "") {
-  return String(label || "")
-    .replace(/\.\.\.$/, "")
-    .replace(/LUST block.*$/i, "LUST confirmation")
-    .trim();
-}
+function setBridgeButtonState(selector, state = "default", label = "") {
+  const btn = document.querySelector(selector);
+  if (!btn) return;
 
-function bridgeActionLabel(selector, ready = false) {
-  if (selector.includes("mint")) return "Mint on LUST";
-  if (selector.includes("release")) return "Release USDT";
-  if (selector.includes("burn")) return "Burn LUSDT";
-  if (selector.includes("deposit")) return "Deposit USDT";
-  return "Continue";
+  const baseLabel = bridgeButtonBaseLabel(selector);
+  if (!btn.dataset.defaultText) btn.dataset.defaultText = baseLabel;
+
+  btn.classList.remove("is-ready", "is-waiting", "is-loading");
+
+  if (state === "ready") {
+    btn.classList.add("is-ready");
+    btn.removeAttribute("disabled");
+    btn.textContent = baseLabel;
+    return;
+  }
+
+  if (state === "waiting") {
+    btn.classList.add("is-waiting");
+    btn.setAttribute("disabled", "disabled");
+    btn.textContent = bridgeButtonBusyLabel(selector);
+    return;
+  }
+
+  if (state === "loading") {
+    btn.classList.add("is-loading");
+    btn.setAttribute("disabled", "disabled");
+    btn.textContent = bridgeButtonBusyLabel(selector);
+    return;
+  }
+
+  if (state === "disabled") {
+    btn.setAttribute("disabled", "disabled");
+    btn.textContent = baseLabel;
+    return;
+  }
+
+  btn.removeAttribute("disabled");
+  btn.textContent = baseLabel;
 }
 
 function setBridgeActionReady(selector, ready) {
-  if (ready) {
-    setBridgeButtonState(selector, "ready", bridgeActionLabel(selector, true));
-  } else {
-    setBridgeButtonState(selector, "disabled", bridgeActionLabel(selector, false));
-  }
-}
-
-async function waitBridgeTxWithProgress(tx, options = {}) {
-  const selector = options.selector || "";
-  const baseLabel = options.baseLabel || "Waiting block";
-  const logFn = options.logFn || (() => {});
-  const txHash = tx?.hash || "";
-  const startedAt = Date.now();
-  let tick = 0;
-
-  if (selector) setBridgeButtonState(selector, "loading", baseLabel);
-
-  const timer = setInterval(() => {
-    tick += 1;
-    if (tick === 2 && txHash) logFn(`Still waiting for block confirmation. Tx: ${txHash}`, "warn");
-  }, 3000);
-
-  try {
-    return await tx.wait();
-  } finally {
-    clearInterval(timer);
-  }
+  setBridgeButtonState(selector, ready ? "ready" : "disabled");
 }
 
 function setLiquidityStatus(selector, message, tone = "") {
