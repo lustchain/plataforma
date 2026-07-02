@@ -901,7 +901,7 @@ function setBridgeButtonState(selector, state = "default", label = "") {
   btn.dataset.bridgeState = state || "default";
 
   const fixedLabel = bridgeActionLabel(selector, state === "ready");
-  btn.textContent = fixedLabel;
+  btn.textContent = bridgeButtonLabel(selector, state, label);
 
   if (state === "ready") {
     btn.classList.add("is-ready");
@@ -918,8 +918,8 @@ function setBridgeButtonState(selector, state = "default", label = "") {
     btn.removeAttribute("disabled");
   }
 
-  // Keep the button visually stable. Show step changes in the status row instead.
-  const step = String(label || "").replace(/\.\.\.$/, "").trim();
+  // The button stays visually stable. The detailed step appears in the status badge.
+  const step = bridgeStepLabel(label || fixedLabel);
   if (step && step !== fixedLabel) {
     if (selector.includes("mint") || selector.includes("deposit")) {
       setText("[data-bridge-claim-state]", step);
@@ -929,10 +929,30 @@ function setBridgeButtonState(selector, state = "default", label = "") {
   }
 }
 
+function bridgeButtonLabel(selector, state = "default", label = "") {
+  const fixedLabel = bridgeActionLabel(selector, state === "ready");
+  if (state !== "loading") return fixedLabel;
+
+  const raw = String(label || "").toLowerCase();
+  if (raw.includes("confirm")) return "Confirm in wallet";
+  if (raw.includes("switch")) return "Switch network";
+  if (selector.includes("deposit")) return "Depositing...";
+  if (selector.includes("mint")) return "Minting...";
+  if (selector.includes("burn")) return "Burning...";
+  if (selector.includes("release")) return "Releasing...";
+  return "Processing...";
+}
+
+function bridgeStepLabel(label = "") {
+  return String(label || "")
+    .replace(/\.\.\.$/, "")
+    .replace(/LUST block.*$/i, "LUST confirmation")
+    .trim();
+}
 
 function bridgeActionLabel(selector, ready = false) {
-  if (selector.includes("mint")) return ready ? "Mint on LUST" : "Mint on LUST";
-  if (selector.includes("release")) return ready ? "Release USDT" : "Release USDT";
+  if (selector.includes("mint")) return "Mint on LUST";
+  if (selector.includes("release")) return "Release USDT";
   if (selector.includes("burn")) return "Burn LUSDT";
   if (selector.includes("deposit")) return "Deposit USDT";
   return "Continue";
