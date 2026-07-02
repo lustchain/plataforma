@@ -1246,9 +1246,18 @@ function bridgeHasPending(kind) {
   return Boolean(bridgePendingValue(kind));
 }
 
+function clearStoredDepositRecovery() {
+  try {
+    localStorage.removeItem("lustLastDepositTxHash");
+    localStorage.removeItem("lustLastDepositSource");
+    localStorage.removeItem("lustLastDepositId");
+  } catch (_) {}
+}
+
 function resetClaimUiToIdle(message = "Ready for a new buy.") {
   activeClaim = null;
   clearBridgePending("claim");
+  clearStoredDepositRecovery();
   setBridgeActionReady("[data-bridge-mint]", false);
   setBridgeButtonState("[data-bridge-deposit]", "default", "⚡ Approve + Deposit");
   setText("[data-bridge-claim-state]", "Waiting");
@@ -1449,10 +1458,20 @@ async function prepareClaimFromRecoveredTx(claim, account, txHash = "") {
 
 async function findOrRecoverPendingClaimByTx(account, options = {}) {
   const item = bridgePendingItem("claim");
-  const source = normalizeClaimRecoverSource(item?.source || localStorage.getItem("lustLastDepositSource"));
-  const txHash = String(item?.txHash || item?.transactionHash || localStorage.getItem("lustLastDepositTxHash") || "").trim();
+  const allowLocalFallback = options.allowLocalFallback === true;
+  const source = normalizeClaimRecoverSource(
+    item?.source || (allowLocalFallback ? localStorage.getItem("lustLastDepositSource") : "")
+  );
+  const txHash = String(
+    item?.txHash ||
+    item?.transactionHash ||
+    (allowLocalFallback ? localStorage.getItem("lustLastDepositTxHash") : "") ||
+    ""
+  ).trim();
   const visible = options.visible !== false;
+  const hasPendingSessionClaim = Boolean(item && (item.value || item.txHash || item.transactionHash));
 
+  if (!hasPendingSessionClaim && !allowLocalFallback) return null;
   if (!source || !isBridgeTxHash(txHash)) return null;
 
   if (visible) {
@@ -1666,7 +1685,7 @@ async function depositToLusdt() {
       "ok"
     );
 
-    const recoveredNow = await findOrRecoverPendingClaimByTx(account);
+    const recoveredNow = await findOrRecoverPendingClaimByTx(account, { visible: true, allowLocalFallback: true });
     if (recoveredNow) {
       setBridgeButtonState("[data-bridge-deposit]", "default", "⚡ Approve + Deposit");
       return;
@@ -1862,7 +1881,10 @@ async function findClaim(options = {}) {
       }
     }
 
-    const recoveredFromTx = await findOrRecoverPendingClaimByTx(account);
+    const recoveredFromTx = await findOrRecoverPendingClaimByTx(account, {
+      visible: !options.silent,
+      allowLocalFallback: !options.silent
+    });
     if (recoveredFromTx) return recoveredFromTx;
 
     const entries = await loadClaimsForAccount(account);
@@ -1884,13 +1906,18 @@ async function findClaim(options = {}) {
     }
 
     const hasPendingClaim = bridgeHasPending("claim");
+    const mayUpdateSilentClaimUi = !options.silent || options.autoRetry === true;
     if (entries.length) {
       clearBridgePending("claim");
-      setText("[data-bridge-claim-state]", "All claims minted");
-      setBridgeActionReady("[data-bridge-mint]", false);
+      if (mayUpdateSilentClaimUi) {
+        setText("[data-bridge-claim-state]", "All claims minted");
+        setBridgeActionReady("[data-bridge-mint]", false);
+      }
     } else if (hasPendingClaim) {
-      setText("[data-bridge-claim-state]", "Preparing claim");
-      setBridgeButtonState("[data-bridge-mint]", "waiting", "Preparing claim...");
+      if (mayUpdateSilentClaimUi) {
+        setText("[data-bridge-claim-state]", "Preparing claim");
+        setBridgeButtonState("[data-bridge-mint]", "waiting", "Preparing claim...");
+      }
     } else {
       setText("[data-bridge-claim-state]", "Waiting");
       setBridgeActionReady("[data-bridge-mint]", false);
