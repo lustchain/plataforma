@@ -72,7 +72,7 @@
   ]
 }
   </script>
-<link rel="stylesheet" href="./styles.css?v=LUST_BRIDGE_V47_SINGLE_RELEASE_BUTTON" />
+<link rel="stylesheet" href="./styles.css?v=LUST_BRIDGE_V48_NO_SEPARATE_RELEASE_UI" />
 <!-- Google tag (gtag.js) - GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8N7M5DTF4"></script>
   <script>
@@ -309,12 +309,9 @@
         <div class="bridge-pro-status">
           <div class="bridge-status-title"><strong>Release status</strong><span data-bridge-release-state>Waiting</span></div>
           <p data-bridge-release-log>Ready. Burn LUSDT and the bridge will check the release automatically.</p>
-          <details open>
-            <summary>Ready releases</summary>
-            <div class="claim-list" data-bridge-pending-releases>
-              <div class="claim-item muted">Burn LUSDT and wait. The bridge checks the release automatically after confirmations.</div>
-            </div>
-          </details>
+          <div class="bridge-hidden-release-list" aria-hidden="true">
+            <div class="claim-list" data-bridge-pending-releases></div>
+          </div>
         </div>
       </div>
     </div>
@@ -586,7 +583,7 @@
     $("[data-bsc-recover-mint]")?.addEventListener("click", mintRecoveredClaim);
   });
 </script>
-<script type="module" src="./app.js?v=LUST_BRIDGE_V47_SINGLE_RELEASE_BUTTON"></script>
+<script type="module" src="./app.js?v=LUST_BRIDGE_V48_NO_SEPARATE_RELEASE_UI"></script>
 
 <script type="module" id="bridge-lusdt-sell-balance-fix-v41-no-blink">
   import { ethers } from "https://esm.sh/ethers@6.16.0";
@@ -865,7 +862,7 @@
 
 
 
-<!-- LUST_BRIDGE_V47_SINGLE_RELEASE_BUTTON_START -->
+<!-- LUST_BRIDGE_V48_NO_SEPARATE_RELEASE_UI_START -->
 <style id="lust-bridge-v44-stable-style">
   /* V46: stable primary action with fast progress feedback and no blinking. */
   [data-lusdt-bridge] .bridge-flow-actions {
@@ -1101,10 +1098,10 @@
     document.addEventListener('visibilitychange', sync);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
-  window.LUST_BRIDGE_V47_SINGLE_RELEASE_BUTTON = true;
+  window.LUST_BRIDGE_V48_NO_SEPARATE_RELEASE_UI = true;
 })();
 </script>
-<!-- LUST_BRIDGE_V47_SINGLE_RELEASE_BUTTON_END -->
+<!-- LUST_BRIDGE_V48_NO_SEPARATE_RELEASE_UI_END -->
 
 
 <style id="lust-bridge-v47-single-release-button">
@@ -1119,6 +1116,19 @@
     border: 1px solid rgba(247,3,117,.45) !important;
     color: #ffe8f4 !important;
     background: rgba(247,3,117,.12) !important;
+  }
+</style>
+
+<style id="lust-bridge-v48-no-separate-release-ui">
+  /* LUST_BRIDGE_V48_NO_SEPARATE_RELEASE_UI */
+  [data-lusdt-bridge] .bridge-hidden-release-list,
+  [data-lusdt-bridge] [data-bridge-pending-releases],
+  [data-lusdt-bridge] [data-bridge-pending-releases] *,
+  [data-lusdt-bridge] [data-bridge-select-release],
+  [data-lusdt-bridge] [data-bridge-release-direct] {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
   }
 </style>
 </body>

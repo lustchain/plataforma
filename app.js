@@ -2451,12 +2451,7 @@ function wireLusdtBridge() {
   });
   document.querySelector("[data-bridge-burn]")?.addEventListener("click", burnForRelease);
   document.querySelector("[data-bridge-release]")?.addEventListener("click", executeRelease);
-  document.addEventListener("click", async (event) => {
-    const btn = event.target.closest("[data-bridge-select-release]");
-    if (!btn) return;
-    const entry = pendingBridgeReleases[Number(btn.getAttribute("data-bridge-select-release"))];
-    if (entry && !entry.used) await prepareActiveRelease(entry.release, "ok");
-  });
+  // V48: release selection is controlled only by the main button; no separate release list actions.
   document.addEventListener("click", async (event) => {
     const btn = event.target.closest("[data-bridge-release-direct]");
     if (!btn) return;
@@ -4592,4 +4587,4 @@ window.lustPresale = {
 
 wireLUSTPresale();
 
-// LUST_BRIDGE_V47_SINGLE_RELEASE_BUTTON_NO_EXTRA_ACTIONS
+// LUST_BRIDGE_V48_NO_SEPARATE_RELEASE_UI_NO_EXTRA_ACTIONS
