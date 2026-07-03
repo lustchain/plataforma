@@ -1,0 +1,1 @@
+V44 stable bridge action buttons: removed MutationObserver loops, removed pulse/flicker animations, stable text/color, one primary button per flow.

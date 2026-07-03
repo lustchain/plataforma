@@ -3818,3 +3818,16 @@ button[data-bridge-deposit].is-waiting,button[data-bridge-burn].is-waiting,butto
   font-size: 12px !important;
   line-height: 1.45 !important;
 }
+
+
+/* LUST_BRIDGE_V44_STABLE_NO_FLICKER global override */
+[data-lusdt-bridge] .bridge-one-action-btn,
+[data-lusdt-bridge] .bridge-one-action-card,
+[data-lusdt-bridge] .bridge-one-step {
+  animation: none !important;
+  transition: none !important;
+}
+[data-lusdt-bridge] .bridge-one-action-btn::before,
+[data-lusdt-bridge] .bridge-one-action-btn::after {
+  animation: none !important;
+}

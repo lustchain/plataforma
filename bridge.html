@@ -72,7 +72,7 @@
   ]
 }
   </script>
-<link rel="stylesheet" href="./styles.css?v=LUST_BRIDGE_SINGLE_BUTTON_V43_NO_FREEZE" />
+<link rel="stylesheet" href="./styles.css?v=LUST_BRIDGE_V44_STABLE_NO_FLICKER" />
 <!-- Google tag (gtag.js) - GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8N7M5DTF4"></script>
   <script>
@@ -586,7 +586,7 @@
     $("[data-bsc-recover-mint]")?.addEventListener("click", mintRecoveredClaim);
   });
 </script>
-<script type="module" src="./app.js?v=LUST_BRIDGE_SINGLE_BUTTON_V43_NO_FREEZE"></script>
+<script type="module" src="./app.js?v=LUST_BRIDGE_V44_STABLE_NO_FLICKER"></script>
 
 <script type="module" id="bridge-lusdt-sell-balance-fix-v41-no-blink">
   import { ethers } from "https://esm.sh/ethers@6.16.0";
@@ -864,198 +864,11 @@
 <script src="./nft-menu.js?v=20260616-hover-v5"></script>
 
 
-<!-- LUST_BRIDGE_ACTIONS_V39_PRO_START -->
-<style id="lust-bridge-actions-v39-pro">
-  :root { --lust-pink: #F70375; --lust-pink-hot:#ff1784; --lust-pink-deep:#b90058; }
-  .bridge-flow-actions {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 14px !important;
-    margin-top: 18px !important;
-    align-items: stretch !important;
-  }
-  .bridge-action-card {
-    position: relative !important;
-    display: grid !important;
-    gap: 10px !important;
-    padding: 16px !important;
-    border-radius: 22px !important;
-    background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018)) !important;
-    border: 1px solid rgba(247,3,117,.28) !important;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.05) !important;
-    overflow: hidden !important;
-  }
-  .bridge-action-card::before {
-    content: "" !important;
-    position: absolute !important;
-    inset: 0 0 auto 0 !important;
-    height: 2px !important;
-    background: linear-gradient(90deg, transparent, rgba(247,3,117,.8), transparent) !important;
-    opacity: .55 !important;
-  }
-  .bridge-action-card.is-ready {
-    border-color: rgba(247,3,117,.72) !important;
-    background: linear-gradient(180deg, rgba(247,3,117,.095), rgba(255,255,255,.025)) !important;
-  }
-  .bridge-action-card.is-processing {
-    border-color: rgba(255,132,202,.92) !important;
-    background: linear-gradient(180deg, rgba(247,3,117,.13), rgba(255,255,255,.035)) !important;
-  }
-  .bridge-action-card-head {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    gap: 10px !important;
-  }
-  .bridge-action-card-head strong {
-    color: #fff !important;
-    font-size: 14px !important;
-    letter-spacing: .01em !important;
-    text-align: right !important;
-  }
-  .bridge-step-pill {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    min-height: 24px !important;
-    padding: 0 10px !important;
-    border-radius: 999px !important;
-    background: rgba(247,3,117,.16) !important;
-    border: 1px solid rgba(247,3,117,.42) !important;
-    color: #ffd7ea !important;
-    font-size: 11px !important;
-    font-weight: 900 !important;
-    text-transform: uppercase !important;
-    letter-spacing: .08em !important;
-    white-space: nowrap !important;
-  }
-  .bridge-action-card p {
-    margin: 0 !important;
-    min-height: 34px !important;
-    color: rgba(255,232,244,.72) !important;
-    font-size: 12px !important;
-    line-height: 1.42 !important;
-  }
-  .bridge-main-action.btn,
-  .bridge-action-grid.two-actions .bridge-main-action.btn,
-  button[data-bridge-deposit].bridge-main-action,
-  button[data-bridge-burn].bridge-main-action,
-  button[data-bridge-mint].bridge-main-action,
-  button[data-bridge-release].bridge-main-action {
-    width: 100% !important;
-    min-height: 58px !important;
-    border-radius: 18px !important;
-    background: linear-gradient(135deg, var(--lust-pink-hot) 0%, var(--lust-pink) 52%, var(--lust-pink-deep) 100%) !important;
-    border: 1px solid rgba(255,165,218,.92) !important;
-    color: #fff !important;
-    box-shadow: 0 16px 34px rgba(247,3,117,.32), inset 0 1px 0 rgba(255,255,255,.22) !important;
-    opacity: 1 !important;
-    filter: none !important;
-    transform: none !important;
-    animation: none !important;
-    text-shadow: none !important;
-    font-weight: 950 !important;
-    letter-spacing: .01em !important;
-    transition: filter .16s ease, box-shadow .16s ease !important;
-  }
-  .bridge-main-action.btn:hover:not(:disabled) {
-    filter: brightness(1.04) !important;
-    box-shadow: 0 18px 38px rgba(247,3,117,.38), inset 0 1px 0 rgba(255,255,255,.24) !important;
-  }
-  .bridge-main-action.btn:disabled:not(.is-loading) {
-    background: rgba(247,3,117,.105) !important;
-    border: 1px solid rgba(247,3,117,.28) !important;
-    color: rgba(255,218,238,.46) !important;
-    box-shadow: none !important;
-    cursor: not-allowed !important;
-  }
-  .bridge-main-action.btn.is-waiting {
-    background: rgba(247,3,117,.105) !important;
-    border-color: rgba(247,3,117,.34) !important;
-    color: rgba(255,218,238,.58) !important;
-    box-shadow: none !important;
-    cursor: wait !important;
-  }
-  .bridge-main-action.btn.is-loading {
-    background: linear-gradient(135deg, var(--lust-pink-hot) 0%, var(--lust-pink) 52%, var(--lust-pink-deep) 100%) !important;
-    border-color: rgba(255,190,228,.96) !important;
-    color: #fff !important;
-    cursor: progress !important;
-    box-shadow: 0 16px 34px rgba(247,3,117,.32), inset 0 1px 0 rgba(255,255,255,.22) !important;
-  }
-  .bridge-main-action.btn::after,
-  .bridge-main-action.btn.is-ready::before,
-  .bridge-main-action.btn.is-ready::after,
-  .bridge-main-action.btn.is-waiting::before,
-  .bridge-main-action.btn.is-waiting::after {
-    content: none !important;
-    display: none !important;
-    animation: none !important;
-  }
-  .bridge-main-action.btn.is-loading::before {
-    content: "" !important;
-    display: inline-block !important;
-    width: 16px !important;
-    height: 16px !important;
-    margin-right: 10px !important;
-    vertical-align: -2px !important;
-    border-radius: 50% !important;
-    border: 2px solid rgba(255,255,255,.42) !important;
-    border-top-color: #fff !important;
-    animation: bridgeSpin .85s linear infinite !important;
-  }
-  .bridge-pro-status {
-    border-color: rgba(247,3,117,.22) !important;
-    background: linear-gradient(180deg, rgba(247,3,117,.055), rgba(255,255,255,.018)) !important;
-  }
-  .bridge-status-title span {
-    border-radius: 999px !important;
-    padding: 4px 10px !important;
-    background: rgba(247,3,117,.13) !important;
-    border: 1px solid rgba(247,3,117,.28) !important;
-    color: #ffd7ea !important;
-  }
-  @media (max-width: 760px) {
-    .bridge-flow-actions { grid-template-columns: 1fr !important; }
-    .bridge-action-card p { min-height: auto !important; }
-  }
-</style>
-<script id="lust-bridge-actions-v39-pro">
-(function(){
-  const pairs = [
-    ['deposit', '[data-bridge-deposit]'],
-    ['mint', '[data-bridge-mint]'],
-    ['burn', '[data-bridge-burn]'],
-    ['release', '[data-bridge-release]']
-  ];
-  function cardFor(key){ return document.querySelector('[data-bridge-card="' + key + '"]'); }
-  function syncCards(){
-    for (const [key, sel] of pairs) {
-      const btn = document.querySelector(sel);
-      const card = cardFor(key);
-      if (!btn || !card) continue;
-      card.classList.toggle('is-processing', btn.classList.contains('is-loading'));
-      card.classList.toggle('is-ready', !btn.disabled && !btn.classList.contains('is-loading'));
-      card.classList.toggle('is-locked', btn.disabled && !btn.classList.contains('is-loading'));
-    }
-  }
-  document.addEventListener('DOMContentLoaded', syncCards);
-  window.addEventListener('load', syncCards);
-  setInterval(syncCards, 800);
-  const mo = new MutationObserver(syncCards);
-  document.addEventListener('DOMContentLoaded', function(){
-    const target = document.querySelector('[data-lusdt-bridge]') || document.body;
-    if (target) mo.observe(target, { attributes:true, childList:true, subtree:true, attributeFilter:['class','disabled'] });
-    syncCards();
-  });
-})();
-</script>
-<!-- LUST_BRIDGE_ACTIONS_V39_PRO_END -->
 
-<!-- LUST_BRIDGE_SINGLE_BUTTON_V43_NO_FREEZE_START -->
-<style id="lust-bridge-single-action-v42-style">
-  /* V40: one professional action button per bridge direction. Old internal buttons stay in DOM but are hidden. */
-  .bridge-flow-actions {
+<!-- LUST_BRIDGE_V44_STABLE_NO_FLICKER_START -->
+<style id="lust-bridge-v44-stable-style">
+  /* V44: one stable primary action, no pulse, no color blinking, no MutationObserver loops. */
+  [data-lusdt-bridge] .bridge-flow-actions {
     position: absolute !important;
     width: 1px !important;
     height: 1px !important;
@@ -1065,32 +878,33 @@
     margin: 0 !important;
     padding: 0 !important;
   }
-  .bridge-one-action-card {
+  [data-lusdt-bridge] .bridge-one-action-card {
     margin-top: 18px !important;
-    padding: 18px !important;
+    padding: 20px !important;
     border-radius: 24px !important;
-    background:
-      radial-gradient(circle at 18% 0%, rgba(247,3,117,.22), transparent 32%),
-      linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.018)) !important;
+    background: linear-gradient(180deg, rgba(247,3,117,.105), rgba(255,255,255,.018)) !important;
     border: 1px solid rgba(247,3,117,.42) !important;
-    box-shadow: 0 18px 44px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.06) !important;
+    box-shadow: 0 18px 42px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.06) !important;
     display: grid !important;
     gap: 14px !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
   }
-  .bridge-one-action-head {
+  [data-lusdt-bridge] .bridge-one-action-head {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
     gap: 14px !important;
   }
-  .bridge-one-action-head strong {
+  [data-lusdt-bridge] .bridge-one-action-head strong {
     color: #fff !important;
     font-size: 16px !important;
     line-height: 1.2 !important;
     letter-spacing: .01em !important;
     text-align: right !important;
   }
-  .bridge-one-step {
+  [data-lusdt-bridge] .bridge-one-step {
     display: inline-flex !important;
     align-items: center !important;
     min-height: 28px !important;
@@ -1104,164 +918,172 @@
     text-transform: uppercase !important;
     letter-spacing: .08em !important;
     white-space: nowrap !important;
+    transition: none !important;
+    animation: none !important;
   }
-  .bridge-one-action-card p {
+  [data-lusdt-bridge] .bridge-one-action-card p,
+  [data-lusdt-bridge] .bridge-one-action-note {
     margin: 0 !important;
-    color: rgba(255,232,244,.74) !important;
+    color: rgba(255,232,244,.72) !important;
     font-size: 13px !important;
-    line-height: 1.48 !important;
-  }
-  .bridge-one-action-note {
+    line-height: 1.45 !important;
     min-height: 20px !important;
-    color: rgba(255,232,244,.64) !important;
-    font-size: 12px !important;
-    line-height: 1.35 !important;
+    transition: none !important;
+    animation: none !important;
   }
-  .bridge-one-action-btn.btn,
-  button.bridge-one-action-btn {
+  [data-lusdt-bridge] .bridge-one-action-note { font-size: 12px !important; color: rgba(255,232,244,.58) !important; }
+  [data-lusdt-bridge] .bridge-one-action-btn.btn,
+  [data-lusdt-bridge] button.bridge-one-action-btn {
     width: 100% !important;
     min-height: 62px !important;
     border-radius: 20px !important;
-    border: 1px solid rgba(255,180,226,.95) !important;
-    background: linear-gradient(135deg, #ff2d95 0%, #F70375 48%, #ba0056 100%) !important;
+    border: 1px solid rgba(255,180,226,.92) !important;
+    background: linear-gradient(135deg, #ff2d95 0%, #F70375 48%, #b90056 100%) !important;
     color: #fff !important;
     font-weight: 950 !important;
     font-size: 15px !important;
     letter-spacing: .01em !important;
-    box-shadow: 0 18px 40px rgba(247,3,117,.34), inset 0 1px 0 rgba(255,255,255,.22) !important;
+    box-shadow: 0 18px 40px rgba(247,3,117,.34), inset 0 1px 0 rgba(255,255,255,.20) !important;
     cursor: pointer !important;
-    transition: filter .15s ease, box-shadow .15s ease !important;
     transform: none !important;
     animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    filter: none !important;
     text-shadow: none !important;
   }
-  .bridge-one-action-btn.btn:hover:not(:disabled) {
-    filter: brightness(1.045) !important;
-    box-shadow: 0 20px 46px rgba(247,3,117,.42), inset 0 1px 0 rgba(255,255,255,.24) !important;
+  [data-lusdt-bridge] .bridge-one-action-btn.btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #ff2d95 0%, #F70375 48%, #b90056 100%) !important;
+    box-shadow: 0 18px 40px rgba(247,3,117,.34), inset 0 1px 0 rgba(255,255,255,.20) !important;
+    transform: none !important;
+    filter: none !important;
   }
-  .bridge-one-action-btn.btn:disabled {
-    background: linear-gradient(135deg, rgba(247,3,117,.24), rgba(247,3,117,.12)) !important;
-    border-color: rgba(247,3,117,.32) !important;
-    color: rgba(255,232,244,.58) !important;
+  [data-lusdt-bridge] .bridge-one-action-btn.btn:disabled {
+    background: linear-gradient(135deg, rgba(247,3,117,.30), rgba(247,3,117,.18)) !important;
+    border-color: rgba(247,3,117,.36) !important;
+    color: rgba(255,232,244,.68) !important;
     box-shadow: none !important;
     cursor: not-allowed !important;
     opacity: 1 !important;
     filter: none !important;
   }
-  .bridge-one-action-btn.is-busy {
+  [data-lusdt-bridge] .bridge-one-action-btn.is-busy {
     cursor: progress !important;
+    background: linear-gradient(135deg, #ff2d95 0%, #F70375 48%, #b90056 100%) !important;
+    color: #fff !important;
+    box-shadow: 0 18px 40px rgba(247,3,117,.34), inset 0 1px 0 rgba(255,255,255,.20) !important;
   }
-  .bridge-one-action-btn.is-busy::before {
-    content: "" !important;
+  [data-lusdt-bridge] .bridge-one-action-btn::before,
+  [data-lusdt-bridge] .bridge-one-action-btn::after {
+    content: none !important;
+    display: none !important;
+    animation: none !important;
+  }
+  [data-lusdt-bridge] .bridge-one-action-btn.is-busy::before {
+    content: "•" !important;
     display: inline-block !important;
-    width: 16px !important;
-    height: 16px !important;
     margin-right: 10px !important;
-    vertical-align: -2px !important;
-    border-radius: 50% !important;
-    border: 2px solid rgba(255,255,255,.42) !important;
-    border-top-color: #fff !important;
-    animation: bridgeSpin .85s linear infinite !important;
-  }
-  .bridge-one-action-card.is-waiting {
-    border-color: rgba(255,196,226,.34) !important;
-    background:
-      radial-gradient(circle at 18% 0%, rgba(247,3,117,.14), transparent 30%),
-      linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.014)) !important;
-  }
-  .bridge-one-action-card.is-done {
-    border-color: rgba(51,255,178,.32) !important;
+    color: #fff !important;
+    font-size: 18px !important;
+    line-height: 0 !important;
+    animation: none !important;
   }
   @media (max-width: 760px) {
-    .bridge-one-action-head { align-items: flex-start !important; flex-direction: column !important; }
-    .bridge-one-action-head strong { text-align: left !important; }
+    [data-lusdt-bridge] .bridge-one-action-head { align-items: flex-start !important; flex-direction: column !important; }
+    [data-lusdt-bridge] .bridge-one-action-head strong { text-align: left !important; }
   }
 </style>
-<script id="lust-bridge-single-action-v42">
+<script id="lust-bridge-v44-stable-no-flicker">
 (function(){
   const SEL = {
-    depositBtn: '[data-bridge-deposit]',
-    mintBtn: '[data-bridge-mint]',
-    burnBtn: '[data-bridge-burn]',
-    releaseBtn: '[data-bridge-release]',
-    primaryDeposit: '[data-bridge-primary-deposit]',
-    primaryWithdraw: '[data-bridge-primary-withdraw]',
-    claimState: '[data-bridge-claim-state]',
-    releaseState: '[data-bridge-release-state]'
+    depositBtn: '[data-bridge-deposit]', mintBtn: '[data-bridge-mint]',
+    burnBtn: '[data-bridge-burn]', releaseBtn: '[data-bridge-release]',
+    primaryDeposit: '[data-bridge-primary-deposit]', primaryWithdraw: '[data-bridge-primary-withdraw]',
+    claimState: '[data-bridge-claim-state]', releaseState: '[data-bridge-release-state]'
   };
-  function $(sel){ return document.querySelector(sel); }
-  function text(sel){ return ($(sel)?.textContent || '').trim(); }
-  function hasClass(sel, cls){ return $(sel)?.classList.contains(cls); }
-  function enabled(sel){ const b=$(sel); return !!b && !b.disabled && !b.classList.contains('is-loading'); }
-  function loading(sel){ return hasClass(sel, 'is-loading'); }
-  function waiting(sel){ return hasClass(sel, 'is-waiting'); }
-  function setPrimary(btn, cfg){
+  const state = { deposit: '', withdraw: '', lockUntil: { deposit: 0, withdraw: 0 } };
+  function $(s){ return document.querySelector(s); }
+  function txt(s){ return ($(s)?.textContent || '').trim(); }
+  function cls(s,c){ return !!$(s)?.classList.contains(c); }
+  function enabled(s){ const b=$(s); return !!b && !b.disabled && !b.classList.contains('is-loading'); }
+  function loading(s){ return cls(s,'is-loading'); }
+  function waiting(s){ return cls(s,'is-waiting'); }
+  function hasFreshPending(kind){
+    try {
+      const raw = sessionStorage.getItem('lustBridgePending_' + kind);
+      if (!raw) return false;
+      const item = JSON.parse(raw);
+      return item && item.ts && (Date.now() - Number(item.ts) < 20*60*1000);
+    } catch(_) { return false; }
+  }
+  function stableKey(cfg){ return [cfg.step,cfg.title,cfg.label,cfg.disabled?'1':'0',cfg.busy?'1':'0',cfg.target||''].join('|'); }
+  function apply(mode, cfg){
+    const btn = mode === 'withdraw' ? $(SEL.primaryWithdraw) : $(SEL.primaryDeposit);
     if (!btn) return;
+    const key = stableKey(cfg);
+    if (state[mode] === key) return;
+    state[mode] = key;
     const card = btn.closest('.bridge-one-action-card');
     const step = card?.querySelector('[data-bridge-primary-step-deposit], [data-bridge-primary-step-withdraw]');
     const title = card?.querySelector('[data-bridge-primary-title-deposit], [data-bridge-primary-title-withdraw]');
     const help = card?.querySelector('[data-bridge-primary-help-deposit], [data-bridge-primary-help-withdraw]');
     const note = card?.querySelector('[data-bridge-primary-note-deposit], [data-bridge-primary-note-withdraw]');
-    if (btn.textContent !== cfg.label) btn.textContent = cfg.label;
-    if (btn.disabled !== !!cfg.disabled) btn.disabled = !!cfg.disabled;
+    if (step) step.textContent = cfg.step;
+    if (title) title.textContent = cfg.title;
+    if (help) help.textContent = cfg.help;
+    if (note) note.textContent = cfg.note;
+    btn.textContent = cfg.label;
+    btn.disabled = !!cfg.disabled;
     btn.classList.toggle('is-busy', !!cfg.busy);
-    if (step && step.textContent !== cfg.step) step.textContent = cfg.step;
-    if (title && title.textContent !== cfg.title) title.textContent = cfg.title;
-    if (help && help.textContent !== cfg.help) help.textContent = cfg.help;
-    if (note && note.textContent !== cfg.note) note.textContent = cfg.note;
-    if (card) {
-      card.classList.toggle('is-waiting', !!cfg.waiting);
-      card.classList.toggle('is-done', !!cfg.done);
-    }
-    if (btn.dataset.targetAction !== (cfg.target || '')) btn.dataset.targetAction = cfg.target || '';
+    btn.dataset.targetAction = cfg.target || '';
   }
-  function cfgDeposit(){
-    const claimState = text(SEL.claimState).toLowerCase();
-    if (loading(SEL.depositBtn)) return { step:'Step 1 of 2', title:'Deposit in progress', label:'Depositing USDT...', disabled:true, busy:true, waiting:false, target:'', help:'Confirm in your wallet and wait for the source-chain transaction to finish.', note:'Do not click again. The bridge is processing your deposit.' };
-    if (loading(SEL.mintBtn)) return { step:'Step 2 of 2', title:'Mint in progress', label:'Minting on LUST...', disabled:true, busy:true, waiting:false, target:'', help:'Your LUST transaction is waiting for confirmation.', note:'Keep this page open until the transaction finishes.' };
-    if (enabled(SEL.mintBtn)) return { step:'Step 2 of 2', title:'Claim ready on LUST', label:'Mint on LUST', disabled:false, busy:false, waiting:false, target:'mint', help:'Your claim is ready. Click once to mint LUSDT on LUST Chain.', note:'This is the final step for this deposit.' };
-    const claimIsActivelyWaiting = waiting(SEL.mintBtn) || claimState.includes('creating') || claimState.includes('checking') || claimState.includes('preparing') || claimState.includes('recover') || claimState.includes('pending') || claimState.includes('signature');
-    if (claimIsActivelyWaiting) {
-      return { step:'Step 2 of 2', title:'Waiting for claim', label:'Waiting for claim...', disabled:true, busy:false, waiting:true, target:'', help:'The bridge is preparing your claim automatically after the deposit confirmation.', note:'No action needed. The button unlocks when the claim is ready.' };
-    }
-    return { step:'Step 1 of 2', title:'Send USDT to LUST', label:'Deposit USDT', disabled:false, busy:false, waiting:false, target:'deposit', help:'Click once to deposit USDT from the selected network.', note:'The next step appears automatically after confirmation.' };
+  function depositCfg(){
+    const claim = txt(SEL.claimState).toLowerCase();
+    const locked = Date.now() < state.lockUntil.deposit;
+    if (locked || loading(SEL.depositBtn)) return { step:'Step 1 of 2', title:'Deposit in progress', label:'Depositing USDT...', disabled:true, busy:true, target:'', help:'Confirm in your wallet and wait for the source-chain transaction.', note:'Processing. Do not click again.' };
+    if (loading(SEL.mintBtn)) return { step:'Step 2 of 2', title:'Mint in progress', label:'Minting on LUST...', disabled:true, busy:true, target:'', help:'Waiting for the LUST transaction to confirm.', note:'Keep this page open.' };
+    if (enabled(SEL.mintBtn)) return { step:'Step 2 of 2', title:'Claim ready on LUST', label:'Mint on LUST', disabled:false, busy:false, target:'mint', help:'Your claim is ready. Click once to mint LUSDT on LUST Chain.', note:'Final step for this deposit.' };
+    const activeWait = hasFreshPending('claim') || waiting(SEL.mintBtn) || /creating|checking|preparing|recover|pending|signature/i.test(claim);
+    if (activeWait) return { step:'Step 2 of 2', title:'Waiting for claim', label:'Waiting for claim...', disabled:true, busy:false, target:'', help:'The bridge is preparing your claim automatically.', note:'No action needed. It unlocks when ready.' };
+    return { step:'Step 1 of 2', title:'Send USDT to LUST', label:'Deposit USDT', disabled:false, busy:false, target:'deposit', help:'Click once to deposit USDT from the selected network.', note:'The next step appears automatically.' };
   }
-  function cfgWithdraw(){
-    const releaseState = text(SEL.releaseState).toLowerCase();
-    if (loading(SEL.burnBtn)) return { step:'Step 1 of 2', title:'Burn in progress', label:'Burning LUSDT...', disabled:true, busy:true, waiting:false, target:'', help:'Confirm in your wallet and wait for LUST Chain to include the burn transaction.', note:'Do not click again. The bridge is processing your burn.' };
-    if (loading(SEL.releaseBtn)) return { step:'Step 2 of 2', title:'Release in progress', label:'Releasing USDT...', disabled:true, busy:true, waiting:false, target:'', help:'Confirm the release on the destination network and wait for confirmation.', note:'Keep this page open until the release finishes.' };
-    if (enabled(SEL.releaseBtn)) return { step:'Step 2 of 2', title:'Release ready', label:'Release USDT', disabled:false, busy:false, waiting:false, target:'release', help:'Your release is ready. Click once to receive USDT on the destination chain.', note:'This is the final step for this sell.' };
-    const releaseIsActivelyWaiting = waiting(SEL.releaseBtn) || releaseState.includes('creating') || releaseState.includes('checking') || releaseState.includes('pending') || releaseState.includes('signature') || releaseState.includes('retry');
-    if (releaseIsActivelyWaiting) {
-      return { step:'Step 2 of 2', title:'Waiting for release', label:'Waiting for release...', disabled:true, busy:false, waiting:true, target:'', help:'The bridge is preparing the release signatures automatically after the burn.', note:'No action needed. The button unlocks when release is ready.' };
-    }
-    return { step:'Step 1 of 2', title:'Burn LUSDT', label:'Burn LUSDT', disabled:false, busy:false, waiting:false, target:'burn', help:'Click once to burn LUSDT on LUST Chain.', note:'The release step appears automatically after confirmation.' };
+  function withdrawCfg(){
+    const release = txt(SEL.releaseState).toLowerCase();
+    const locked = Date.now() < state.lockUntil.withdraw;
+    if (locked || loading(SEL.burnBtn)) return { step:'Step 1 of 2', title:'Burn in progress', label:'Burning LUSDT...', disabled:true, busy:true, target:'', help:'Confirm in your wallet and wait for LUST Chain confirmation.', note:'Processing. Do not click again.' };
+    if (loading(SEL.releaseBtn)) return { step:'Step 2 of 2', title:'Release in progress', label:'Releasing USDT...', disabled:true, busy:true, target:'', help:'Waiting for the destination network transaction.', note:'Keep this page open.' };
+    if (enabled(SEL.releaseBtn)) return { step:'Step 2 of 2', title:'Release ready', label:'Release USDT', disabled:false, busy:false, target:'release', help:'Your release is ready. Click once to receive USDT.', note:'Final step for this sell.' };
+    const activeWait = hasFreshPending('release') || waiting(SEL.releaseBtn) || /creating|checking|pending|signature|retry|ready/i.test(release) && !/no pending|waiting/i.test(release);
+    if (activeWait) return { step:'Step 2 of 2', title:'Waiting for release', label:'Waiting for release...', disabled:true, busy:false, target:'', help:'The bridge is preparing release signatures automatically.', note:'No action needed. It unlocks when ready.' };
+    return { step:'Step 1 of 2', title:'Burn LUSDT', label:'Burn LUSDT', disabled:false, busy:false, target:'burn', help:'Click once to burn LUSDT on LUST Chain.', note:'The release step appears automatically.' };
   }
-  function sync(){
-    setPrimary($(SEL.primaryDeposit), cfgDeposit());
-    setPrimary($(SEL.primaryWithdraw), cfgWithdraw());
-  }
-  function clickTarget(mode){
+  function sync(){ apply('deposit', depositCfg()); apply('withdraw', withdrawCfg()); }
+  function click(mode){
     sync();
     const btn = mode === 'withdraw' ? $(SEL.primaryWithdraw) : $(SEL.primaryDeposit);
     if (!btn || btn.disabled) return;
     const action = btn.dataset.targetAction;
     const target = action === 'mint' ? $(SEL.mintBtn) : action === 'deposit' ? $(SEL.depositBtn) : action === 'release' ? $(SEL.releaseBtn) : action === 'burn' ? $(SEL.burnBtn) : null;
-    if (target && !target.disabled) target.click();
+    if (!target || target.disabled) return;
+    state.lockUntil[mode] = Date.now() + 4500;
+    sync();
+    target.click();
+    setTimeout(sync, 1200);
+    setTimeout(sync, 5000);
   }
   function init(){
-    $(SEL.primaryDeposit)?.addEventListener('click', () => clickTarget('deposit'));
-    $(SEL.primaryWithdraw)?.addEventListener('click', () => clickTarget('withdraw'));
+    $(SEL.primaryDeposit)?.addEventListener('click', () => click('deposit'));
+    $(SEL.primaryWithdraw)?.addEventListener('click', () => click('withdraw'));
     sync();
-    const target = document.querySelector('[data-lusdt-bridge]') || document.body;
-    if (target && window.MutationObserver) new MutationObserver(sync).observe(target, { subtree:true, childList:false, attributes:true, attributeFilter:['class','disabled'] });
-    setInterval(sync, 1200);
+    setInterval(sync, 1500);
+    window.addEventListener('focus', sync);
+    document.addEventListener('visibilitychange', sync);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
-  window.LUST_BRIDGE_SINGLE_BUTTON_V43_NO_FREEZE = true;
+  window.LUST_BRIDGE_V44_STABLE_NO_FLICKER = true;
 })();
 </script>
-<!-- LUST_BRIDGE_SINGLE_BUTTON_V43_NO_FREEZE_END -->
+<!-- LUST_BRIDGE_V44_STABLE_NO_FLICKER_END -->
 
 </body>
 </html>
