@@ -72,7 +72,7 @@
   ]
 }
   </script>
-<link rel="stylesheet" href="./styles.css?v=LUST_BRIDGE_V50_HIDE_RELEASE_STATUS" />
+<link rel="stylesheet" href="./styles.css?v=LUST_BRIDGE_V51_CLEAN_USER_UI" />
 <!-- Google tag (gtag.js) - GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8N7M5DTF4"></script>
   <script>
@@ -583,7 +583,7 @@
     $("[data-bsc-recover-mint]")?.addEventListener("click", mintRecoveredClaim);
   });
 </script>
-<script type="module" src="./app.js?v=LUST_BRIDGE_V50_HIDE_RELEASE_STATUS"></script>
+<script type="module" src="./app.js?v=LUST_BRIDGE_V51_CLEAN_USER_UI"></script>
 
 <script type="module" id="bridge-lusdt-sell-balance-fix-v41-no-blink">
   import { ethers } from "https://esm.sh/ethers@6.16.0";
@@ -862,7 +862,7 @@
 
 
 
-<!-- LUST_BRIDGE_V50_HIDE_RELEASE_STATUS_START -->
+<!-- LUST_BRIDGE_V51_CLEAN_USER_UI_START -->
 <style id="lust-bridge-v44-stable-style">
   /* V46: stable primary action with fast progress feedback and no blinking. */
   [data-lusdt-bridge] .bridge-flow-actions {
@@ -1098,10 +1098,10 @@
     document.addEventListener('visibilitychange', sync);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
-  window.LUST_BRIDGE_V50_HIDE_RELEASE_STATUS = true;
+  window.LUST_BRIDGE_V51_CLEAN_USER_UI = true;
 })();
 </script>
-<!-- LUST_BRIDGE_V50_HIDE_RELEASE_STATUS_END -->
+<!-- LUST_BRIDGE_V51_CLEAN_USER_UI_END -->
 
 
 <style id="lust-bridge-v47-single-release-button">
@@ -1120,7 +1120,7 @@
 </style>
 
 <style id="lust-bridge-v48-no-separate-release-ui">
-  /* LUST_BRIDGE_V50_HIDE_RELEASE_STATUS */
+  /* LUST_BRIDGE_V51_CLEAN_USER_UI */
   [data-lusdt-bridge] .bridge-hidden-release-list,
   [data-lusdt-bridge] [data-bridge-pending-releases],
   [data-lusdt-bridge] [data-bridge-pending-releases] *,
@@ -1134,7 +1134,7 @@
 
 
 <style id="lust-bridge-v50-hide-release-status">
-  /* LUST_BRIDGE_V50_HIDE_RELEASE_STATUS: hide the noisy release status box; main Sell button shows the flow. */
+  /* LUST_BRIDGE_V51_CLEAN_USER_UI: hide the noisy release status box; main Sell button shows the flow. */
   [data-lusdt-bridge] [data-bridge-release-panel],
   [data-lusdt-bridge] [data-bridge-release-panel] *,
   [data-lusdt-bridge] .bridge-hidden-release-list,
@@ -1154,5 +1154,22 @@
   }
 </style>
 
+
+<style id="lust-bridge-v51-clean-user-ui">
+  /* LUST_BRIDGE_V51_CLEAN_USER_UI: hide technical status panels from normal users. */
+  [data-lusdt-bridge] [data-bridge-panel="deposit"] .bridge-pro-status,
+  [data-lusdt-bridge] [data-bridge-panel="deposit"] .bridge-pro-status *,
+  [data-lusdt-bridge] [data-bridge-release-panel],
+  [data-lusdt-bridge] [data-bridge-release-panel] *,
+  [data-lusdt-bridge] [data-bridge-pending-claims],
+  [data-lusdt-bridge] [data-bridge-pending-claims] *,
+  [data-lusdt-bridge] [data-bridge-pending-releases],
+  [data-lusdt-bridge] [data-bridge-pending-releases] * {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+</style>
 </body>
 </html>
