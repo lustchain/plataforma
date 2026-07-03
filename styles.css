@@ -3719,7 +3719,7 @@ button[data-bridge-deposit].is-waiting,button[data-bridge-burn].is-waiting,butto
 /* LUST_BRIDGE_ACTIONS_V39_PRO: bridge step cards and stable pink actions. Main enforcement is inline in bridge.html. */
 
 
-/* LUST_BRIDGE_SINGLE_BUTTON_V41_PHYSICAL - one visible CTA only, no competing step buttons */
+/* LUST_BRIDGE_SINGLE_BUTTON_V42_READY_FIX - one visible CTA only, no competing step buttons */
 .bridge-internal-actions,
 .bridge-action-grid.bridge-flow-actions,
 .bridge-action-grid.two-actions.bridge-flow-actions {

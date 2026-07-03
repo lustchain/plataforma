@@ -72,7 +72,7 @@
   ]
 }
   </script>
-<link rel="stylesheet" href="./styles.css?v=LUST_BRIDGE_SINGLE_BUTTON_V41_PHYSICAL" />
+<link rel="stylesheet" href="./styles.css?v=LUST_BRIDGE_SINGLE_BUTTON_V42_READY_FIX" />
 <!-- Google tag (gtag.js) - GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8N7M5DTF4"></script>
   <script>
@@ -209,7 +209,7 @@
           <div class="bridge-one-action-note" data-bridge-primary-note-deposit>Click once. Do not click again while the bridge is processing.</div>
         </div>
 
-        <!-- LUST_BRIDGE_SINGLE_BUTTON_V41_PHYSICAL: internal action buttons kept for app.js only; not visible to users. -->
+        <!-- LUST_BRIDGE_SINGLE_BUTTON_V42_READY_FIX: internal action buttons kept for app.js only; not visible to users. -->
         <div class="bridge-internal-actions" hidden aria-hidden="true" data-bridge-action-flow="deposit">
           <button class="btn primary bridge-main-action" type="button" data-bridge-deposit>Deposit USDT</button>
           <button class="btn bridge-main-action" type="button" data-bridge-mint disabled>Mint on LUST</button>
@@ -300,7 +300,7 @@
           <div class="bridge-one-action-note" data-bridge-primary-note-withdraw>Click once. Do not click again while the bridge is processing.</div>
         </div>
 
-        <!-- LUST_BRIDGE_SINGLE_BUTTON_V41_PHYSICAL: internal action buttons kept for app.js only; not visible to users. -->
+        <!-- LUST_BRIDGE_SINGLE_BUTTON_V42_READY_FIX: internal action buttons kept for app.js only; not visible to users. -->
         <div class="bridge-internal-actions" hidden aria-hidden="true" data-bridge-action-flow="withdraw">
           <button class="btn primary bridge-main-action" type="button" data-bridge-burn>Burn LUSDT</button>
           <button class="btn bridge-main-action" type="button" data-bridge-release disabled>Release USDT</button>
@@ -586,7 +586,7 @@
     $("[data-bsc-recover-mint]")?.addEventListener("click", mintRecoveredClaim);
   });
 </script>
-<script type="module" src="./app.js?v=LUST_BRIDGE_SINGLE_BUTTON_V41_PHYSICAL"></script>
+<script type="module" src="./app.js?v=LUST_BRIDGE_SINGLE_BUTTON_V42_READY_FIX"></script>
 
 <script type="module" id="bridge-lusdt-sell-balance-fix-v41-no-blink">
   import { ethers } from "https://esm.sh/ethers@6.16.0";
@@ -1052,8 +1052,8 @@
 </script>
 <!-- LUST_BRIDGE_ACTIONS_V39_PRO_END -->
 
-<!-- LUST_BRIDGE_SINGLE_BUTTON_V41_PHYSICAL_START -->
-<style id="lust-bridge-single-action-v40-style">
+<!-- LUST_BRIDGE_SINGLE_BUTTON_V42_READY_FIX_START -->
+<style id="lust-bridge-single-action-v42-style">
   /* V40: one professional action button per bridge direction. Old internal buttons stay in DOM but are hidden. */
   .bridge-flow-actions {
     position: absolute !important;
@@ -1177,7 +1177,7 @@
     .bridge-one-action-head strong { text-align: left !important; }
   }
 </style>
-<script id="lust-bridge-single-action-v40">
+<script id="lust-bridge-single-action-v42">
 (function(){
   const SEL = {
     depositBtn: '[data-bridge-deposit]',
@@ -1220,20 +1220,22 @@
     if (loading(SEL.depositBtn)) return { step:'Step 1 of 2', title:'Deposit in progress', label:'Depositing USDT...', disabled:true, busy:true, waiting:false, target:'', help:'Confirm in your wallet and wait for the source-chain transaction to finish.', note:'Do not click again. The bridge is processing your deposit.' };
     if (loading(SEL.mintBtn)) return { step:'Step 2 of 2', title:'Mint in progress', label:'Minting on LUST...', disabled:true, busy:true, waiting:false, target:'', help:'Your LUST transaction is waiting for confirmation.', note:'Keep this page open until the transaction finishes.' };
     if (enabled(SEL.mintBtn)) return { step:'Step 2 of 2', title:'Claim ready on LUST', label:'Mint on LUST', disabled:false, busy:false, waiting:false, target:'mint', help:'Your claim is ready. Click once to mint LUSDT on LUST Chain.', note:'This is the final step for this deposit.' };
-    if (waiting(SEL.mintBtn) || claimState.includes('creating') || claimState.includes('checking') || claimState.includes('preparing') || claimState.includes('recover') || claimState.includes('waiting')) {
+    const claimIsActivelyWaiting = waiting(SEL.mintBtn) || claimState.includes('creating') || claimState.includes('checking') || claimState.includes('preparing') || claimState.includes('recover') || claimState.includes('pending') || claimState.includes('signature');
+    if (claimIsActivelyWaiting) {
       return { step:'Step 2 of 2', title:'Waiting for claim', label:'Waiting for claim...', disabled:true, busy:false, waiting:true, target:'', help:'The bridge is preparing your claim automatically after the deposit confirmation.', note:'No action needed. The button unlocks when the claim is ready.' };
     }
-    return { step:'Step 1 of 2', title:'Send USDT to LUST', label:'Deposit USDT', disabled:false, busy:false, waiting:false, target:'deposit', help:'One click starts the bridge. The next step appears automatically.', note:'Click once. After confirmation, the next step appears automatically.' };
+    return { step:'Step 1 of 2', title:'Send USDT to LUST', label:'Deposit USDT', disabled:false, busy:false, waiting:false, target:'deposit', help:'Click once to deposit USDT from the selected network.', note:'The next step appears automatically after confirmation.' };
   }
   function cfgWithdraw(){
     const releaseState = text(SEL.releaseState).toLowerCase();
     if (loading(SEL.burnBtn)) return { step:'Step 1 of 2', title:'Burn in progress', label:'Burning LUSDT...', disabled:true, busy:true, waiting:false, target:'', help:'Confirm in your wallet and wait for LUST Chain to include the burn transaction.', note:'Do not click again. The bridge is processing your burn.' };
     if (loading(SEL.releaseBtn)) return { step:'Step 2 of 2', title:'Release in progress', label:'Releasing USDT...', disabled:true, busy:true, waiting:false, target:'', help:'Confirm the release on the destination network and wait for confirmation.', note:'Keep this page open until the release finishes.' };
     if (enabled(SEL.releaseBtn)) return { step:'Step 2 of 2', title:'Release ready', label:'Release USDT', disabled:false, busy:false, waiting:false, target:'release', help:'Your release is ready. Click once to receive USDT on the destination chain.', note:'This is the final step for this sell.' };
-    if (waiting(SEL.releaseBtn) || releaseState.includes('creating') || releaseState.includes('checking') || releaseState.includes('waiting') || releaseState.includes('retry')) {
+    const releaseIsActivelyWaiting = waiting(SEL.releaseBtn) || releaseState.includes('creating') || releaseState.includes('checking') || releaseState.includes('pending') || releaseState.includes('signature') || releaseState.includes('retry');
+    if (releaseIsActivelyWaiting) {
       return { step:'Step 2 of 2', title:'Waiting for release', label:'Waiting for release...', disabled:true, busy:false, waiting:true, target:'', help:'The bridge is preparing the release signatures automatically after the burn.', note:'No action needed. The button unlocks when release is ready.' };
     }
-    return { step:'Step 1 of 2', title:'Burn LUSDT', label:'Burn LUSDT', disabled:false, busy:false, waiting:false, target:'burn', help:'Burn once on LUST Chain. The release step unlocks automatically.', note:'Click once. After confirmation, the bridge prepares the release.' };
+    return { step:'Step 1 of 2', title:'Burn LUSDT', label:'Burn LUSDT', disabled:false, busy:false, waiting:false, target:'burn', help:'Click once to burn LUSDT on LUST Chain.', note:'The release step appears automatically after confirmation.' };
   }
   function sync(){
     setPrimary($(SEL.primaryDeposit), cfgDeposit());
@@ -1256,10 +1258,10 @@
     setInterval(sync, 1200);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
-  window.LUST_BRIDGE_SINGLE_BUTTON_V41_PHYSICAL = true;
+  window.LUST_BRIDGE_SINGLE_BUTTON_V42_READY_FIX = true;
 })();
 </script>
-<!-- LUST_BRIDGE_SINGLE_BUTTON_V41_PHYSICAL_END -->
+<!-- LUST_BRIDGE_SINGLE_BUTTON_V42_READY_FIX_END -->
 
 </body>
 </html>
