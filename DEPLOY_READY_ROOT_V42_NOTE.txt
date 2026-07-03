@@ -1,0 +1,1 @@
+This ZIP is deploy-ready: index.html is at the root. Upload contents to repository root; do not replace .github/workflows.
