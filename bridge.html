@@ -72,7 +72,7 @@
   ]
 }
   </script>
-<link rel="stylesheet" href="./styles.css?v=LUST_BRIDGE_V45_STABLE_BUSY_LOCK" />
+<link rel="stylesheet" href="./styles.css?v=LUST_BRIDGE_V46_FAST_PROGRESS" />
 <!-- Google tag (gtag.js) - GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8N7M5DTF4"></script>
   <script>
@@ -204,9 +204,9 @@
             <span class="bridge-one-step" data-bridge-primary-step-deposit>Ready</span>
             <strong data-bridge-primary-title-deposit>Send USDT to LUST</strong>
           </div>
-          <p data-bridge-primary-help-deposit>One click starts the bridge. The next step appears automatically.</p>
+          <p data-bridge-primary-help-deposit>One click starts the bridge. You will see wallet, tx sent, confirmation and claim progress.</p>
           <button class="btn primary bridge-one-action-btn" type="button" data-bridge-primary-deposit>Deposit USDT</button>
-          <div class="bridge-one-action-note" data-bridge-primary-note-deposit>Click once. Do not click again while the bridge is processing.</div>
+          <div class="bridge-one-action-note" data-bridge-primary-note-deposit>Click once. The progress appears here automatically.</div>
         </div>
 
         <!-- LUST_BRIDGE_SINGLE_BUTTON_V43_NO_FREEZE: internal action buttons kept for app.js only; not visible to users. -->
@@ -295,9 +295,9 @@
             <span class="bridge-one-step" data-bridge-primary-step-withdraw>Ready</span>
             <strong data-bridge-primary-title-withdraw>Burn LUSDT</strong>
           </div>
-          <p data-bridge-primary-help-withdraw>One click starts the burn. Release appears automatically when ready.</p>
+          <p data-bridge-primary-help-withdraw>One click starts the burn. You will see wallet, tx sent, confirmation and release progress.</p>
           <button class="btn primary bridge-one-action-btn" type="button" data-bridge-primary-withdraw>Burn LUSDT</button>
-          <div class="bridge-one-action-note" data-bridge-primary-note-withdraw>Click once. Do not click again while the bridge is processing.</div>
+          <div class="bridge-one-action-note" data-bridge-primary-note-withdraw>Click once. The progress appears here automatically.</div>
         </div>
 
         <!-- LUST_BRIDGE_SINGLE_BUTTON_V43_NO_FREEZE: internal action buttons kept for app.js only; not visible to users. -->
@@ -586,7 +586,7 @@
     $("[data-bsc-recover-mint]")?.addEventListener("click", mintRecoveredClaim);
   });
 </script>
-<script type="module" src="./app.js?v=LUST_BRIDGE_V45_STABLE_BUSY_LOCK"></script>
+<script type="module" src="./app.js?v=LUST_BRIDGE_V46_FAST_PROGRESS"></script>
 
 <script type="module" id="bridge-lusdt-sell-balance-fix-v41-no-blink">
   import { ethers } from "https://esm.sh/ethers@6.16.0";
@@ -865,9 +865,9 @@
 
 
 
-<!-- LUST_BRIDGE_V45_STABLE_BUSY_LOCK_START -->
+<!-- LUST_BRIDGE_V46_FAST_PROGRESS_START -->
 <style id="lust-bridge-v44-stable-style">
-  /* V44: one stable primary action, no pulse, no color blinking, no MutationObserver loops. */
+  /* V46: stable primary action with fast progress feedback and no blinking. */
   [data-lusdt-bridge] .bridge-flow-actions {
     position: absolute !important;
     width: 1px !important;
@@ -1101,10 +1101,10 @@
     document.addEventListener('visibilitychange', sync);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
-  window.LUST_BRIDGE_V45_STABLE_BUSY_LOCK = true;
+  window.LUST_BRIDGE_V46_FAST_PROGRESS = true;
 })();
 </script>
-<!-- LUST_BRIDGE_V45_STABLE_BUSY_LOCK_END -->
+<!-- LUST_BRIDGE_V46_FAST_PROGRESS_END -->
 
 </body>
 </html>

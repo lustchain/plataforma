@@ -3831,3 +3831,6 @@ button[data-bridge-deposit].is-waiting,button[data-bridge-burn].is-waiting,butto
 [data-lusdt-bridge] .bridge-one-action-btn::after {
   animation: none !important;
 }
+
+
+/* LUST_BRIDGE_V46_FAST_PROGRESS: stable one-click bridge CTA, no blinking; progress shown in status text. */

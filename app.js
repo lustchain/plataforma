@@ -1276,6 +1276,24 @@ function bridgeHasPending(kind) {
   return Boolean(bridgePendingValue(kind));
 }
 
+function clearBridgeUiBusy(kind) {
+  try { sessionStorage.removeItem(`lustBridgeUiBusy_${kind}`); } catch (_) {}
+}
+
+function bridgeTxExplorerUrl(chainKey, txHash) {
+  if (!txHash) return "";
+  const key = String(chainKey || "").toLowerCase();
+  if (key === "lust") return `https://explorer.lustchain.org/tx/${txHash}`;
+  if (key === "polygon") return `https://polygonscan.com/tx/${txHash}`;
+  if (key === "bsc") return `https://bscscan.com/tx/${txHash}`;
+  return "";
+}
+
+function bridgeTxLinkHtml(chainKey, txHash, label = "View transaction") {
+  const url = bridgeTxExplorerUrl(chainKey, txHash);
+  return url ? `${label}: ${url}` : "";
+}
+
 function clearStoredDepositRecovery() {
   try {
     localStorage.removeItem("lustLastDepositTxHash");
@@ -1404,6 +1422,7 @@ async function prepareActiveClaim(claim, tone = "ok") {
     return false;
   }
   activeClaim = claim;
+  clearBridgeUiBusy("claim");
   const source = claim.source || (String(claim.sourceChainId) === "56" ? "bsc" : "polygon");
   setText("[data-bridge-claim-state]", `Ready · ${source} · ${formatUnitsSafe(claim.amount)} LUSDT`);
   setBridgeActionReady("[data-bridge-mint]", true);
@@ -1683,9 +1702,15 @@ async function depositToLusdt() {
     setText("[data-bridge-last-deposit]", bridgeShort(tx.hash));
     setBridgeButtonState("[data-bridge-deposit]", "loading", "Deposit pending");
     setBridgeButtonState("[data-bridge-mint]", "waiting", "Waiting deposit");
-    bridgeClaimLog(`Deposit sent: ${tx.hash}. Waiting on-chain confirmation...`, "");
+    bridgeClaimLog(`Deposit sent: ${tx.hash}. Waiting source-chain confirmation. ${bridgeTxLinkHtml(kind, tx.hash)}`, "");
+    autoFindClaimSoon();
 
-    const receipt = await tx.wait();
+    const receipt = await waitBridgeTxWithProgress(tx, {
+      selector: "[data-bridge-deposit]",
+      baseLabel: `Deposit pending on ${chain.name}`,
+      logFn: bridgeClaimLog,
+      chainKey: kind
+    });
 
     let depositId = "";
     try {
@@ -1727,6 +1752,7 @@ async function depositToLusdt() {
     autoFindClaimSoon();
   } catch (err) {
     console.error(err);
+    clearBridgeUiBusy("claim");
     setBridgeButtonState("[data-bridge-deposit]", "default", "Deposit USDT");
     if (activeClaim) setBridgeActionReady("[data-bridge-mint]", true);
     else setBridgeButtonState("[data-bridge-mint]", "disabled", "Mint on LUST");
@@ -1989,18 +2015,37 @@ async function waitBridgeTxWithProgress(tx, options = {}) {
   const selector = options.selector || "";
   const baseLabel = options.baseLabel || "Transaction pending";
   const logFn = typeof options.logFn === "function" ? options.logFn : bridgeLog;
+  const chainKey = options.chainKey || "lust";
   const started = Date.now();
   let timer = null;
 
+  const txLink = bridgeTxLinkHtml(chainKey, tx?.hash, "View transaction");
+
   try {
+    if (selector) setBridgeButtonState(selector, "loading", baseLabel);
+    try {
+      logFn(
+        txLink
+          ? `${baseLabel}. Transaction sent. ${txLink}`
+          : `${baseLabel}. Transaction sent. Waiting for confirmation...`,
+        ""
+      );
+    } catch (_) {}
+
     timer = setInterval(() => {
       const seconds = Math.max(1, Math.floor((Date.now() - started) / 1000));
       if (selector) setBridgeButtonState(selector, "loading", baseLabel);
-      try { logFn(`${baseLabel}. Waiting for on-chain confirmation (${seconds}s)...`, ""); } catch (_) {}
-    }, 5000);
+      try {
+        logFn(
+          txLink
+            ? `${baseLabel}. Waiting for confirmation (${seconds}s). ${txLink}`
+            : `${baseLabel}. Waiting for confirmation (${seconds}s)...`,
+          ""
+        );
+      } catch (_) {}
+    }, 4000);
 
-    if (selector) setBridgeButtonState(selector, "loading", baseLabel);
-    const receipt = await tx.wait();
+    const receipt = await tx.wait(1);
     if (receipt && receipt.status === 0) throw new Error("Transaction failed on-chain.");
     return receipt;
   } finally {
@@ -2029,11 +2074,13 @@ async function mintClaim() {
     await waitBridgeTxWithProgress(tx, {
       selector: "[data-bridge-mint]",
       baseLabel: "Mint pending on LUST",
-      logFn: bridgeClaimLog
+      logFn: bridgeClaimLog,
+      chainKey: "lust"
     });
     setBridgeButtonState("[data-bridge-mint]", "loading", "Finalizing");
     markLocallyMinted(activeClaim.depositId);
     clearBridgePending("claim");
+    clearBridgeUiBusy("claim");
     bridgeClaimLog(`LUSDT minted successfully. Tx: ${tx.hash}`, "ok");
     setText("[data-bridge-claim-state]", "Minted successfully");
     activeClaim = null;
@@ -2042,6 +2089,7 @@ async function mintClaim() {
     setTimeout(() => findClaim({ silent: true }).catch(() => {}), 2500);
   } catch (err) {
     console.error(err);
+    clearBridgeUiBusy("claim");
     if (activeClaim) setBridgeActionReady("[data-bridge-mint]", true);
     bridgeClaimLog(err?.shortMessage || err?.message || "Mint failed or rejected.", "warn");
   }
@@ -2057,7 +2105,10 @@ async function burnForRelease() {
     const nonce = BigInt(Date.now());
     const deadline = BigInt(Math.floor(Date.now() / 1000) + 2592000);
 
-    await refreshBridgeLiquidity();
+    await Promise.race([
+      refreshBridgeLiquidity(),
+      new Promise((resolve) => setTimeout(resolve, 2500))
+    ]).catch(() => {});
     const liq = bridgeLiquidity[destination];
     if (liq) {
       const { net } = bridgeQuote(document.querySelector("[data-withdraw-amount]")?.value || "0");
@@ -2081,11 +2132,13 @@ async function burnForRelease() {
     localStorage.setItem("lustLastBurnNonce", String(nonce));
     setBridgePending("release", String(nonce), { destination, amount: String(amount), txHash: tx.hash });
     setText("[data-bridge-release-state]", "Burn pending");
-    bridgeReleaseLog(`Burn sent: ${tx.hash}. Waiting LUST confirmation...`, "");
+    bridgeReleaseLog(`Burn sent: ${tx.hash}. Waiting LUST confirmation. ${bridgeTxLinkHtml("lust", tx.hash)}`, "");
+    autoFindReleaseSoon({ visible: false });
     await waitBridgeTxWithProgress(tx, {
       selector: "[data-bridge-burn]",
       baseLabel: "Burn pending on LUST",
-      logFn: bridgeReleaseLog
+      logFn: bridgeReleaseLog,
+      chainKey: "lust"
     });
 
     setBridgeButtonState("[data-bridge-burn]", "default", "Burn LUSDT");
@@ -2102,6 +2155,7 @@ async function burnForRelease() {
     autoFindReleaseSoon({ visible: true });
   } catch (err) {
     console.error(err);
+    clearBridgeUiBusy("release");
     setBridgeButtonState("[data-bridge-burn]", "default", "Burn LUSDT");
     if (activeRelease) setBridgeActionReady("[data-bridge-release]", true);
     else if (bridgeHasPending("release")) setBridgeButtonState("[data-bridge-release]", "waiting", "Resume release");
@@ -2211,10 +2265,12 @@ async function executeRelease() {
     await waitBridgeTxWithProgress(tx, {
       selector: "[data-bridge-release]",
       baseLabel: `Release pending on ${chain.name}`,
-      logFn: bridgeReleaseLog
+      logFn: bridgeReleaseLog,
+      chainKey: destination
     });
     setBridgeButtonState("[data-bridge-release]", "loading", "Finalizing");
     clearBridgePending("release");
+    clearBridgeUiBusy("release");
     try { localStorage.removeItem("lustLastBurnNonce"); } catch (_) {}
     bridgeReleaseLog(`USDT released successfully. Tx: ${tx.hash}`, "ok");
     setText("[data-bridge-release-state]", "Released successfully");
@@ -2224,6 +2280,7 @@ async function executeRelease() {
     setTimeout(() => findRelease({ silent: true }).catch(() => {}), 2500);
   } catch (err) {
     console.error(err);
+    clearBridgeUiBusy("release");
     if (activeRelease) setBridgeActionReady("[data-bridge-release]", true);
     else if (bridgeHasPending("release")) setBridgeButtonState("[data-bridge-release]", "waiting", "Retry release");
     bridgeReleaseLog(err?.shortMessage || err?.message || "Release failed or rejected.", "warn");
