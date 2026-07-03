@@ -1,0 +1,1 @@
+V47: release flow uses one main button only; removed separate release buttons from pending release list; keeps fast progress and stable no-flicker UI.

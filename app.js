@@ -1815,7 +1815,7 @@ function renderPendingReleases(entries = []) {
           </div>
           ${used
             ? `<span class="claim-badge done">Released</span>`
-            : `<div class="claim-actions"><button class="mini-btn" type="button" data-bridge-select-release="${idx}">Select</button><button class="claim-direct-btn" type="button" data-bridge-release-direct="${idx}">Release ${releaseDestinationLabel(release)}</button></div>`}
+            : `<span class="claim-badge ready">Ready</span>`}
         </div>`;
     }).join("")}
   `;
@@ -4591,3 +4591,5 @@ window.lustPresale = {
 };
 
 wireLUSTPresale();
+
+// LUST_BRIDGE_V47_SINGLE_RELEASE_BUTTON_NO_EXTRA_ACTIONS
