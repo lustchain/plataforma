@@ -72,7 +72,7 @@
   ]
 }
   </script>
-<link rel="stylesheet" href="./styles.css?v=LUST_BRIDGE_SINGLE_BUTTON_V42_READY_FIX" />
+<link rel="stylesheet" href="./styles.css?v=LUST_BRIDGE_SINGLE_BUTTON_V43_NO_FREEZE" />
 <!-- Google tag (gtag.js) - GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8N7M5DTF4"></script>
   <script>
@@ -209,7 +209,7 @@
           <div class="bridge-one-action-note" data-bridge-primary-note-deposit>Click once. Do not click again while the bridge is processing.</div>
         </div>
 
-        <!-- LUST_BRIDGE_SINGLE_BUTTON_V42_READY_FIX: internal action buttons kept for app.js only; not visible to users. -->
+        <!-- LUST_BRIDGE_SINGLE_BUTTON_V43_NO_FREEZE: internal action buttons kept for app.js only; not visible to users. -->
         <div class="bridge-internal-actions" hidden aria-hidden="true" data-bridge-action-flow="deposit">
           <button class="btn primary bridge-main-action" type="button" data-bridge-deposit>Deposit USDT</button>
           <button class="btn bridge-main-action" type="button" data-bridge-mint disabled>Mint on LUST</button>
@@ -300,7 +300,7 @@
           <div class="bridge-one-action-note" data-bridge-primary-note-withdraw>Click once. Do not click again while the bridge is processing.</div>
         </div>
 
-        <!-- LUST_BRIDGE_SINGLE_BUTTON_V42_READY_FIX: internal action buttons kept for app.js only; not visible to users. -->
+        <!-- LUST_BRIDGE_SINGLE_BUTTON_V43_NO_FREEZE: internal action buttons kept for app.js only; not visible to users. -->
         <div class="bridge-internal-actions" hidden aria-hidden="true" data-bridge-action-flow="withdraw">
           <button class="btn primary bridge-main-action" type="button" data-bridge-burn>Burn LUSDT</button>
           <button class="btn bridge-main-action" type="button" data-bridge-release disabled>Release USDT</button>
@@ -586,7 +586,7 @@
     $("[data-bsc-recover-mint]")?.addEventListener("click", mintRecoveredClaim);
   });
 </script>
-<script type="module" src="./app.js?v=LUST_BRIDGE_SINGLE_BUTTON_V42_READY_FIX"></script>
+<script type="module" src="./app.js?v=LUST_BRIDGE_SINGLE_BUTTON_V43_NO_FREEZE"></script>
 
 <script type="module" id="bridge-lusdt-sell-balance-fix-v41-no-blink">
   import { ethers } from "https://esm.sh/ethers@6.16.0";
@@ -1052,7 +1052,7 @@
 </script>
 <!-- LUST_BRIDGE_ACTIONS_V39_PRO_END -->
 
-<!-- LUST_BRIDGE_SINGLE_BUTTON_V42_READY_FIX_START -->
+<!-- LUST_BRIDGE_SINGLE_BUTTON_V43_NO_FREEZE_START -->
 <style id="lust-bridge-single-action-v42-style">
   /* V40: one professional action button per bridge direction. Old internal buttons stay in DOM but are hidden. */
   .bridge-flow-actions {
@@ -1203,7 +1203,7 @@
     const help = card?.querySelector('[data-bridge-primary-help-deposit], [data-bridge-primary-help-withdraw]');
     const note = card?.querySelector('[data-bridge-primary-note-deposit], [data-bridge-primary-note-withdraw]');
     if (btn.textContent !== cfg.label) btn.textContent = cfg.label;
-    btn.disabled = !!cfg.disabled;
+    if (btn.disabled !== !!cfg.disabled) btn.disabled = !!cfg.disabled;
     btn.classList.toggle('is-busy', !!cfg.busy);
     if (step && step.textContent !== cfg.step) step.textContent = cfg.step;
     if (title && title.textContent !== cfg.title) title.textContent = cfg.title;
@@ -1213,7 +1213,7 @@
       card.classList.toggle('is-waiting', !!cfg.waiting);
       card.classList.toggle('is-done', !!cfg.done);
     }
-    btn.dataset.targetAction = cfg.target || '';
+    if (btn.dataset.targetAction !== (cfg.target || '')) btn.dataset.targetAction = cfg.target || '';
   }
   function cfgDeposit(){
     const claimState = text(SEL.claimState).toLowerCase();
@@ -1254,14 +1254,14 @@
     $(SEL.primaryWithdraw)?.addEventListener('click', () => clickTarget('withdraw'));
     sync();
     const target = document.querySelector('[data-lusdt-bridge]') || document.body;
-    if (target && window.MutationObserver) new MutationObserver(sync).observe(target, { subtree:true, childList:true, attributes:true, attributeFilter:['class','disabled'] });
+    if (target && window.MutationObserver) new MutationObserver(sync).observe(target, { subtree:true, childList:false, attributes:true, attributeFilter:['class','disabled'] });
     setInterval(sync, 1200);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
-  window.LUST_BRIDGE_SINGLE_BUTTON_V42_READY_FIX = true;
+  window.LUST_BRIDGE_SINGLE_BUTTON_V43_NO_FREEZE = true;
 })();
 </script>
-<!-- LUST_BRIDGE_SINGLE_BUTTON_V42_READY_FIX_END -->
+<!-- LUST_BRIDGE_SINGLE_BUTTON_V43_NO_FREEZE_END -->
 
 </body>
 </html>

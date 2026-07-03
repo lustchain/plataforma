@@ -1983,6 +1983,31 @@ async function autoFindReleaseSoon(options = {}) {
   }
 }
 
+
+
+async function waitBridgeTxWithProgress(tx, options = {}) {
+  const selector = options.selector || "";
+  const baseLabel = options.baseLabel || "Transaction pending";
+  const logFn = typeof options.logFn === "function" ? options.logFn : bridgeLog;
+  const started = Date.now();
+  let timer = null;
+
+  try {
+    timer = setInterval(() => {
+      const seconds = Math.max(1, Math.floor((Date.now() - started) / 1000));
+      if (selector) setBridgeButtonState(selector, "loading", baseLabel);
+      try { logFn(`${baseLabel}. Waiting for on-chain confirmation (${seconds}s)...`, ""); } catch (_) {}
+    }, 5000);
+
+    if (selector) setBridgeButtonState(selector, "loading", baseLabel);
+    const receipt = await tx.wait();
+    if (receipt && receipt.status === 0) throw new Error("Transaction failed on-chain.");
+    return receipt;
+  } finally {
+    if (timer) clearInterval(timer);
+  }
+}
+
 async function mintClaim() {
   try {
     if (!activeClaim) await findClaim();
