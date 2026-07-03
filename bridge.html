@@ -72,7 +72,7 @@
   ]
 }
   </script>
-<link rel="stylesheet" href="./styles.css?v=LUST_BRIDGE_V44_STABLE_NO_FLICKER" />
+<link rel="stylesheet" href="./styles.css?v=LUST_BRIDGE_V45_STABLE_BUSY_LOCK" />
 <!-- Google tag (gtag.js) - GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8N7M5DTF4"></script>
   <script>
@@ -586,7 +586,7 @@
     $("[data-bsc-recover-mint]")?.addEventListener("click", mintRecoveredClaim);
   });
 </script>
-<script type="module" src="./app.js?v=LUST_BRIDGE_V44_STABLE_NO_FLICKER"></script>
+<script type="module" src="./app.js?v=LUST_BRIDGE_V45_STABLE_BUSY_LOCK"></script>
 
 <script type="module" id="bridge-lusdt-sell-balance-fix-v41-no-blink">
   import { ethers } from "https://esm.sh/ethers@6.16.0";
@@ -865,7 +865,7 @@
 
 
 
-<!-- LUST_BRIDGE_V44_STABLE_NO_FLICKER_START -->
+<!-- LUST_BRIDGE_V45_STABLE_BUSY_LOCK_START -->
 <style id="lust-bridge-v44-stable-style">
   /* V44: one stable primary action, no pulse, no color blinking, no MutationObserver loops. */
   [data-lusdt-bridge] .bridge-flow-actions {
@@ -1016,6 +1016,21 @@
       return item && item.ts && (Date.now() - Number(item.ts) < 20*60*1000);
     } catch(_) { return false; }
   }
+  function getUiBusy(kind){
+    try {
+      const raw = sessionStorage.getItem('lustBridgeUiBusy_' + kind);
+      if (!raw) return '';
+      const item = JSON.parse(raw);
+      if (!item || !item.ts || Date.now() - Number(item.ts) > 4*60*1000) {
+        sessionStorage.removeItem('lustBridgeUiBusy_' + kind);
+        return '';
+      }
+      return String(item.action || 'processing');
+    } catch(_) { return ''; }
+  }
+  function setUiBusy(kind, action){
+    try { sessionStorage.setItem('lustBridgeUiBusy_' + kind, JSON.stringify({ action, ts: Date.now() })); } catch(_) {}
+  }
   function stableKey(cfg){ return [cfg.step,cfg.title,cfg.label,cfg.disabled?'1':'0',cfg.busy?'1':'0',cfg.target||''].join('|'); }
   function apply(mode, cfg){
     const btn = mode === 'withdraw' ? $(SEL.primaryWithdraw) : $(SEL.primaryDeposit);
@@ -1040,8 +1055,9 @@
   function depositCfg(){
     const claim = txt(SEL.claimState).toLowerCase();
     const locked = Date.now() < state.lockUntil.deposit;
-    if (locked || loading(SEL.depositBtn)) return { step:'Step 1 of 2', title:'Deposit in progress', label:'Depositing USDT...', disabled:true, busy:true, target:'', help:'Confirm in your wallet and wait for the source-chain transaction.', note:'Processing. Do not click again.' };
-    if (loading(SEL.mintBtn)) return { step:'Step 2 of 2', title:'Mint in progress', label:'Minting on LUST...', disabled:true, busy:true, target:'', help:'Waiting for the LUST transaction to confirm.', note:'Keep this page open.' };
+    const busy = getUiBusy('claim');
+    if (locked || busy === 'deposit' || loading(SEL.depositBtn)) return { step:'Step 1 of 2', title:'Deposit in progress', label:'Depositing USDT...', disabled:true, busy:true, target:'', help:'Confirm in your wallet and wait for the source-chain transaction.', note:'Processing. Do not click again.' };
+    if (busy === 'mint' || loading(SEL.mintBtn)) return { step:'Step 2 of 2', title:'Mint in progress', label:'Minting on LUST...', disabled:true, busy:true, target:'', help:'Waiting for the LUST transaction to confirm.', note:'Keep this page open.' };
     if (enabled(SEL.mintBtn)) return { step:'Step 2 of 2', title:'Claim ready on LUST', label:'Mint on LUST', disabled:false, busy:false, target:'mint', help:'Your claim is ready. Click once to mint LUSDT on LUST Chain.', note:'Final step for this deposit.' };
     const activeWait = hasFreshPending('claim') || waiting(SEL.mintBtn) || /creating|checking|preparing|recover|pending|signature/i.test(claim);
     if (activeWait) return { step:'Step 2 of 2', title:'Waiting for claim', label:'Waiting for claim...', disabled:true, busy:false, target:'', help:'The bridge is preparing your claim automatically.', note:'No action needed. It unlocks when ready.' };
@@ -1050,8 +1066,9 @@
   function withdrawCfg(){
     const release = txt(SEL.releaseState).toLowerCase();
     const locked = Date.now() < state.lockUntil.withdraw;
-    if (locked || loading(SEL.burnBtn)) return { step:'Step 1 of 2', title:'Burn in progress', label:'Burning LUSDT...', disabled:true, busy:true, target:'', help:'Confirm in your wallet and wait for LUST Chain confirmation.', note:'Processing. Do not click again.' };
-    if (loading(SEL.releaseBtn)) return { step:'Step 2 of 2', title:'Release in progress', label:'Releasing USDT...', disabled:true, busy:true, target:'', help:'Waiting for the destination network transaction.', note:'Keep this page open.' };
+    const busy = getUiBusy('release');
+    if (locked || busy === 'burn' || loading(SEL.burnBtn)) return { step:'Step 1 of 2', title:'Burn in progress', label:'Burning LUSDT...', disabled:true, busy:true, target:'', help:'Confirm in your wallet and wait for LUST Chain confirmation.', note:'Processing. Do not click again.' };
+    if (busy === 'release' || loading(SEL.releaseBtn)) return { step:'Step 2 of 2', title:'Release in progress', label:'Releasing USDT...', disabled:true, busy:true, target:'', help:'Waiting for the destination network transaction.', note:'Keep this page open.' };
     if (enabled(SEL.releaseBtn)) return { step:'Step 2 of 2', title:'Release ready', label:'Release USDT', disabled:false, busy:false, target:'release', help:'Your release is ready. Click once to receive USDT.', note:'Final step for this sell.' };
     const activeWait = hasFreshPending('release') || waiting(SEL.releaseBtn) || /creating|checking|pending|signature|retry|ready/i.test(release) && !/no pending|waiting/i.test(release);
     if (activeWait) return { step:'Step 2 of 2', title:'Waiting for release', label:'Waiting for release...', disabled:true, busy:false, target:'', help:'The bridge is preparing release signatures automatically.', note:'No action needed. It unlocks when ready.' };
@@ -1066,6 +1083,10 @@
     const target = action === 'mint' ? $(SEL.mintBtn) : action === 'deposit' ? $(SEL.depositBtn) : action === 'release' ? $(SEL.releaseBtn) : action === 'burn' ? $(SEL.burnBtn) : null;
     if (!target || target.disabled) return;
     state.lockUntil[mode] = Date.now() + 4500;
+    if (action === 'deposit') setUiBusy('claim', 'deposit');
+    if (action === 'mint') setUiBusy('claim', 'mint');
+    if (action === 'burn') setUiBusy('release', 'burn');
+    if (action === 'release') setUiBusy('release', 'release');
     sync();
     target.click();
     setTimeout(sync, 1200);
@@ -1080,10 +1101,10 @@
     document.addEventListener('visibilitychange', sync);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
-  window.LUST_BRIDGE_V44_STABLE_NO_FLICKER = true;
+  window.LUST_BRIDGE_V45_STABLE_BUSY_LOCK = true;
 })();
 </script>
-<!-- LUST_BRIDGE_V44_STABLE_NO_FLICKER_END -->
+<!-- LUST_BRIDGE_V45_STABLE_BUSY_LOCK_END -->
 
 </body>
 </html>
