@@ -72,7 +72,7 @@
   ]
 }
   </script>
-<link rel="stylesheet" href="./styles.css?v=LUST_BRIDGE_V48_NO_SEPARATE_RELEASE_UI" />
+<link rel="stylesheet" href="./styles.css?v=LUST_BRIDGE_V49_SINGLE_BUTTON_CLEAN" />
 <!-- Google tag (gtag.js) - GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8N7M5DTF4"></script>
   <script>
@@ -210,9 +210,9 @@
         </div>
 
         <!-- LUST_BRIDGE_SINGLE_BUTTON_V43_NO_FREEZE: internal action buttons kept for app.js only; not visible to users. -->
-        <div class="bridge-internal-actions" hidden aria-hidden="true" data-bridge-action-flow="deposit">
-          <button class="btn primary bridge-main-action" type="button" data-bridge-deposit>Deposit USDT</button>
-          <button class="btn bridge-main-action" type="button" data-bridge-mint disabled>Mint on LUST</button>
+        <div class="bridge-internal-actions" hidden aria-hidden="true" style="display:none!important;visibility:hidden!important;pointer-events:none!important;" data-bridge-action-flow="deposit">
+          <button class="btn primary bridge-main-action" type="button" data-bridge-deposit style="display:none!important;visibility:hidden!important;pointer-events:none!important;" tabindex="-1">Deposit USDT</button>
+          <button class="btn bridge-main-action" type="button" data-bridge-mint disabled style="display:none!important;visibility:hidden!important;pointer-events:none!important;" tabindex="-1">Mint on LUST</button>
         </div>
 
         <div class="bridge-pro-status">
@@ -301,9 +301,9 @@
         </div>
 
         <!-- LUST_BRIDGE_SINGLE_BUTTON_V43_NO_FREEZE: internal action buttons kept for app.js only; not visible to users. -->
-        <div class="bridge-internal-actions" hidden aria-hidden="true" data-bridge-action-flow="withdraw">
-          <button class="btn primary bridge-main-action" type="button" data-bridge-burn>Burn LUSDT</button>
-          <button class="btn bridge-main-action" type="button" data-bridge-release disabled>Release USDT</button>
+        <div class="bridge-internal-actions" hidden aria-hidden="true" style="display:none!important;visibility:hidden!important;pointer-events:none!important;" data-bridge-action-flow="withdraw">
+          <button class="btn primary bridge-main-action" type="button" data-bridge-burn style="display:none!important;visibility:hidden!important;pointer-events:none!important;" tabindex="-1">Burn LUSDT</button>
+          <button class="btn bridge-main-action" type="button" data-bridge-release disabled style="display:none!important;visibility:hidden!important;pointer-events:none!important;" tabindex="-1">Release USDT</button>
         </div>
 
         <div class="bridge-pro-status">
@@ -583,7 +583,7 @@
     $("[data-bsc-recover-mint]")?.addEventListener("click", mintRecoveredClaim);
   });
 </script>
-<script type="module" src="./app.js?v=LUST_BRIDGE_V48_NO_SEPARATE_RELEASE_UI"></script>
+<script type="module" src="./app.js?v=LUST_BRIDGE_V49_SINGLE_BUTTON_CLEAN"></script>
 
 <script type="module" id="bridge-lusdt-sell-balance-fix-v41-no-blink">
   import { ethers } from "https://esm.sh/ethers@6.16.0";
@@ -862,7 +862,7 @@
 
 
 
-<!-- LUST_BRIDGE_V48_NO_SEPARATE_RELEASE_UI_START -->
+<!-- LUST_BRIDGE_V49_SINGLE_BUTTON_CLEAN_START -->
 <style id="lust-bridge-v44-stable-style">
   /* V46: stable primary action with fast progress feedback and no blinking. */
   [data-lusdt-bridge] .bridge-flow-actions {
@@ -1058,7 +1058,7 @@
     if (enabled(SEL.mintBtn)) return { step:'Step 2 of 2', title:'Claim ready on LUST', label:'Mint on LUST', disabled:false, busy:false, target:'mint', help:'Your claim is ready. Click once to mint LUSDT on LUST Chain.', note:'Final step for this deposit.' };
     const activeWait = hasFreshPending('claim') || waiting(SEL.mintBtn) || /creating|checking|preparing|recover|pending|signature/i.test(claim);
     if (activeWait) return { step:'Step 2 of 2', title:'Waiting for claim', label:'Waiting for claim...', disabled:true, busy:false, target:'', help:'The bridge is preparing your claim automatically.', note:'No action needed. The same button unlocks when ready.' };
-    return { step:'Step 1 of 2', title:'Send USDT to LUST', label:'Deposit USDT', disabled:false, busy:false, target:'deposit', help:'Click once to deposit USDT from the selected network.', note:'The next step appears automatically.' };
+    return { step:'Step 1 of 2', title:'Send USDT to LUST', label:'Deposit USDT', disabled:false, busy:false, target:'deposit', help:'Click once to deposit USDT from the selected network.', note:'This same button becomes Mint on LUST when it is ready.' };
   }
   function withdrawCfg(){
     const release = txt(SEL.releaseState).toLowerCase();
@@ -1069,7 +1069,7 @@
     if (enabled(SEL.releaseBtn)) return { step:'Step 2 of 2', title:'Release ready', label:'Release USDT', disabled:false, busy:false, target:'release', help:'Your release is ready. Click once to receive USDT.', note:'Final step for this sell.' };
     const activeWait = hasFreshPending('release') || waiting(SEL.releaseBtn) || /creating|checking|pending|signature|retry|ready/i.test(release) && !/no pending|waiting/i.test(release);
     if (activeWait) return { step:'Step 2 of 2', title:'Waiting for release', label:'Waiting for release...', disabled:true, busy:false, target:'', help:'The bridge is preparing release signatures automatically.', note:'No action needed. The same button unlocks when ready.' };
-    return { step:'Step 1 of 2', title:'Burn LUSDT', label:'Burn LUSDT', disabled:false, busy:false, target:'burn', help:'Click once to burn LUSDT on LUST Chain.', note:'The release step appears automatically.' };
+    return { step:'Step 1 of 2', title:'Burn LUSDT', label:'Burn LUSDT', disabled:false, busy:false, target:'burn', help:'Click once to burn LUSDT on LUST Chain.', note:'This same button becomes Release USDT when it is ready.' };
   }
   function sync(){ apply('deposit', depositCfg()); apply('withdraw', withdrawCfg()); }
   function click(mode){
@@ -1098,10 +1098,10 @@
     document.addEventListener('visibilitychange', sync);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
-  window.LUST_BRIDGE_V48_NO_SEPARATE_RELEASE_UI = true;
+  window.LUST_BRIDGE_V49_SINGLE_BUTTON_CLEAN = true;
 })();
 </script>
-<!-- LUST_BRIDGE_V48_NO_SEPARATE_RELEASE_UI_END -->
+<!-- LUST_BRIDGE_V49_SINGLE_BUTTON_CLEAN_END -->
 
 
 <style id="lust-bridge-v47-single-release-button">
@@ -1120,7 +1120,7 @@
 </style>
 
 <style id="lust-bridge-v48-no-separate-release-ui">
-  /* LUST_BRIDGE_V48_NO_SEPARATE_RELEASE_UI */
+  /* LUST_BRIDGE_V49_SINGLE_BUTTON_CLEAN */
   [data-lusdt-bridge] .bridge-hidden-release-list,
   [data-lusdt-bridge] [data-bridge-pending-releases],
   [data-lusdt-bridge] [data-bridge-pending-releases] *,
@@ -1131,5 +1131,77 @@
     pointer-events: none !important;
   }
 </style>
+
+
+<!-- LUST_BRIDGE_V49_SINGLE_BUTTON_CLEAN_FINAL_GUARD -->
+<style id="lust-bridge-v49-single-button-clean-final-guard">
+  [data-lusdt-bridge] .bridge-internal-actions,
+  [data-lusdt-bridge] .bridge-internal-actions *,
+  [data-lusdt-bridge] [data-bridge-action-flow],
+  [data-lusdt-bridge] [data-bridge-action-flow] *,
+  [data-lusdt-bridge] [data-bridge-pending-releases],
+  [data-lusdt-bridge] [data-bridge-pending-releases] *,
+  [data-lusdt-bridge] .bridge-hidden-release-list,
+  [data-lusdt-bridge] .bridge-hidden-release-list *,
+  [data-lusdt-bridge] [data-bridge-release-direct],
+  [data-lusdt-bridge] [data-bridge-select-release] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    left: -99999px !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+  [data-lusdt-bridge] [data-bridge-primary-withdraw],
+  [data-lusdt-bridge] [data-bridge-primary-deposit] {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    position: relative !important;
+    left: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+</style>
+<script id="lust-bridge-v49-single-button-clean-final-guard-script">
+(function(){
+  function hardHideReleaseExtras(){
+    var root = document.querySelector('[data-lusdt-bridge]');
+    if (!root) return;
+    root.querySelectorAll('[data-bridge-pending-releases], .bridge-hidden-release-list, [data-bridge-release-direct], [data-bridge-select-release], [data-bridge-action-flow]').forEach(function(el){
+      el.setAttribute('aria-hidden','true');
+      if (!el.hasAttribute('hidden')) el.setAttribute('hidden','');
+      el.style.setProperty('display','none','important');
+      el.style.setProperty('visibility','hidden','important');
+      el.style.setProperty('pointer-events','none','important');
+      el.style.setProperty('position','absolute','important');
+      el.style.setProperty('left','-99999px','important');
+    });
+    var mainWithdraw = root.querySelector('[data-bridge-primary-withdraw]');
+    var mainDeposit = root.querySelector('[data-bridge-primary-deposit]');
+    if (mainWithdraw) {
+      mainWithdraw.removeAttribute('hidden');
+      mainWithdraw.style.removeProperty('display');
+      mainWithdraw.style.removeProperty('visibility');
+      mainWithdraw.style.removeProperty('pointer-events');
+    }
+    if (mainDeposit) {
+      mainDeposit.removeAttribute('hidden');
+      mainDeposit.style.removeProperty('display');
+      mainDeposit.style.removeProperty('visibility');
+      mainDeposit.style.removeProperty('pointer-events');
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', hardHideReleaseExtras); else hardHideReleaseExtras();
+  setInterval(hardHideReleaseExtras, 1200);
+  window.LUST_BRIDGE_V49_SINGLE_BUTTON_CLEAN = true;
+})();
+</script>
+
 </body>
 </html>
