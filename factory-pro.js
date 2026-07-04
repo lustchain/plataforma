@@ -67,8 +67,26 @@ const ERC20_ABI = [
   "function approve(address spender,uint256 amount) returns (bool)"
 ];
 
-const provider = new ethers.JsonRpcProvider(LUST_RPC_URL);
-const factoryRead = new ethers.Contract(FACTORY_ADDRESS, FACTORY_ABI, provider);
+const publicProvider = new ethers.JsonRpcProvider(LUST_RPC_URL);
+const factoryRead = new ethers.Contract(FACTORY_ADDRESS, FACTORY_ABI, publicProvider);
+
+async function readProviderPreferWallet() {
+  try {
+    const eth = window.ethereum;
+    if (eth) {
+      const chainId = await eth.request({ method: "eth_chainId" }).catch(() => "");
+      const accounts = await eth.request({ method: "eth_accounts" }).catch(() => []);
+      if (String(chainId).toLowerCase() === LUST_CHAIN.chainId && accounts?.length) {
+        return new ethers.BrowserProvider(eth);
+      }
+    }
+  } catch (_) {}
+  return publicProvider;
+}
+
+async function factoryForRead() {
+  return new ethers.Contract(FACTORY_ADDRESS, FACTORY_ABI, await readProviderPreferWallet());
+}
 
 function $(selector) {
   return document.querySelector(selector);
@@ -333,9 +351,10 @@ async function walletAddress() {
 }
 
 async function readFees(plan = selectedPlan()) {
+  const factory = await factoryForRead();
   const [lusdtFee, lstFee] = await Promise.all([
-    factoryRead.getLUSDTFeeForPlan(plan),
-    factoryRead.getLSTFeeForPlan(plan)
+    factory.getLUSDTFeeForPlan(plan),
+    factory.getLSTFeeForPlan(plan)
   ]);
   return { lusdtFee: BigInt(lusdtFee), lstFee: BigInt(lstFee) };
 }
@@ -395,11 +414,13 @@ async function refreshWalletData() {
   setText("[data-factory-wallet]", shortAddress(address));
 
   try {
-    const token = new ethers.Contract(LUSDT_ADDRESS, ERC20_ABI, provider);
+    const readProvider = await readProviderPreferWallet();
+    const token = new ethers.Contract(LUSDT_ADDRESS, ERC20_ABI, readProvider);
+    const factory = new ethers.Contract(FACTORY_ADDRESS, FACTORY_ABI, readProvider);
     const [balance, allowance, tokens] = await Promise.all([
       token.balanceOf(address),
       token.allowance(address, FACTORY_ADDRESS),
-      factoryRead.getCreatorTokens(address)
+      factory.getCreatorTokens(address)
     ]);
     setText("[data-factory-lusdt-balance]", formatFee(balance, PAYMENT.LUSDT));
     setText("[data-factory-lusdt-allowance]", formatFee(allowance, PAYMENT.LUSDT));
@@ -413,11 +434,12 @@ async function refreshWalletData() {
 
 async function refreshFactory() {
   try {
+    const factory = await factoryForRead();
     const [paused, lusdtEnabled, lstEnabled, total] = await Promise.all([
-      factoryRead.paused(),
-      factoryRead.lusdtPaymentsEnabled(),
-      factoryRead.lstPaymentsEnabled(),
-      factoryRead.totalTokens()
+      factory.paused(),
+      factory.lusdtPaymentsEnabled(),
+      factory.lstPaymentsEnabled(),
+      factory.totalTokens()
     ]);
 
     setText("[data-factory-address-short]", shortAddress(FACTORY_ADDRESS));
@@ -440,7 +462,8 @@ async function approveLUSDT() {
     await ensureLustChain();
     const s = await signer();
     const plan = selectedPlan();
-    const fee = BigInt(await factoryRead.getLUSDTFeeForPlan(plan));
+    const factory = new ethers.Contract(FACTORY_ADDRESS, FACTORY_ABI, s);
+    const fee = BigInt(await factory.getLUSDTFeeForPlan(plan));
     if (fee <= 0n) {
       log("No LUSDT approval is needed for this plan.", "ok");
       return;
@@ -509,7 +532,7 @@ async function createToken(event) {
     const factory = new ethers.Contract(FACTORY_ADDRESS, FACTORY_ABI, s);
 
     if (payment === PAYMENT.LUSDT) {
-      const fee = BigInt(await factoryRead.getLUSDTFeeForPlan(plan));
+      const fee = BigInt(await factory.getLUSDTFeeForPlan(plan));
       const owner = await s.getAddress();
       const token = new ethers.Contract(LUSDT_ADDRESS, ERC20_ABI, s);
       const currentAllowance = BigInt(await token.allowance(owner, FACTORY_ADDRESS));
@@ -521,7 +544,7 @@ async function createToken(event) {
       }
     }
 
-    const value = payment === PAYMENT.LST ? BigInt(await factoryRead.getLSTFeeForPlan(plan)) : 0n;
+    const value = payment === PAYMENT.LST ? BigInt(await factory.getLSTFeeForPlan(plan)) : 0n;
     const metadataURI = await uploadMetadataForExplorer({ plan, name, symbol, creator });
 
     if (plan === PLAN.BASIC) log("Opening token creation confirmation in wallet...");
