@@ -405,6 +405,7 @@ async function refreshWalletData() {
   const address = await walletAddress();
   if (!address) {
     setText("[data-factory-wallet]", "Not connected");
+    setText("[data-factory-lst-balance]", "Connect wallet");
     setText("[data-factory-lusdt-balance]", "Connect wallet");
     setText("[data-factory-lusdt-allowance]", "Connect wallet");
     renderMyTokens([]);
@@ -417,16 +418,19 @@ async function refreshWalletData() {
     const readProvider = await readProviderPreferWallet();
     const token = new ethers.Contract(LUSDT_ADDRESS, ERC20_ABI, readProvider);
     const factory = new ethers.Contract(FACTORY_ADDRESS, FACTORY_ABI, readProvider);
-    const [balance, allowance, tokens] = await Promise.all([
+    const [lstBalance, balance, allowance, tokens] = await Promise.all([
+      readProvider.getBalance(address),
       token.balanceOf(address),
       token.allowance(address, FACTORY_ADDRESS),
       factory.getCreatorTokens(address)
     ]);
+    setText("[data-factory-lst-balance]", formatFee(lstBalance, PAYMENT.LST));
     setText("[data-factory-lusdt-balance]", formatFee(balance, PAYMENT.LUSDT));
     setText("[data-factory-lusdt-allowance]", formatFee(allowance, PAYMENT.LUSDT));
     await renderMyTokens(tokens);
   } catch (err) {
     console.warn(err);
+    setText("[data-factory-lst-balance]", "Unavailable");
     setText("[data-factory-lusdt-balance]", "Unavailable");
     setText("[data-factory-lusdt-allowance]", "Unavailable");
   }
