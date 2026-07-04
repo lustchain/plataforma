@@ -1887,6 +1887,7 @@ async function loadReleasesForAccount(account) {
 
 async function prepareActiveRelease(release, tone = "ok") {
   if (!release) return false;
+  clearBridgeUiBusy("release");
   if (await isReleaseUsedOnChain(release)) {
     setText("[data-bridge-release-state]", "Already released");
     clearBridgePending("release");
@@ -2002,7 +2003,9 @@ async function autoFindClaimSoon() {
 }
 
 async function autoFindReleaseSoon(options = {}) {
-  const attempts = [0, 1200, 2500, 4000, 6500, 9000, 12000, 16000, 22000, 30000, 45000, 60000, 90000, 120000];
+  // V52: more responsive sell-side polling. Backend/API is fast; the delay users felt was mostly
+  // the UI waiting too long to re-check after the LUST burn confirmation.
+  const attempts = [0, 750, 1500, 2500, 4000, 6000, 8000, 11000, 14000, 18000, 23000, 30000, 40000, 55000, 75000, 100000, 130000];
   const visible = options.visible === true;
   for (const ms of attempts) {
     setTimeout(() => findRelease({ silent: !visible, autoRetry: true }).catch(() => {}), ms);
@@ -2140,6 +2143,11 @@ async function burnForRelease() {
       logFn: bridgeReleaseLog,
       chainKey: "lust"
     });
+
+    // V52: the main Sell button uses sessionStorage busy-lock while the burn tx is pending.
+    // Clear it immediately after the burn confirms, otherwise the visible main button can stay
+    // stuck on "Burning LUSDT..." for up to the old 4-minute safety timeout even after release is ready.
+    clearBridgeUiBusy("release");
 
     setBridgeButtonState("[data-bridge-burn]", "default", "Burn LUSDT");
     setBridgeButtonState("[data-bridge-release]", "loading", "Preparing release");
