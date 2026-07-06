@@ -1,0 +1,22 @@
+LUST Mining FINAL9 community-simple update - 2026-07-06
+
+Changed only mining page package information and miner hashes.
+Do not replace Bridge or other pages if deploying manually.
+
+Files to upload for minimal safe deploy:
+- mining.html
+- miner-package-hashes.txt
+
+Windows FINAL9 hash updated to:
+1c3461a69baf35cf7550e5d4466d164a95c8522630e27127c3badad1cb224da7
+
+Ubuntu FINAL9 hash unchanged:
+8145bb57d1bce096265010f87e92e80df3f4e17b4e4a33e6210b108a6a624e04
+
+Windows package now includes double-click community files:
+0-LIMPAR-INSTALACAO-ANTIGA-LUST.bat
+1-INICIAR-MINERACAO-LUST.bat
+2-VER-STATUS-LUST.bat
+3-PARAR-MINERACAO-LUST.bat
+4-RESETAR-SOMENTE-STATUS-LUST.bat
+5-WINDOWS-NAO-DORMIR.bat

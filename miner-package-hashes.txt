@@ -2,7 +2,7 @@ LUST FINAL9 public mining downloads
 
 Windows full miner ZIP:
 https://snapshot.lustchain.org/downloads/lust-final9-miner-windows-amd64.zip
-SHA256: dce1dc8bbc6ce1d1f96753b5e27cb241620672bd6784727876fa0b95efde8598
+SHA256: 1c3461a69baf35cf7550e5d4466d164a95c8522630e27127c3badad1cb224da7
 
 Ubuntu full miner TAR.GZ:
 https://snapshot.lustchain.org/downloads/lust-final9-miner-ubuntu-amd64.tar.gz
@@ -21,5 +21,11 @@ FINAL9 rules:
 - The maturity period helps protect the network against instant wallet rotation and spam registrations.
 
 Package status:
-- Windows package includes full live status.
+- Windows package includes community-simple double-click files:
+  0-LIMPAR-INSTALACAO-ANTIGA-LUST.bat
+  1-INICIAR-MINERACAO-LUST.bat
+  2-VER-STATUS-LUST.bat
+  3-PARAR-MINERACAO-LUST.bat
+  4-RESETAR-SOMENTE-STATUS-LUST.bat
+  5-WINDOWS-NAO-DORMIR.bat
 - Ubuntu package includes START, STATUS, LIVE STATUS, STOP and RESET scripts.

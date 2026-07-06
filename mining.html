@@ -194,11 +194,12 @@
           <span class="lmin-btn primary locked" role="button" aria-disabled="true">Windows ZIP locked</span>
           <span class="lmin-btn locked" role="button" aria-disabled="true">SHA256 locked</span>
         </div>
-        <div class="lmin-mono">SHA256 ZIP: dce1dc8bbc6ce1d1f96753b5e27cb241620672bd6784727876fa0b95efde8598</div>
+        <div class="lmin-mono">SHA256 ZIP: 1c3461a69baf35cf7550e5d4466d164a95c8522630e27127c3badad1cb224da7</div>
         <ul>
-          <li><strong>START</strong> asks for your public 0x reward wallet and starts sync/mining.</li>
-          <li><strong>STATUS</strong> opens the full live dashboard with wallet, operator, gap, peers, blocks mined and balance.</li>
-          <li><strong>STOP</strong> stops the miner only when you want to stop mining.</li>
+          <li><strong>1-INICIAR-MINERACAO-LUST.bat</strong> starts the miner by double click.</li>
+          <li><strong>2-VER-STATUS-LUST.bat</strong> opens the live dashboard without PowerShell commands.</li>
+          <li><strong>3-PARAR-MINERACAO-LUST.bat</strong> stops the miner only when you want to stop mining.</li>
+          <li><strong>0-LIMPAR-INSTALACAO-ANTIGA-LUST.bat</strong> can clean an old local install if the user changes PC/wallet or the local node gets stuck.</li>
         </ul>
       </div>
 
@@ -308,7 +309,7 @@
       </div>
     </div>
     <div class="lmin-alert warn" style="margin-top:16px">
-      <strong>Release flow after Presale:</strong> download miner → start miner → copy Operator Address → Register → Active → wait about 64 blocks → wallet enters the public mining rotation. Until release, downloads stay locked.
+      <strong>Release flow after Presale:</strong> download miner → extract ZIP → double click <strong>1-INICIAR-MINERACAO-LUST.bat</strong> → copy Operator Address → Register → Active → wait about 64 blocks → wallet enters the public mining rotation. Until release, downloads stay locked.
     </div>
   </section>
 
@@ -321,12 +322,12 @@
       <p>The miner must stay open. If Gap is 0, peers are connected and sync is false, the local node is synchronized. If the wallet is still inside the 64-block maturity period, it is ready but not yet competing.</p>
     </div>
     <div class="lmin-grid">
-      <div class="lmin-card"><h3>Windows live status</h3><p>Run <strong>STATUS-LUST-MINER-WINDOWS.bat</strong> or <strong>LIVE-STATUS-LUST-MINER-WINDOWS.bat</strong>. It shows wallet, operator, local/public block, gap, peers, latest miner, txpool, blocks mined, balance and estimated producer rewards.</p></div>
+      <div class="lmin-card"><h3>Windows live status</h3><p>For normal users, double click <strong>2-VER-STATUS-LUST.bat</strong>. Advanced users can also run <strong>STATUS-LUST-MINER-WINDOWS.bat</strong> or <strong>LIVE-STATUS-LUST-MINER-WINDOWS.bat</strong>. It shows wallet, operator, local/public block, gap, peers, latest miner, txpool, blocks mined, balance and estimated producer rewards.</p></div>
       <div class="lmin-card"><h3>Ubuntu status</h3><p>Run <strong>STATUS-LUST-MINER-UBUNTU.sh</strong> or <strong>LIVE-STATUS-LUST-MINER-UBUNTU.sh</strong> from the Ubuntu package folder. The package also includes <strong>RESET-STATUS-COUNTERS-FINAL9.sh</strong>.</p></div>
       <div class="lmin-card"><h3>Explorer proof</h3><p>When your wallet produces a block, the explorer block history shows your reward wallet address as the miner and your balance updates on-chain.</p></div>
     </div>
     <div class="lmin-alert ok" style="margin-top:16px">
-      <strong>Complete Windows dashboard included:</strong> Account, Sync, Network, Your Mining Session, Rewards / Balance and automatic refresh every 10 seconds. To reset only local status counters, run <strong>RESET-STATUS-COUNTERS-FINAL9.bat</strong>.
+      <strong>Complete Windows community package included:</strong> double-click Start, Status, Stop, cleanup for old local installs, status reset and no-sleep helper. The dashboard shows Account, Sync, Network, Your Mining Session, Rewards / Balance and automatic refresh every 10 seconds.
     </div>
   </section>
 
