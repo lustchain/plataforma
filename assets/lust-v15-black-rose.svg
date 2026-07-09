@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-label="LUST Black Rose Circuit">
+  <defs>
+    <radialGradient id="g" cx="50%" cy="48%" r="62%">
+      <stop offset="0" stop-color="#ff6ab7" stop-opacity="0.95"/>
+      <stop offset="0.34" stop-color="#f70375" stop-opacity="0.75"/>
+      <stop offset="0.72" stop-color="#8f35ff" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#050007" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="p" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff8fcc"/>
+      <stop offset="0.48" stop-color="#f70375"/>
+      <stop offset="1" stop-color="#8f35ff"/>
+    </linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="12"/></filter>
+  </defs>
+  <circle cx="300" cy="300" r="250" fill="url(#g)" opacity=".55"/>
+  <g fill="none" stroke="url(#p)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity=".96">
+    <path d="M301 101c45 60 52 117 22 175 62-32 113-13 153 45-73 8-126 32-158 73 12-72-11-121-78-147 69-7 92-60 61-146Z"/>
+    <path d="M221 142c16 79-5 128-62 146 63 18 94 60 92 126-65-32-117-35-156-8 36-58 35-111-4-158 63 25 108-10 130-106Z" opacity=".86"/>
+    <path d="M378 160c-41 74-34 127 22 159-66 4-105 39-116 105-38-63-83-91-137-84 56-39 79-87 67-144 52 46 107 34 164-36Z" opacity=".68"/>
+    <path d="M298 256c48 31 58 72 30 122-35-46-77-60-127-41 32-42 32-83-2-122 45 22 78 35 99 41Z" opacity=".92"/>
+  </g>
+  <g stroke="#f70375" stroke-width="3" fill="none" opacity=".45">
+    <path d="M86 309H32M514 309h54M300 86V34M300 514v54"/>
+    <path d="M112 204 72 164M488 204l40-40M112 396l-40 40M488 396l40 40"/>
+    <circle cx="32" cy="309" r="7" fill="#f70375"/><circle cx="568" cy="309" r="7" fill="#f70375"/>
+    <circle cx="300" cy="34" r="7" fill="#f70375"/><circle cx="300" cy="568" r="7" fill="#f70375"/>
+  </g>
+</svg>
