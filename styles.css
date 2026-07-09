@@ -3834,3 +3834,339 @@ button[data-bridge-deposit].is-waiting,button[data-bridge-burn].is-waiting,butto
 
 
 /* LUST_BRIDGE_V46_FAST_PROGRESS: stable one-click bridge CTA, no blinking; progress shown in status text. */
+
+/* ======================================================================
+   LUST VISUAL SAFE UPGRADE — 2026-07-09
+   CSS-only layer. No HTML, JS, RPC, wallet, presale, bridge, mining,
+   staking, NFT or contract logic was changed.
+   ====================================================================== */
+:root{
+  --lust-bg-0:#030004;
+  --lust-bg-1:#08000b;
+  --lust-bg-2:#130013;
+  --lust-panel:rgba(18,0,18,.78);
+  --lust-panel-2:rgba(255,255,255,.045);
+  --lust-line:rgba(255,255,255,.15);
+  --lust-line-hot:rgba(247,3,117,.52);
+  --lust-glow:rgba(247,3,117,.24);
+  --lust-cyan:#4effe4;
+  --lust-gold:#ffd66b;
+}
+html{
+  background:var(--lust-bg-0);
+}
+body{
+  background:
+    radial-gradient(circle at 18% -8%, rgba(247,3,117,.30), transparent 34%),
+    radial-gradient(circle at 94% 8%, rgba(143,53,255,.22), transparent 32%),
+    radial-gradient(circle at 50% 105%, rgba(247,3,117,.14), transparent 42%),
+    linear-gradient(180deg, #050006 0%, #08000b 42%, #030004 100%) !important;
+  background-attachment:fixed;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
+  background-size:64px 64px;
+  mask-image:linear-gradient(180deg, rgba(0,0,0,.58), transparent 82%);
+}
+::selection{background:rgba(247,3,117,.55);color:#fff}
+
+/* Header: more premium, less flat */
+.promo-bar{
+  border-bottom:1px solid rgba(247,3,117,.34) !important;
+  background:
+    linear-gradient(90deg, rgba(247,3,117,.18), rgba(143,53,255,.16), rgba(247,3,117,.10)) !important;
+  color:#ffe9f4 !important;
+  letter-spacing:.16em !important;
+}
+.topbar{
+  border-bottom:1px solid rgba(247,3,117,.42) !important;
+  background:rgba(5,0,8,.82) !important;
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  box-shadow:0 14px 50px rgba(0,0,0,.34), inset 0 -1px 0 rgba(255,255,255,.05) !important;
+}
+.logo img{
+  filter:drop-shadow(0 0 18px rgba(247,3,117,.28));
+}
+.nav a,
+.nav-nft-menu > summary{
+  border-radius:999px;
+  padding:9px 11px 10px !important;
+}
+.nav a:hover,
+.nav a.active,
+.nav-nft-menu[open] > summary,
+.nav-nft-menu > summary.active{
+  background:rgba(247,3,117,.10);
+}
+.nav a.active::after,
+.nav-nft-menu > summary.active::after{
+  bottom:-2px !important;
+  height:2px !important;
+  width:34px !important;
+  background:linear-gradient(90deg, transparent, #ff4ba8, transparent) !important;
+}
+
+/* Buttons: stronger launch feeling without changing button behavior */
+.btn,
+.tab,
+.bridge-tab,
+.network-toggle-btn,
+.network-select-pill,
+.docs-btn,
+.lust-doc-btn,
+.lmin-btn{
+  transition:transform .16s ease, border-color .16s ease, box-shadow .16s ease, background .16s ease, color .16s ease;
+}
+.btn:not(:disabled):not([disabled]):hover,
+.tab:not(:disabled):hover,
+.bridge-tab:not(:disabled):hover,
+.docs-btn:hover,
+.lust-doc-btn:hover,
+.lmin-btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 16px 38px rgba(0,0,0,.32), 0 0 0 1px rgba(255,255,255,.04);
+}
+.btn.primary,
+.tab.active,
+.bridge-tab.active,
+.presale-main-btn,
+.dex-main-btn{
+  background:linear-gradient(135deg,#ff0a78 0%,#f70375 44%,#a733ff 100%) !important;
+  border-color:rgba(255,111,190,.70) !important;
+  box-shadow:0 18px 48px rgba(247,3,117,.28), inset 0 1px 0 rgba(255,255,255,.20) !important;
+}
+.btn.primary:not(:disabled):not([disabled]):hover{
+  box-shadow:0 22px 56px rgba(247,3,117,.36), inset 0 1px 0 rgba(255,255,255,.22) !important;
+}
+.connect-btn{
+  background:linear-gradient(180deg, rgba(16,0,20,.96), rgba(5,0,8,.96)) !important;
+  border-color:rgba(247,3,117,.64) !important;
+  box-shadow:0 16px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(255,255,255,.045) !important;
+}
+.connect-btn:hover{
+  box-shadow:0 18px 46px rgba(247,3,117,.16), 0 0 0 1px rgba(255,255,255,.06) !important;
+}
+
+/* Inputs: cleaner DeFi surfaces */
+.input,
+.token-select,
+.operator-field input,
+.staking-input,
+.presale-input-box,
+.bridge-amount-box,
+.token-box,
+.dex-amount{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05), 0 10px 34px rgba(0,0,0,.18);
+}
+.input:focus,
+.operator-field input:focus,
+.staking-input:focus,
+.presale-amount:focus{
+  border-color:rgba(247,3,117,.72) !important;
+  box-shadow:0 0 0 4px rgba(247,3,117,.12), inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+
+/* Global card polish: visual only */
+.card,.box,.form,
+.docs-card,.lust-doc-card,.lust-doc-section,.lust-wp-section,
+.bridge-hero-copy,.bridge-status-card,.bridge-shell,.bridge-pro-card,.bridge-pro-side .bridge-side-card,.bridge-side-details,.bridge-asset-card,.bridge-amount-box,.bridge-pro-status,.bridge-quote-grid .result,.bridge-reserve-mini,.claim-item,.claim-summary,.bridge-inline-warning,
+.staking-hero-copy,.staking-status-card,.staking-metric-card,.staking-plan-card,.staking-position-card,.staking-shell,
+.p2p-hero-copy,.p2p-market-card,.p2p-order-card,.p2p-help-card,
+.dex-card,.pool-panel,.import-card,.info-card,
+.presale-hero-copy,.presale-countdown-card,.presale-card,.presale-metric,.presale-contract-strip a,
+.lmin-card,.rabbit-panel,.rabbit-benefit,.rabbit-fund-card,.rabbit-tier-card,.pioneer-card,
+.home-hero-copy,.home-status-card,.home-step-card,.home-app-card,.home-panel,.home-contract-strip{
+  border-color:rgba(255,255,255,.13) !important;
+  background:
+    radial-gradient(circle at 14% 0%, rgba(247,3,117,.16), transparent 34%),
+    radial-gradient(circle at 100% 0%, rgba(143,53,255,.10), transparent 36%),
+    linear-gradient(180deg, rgba(22,0,22,.86), rgba(5,0,8,.90)) !important;
+  box-shadow:0 24px 70px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.055) !important;
+}
+.card:hover,.box:hover,.docs-card:hover,.lust-doc-card:hover,
+.home-step-card:hover,.home-app-card:hover,.home-panel:hover,
+.presale-card:hover,.presale-metric:hover,.dex-card:hover,.staking-plan-card:hover,.p2p-order-card:hover,.lmin-card:hover,.rabbit-panel:hover,.pioneer-card:hover{
+  border-color:rgba(247,3,117,.45) !important;
+  box-shadow:0 30px 78px rgba(0,0,0,.38), 0 0 36px rgba(247,3,117,.10), inset 0 1px 0 rgba(255,255,255,.07) !important;
+}
+
+/* Home: more impact for first impression */
+.home-page{
+  width:min(1500px,100%);
+}
+.home-hero{
+  gap:22px;
+}
+.home-hero-copy{
+  border-radius:38px !important;
+  min-height:520px;
+}
+.home-hero-copy::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(115deg, rgba(255,255,255,.09), transparent 18%, transparent 72%, rgba(247,3,117,.08)),
+    radial-gradient(circle at 78% 22%, rgba(78,255,228,.10), transparent 22%);
+}
+.home-kicker::before,
+.presale-kicker::before,
+.kicker::before,
+.lmin-kicker::before,
+.lust-doc-kicker::before{
+  content:"●";
+  color:var(--lust-cyan);
+  margin-right:8px;
+  text-shadow:0 0 14px rgba(78,255,228,.72);
+}
+.home-title-stack h1{
+  text-shadow:0 20px 70px rgba(247,3,117,.18);
+}
+.home-lead{
+  max-width:820px !important;
+}
+.home-feature-pills span,
+.home-mini-badge,
+.bridge-badges span,
+.wp-pill,.docs-chip,.lust-doc-pill,.lmin-chip,.presale-card-head span{
+  background:linear-gradient(180deg, rgba(247,3,117,.13), rgba(255,255,255,.035)) !important;
+  border-color:rgba(247,3,117,.36) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+}
+.home-alert,
+.notice,.warn,.bridge-inline-warning,.presale-warning,.lmin-alert{
+  border-color:rgba(255,214,107,.35) !important;
+  background:linear-gradient(180deg, rgba(255,214,107,.085), rgba(255,255,255,.025)) !important;
+  color:#ffecc4 !important;
+}
+.home-status-card{
+  border-radius:38px !important;
+}
+.home-status-grid div,
+.home-token-grid div,
+.home-card-flow div,
+.presale-countdown div,
+.presale-quote-grid div,
+.presale-terms-list div,
+.bridge-live-strip div,
+.bridge-route-card,
+.bridge-metric-card,
+.staking-mini-grid div,
+.staking-preview-grid div,
+.token-box,.dex-amount,.result{
+  border-color:rgba(255,255,255,.12) !important;
+  background:linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.025)) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.055);
+}
+.home-app-card.hot,
+.home-step-card.featured{
+  border-color:rgba(247,3,117,.72) !important;
+  box-shadow:0 30px 88px rgba(247,3,117,.17), inset 0 1px 0 rgba(255,255,255,.08) !important;
+}
+.home-app-card.locked{
+  opacity:.84;
+}
+.home-app-card.locked::after{
+  content:"LOCKED";
+  align-self:flex-start;
+  margin-top:10px;
+  padding:6px 9px;
+  border-radius:999px;
+  border:1px solid rgba(255,214,107,.30);
+  color:#ffe09a;
+  background:rgba(255,214,107,.07);
+  font-size:10px;
+  font-weight:1000;
+  letter-spacing:.14em;
+}
+
+/* Page heroes: better launch/readability */
+.hero h1,
+.bridge-hero-copy h1,
+.staking-hero-copy h1,
+.p2p-hero-copy h1,
+.presale-hero h1,
+.home-title-stack h1,
+.lust-doc-title,
+.wp-title{
+  text-wrap:balance;
+}
+h1,h2,.home-title-stack h1,.presale-hero h1{
+  color:#fff;
+}
+p,.card p,.box p,.docs-card p,.lust-doc-card p,.home-app-card span,.home-section-head p{
+  color:rgba(255,240,250,.78);
+}
+strong,.status,.green,.ok{
+  text-shadow:0 0 18px rgba(78,255,190,.10);
+}
+
+/* Mining page: make it feel like a serious launch product, not a plain download page */
+.lmin-live,
+.lmin-head,
+.lmin-section{
+  position:relative;
+}
+.lmin-head::after{
+  content:"";
+  position:absolute;
+  right:18px;
+  top:18px;
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(247,3,117,.16), transparent 68%);
+  pointer-events:none;
+}
+.lmin-card strong,
+.presale-metric strong,
+.staking-metric-card strong,
+.bridge-metric-card strong{
+  letter-spacing:-.045em;
+}
+
+/* Footer: keep professional, but less heavy */
+.footer.lust-footer{
+  border-top:1px solid rgba(247,3,117,.48) !important;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(247,3,117,.18), transparent 36%),
+    radial-gradient(circle at 88% 12%, rgba(143,53,255,.14), transparent 36%),
+    linear-gradient(180deg, #09000c 0%, #040005 100%) !important;
+}
+.lust-footer__social:hover,
+.back-to-top:hover{
+  transform:translateY(-1px);
+  box-shadow:0 18px 44px rgba(247,3,117,.18) !important;
+}
+
+@media(max-width:980px){
+  .topbar{
+    border-radius:0 0 22px 22px;
+  }
+  .nav a,
+  .nav-nft-menu > summary{
+    padding:8px 10px !important;
+  }
+  .home-hero-copy{
+    min-height:0;
+  }
+}
+@media(max-width:560px){
+  body{background-attachment:scroll !important;}
+  .home-hero-copy,.home-status-card,.presale-hero-copy,.presale-countdown-card,.bridge-hero-copy,.bridge-status-card{
+    border-radius:24px !important;
+  }
+  .home-title-stack h1,
+  .presale-hero h1{
+    letter-spacing:-.055em;
+  }
+}
