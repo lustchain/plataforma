@@ -1,0 +1,459 @@
+/*
+  LUST VISUAL V4 PREMIUM — RESEARCH-BASED SAFE VISUAL LAYER
+  Date: 2026-07-09
+  Scope: CSS-only visual upgrade loaded after styles.css.
+  No JS, wallet, RPC, contract, bridge, presale, mining or staking logic changed.
+*/
+
+:root{
+  --lust-v4-black:#030006;
+  --lust-v4-black2:#07000b;
+  --lust-v4-panel:rgba(14,4,20,.72);
+  --lust-v4-panel2:rgba(22,6,30,.68);
+  --lust-v4-pink:#F70375;
+  --lust-v4-pink2:#ff57b0;
+  --lust-v4-violet:#8F35FF;
+  --lust-v4-cyan:#43ffe0;
+  --lust-v4-gold:#ffd166;
+  --lust-v4-green:#4effbe;
+  --lust-v4-text:#fff8fc;
+  --lust-v4-muted:#d7bfd1;
+  --lust-v4-soft:#a993b0;
+  --lust-v4-line:rgba(255,255,255,.13);
+  --lust-v4-line-strong:rgba(255,255,255,.22);
+  --lust-v4-pink-line:rgba(247,3,117,.42);
+  --lust-v4-shadow:0 30px 110px rgba(0,0,0,.58);
+  --lust-v4-glow:0 0 70px rgba(247,3,117,.25);
+  --lust-v4-radius:28px;
+  --lust-v4-radius-lg:42px;
+}
+
+*{scrollbar-color:rgba(247,3,117,.70) rgba(255,255,255,.05)}
+html{background:var(--lust-v4-black)!important;}
+body{
+  color:var(--lust-v4-text)!important;
+  background:
+    radial-gradient(circle at 12% -8%, rgba(247,3,117,.34), transparent 34%),
+    radial-gradient(circle at 88% 2%, rgba(143,53,255,.30), transparent 35%),
+    radial-gradient(circle at 48% 105%, rgba(247,3,117,.18), transparent 42%),
+    linear-gradient(180deg,#07000d 0%,#030006 42%,#08000b 100%)!important;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px),
+    radial-gradient(circle at 50% 16%,rgba(255,255,255,.10),transparent 1px);
+  background-size:58px 58px,58px 58px,4px 4px;
+  mask-image:radial-gradient(circle at 50% 20%,#000 0%,rgba(0,0,0,.74) 50%,transparent 88%);
+}
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    linear-gradient(120deg,transparent 0 30%,rgba(247,3,117,.055) 42%,transparent 58% 100%),
+    radial-gradient(ellipse at top,rgba(255,255,255,.055),transparent 62%);
+  mix-blend-mode:screen;
+}
+
+::selection{background:rgba(247,3,117,.45);color:#fff;}
+
+.promo-bar{
+  min-height:38px!important;
+  padding:9px 18px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:
+    linear-gradient(90deg,rgba(247,3,117,.98),rgba(143,53,255,.82),rgba(247,3,117,.98))!important;
+  color:#fff!important;
+  font-size:12px!important;
+  font-weight:950!important;
+  letter-spacing:.16em!important;
+  text-transform:uppercase!important;
+  border:0!important;
+  box-shadow:0 0 44px rgba(247,3,117,.35)!important;
+}
+
+.topbar{
+  background:rgba(4,0,8,.74)!important;
+  border-bottom:1px solid rgba(255,255,255,.10)!important;
+  box-shadow:0 18px 70px rgba(0,0,0,.55),0 0 38px rgba(247,3,117,.12)!important;
+  backdrop-filter:blur(20px) saturate(150%)!important;
+  -webkit-backdrop-filter:blur(20px) saturate(150%)!important;
+}
+.logo img,.lust-footer__logo img,.home-card-watermark img{
+  filter:drop-shadow(0 0 16px rgba(247,3,117,.58)) drop-shadow(0 0 38px rgba(143,53,255,.28))!important;
+}
+.brand strong{letter-spacing:.20em!important;font-size:15px!important;color:#fff!important;}
+.brand span{color:#eccbdd!important;}
+.nav{gap:8px!important;}
+.nav a,.nav-nft-menu summary{
+  padding:9px 12px!important;
+  border-radius:999px!important;
+  color:#e7c9db!important;
+  font-size:13px!important;
+  line-height:1!important;
+}
+.nav a:hover,.nav a.active,.nav-nft-menu:hover summary{
+  color:#fff!important;
+  background:rgba(255,255,255,.07)!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),0 0 24px rgba(247,3,117,.18)!important;
+}
+.nav a.active::after{display:none!important;}
+.nav-nft-dropdown{
+  background:rgba(8,0,12,.94)!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  box-shadow:0 24px 70px rgba(0,0,0,.55),0 0 42px rgba(247,3,117,.18)!important;
+  backdrop-filter:blur(18px)!important;
+}
+
+.connect-btn{
+  border:1px solid rgba(255,255,255,.18)!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.045))!important;
+  border-radius:999px!important;
+  min-width:230px!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 0 32px rgba(247,3,117,.18)!important;
+}
+.connect-icon{
+  border-radius:999px!important;
+  background:radial-gradient(circle at 35% 20%,rgba(255,255,255,.18),rgba(247,3,117,.16))!important;
+  border-color:rgba(255,129,203,.55)!important;
+}
+
+h1,h2,h3{color:#fff!important;text-wrap:balance;}
+p{color:var(--lust-v4-muted)!important;}
+.kicker,.home-kicker,.presale-kicker,.bridge-pro-kicker,.lmin-kicker,.docs-kicker,.wp-pill,.lust-doc-pill,
+.home-section-head small,.home-panel small,.home-status-grid small,.home-step-card span,.home-app-card small,.home-contract-strip small,
+.presale-metric small,.presale-card-head span,.bridge-pro-card-head small,.bridge-pro-steps small,.bridge-asset-card small,.bridge-amount-head small,.bridge-pro-side small{
+  color:var(--lust-v4-pink2)!important;
+  letter-spacing:.17em!important;
+  font-weight:950!important;
+}
+
+.home-hero-copy h1,.presale-hero h1,.bridge-pro-intro h1,.staking-hero-copy h1,.dex-hero h1,.lmin-head h1,.hero h1,.home-section-head h2,.home-panel h2{
+  background:linear-gradient(180deg,#fff 0%,#ffe6f2 42%,#ff74bd 78%,#c986ff 100%)!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  color:transparent!important;
+  text-shadow:none!important;
+}
+.home-title-stack h1 span{color:transparent!important;}
+
+.btn,.lmin-btn,.docs-btn,.lust-doc-btn,.bridge-tab,
+button[data-presale-refresh],button[data-presale-max],button[data-bridge-reload-claims],button[data-bridge-use-max]{
+  border-radius:999px!important;
+  border:1px solid rgba(255,255,255,.18)!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.04))!important;
+  color:#fff!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 12px 36px rgba(0,0,0,.26)!important;
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,background .18s ease!important;
+}
+.btn.primary,.btn.is-ready.primary,.lmin-btn.primary,.presale-main-btn,.staking-main-action,.bridge-main-action,.dex-main-btn,
+button[data-bridge-deposit],button[data-bridge-burn],button[data-bridge-mint]:not([disabled]),button[data-bridge-release]:not([disabled]){
+  background:linear-gradient(135deg,#ff2d93 0%,#F70375 44%,#8F35FF 100%)!important;
+  border-color:rgba(255,211,237,.76)!important;
+  box-shadow:0 18px 54px rgba(247,3,117,.34),inset 0 1px 0 rgba(255,255,255,.20)!important;
+  color:#fff!important;
+}
+.btn:not(:disabled):hover,.lmin-btn:not(:disabled):hover,.docs-btn:not(:disabled):hover,.lust-doc-btn:not(:disabled):hover{
+  transform:translateY(-1px)!important;
+  border-color:rgba(255,161,218,.65)!important;
+  box-shadow:0 22px 70px rgba(247,3,117,.26),inset 0 1px 0 rgba(255,255,255,.14)!important;
+}
+button:disabled,.btn:disabled,.locked .btn{
+  opacity:.62!important;
+  filter:saturate(.75)!important;
+}
+
+.card,.box,.form,.notice,.result,
+.home-hero-copy,.home-status-card,.home-step-card,.home-app-card,.home-panel,.home-contract-strip,
+.presale-hero-copy,.presale-countdown-card,.presale-card,.presale-metric,.presale-contract-strip a,.presale-terms-list div,.presale-log,.presale-warning,
+.bridge-pro-card,.bridge-pro-side .bridge-side-card,.bridge-side-details,.bridge-asset-card,.bridge-amount-box,.bridge-pro-status,.bridge-pro-tabs,.bridge-pro-steps div,.bridge-quote-grid .result,.bridge-reserve-mini,.claim-item,.claim-summary,.bridge-inline-warning,.bridge-list-card,
+.staking-hero-copy,.staking-status-card,.staking-shell,.staking-owner-panel,.staking-metric-card,.staking-plan-card,.staking-position-card,
+.lmin-card,.lmin-live,.lmin-alert,.lmin-step,.docs-card,.lust-doc-card,.lust-doc-section,.lust-wp-section,.rabbit-panel,.rabbit-benefit,.rabbit-fund-card,.rabbit-tier-card,.pioneer-card,.pioneer-step,.dex-card,.dex-contract-strip a,.dex-contract-strip div,.p2p-section,.p2p-form,.owner-card,.owner-warning{
+  border-width:1px!important;
+  border-color:var(--lust-v4-line)!important;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.082),rgba(255,255,255,.032)),
+    radial-gradient(circle at 18% 0%,rgba(247,3,117,.16),transparent 42%),
+    rgba(8,0,12,.72)!important;
+  box-shadow:var(--lust-v4-shadow),inset 0 1px 0 rgba(255,255,255,.08)!important;
+  backdrop-filter:blur(14px) saturate(126%)!important;
+  -webkit-backdrop-filter:blur(14px) saturate(126%)!important;
+}
+
+/* HOME: premium hero + bento product grid */
+.home-page{width:min(1540px,100%)!important;padding:24px clamp(14px,2.4vw,34px) 76px!important;}
+.home-hero{grid-template-columns:minmax(0,1.18fr) minmax(360px,.82fr)!important;gap:28px!important;align-items:stretch!important;min-height:0!important;}
+.home-hero-copy{
+  min-height:590px!important;
+  border-radius:var(--lust-v4-radius-lg)!important;
+  padding:clamp(34px,5vw,72px)!important;
+  position:relative!important;
+  overflow:hidden!important;
+  justify-content:center!important;
+  background:
+    radial-gradient(circle at 86% 18%,rgba(247,3,117,.30),transparent 31%),
+    radial-gradient(circle at 8% 10%,rgba(143,53,255,.23),transparent 36%),
+    linear-gradient(135deg,rgba(22,0,30,.92),rgba(5,0,8,.82) 48%,rgba(28,0,24,.92))!important;
+}
+.home-hero-copy::before{
+  content:""!important;
+  position:absolute!important;
+  right:-120px!important;
+  bottom:-150px!important;
+  width:560px!important;
+  height:560px!important;
+  border-radius:50%!important;
+  background:
+    repeating-radial-gradient(circle,rgba(247,3,117,.28) 0 2px,transparent 2px 26px),
+    radial-gradient(circle,rgba(143,53,255,.20),transparent 66%)!important;
+  opacity:.56!important;
+  pointer-events:none!important;
+}
+.home-hero-copy::after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  pointer-events:none!important;
+  background:linear-gradient(115deg,transparent 0 34%,rgba(255,255,255,.06) 49%,transparent 63% 100%)!important;
+  opacity:.80!important;
+}
+.home-title-stack,.home-hero-copy > p,.home-actions,.home-feature-pills,.home-alert{position:relative!important;z-index:1!important;}
+.home-title-stack h1{font-size:clamp(64px,8.9vw,134px)!important;line-height:.78!important;letter-spacing:-.095em!important;margin:0!important;}
+.home-lead{font-size:clamp(17px,1.65vw,23px)!important;line-height:1.58!important;color:#ffe4f1!important;max-width:850px!important;margin-top:22px!important;}
+.home-hero-copy > p:not(.home-lead){font-size:16px!important;line-height:1.78!important;max-width:820px!important;color:#d8c5d1!important;}
+.home-actions{gap:14px!important;margin-top:32px!important;}
+.home-actions .btn{min-height:52px!important;padding-inline:22px!important;}
+.home-feature-pills{gap:10px!important;margin-top:24px!important;}
+.home-feature-pills span,.home-mini-badge{
+  border:1px solid rgba(255,255,255,.16)!important;
+  background:rgba(255,255,255,.075)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08)!important;
+}
+.home-alert{
+  border:1px solid rgba(255,209,102,.34)!important;
+  background:linear-gradient(90deg,rgba(255,209,102,.12),rgba(247,3,117,.075))!important;
+  color:#ffeed1!important;
+}
+.home-status-card{
+  border-radius:var(--lust-v4-radius-lg)!important;
+  padding:28px!important;
+  position:relative!important;
+  overflow:hidden!important;
+}
+.home-status-card::before{
+  content:""!important;
+  position:absolute!important;
+  inset:18px!important;
+  border-radius:36px!important;
+  background:
+    radial-gradient(circle at 50% 36%,rgba(247,3,117,.24),transparent 40%),
+    repeating-radial-gradient(circle at 50% 38%,rgba(255,255,255,.10) 0 1px,transparent 1px 32px)!important;
+  opacity:.45!important;
+  pointer-events:none!important;
+}
+.home-card-top,.home-status-grid,.home-card-flow,.home-card-actions{position:relative!important;z-index:1!important;}
+.home-card-top h2{font-size:clamp(30px,3.2vw,48px)!important;line-height:.92!important;}
+.home-status-grid{gap:12px!important;}
+.home-status-grid div,.home-token-grid div{
+  border:1px solid rgba(255,255,255,.13)!important;
+  background:rgba(255,255,255,.06)!important;
+  border-radius:22px!important;
+}
+.home-status-grid strong,.home-token-grid strong{font-size:22px!important;color:#fff!important;}
+.home-card-flow div{border-radius:22px!important;background:rgba(255,255,255,.055)!important;border-color:rgba(255,255,255,.13)!important;}
+.home-start-grid{gap:18px!important;margin-top:28px!important;}
+.home-step-card{border-radius:34px!important;min-height:236px!important;padding:26px!important;position:relative!important;overflow:hidden!important;}
+.home-step-card.featured,.home-app-card.hot{
+  border-color:rgba(247,3,117,.62)!important;
+  box-shadow:0 32px 100px rgba(247,3,117,.18),inset 0 1px 0 rgba(255,255,255,.10)!important;
+}
+.home-step-card h2{font-size:32px!important;}
+.home-section-head{margin:66px auto 28px!important;}
+.home-section-head h2{font-size:clamp(42px,6vw,82px)!important;line-height:.88!important;}
+.home-app-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:16px!important;}
+.home-app-card{
+  min-height:194px!important;
+  border-radius:30px!important;
+  padding:22px!important;
+  position:relative!important;
+  overflow:hidden!important;
+}
+.home-app-card::after{
+  content:"";
+  position:absolute;
+  inset:auto -30% -58% 28%;
+  height:150px;
+  background:radial-gradient(circle,rgba(247,3,117,.22),transparent 68%);
+  opacity:0;
+  transition:opacity .18s ease;
+}
+.home-app-card:hover::after{opacity:1;}
+.home-app-card:hover{transform:translateY(-4px)!important;border-color:rgba(247,3,117,.55)!important;}
+.home-app-card strong{font-size:24px!important;letter-spacing:-.04em!important;}
+.home-app-card.locked{opacity:.88!important;border-style:solid!important;}
+.home-app-card.locked::before{
+  content:"LOCKED";
+  position:absolute;
+  right:16px;
+  top:16px;
+  border:1px solid rgba(255,209,102,.35);
+  border-radius:999px;
+  padding:5px 8px;
+  color:#ffe0a3;
+  background:rgba(255,209,102,.08);
+  font-size:9px;
+  font-weight:950;
+  letter-spacing:.14em;
+}
+.home-split{gap:20px!important;margin-top:26px!important;}
+.home-panel{border-radius:36px!important;padding:30px!important;}
+.home-contract-strip{border-radius:34px!important;padding:18px!important;gap:12px!important;}
+
+/* PRESALE: make the sale page look like an active Genesis console */
+.presale-page{width:min(1340px,94vw)!important;padding-top:46px!important;}
+.presale-hero{gap:24px!important;align-items:stretch!important;}
+.presale-hero-copy,.presale-countdown-card{border-radius:var(--lust-v4-radius-lg)!important;padding:34px!important;position:relative!important;overflow:hidden!important;}
+.presale-hero-copy h1{font-size:clamp(58px,7.4vw,104px)!important;line-height:.82!important;letter-spacing:-.085em!important;}
+.presale-hero-copy p{font-size:18px!important;line-height:1.65!important;max-width:780px!important;}
+.presale-countdown-card::before{
+  content:"GENESIS";
+  position:absolute;
+  right:-18px;
+  top:22px;
+  color:rgba(255,255,255,.045);
+  font-size:54px;
+  font-weight:1000;
+  letter-spacing:.08em;
+}
+.presale-countdown{gap:10px!important;}
+.presale-countdown div{
+  border:1px solid rgba(255,255,255,.14)!important;
+  border-radius:22px!important;
+  background:rgba(255,255,255,.07)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08)!important;
+}
+.presale-countdown strong{font-size:34px!important;color:#fff!important;}
+.presale-live-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:14px!important;}
+.presale-metric{border-radius:28px!important;min-height:138px!important;display:flex!important;flex-direction:column!important;justify-content:space-between!important;}
+.presale-metric strong{font-size:26px!important;color:#fff!important;}
+.presale-main-grid{gap:22px!important;}
+.presale-card{border-radius:32px!important;padding:26px!important;}
+.presale-card-head h2{font-size:clamp(30px,3vw,44px)!important;line-height:.94!important;}
+.presale-progress-track{height:18px!important;border-radius:999px!important;background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.12)!important;overflow:hidden!important;}
+.presale-progress-fill{background:linear-gradient(90deg,#F70375,#ff57b0,#8F35FF)!important;box-shadow:0 0 28px rgba(247,3,117,.35)!important;}
+.presale-input-row .input,.input,select,textarea{
+  border:1px solid rgba(255,255,255,.16)!important;
+  background:rgba(255,255,255,.065)!important;
+  border-radius:18px!important;
+  color:#fff!important;
+}
+.presale-quote-grid{gap:10px!important;}
+.presale-actions-grid{gap:10px!important;}
+.presale-info-grid{gap:16px!important;}
+.presale-contract-strip{gap:12px!important;}
+
+/* BRIDGE: cleaner, less heavy, more product-like */
+.bridge-pro-page{width:min(1240px,94vw)!important;padding-top:46px!important;}
+.bridge-pro-intro{align-items:center!important;margin-bottom:28px!important;position:relative!important;}
+.bridge-pro-intro h1{font-size:clamp(58px,7vw,96px)!important;line-height:.82!important;letter-spacing:-.08em!important;}
+.bridge-pro-intro p{font-size:18px!important;line-height:1.62!important;}
+.bridge-pro-pills div{border-radius:22px!important;border:1px solid rgba(255,255,255,.13)!important;background:rgba(255,255,255,.065)!important;}
+.bridge-pro-shell{grid-template-columns:minmax(0,1fr) 360px!important;gap:22px!important;}
+.bridge-pro-card,.bridge-side-card,.bridge-side-details{border-radius:34px!important;padding:24px!important;}
+.bridge-pro-card-head{border-radius:28px!important;border-width:1px!important;background:linear-gradient(135deg,rgba(247,3,117,.16),rgba(255,255,255,.05))!important;}
+.bridge-pro-tabs{padding:6px!important;border-radius:999px!important;}
+.bridge-pro-tabs .bridge-tab.active{background:linear-gradient(135deg,#F70375,#8F35FF)!important;box-shadow:0 14px 34px rgba(247,3,117,.26)!important;}
+.bridge-pro-steps{gap:12px!important;}
+.bridge-pro-steps div{border-radius:22px!important;}
+.bridge-pro-steps b{background:rgba(247,3,117,.15)!important;color:#ff8bc5!important;}
+.bridge-pro-steps .active b{background:linear-gradient(135deg,#F70375,#8F35FF)!important;color:#fff!important;}
+.bridge-route-box{grid-template-columns:1fr 62px 1fr!important;gap:14px!important;}
+.bridge-asset-card,.bridge-amount-box,.bridge-pro-status{border-radius:28px!important;}
+.bridge-arrow{border-radius:22px!important;background:linear-gradient(135deg,#F70375,#8F35FF)!important;box-shadow:0 18px 45px rgba(247,3,117,.28)!important;}
+.bridge-action-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;}
+.bridge-action-grid .btn{min-height:54px!important;}
+.bridge-quote-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important;}
+.bridge-quote-grid .result{border-radius:20px!important;}
+
+/* MINING / STAKING / DOCS / NFT pages */
+.lmin-page,.staking-page,.dex-page,.p2p-page{width:min(1280px,94vw)!important;margin-inline:auto!important;}
+.lmin-hero,.staking-hero,.dex-hero,.hero{position:relative!important;}
+.lmin-head,.staking-hero-copy,.staking-status-card,.dex-hero,.hero{
+  border-radius:var(--lust-v4-radius-lg)!important;
+}
+.lmin-head h1,.staking-hero-copy h1,.dex-hero h1,.hero h1{font-size:clamp(52px,7vw,98px)!important;line-height:.84!important;letter-spacing:-.08em!important;}
+.lmin-card,.lmin-live,.lmin-alert,.lmin-step,.staking-shell,.staking-owner-panel,.staking-metric-card,.staking-plan-card,.staking-position-card,.docs-card,.lust-doc-section,.lust-wp-section,.rabbit-panel,.rabbit-benefit,.rabbit-fund-card,.rabbit-tier-card,.pioneer-card,.pioneer-step,.dex-card,.p2p-section,.p2p-form,.owner-card{
+  border-radius:30px!important;
+}
+.lmin-grid,.staking-metrics,.staking-plan-grid,.docs-grid,.rabbit-benefits,.rabbit-tier-grid,.pioneer-grid,.dex-grid{gap:16px!important;}
+.lmin-card:hover,.staking-plan-card:hover,.home-step-card:hover,.pioneer-card:hover,.rabbit-tier-card:hover,.docs-card:hover{
+  transform:translateY(-2px)!important;
+  border-color:rgba(247,3,117,.42)!important;
+}
+.lmin-card,.staking-plan-card,.home-step-card,.pioneer-card,.rabbit-tier-card,.docs-card{transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease!important;}
+
+/* LEGAL/DOC text readability */
+.lust-doc-section p,.lust-wp-section p,.docs-card p,.wp-table td,.wp-table th,li{
+  color:#d9c6d2!important;
+}
+.wp-table,.docs-address,.lust-doc-card,.quote-box{
+  border-color:rgba(255,255,255,.13)!important;
+  background:rgba(255,255,255,.045)!important;
+}
+
+/* Footer */
+.lust-footer--v8,.lust-footer{
+  margin-top:70px!important;
+  background:
+    radial-gradient(circle at 12% 0%,rgba(247,3,117,.20),transparent 34%),
+    linear-gradient(180deg,rgba(8,0,12,.70),rgba(3,0,6,.96))!important;
+  border-top:1px solid rgba(255,255,255,.12)!important;
+}
+.lust-footer__inner{border-radius:34px!important;}
+.lust-footer__social,.lust-footer__quick-actions a,.lust-footer__badges span,.back-to-top{
+  border-radius:999px!important;
+  border-color:rgba(255,255,255,.14)!important;
+  background:rgba(255,255,255,.065)!important;
+}
+.back-to-top{box-shadow:0 18px 48px rgba(247,3,117,.24)!important;}
+
+@media(max-width:1180px){
+  .home-hero,.presale-hero,.bridge-pro-shell{grid-template-columns:1fr!important;}
+  .home-status-card{min-height:360px!important;}
+  .home-app-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+  .presale-live-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+}
+@media(max-width:860px){
+  .topbar{padding:10px 14px!important;}
+  .connect-btn{min-width:0!important;}
+  .home-page{padding-inline:12px!important;}
+  .home-hero-copy{min-height:0!important;padding:28px!important;border-radius:32px!important;}
+  .home-title-stack h1{font-size:clamp(52px,15vw,82px)!important;}
+  .home-start-grid,.home-split,.bridge-route-box,.bridge-action-grid,.bridge-quote-grid{grid-template-columns:1fr!important;}
+  .home-app-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  .home-contract-strip{grid-template-columns:1fr 1fr!important;}
+  .presale-live-grid,.presale-quote-grid,.presale-input-row{grid-template-columns:1fr!important;}
+  .bridge-arrow{width:100%!important;height:48px!important;}
+}
+@media(max-width:560px){
+  .promo-bar{font-size:10px!important;letter-spacing:.08em!important;}
+  .brand span{display:none!important;}
+  .home-actions .btn,.home-card-actions .btn,.presale-hero-actions .btn,.bridge-action-grid .btn{width:100%!important;}
+  .home-app-grid,.home-contract-strip,.home-status-grid,.home-token-grid,.home-card-flow,.presale-countdown{grid-template-columns:1fr!important;}
+  .home-app-card{min-height:154px!important;}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;scroll-behavior:auto!important;}
+}
