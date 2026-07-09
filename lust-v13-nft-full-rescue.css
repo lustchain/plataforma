@@ -1,0 +1,55 @@
+/* LUST V13 NFT FULL RESCUE — restores Rabbit/Pioneer pages and direct menu links */
+html, body { min-height: 100%; }
+body { overflow-x: hidden; }
+.topbar, .nav, header { overflow: visible !important; }
+.nav { align-items: center !important; }
+.nav details.nav-nft-menu { display: none !important; }
+.nav .active, .nav a.active { color: #fff !important; }
+.nav .active::after, .nav a.active::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  bottom: -15px !important;
+  width: 26px !important;
+  height: 3px !important;
+  transform: translateX(-50%) !important;
+  border-radius: 999px !important;
+  background: #f70375 !important;
+  box-shadow: 0 0 16px rgba(247,3,117,.75) !important;
+}
+.nav a { position: relative !important; }
+.rabbit-page, .pioneer-page, main.rabbit-page, main.pioneer-page {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
+  min-height: 60vh !important;
+}
+.rabbit-shell, .rabbit-hero, .pioneer-hero, .pioneer-shell {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.rabbit-page img, .pioneer-page img { max-width: 100%; height: auto; }
+.back-to-top, #backToTop {
+  display: flex !important;
+  position: fixed !important;
+  right: 22px !important;
+  bottom: 22px !important;
+  z-index: 2147483000 !important;
+  width: 52px !important;
+  height: 52px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(247,3,117,.72) !important;
+  background: radial-gradient(circle at 30% 20%, #ff4aa2, #a3004c 58%, #16000c) !important;
+  color: #fff !important;
+  font-weight: 900 !important;
+  box-shadow: 0 0 28px rgba(247,3,117,.42) !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+@media (max-width: 900px) {
+  .nav { overflow-x: auto !important; white-space: nowrap !important; -webkit-overflow-scrolling: touch; }
+  .nav a { flex: 0 0 auto; }
+}
