@@ -1,0 +1,91 @@
+/* LUST NFT RESTORE ORIGINAL V12
+   Restores NFT pages to the original layout from plataforma-main(28).zip.
+   Only fixes menu/dropdown visibility and the back-to-top button.
+   No wallet, contract, mint, bridge, presale, mining or staking logic changed.
+*/
+
+/* Do not let the later global visual patches hide/cut the NFT pages. */
+body .rabbit-page,
+body .pioneer-page,
+body main.rabbit-page,
+body main.pioneer-page{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  overflow:visible !important;
+}
+body .rabbit-shell,
+body .rabbit-hero,
+body .rabbit-panel,
+body .rabbit-card,
+body .pioneer-shell,
+body .pioneer-hero,
+body .pioneer-card,
+body .pioneer-panel,
+body .pioneer-grid,
+body .pioneer-reward-grid{
+  display:revert-layer;
+  visibility:visible !important;
+  opacity:1 !important;
+}
+
+/* Keep the original NFT dropdown working and above the page. */
+.nav{overflow:visible !important;}
+.nav-nft-menu{display:inline-block !important;position:relative !important;z-index:9999 !important;}
+.nav-nft-menu summary{cursor:pointer !important;}
+.nav-nft-dropdown{z-index:10000 !important;}
+.nav-nft-menu[open] .nav-nft-dropdown,
+.nav-nft-menu:hover .nav-nft-dropdown,
+.nav-nft-menu:focus-within .nav-nft-dropdown{
+  opacity:1 !important;
+  visibility:visible !important;
+  pointer-events:auto !important;
+  transform:translateY(0) !important;
+}
+
+/* Back to top visible and safe on NFT pages. */
+.back-to-top,
+#backToTop{
+  display:flex !important;
+  position:fixed !important;
+  right:24px !important;
+  bottom:24px !important;
+  width:56px !important;
+  height:56px !important;
+  min-width:56px !important;
+  min-height:56px !important;
+  border-radius:999px !important;
+  align-items:center !important;
+  justify-content:center !important;
+  border:1px solid rgba(255,255,255,.22) !important;
+  background:linear-gradient(135deg,#ff1b8c,#8f0050) !important;
+  color:#fff !important;
+  box-shadow:0 0 28px rgba(247,3,117,.50),0 18px 55px rgba(0,0,0,.45) !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  pointer-events:auto !important;
+  transform:none !important;
+  z-index:2147483000 !important;
+  font-size:24px !important;
+  font-weight:900 !important;
+  line-height:1 !important;
+  cursor:pointer !important;
+}
+.back-to-top::before,
+#backToTop::before{display:none !important;}
+.back-to-top:hover,
+#backToTop:hover{filter:brightness(1.12);transform:translateY(-2px) !important;}
+
+/* Keep old NFT art/images normal. */
+.rabbit-art-card img,
+.pioneer-preview img,
+.pioneer-card img{
+  max-width:100% !important;
+  height:auto !important;
+  visibility:visible !important;
+  opacity:1 !important;
+}
+
+@media(max-width:760px){
+  .back-to-top,#backToTop{right:14px !important;bottom:14px !important;width:50px !important;height:50px !important;min-width:50px !important;min-height:50px !important;}
+}
