@@ -91,52 +91,14 @@
   .lust-pause-banner p{margin:0;color:rgba(255,239,247,.72);line-height:1.5;font-size:14px}
   .lust-paused-control{opacity:.48!important;filter:saturate(.45)!important;cursor:not-allowed!important;pointer-events:none!important}
   .lust-pause-note{margin-top:12px;padding:12px 14px;border-radius:12px;background:rgba(255,45,141,.08);border:1px solid rgba(255,45,141,.18);color:rgba(255,239,247,.72);font-size:13px;line-height:1.45}
+
+  [data-bridge-primary-deposit], [data-bridge-deposit], [data-bridge-mint], [data-bridge-primary-withdraw], [data-bridge-burn], [data-bridge-release], [data-bsc-recover-btn], [data-bsc-recover-mint]{opacity:.48!important;filter:saturate(.45)!important;cursor:not-allowed!important;pointer-events:none!important}
   @media(max-width:720px){.lust-pause-banner{margin:12px 14px 18px;padding:15px;border-radius:15px}.lust-pause-banner__icon{width:38px;height:38px;flex-basis:38px}.lust-pause-banner strong{font-size:16px}.lust-pause-banner p{font-size:13px}}
 </style>
 
 </head>
 <body>
 
-<script id="lust-bridge-temporary-pause">
-(() => {
-  'use strict';
-  const selectors = [
-    '[data-bridge-deposit]','[data-bridge-mint]',
-    '[data-bridge-burn]','[data-bridge-release]','[data-bridge-primary-deposit]',
-    '[data-bridge-primary-withdraw]','[data-bsc-recover-btn]','[data-bsc-recover-mint]',
-    '[data-bridge-max-deposit]','[data-bridge-max-withdraw]'
-  ];
-  const matchesPaused = (el) => selectors.some(s => el.matches?.(s) || el.closest?.(s));
-  const enforce = () => {
-    document.querySelectorAll(selectors.join(',')).forEach(el => {
-      el.classList.add('lust-paused-control');
-      if ('disabled' in el) el.disabled = true;
-      el.setAttribute('aria-disabled','true');
-      el.setAttribute('title','Bridge temporarily paused');
-    });
-    document.querySelectorAll('[data-bridge-primary-deposit],[data-bridge-deposit],[data-bridge-mint]').forEach(el => el.textContent='Bridge temporarily paused');
-    document.querySelectorAll('[data-bridge-primary-withdraw],[data-bridge-burn],[data-bridge-release]').forEach(el => el.textContent='Bridge temporarily paused');
-    const claim = document.querySelector('[data-bridge-claim-log]');
-    if (claim) claim.textContent='Wallet connection and balance viewing are available. New bridge operations are temporarily paused.';
-    const release = document.querySelector('[data-bridge-release-log]');
-    if (release) release.textContent='Wallet connection and balance viewing are available. New bridge operations are temporarily paused.';
-  };
-  const block = (event) => {
-    const target = event.target instanceof Element ? event.target : null;
-    if (!target || !matchesPaused(target)) return;
-    event.preventDefault();
-    event.stopImmediatePropagation();
-  };
-  document.addEventListener('click', block, true);
-  document.addEventListener('submit', block, true);
-  document.addEventListener('DOMContentLoaded', () => {
-    const main = document.querySelector('main');
-    if (main && !document.querySelector('.lust-pause-banner')) main.insertAdjacentHTML('afterbegin', '<section class="lust-pause-banner" role="status"><div class="lust-pause-banner__icon">⏸</div><div><small>Temporary pause</small><strong>LUSDT Bridge operations are currently unavailable</strong><p>Wallet connection, network selection and balance viewing remain available. New deposits, burns, mints, releases and recovery actions cannot be initiated through the platform while the next stage of the LUST ecosystem is completed.</p></div></section>');
-    enforce();
-    setTimeout(enforce, 500);
-  });
-})();
-</script>
 
 <div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
 <header class="topbar">
@@ -182,6 +144,7 @@
 </header>
 
 <main class="bridge-pro-page" data-lusdt-bridge>
+<section class="lust-pause-banner" role="status"><div class="lust-pause-banner__icon">⏸</div><div><small>Temporary pause</small><strong>LUSDT Bridge operations are currently unavailable</strong><p>Wallet connection, network selection and balance viewing remain available. Deposits, burns, mints, releases and recovery actions are temporarily disabled.</p></div></section>
   <section class="bridge-pro-intro">
     <div class="bridge-pro-intro-copy">
       <small class="bridge-pro-kicker">Bridge</small>
@@ -266,14 +229,14 @@
             <strong data-bridge-primary-title-deposit>Send USDT to LUST</strong>
           </div>
           <p data-bridge-primary-help-deposit>One click starts the bridge. You will see wallet, tx sent, confirmation and claim progress.</p>
-          <button class="btn primary bridge-one-action-btn" type="button" data-bridge-primary-deposit>Deposit USDT</button>
+          <button class="btn primary bridge-one-action-btn" type="button" data-bridge-primary-deposit disabled aria-disabled="true">Bridge temporarily paused</button>
           <div class="bridge-one-action-note" data-bridge-primary-note-deposit>Click once. The progress appears here automatically.</div>
         </div>
 
         <!-- LUST_BRIDGE_SINGLE_BUTTON_V43_NO_FREEZE: internal action buttons kept for app.js only; not visible to users. -->
         <div class="bridge-internal-actions" hidden aria-hidden="true" data-bridge-action-flow="deposit">
-          <button class="btn primary bridge-main-action" type="button" data-bridge-deposit>Deposit USDT</button>
-          <button class="btn bridge-main-action" type="button" data-bridge-mint disabled>Mint on LUST</button>
+          <button class="btn primary bridge-main-action" type="button" data-bridge-deposit disabled aria-disabled="true">Bridge temporarily paused</button>
+          <button class="btn bridge-main-action" type="button" data-bridge-mint disabled>Bridge temporarily paused</button>
         </div>
 
         <div class="bridge-pro-status">
@@ -291,8 +254,8 @@
                 <small>Use this only if a BSC deposit was confirmed but the claim did not appear automatically.</small>
                 <input class="input" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="Paste BSC tx hash 0x..." data-bsc-recover-tx>
                 <div class="bridge-action-grid two-actions" style="margin-top:0;">
-                  <button class="btn" type="button" data-bsc-recover-btn>Recover claim</button>
-                  <button class="btn primary" type="button" data-bsc-recover-mint disabled>Mint recovered claim</button>
+                  <button class="btn" type="button" data-bsc-recover-btn disabled aria-disabled="true">Bridge temporarily paused</button>
+                  <button class="btn primary" type="button" data-bsc-recover-mint disabled>Bridge temporarily paused</button>
                 </div>
                 <div class="bridge-inline-warning" data-bsc-recover-status>Paste a BSC deposit transaction hash if automatic claim detection fails.</div>
               </div>
@@ -357,14 +320,14 @@
             <strong data-bridge-primary-title-withdraw>Burn LUSDT</strong>
           </div>
           <p data-bridge-primary-help-withdraw>One click starts the burn. You will see wallet, tx sent, confirmation and release progress.</p>
-          <button class="btn primary bridge-one-action-btn" type="button" data-bridge-primary-withdraw>Burn LUSDT</button>
+          <button class="btn primary bridge-one-action-btn" type="button" data-bridge-primary-withdraw disabled aria-disabled="true">Bridge temporarily paused</button>
           <div class="bridge-one-action-note" data-bridge-primary-note-withdraw>Click once. The progress appears here automatically.</div>
         </div>
 
         <!-- LUST_BRIDGE_SINGLE_BUTTON_V43_NO_FREEZE: internal action buttons kept for app.js only; not visible to users. -->
         <div class="bridge-internal-actions" hidden aria-hidden="true" data-bridge-action-flow="withdraw">
-          <button class="btn primary bridge-main-action" type="button" data-bridge-burn>Burn LUSDT</button>
-          <button class="btn bridge-main-action" type="button" data-bridge-release disabled>Release USDT</button>
+          <button class="btn primary bridge-main-action" type="button" data-bridge-burn disabled aria-disabled="true">Bridge temporarily paused</button>
+          <button class="btn bridge-main-action" type="button" data-bridge-release disabled>Bridge temporarily paused</button>
         </div>
 
         <div class="bridge-pro-status" data-bridge-release-panel aria-hidden="true">

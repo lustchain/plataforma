@@ -91,50 +91,14 @@
   .lust-pause-banner p{margin:0;color:rgba(255,239,247,.72);line-height:1.5;font-size:14px}
   .lust-paused-control{opacity:.48!important;filter:saturate(.45)!important;cursor:not-allowed!important;pointer-events:none!important}
   .lust-pause-note{margin-top:12px;padding:12px 14px;border-radius:12px;background:rgba(255,45,141,.08);border:1px solid rgba(255,45,141,.18);color:rgba(255,239,247,.72);font-size:13px;line-height:1.45}
+
+  [data-presale-buy], [data-presale-claim], [data-presale-claim-bonus], [data-presale-refund]{opacity:.48!important;filter:saturate(.45)!important;cursor:not-allowed!important;pointer-events:none!important}
   @media(max-width:720px){.lust-pause-banner{margin:12px 14px 18px;padding:15px;border-radius:15px}.lust-pause-banner__icon{width:38px;height:38px;flex-basis:38px}.lust-pause-banner strong{font-size:16px}.lust-pause-banner p{font-size:13px}}
 </style>
 
 </head>
 <body>
 
-<script id="lust-presale-temporary-pause">
-(() => {
-  'use strict';
-  const MESSAGE = 'The Genesis Presale is temporarily paused while the next stage of the LUST ecosystem is completed.';
-  const selectors = [
-    '[data-presale-buy]','[data-presale-claim]',
-    '[data-presale-claim-bonus]','[data-presale-refund]','[data-presale-max]'
-  ];
-  const matchesPaused = (el) => selectors.some(s => el.matches?.(s) || el.closest?.(s));
-  const enforce = () => {
-    document.querySelectorAll(selectors.join(',')).forEach(el => {
-      el.classList.add('lust-paused-control');
-      if ('disabled' in el) el.disabled = true;
-      el.setAttribute('aria-disabled','true');
-      el.setAttribute('title','Temporarily paused');
-    });
-    const buy = document.querySelector('[data-presale-buy]');
-    if (buy) buy.textContent = 'Presale temporarily paused';
-    document.querySelectorAll('[data-presale-claim],[data-presale-claim-bonus],[data-presale-refund]').forEach(el => {
-      el.textContent = 'Temporarily paused';
-    });
-  };
-  const block = (event) => {
-    const target = event.target instanceof Element ? event.target : null;
-    if (!target || !matchesPaused(target)) return;
-    event.preventDefault();
-    event.stopImmediatePropagation();
-  };
-  document.addEventListener('click', block, true);
-  document.addEventListener('submit', block, true);
-  document.addEventListener('DOMContentLoaded', () => {
-    const main = document.querySelector('main');
-    if (main && !document.querySelector('.lust-pause-banner')) main.insertAdjacentHTML('afterbegin', `<section class="lust-pause-banner" role="status"><div class="lust-pause-banner__icon">⏸</div><div><small>Temporary pause</small><strong>Genesis Presale is currently unavailable</strong><p>${MESSAGE} Wallet connection and balance viewing remain available, but purchases, approvals, claims and refunds cannot be initiated through the platform.</p></div></section>`);
-    enforce();
-    setTimeout(enforce, 500);
-  });
-})();
-</script>
 
 <div class="promo-bar">LUST Genesis Liquidity Event · Either liquidity is created, or your LUSDT comes back.</div>
 <header class="topbar">
@@ -180,6 +144,7 @@
 </header>
 
 <main class="presale-page" data-presale-page>
+<section class="lust-pause-banner" role="status"><div class="lust-pause-banner__icon">⏸</div><div><small>Temporary pause</small><strong>Genesis Presale is currently unavailable</strong><p>Wallet connection and balance viewing remain available. Purchases, claims and refunds are temporarily disabled while the next stage of the LUST ecosystem is completed.</p></div></section>
   <section class="presale-hero">
     <div class="presale-hero-copy">
       <small class="presale-kicker">Genesis liquidity event</small>
@@ -262,7 +227,7 @@
         <div><span>Net to liquidity</span><strong data-presale-quote-net>--</strong></div>
       </div>
 
-      <button class="btn primary presale-main-btn" type="button" data-presale-buy>Connect wallet / Buy LST</button>
+      <button class="btn primary presale-main-btn" type="button" data-presale-buy disabled aria-disabled="true">Presale temporarily paused</button>
       <div class="presale-log" data-presale-action-log>Buy window opens only when the contract start time is reached.</div>
     </section>
 
@@ -306,9 +271,9 @@
           <div><span>Bonus available</span><strong data-presale-user-bonus-available>--</strong></div>
         </div>
         <div class="presale-actions-grid">
-          <button class="btn primary" type="button" data-presale-claim>Claim LST</button>
-          <button class="btn" type="button" data-presale-claim-bonus>Claim bonus</button>
-          <button class="btn" type="button" data-presale-refund>Refund LUSDT</button>
+          <button class="btn primary" type="button" data-presale-claim disabled aria-disabled="true">Temporarily paused</button>
+          <button class="btn" type="button" data-presale-claim-bonus disabled aria-disabled="true">Temporarily paused</button>
+          <button class="btn" type="button" data-presale-refund disabled aria-disabled="true">Temporarily paused</button>
         </div>
       </section>
     </aside>
