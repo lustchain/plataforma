@@ -23,7 +23,7 @@
 <link rel="icon" type="image/png" href="./assets/favicon.png?v=20260628-explorer-v2" />
 <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png?v=20260628-explorer-v2" />
 <link rel="stylesheet" href="./styles.css?v=20260628-footer-v8-clean" />
-<link rel="stylesheet" href="./launchpad.css?v=20260716-launchpad-preview-v1" />
+<link rel="stylesheet" href="./launchpad.css?v=20260716-launchpad-premium-v2" />
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8N7M5DTF4"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-Z8N7M5DTF4');</script>
 </head>
@@ -40,69 +40,87 @@
 </header>
 
 <main class="wrap page launchpad-page">
-  <section class="hero launchpad-hero">
-    <div class="launchpad-badge"><span></span> Native DeFi infrastructure · Preview</div>
-    <div class="launchpad-hero-grid">
-      <div>
-        <div class="kicker">Automated Liquidity Launchpad</div>
-        <h1>From creator token to locked liquidity. One native flow.</h1>
-        <p>Build a token in the LUST Factory, launch it through a transparent bonding curve, and migrate liquidity automatically into LUSTSwap when the target is reached.</p>
-        <div class="hero-buttons">
-          <a class="btn primary" href="#launch-builder">Explore launch flow</a>
-          <a class="btn ghost" href="./factory.html">Create token first</a>
-        </div>
-        <div class="launchpad-trust-row"><span>100% curve allocation</span><span>Automatic LUSTSwap pool</span><span>On-chain launch rules</span></div>
+  <section class="lp-hero">
+    <div class="lp-hero-copy">
+      <div class="lp-eyebrow"><span>NEW</span> Fair launches · Automated liquidity</div>
+      <h1>Automated Liquidity <em>Launchpad</em></h1>
+      <p>The native LUST Chain launch infrastructure for creators. Create a token, open a transparent bonding curve and graduate directly to locked liquidity on LUSTSwap.</p>
+      <div class="lp-actions">
+        <a class="btn primary" href="#featured-launch">View featured launch</a>
+        <a class="btn ghost" href="./factory.html">Create a token</a>
       </div>
-      <aside class="launchpad-orbit" aria-label="Factory, launchpad and swap connection">
-        <div class="orbit-core"><img src="./assets/lust-logo.png" alt=""><strong>LUST</strong><span>Launch Engine</span></div>
-        <a class="orbit-node node-factory" href="./factory.html"><small>01</small><strong>Factory</strong><span>Create</span></a>
-        <div class="orbit-node node-curve"><small>02</small><strong>Bonding Curve</strong><span>Distribute</span></div>
-        <a class="orbit-node node-swap" href="./swap.html"><small>03</small><strong>LUSTSwap</strong><span>Liquidity</span></a>
-      </aside>
+      <div class="lp-benefits">
+        <article><span>✓</span><div><strong>Fair and transparent</strong><small>Public rules, visible allocation and no hidden curve supply.</small></div></article>
+        <article><span>⌁</span><div><strong>Automated liquidity</strong><small>Graduation creates the initial market directly on LUSTSwap.</small></div></article>
+        <article><span>⚡</span><div><strong>Built for creators</strong><small>A guided launch flow without code or unnecessary complexity.</small></div></article>
+      </div>
+    </div>
+    <div class="lp-engine" aria-label="LUST automated launch engine">
+      <div class="lp-engine-rings"><div class="lp-engine-core"><img src="./assets/lust-logo.png" alt="LUST Chain"><strong>LUST</strong><small>Launch Engine</small></div></div>
+      <span class="lp-engine-caption">Factory · Bonding curve · LUSTSwap</span>
     </div>
   </section>
 
-  <section class="launchpad-flow" aria-label="Launchpad workflow">
-    <article><span>1</span><div><small>CREATE</small><h2>Token Factory</h2><p>Deploy a fixed-supply creator token with verified metadata and an on-chain owner.</p></div></article>
-    <i>→</i>
-    <article><span>2</span><div><small>LAUNCH</small><h2>Bonding Curve</h2><p>Place the public allocation into a transparent price curve with visible progress.</p></div></article>
-    <i>→</i>
-    <article><span>3</span><div><small>GRADUATE</small><h2>Locked Liquidity</h2><p>At the target, liquidity migrates to the native Swap according to immutable rules.</p></div></article>
+  <section class="lp-section lp-how">
+    <div class="lp-section-title"><small>ONE CONNECTED FLOW</small><h2>From token creation to public liquidity</h2></div>
+    <div class="lp-steps">
+      <article><b>01</b><div class="lp-step-icon">▤</div><h3>Token Factory</h3><p>Create your fixed-supply token with verified metadata on LUST Chain.</p><a href="./factory.html">Open Factory →</a></article>
+      <i>→</i>
+      <article><b>02</b><div class="lp-step-icon">⌁</div><h3>Bonding Curve</h3><p>Launch the public allocation through transparent, predefined pricing rules.</p></article>
+      <i>→</i>
+      <article><b>03</b><div class="lp-step-icon">◉</div><h3>LUSTSwap Liquidity</h3><p>When the goal is reached, liquidity is created and locked automatically.</p><a href="./swap.html">View LUSTSwap →</a></article>
+    </div>
   </section>
 
-  <section class="launchpad-layout" id="launch-builder">
-    <section class="launchpad-panel launch-builder-card">
-      <div class="panel-head"><div><small>CREATOR CONSOLE</small><h2>Prepare a launch</h2></div><span class="status-pill">Preview only</span></div>
-      <div class="launch-note"><strong>No contract actions are enabled yet.</strong><span>This interface is ready for the audited contracts and preserves the current live platform.</span></div>
-      <div class="launch-fields">
-        <label>Token contract<input class="input" type="text" placeholder="0x..." data-launch-token></label>
-        <label>Quote asset<select class="input" data-launch-quote><option>LUSDT</option><option>LST</option></select></label>
-        <label>Tokens allocated to curve<input class="input" type="text" inputmode="numeric" placeholder="Example: 1000000000" data-launch-supply></label>
-        <label>Liquidity graduation target<input class="input" type="text" inputmode="decimal" placeholder="Example: 25,000 LUSDT" data-launch-target></label>
+  <section class="lp-feature-grid" id="featured-launch">
+    <article class="lp-mia-card">
+      <div class="lp-mia-main">
+        <div class="lp-mia-logo"><img src="./assets/mia-coin.jpg" alt="Mia Meme Coin logo"></div>
+        <div class="lp-mia-copy">
+          <span class="lp-featured-pill">FEATURED FAIR LAUNCH</span>
+          <h2>Mia Meme Coin <em>($MIA)</em></h2>
+          <p>The first featured launch prepared for the LUST creator ecosystem: a transparent experimental community token with its full public allocation placed in the bonding curve.</p>
+        </div>
       </div>
-      <div class="launch-policy-grid">
-        <label class="policy-card"><input type="checkbox" checked disabled><span><strong>Fair-launch allocation</strong><small>No hidden team allocation inside the curve.</small></span></label>
-        <label class="policy-card"><input type="checkbox" checked disabled><span><strong>Automatic graduation</strong><small>Pool creation executes only after the target.</small></span></label>
-        <label class="policy-card"><input type="checkbox" checked disabled><span><strong>Liquidity lock</strong><small>Lock parameters remain public and verifiable.</small></span></label>
+      <div class="lp-mia-points">
+        <div><span>♙</span><strong>Creator-first</strong><small>Designed to demonstrate a simple launch path for independent creators.</small></div>
+        <div><span>100%</span><strong>In the curve</strong><small>The complete launch allocation is publicly distributed through the curve.</small></div>
+        <div><span>▣</span><strong>Locked liquidity</strong><small>Graduated liquidity is created on LUSTSwap and locked by contract rule.</small></div>
       </div>
-      <button class="btn primary launch-disabled" type="button" disabled>Launch contracts coming soon</button>
-      <p class="launch-disclaimer">Creating or buying creator tokens involves substantial risk. The final interface will display contract addresses, fees, lock duration and curve parameters before any signature.</p>
-    </section>
+      <div class="lp-fair-note"><span>✓</span><div><strong>No retained launch tokens. No private allocation. No hidden rules.</strong><small>Final contract addresses and parameters will be published before launch.</small></div></div>
+    </article>
 
-    <aside class="launchpad-side">
-      <section class="launchpad-panel mia-card">
-        <div class="mia-top"><span class="mia-mark">M</span><div><small>FIRST TECHNOLOGY STRESS TEST</small><h2>Mia Meme Coin</h2><p>$MIA · Experimental fair launch</p></div></div>
-        <div class="mia-progress"><div><span>Launch readiness</span><strong>Interface phase</strong></div><div class="progress-track"><i></i></div></div>
-        <dl><div><dt>Curve allocation</dt><dd>100%</dd></div><div><dt>Team tokens</dt><dd>0%</dd></div><div><dt>Destination</dt><dd>LUSTSwap</dd></div><div><dt>Liquidity</dt><dd>Locked by rule</dd></div></dl>
-        <div class="mia-state">Contract addresses will appear here only after deployment and verification.</div>
-      </section>
-      <section class="launchpad-panel creator-card"><small>BUILT FOR INDEPENDENT CREATORS</small><h2>Own the launch. Keep the audience relationship.</h2><p>Designed for adult creators and digital communities that need direct token infrastructure without traditional platform gatekeepers.</p><div class="creator-links"><a href="./factory.html">Open Token Factory →</a><a href="./swap.html">View LUSTSwap →</a></div></section>
+    <aside class="lp-summary-card">
+      <div class="lp-summary-head"><div><small>LAUNCH SUMMARY</small><h2>$MIA</h2></div><span class="lp-status">IN PREPARATION</span></div>
+      <dl>
+        <div><dt>Token</dt><dd>Mia Meme Coin</dd></div>
+        <div><dt>Network</dt><dd>LUST Chain</dd></div>
+        <div><dt>Quote asset</dt><dd>LUSDT or LST</dd></div>
+        <div><dt>Curve allocation</dt><dd>100%</dd></div>
+        <div><dt>Team allocation</dt><dd>0%</dd></div>
+        <div><dt>Liquidity destination</dt><dd>LUSTSwap</dd></div>
+        <div><dt>Liquidity protection</dt><dd>Locked by rule</dd></div>
+        <div><dt>Platform launch fee</dt><dd>To be published</dd></div>
+      </dl>
+      <button class="lp-coming" type="button" disabled>Launch coming soon</button>
+      <p>Awaiting audited contract deployment and public verification.</p>
     </aside>
   </section>
 
-  <section class="launchpad-principles">
-    <div class="section-heading"><small>DESIGN PRINCIPLES</small><h2>Transparent by construction.</h2><p>The contract phase will follow these public requirements before the launch button is enabled.</p></div>
-    <div class="principle-grid"><article><b>01</b><h3>Verifiable parameters</h3><p>Supply, curve, fees, target, migration and lock settings exposed before signing.</p></article><article><b>02</b><h3>No silent custody</h3><p>Launch assets move only through published contracts and auditable state transitions.</p></article><article><b>03</b><h3>Native graduation</h3><p>Successful launches create their initial market directly inside LUSTSwap.</p></article><article><b>04</b><h3>Creator-ready UX</h3><p>A guided path from Factory to launch page, community sale and public liquidity.</p></article></div>
+  <section class="lp-creator-cta">
+    <div class="lp-cta-icon">✦</div>
+    <div><h2>Ready to build your creator token?</h2><p>Create the token now in the LUST Factory. Launchpad contract actions will be enabled only after auditing and public verification.</p></div>
+    <a class="btn ghost" href="./factory.html">Open Token Factory →</a>
+  </section>
+
+  <section class="lp-safety">
+    <div class="lp-section-title"><small>TRANSPARENT BY CONSTRUCTION</small><h2>Clear rules before every signature</h2></div>
+    <div class="lp-safety-grid">
+      <article><b>01</b><h3>Visible parameters</h3><p>Supply, curve, target, migration, fees and lock duration shown before launch.</p></article>
+      <article><b>02</b><h3>Verified contracts</h3><p>Only published and explorer-verified contracts will power live launch actions.</p></article>
+      <article><b>03</b><h3>Native graduation</h3><p>Successful curves create their initial public market directly on LUSTSwap.</p></article>
+      <article><b>04</b><h3>No silent custody</h3><p>Funds and tokens move according to auditable on-chain state transitions.</p></article>
+    </div>
   </section>
 </main>
 <footer class="footer lust-footer lust-footer--v8" aria-label="LUST Chain footer">
@@ -196,7 +214,7 @@
 <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
 
 <script type="module" src="./app.js?v20260613-lustswap-v1"></script>
-<script src="./launchpad.js?v=20260716-launchpad-preview-v1"></script>
+<script src="./launchpad.js?v=20260716-launchpad-premium-v2"></script>
 <script src="./nft-menu.js?v=20260616-hover-v5"></script>
 </body>
 </html>
