@@ -1,0 +1,7 @@
+LUST mobile scroll reliability fix.
+- Removed body scroll lock while mobile menu is open.
+- Mobile navigation now expands in normal document flow.
+- Removed nested internal scroll area and max-height traps.
+- Added pan-y/touch scrolling safeguards.
+- Added cleanup of any legacy inline overflow/position locks.
+No contracts, transaction logic, wallet connection logic, or page content changed.

@@ -3909,3 +3909,52 @@ button[data-bridge-deposit].is-waiting,button[data-bridge-burn].is-waiting,butto
   body.nav-open .actions{display:flex!important;padding:0 4px 8px;box-sizing:border-box}
   .connect-btn{width:100%!important;min-width:0!important;justify-content:flex-start}
 }
+
+/* LUST MOBILE SCROLL RELIABILITY FIX v20260716 */
+@media (max-width:900px){
+  html{
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    overscroll-behavior-y:auto!important;
+    touch-action:pan-y!important;
+    -webkit-text-size-adjust:100%;
+  }
+  body,
+  body.nav-open{
+    position:static!important;
+    width:100%!important;
+    min-height:100%!important;
+    height:auto!important;
+    overflow-x:hidden!important;
+    overflow-y:visible!important;
+    overscroll-behavior-y:auto!important;
+    touch-action:pan-y!important;
+  }
+  .topbar{
+    overflow:visible!important;
+    height:auto!important;
+    max-height:none!important;
+  }
+  .nav,
+  body.nav-open .nav{
+    position:static!important;
+    inset:auto!important;
+    width:100%!important;
+    height:auto!important;
+    max-height:none!important;
+    overflow:visible!important;
+    overscroll-behavior:auto!important;
+    touch-action:pan-y!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+  .nav-dropdown-menu,
+  .nav-dropdown-panel,
+  .nav-nft-dropdown,
+  .nav-more-dropdown{
+    touch-action:pan-y!important;
+    overscroll-behavior:auto!important;
+  }
+  main,.container,.page-shell,.site-main{
+    touch-action:pan-y!important;
+  }
+}
