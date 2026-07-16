@@ -3835,7 +3835,7 @@ button[data-bridge-deposit].is-waiting,button[data-bridge-burn].is-waiting,butto
 
 /* LUST_BRIDGE_V46_FAST_PROGRESS: stable one-click bridge CTA, no blinking; progress shown in status text. */
 
-/* NAVIGATION DESKTOP + MOBILE FINAL v20260716 */
+/* NAVIGATION DESKTOP + MOBILE — STABLE TOUCH/SCROLL v20260716-r2 */
 .mobile-menu-toggle{display:none}
 .nav-more-menu{position:relative;margin:0;padding:0}
 .nav-more-menu>summary,
@@ -3866,31 +3866,43 @@ button[data-bridge-deposit].is-waiting,button[data-bridge-burn].is-waiting,butto
 }
 
 @media(max-width:900px){
-  body.nav-open{overflow:hidden}
+  html,body{
+    width:100%;min-height:100%;height:auto;
+    overflow-x:hidden;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  /* Never lock page scrolling when the navigation is open. */
+  body.nav-open{overflow-y:auto!important;position:static!important;height:auto!important}
   .promo-bar{font-size:11px;line-height:1.25;padding:7px 38px;text-align:center}
   .topbar{
     position:relative;display:grid!important;grid-template-columns:minmax(0,1fr) 46px;align-items:center!important;
-    gap:10px!important;padding:10px 14px!important;min-height:70px;flex-direction:unset!important
+    gap:10px!important;padding:10px 14px!important;min-height:70px;flex-direction:unset!important;
+    overflow:visible!important
   }
   .brand{min-width:0;gap:8px}
   .logo,.logo img{width:48px!important;height:48px!important}
   .brand strong{font-size:13px}.brand span{font-size:9px}
   .mobile-menu-toggle{
     display:flex;width:44px;height:44px;padding:0;border:1px solid rgba(247,3,117,.45);border-radius:12px;
-    background:rgba(247,3,117,.08);align-items:center;justify-content:center;flex-direction:column;gap:5px;cursor:pointer
+    background:rgba(247,3,117,.08);align-items:center;justify-content:center;flex-direction:column;gap:5px;cursor:pointer;
+    touch-action:manipulation
   }
   .mobile-menu-toggle span{display:block;width:20px;height:2px;border-radius:10px;background:#fff;transition:transform .2s,opacity .2s}
   body.nav-open .mobile-menu-toggle span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   body.nav-open .mobile-menu-toggle span:nth-child(2){opacity:0}
   body.nav-open .mobile-menu-toggle span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  /* The menu is a normal block below the header. The document remains the scroll owner. */
   .nav{
-    display:none!important;grid-column:1/-1;width:100%;max-height:calc(100dvh - 155px);overflow-y:auto;overscroll-behavior:contain;
+    display:none!important;grid-column:1/-1;width:100%;height:auto;max-height:none;overflow:visible;
     padding:8px 4px 16px!important;margin:0!important;gap:4px!important;flex-direction:column;align-items:stretch!important;
-    background:#080009;border-top:1px solid rgba(255,255,255,.08);scrollbar-width:thin
+    background:#080009;border-top:1px solid rgba(255,255,255,.08)
   }
   body.nav-open .nav{display:flex!important}
   .nav>a,.nav-dropdown-menu>summary{
-    width:100%;box-sizing:border-box;padding:13px 14px!important;border-radius:10px;font-size:15px!important;line-height:1.2;text-align:left
+    width:100%;box-sizing:border-box;padding:13px 14px!important;border-radius:10px;font-size:15px!important;line-height:1.2;text-align:left;
+    touch-action:manipulation
   }
   .nav>a:hover,.nav>a.active,.nav-dropdown-menu>summary:hover,.nav-dropdown-menu>summary.active{background:rgba(247,3,117,.10);color:#fff}
   .nav a.active::after,.nav-dropdown-menu>summary.active::after{display:none!important}
@@ -3900,61 +3912,12 @@ button[data-bridge-deposit].is-waiting,button[data-bridge-burn].is-waiting,butto
   .nav-dropdown-menu[open]>summary::after{content:"−"!important}
   .nav-nft-dropdown,.nav-more-dropdown,.nav-dropdown-panel{
     position:static!important;display:none;width:auto!important;transform:none!important;margin:2px 8px 8px!important;padding:4px!important;
-    background:rgba(255,255,255,.035)!important;border-radius:10px!important;box-shadow:none!important
+    background:rgba(255,255,255,.035)!important;border-radius:10px!important;box-shadow:none!important;overflow:visible!important
   }
   .nav-dropdown-menu[open]>.nav-dropdown-panel{display:block!important;animation:none!important}
-  .nav .nav-dropdown-panel a{padding:12px!important;border-radius:8px!important}
+  .nav .nav-dropdown-panel a{padding:12px!important;border-radius:8px!important;touch-action:manipulation}
   .nav .nav-dropdown-panel a strong{font-size:14px!important}.nav .nav-dropdown-panel a span{font-size:11px!important}
   .actions{display:none!important;grid-column:1/-1;width:100%!important}
   body.nav-open .actions{display:flex!important;padding:0 4px 8px;box-sizing:border-box}
-  .connect-btn{width:100%!important;min-width:0!important;justify-content:flex-start}
-}
-
-/* LUST MOBILE SCROLL RELIABILITY FIX v20260716 */
-@media (max-width:900px){
-  html{
-    overflow-x:hidden!important;
-    overflow-y:auto!important;
-    overscroll-behavior-y:auto!important;
-    touch-action:pan-y!important;
-    -webkit-text-size-adjust:100%;
-  }
-  body,
-  body.nav-open{
-    position:static!important;
-    width:100%!important;
-    min-height:100%!important;
-    height:auto!important;
-    overflow-x:hidden!important;
-    overflow-y:visible!important;
-    overscroll-behavior-y:auto!important;
-    touch-action:pan-y!important;
-  }
-  .topbar{
-    overflow:visible!important;
-    height:auto!important;
-    max-height:none!important;
-  }
-  .nav,
-  body.nav-open .nav{
-    position:static!important;
-    inset:auto!important;
-    width:100%!important;
-    height:auto!important;
-    max-height:none!important;
-    overflow:visible!important;
-    overscroll-behavior:auto!important;
-    touch-action:pan-y!important;
-    -webkit-overflow-scrolling:touch!important;
-  }
-  .nav-dropdown-menu,
-  .nav-dropdown-panel,
-  .nav-nft-dropdown,
-  .nav-more-dropdown{
-    touch-action:pan-y!important;
-    overscroll-behavior:auto!important;
-  }
-  main,.container,.page-shell,.site-main{
-    touch-action:pan-y!important;
-  }
+  .connect-btn{width:100%!important;min-width:0!important;justify-content:flex-start;touch-action:manipulation}
 }
