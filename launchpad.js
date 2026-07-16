@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",()=>{const btn=document.getElementById("backToTop");if(btn){const sync=()=>btn.classList.toggle("show",window.scrollY>420);window.addEventListener("scroll",sync,{passive:true});sync();btn.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"));}});

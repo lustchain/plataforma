@@ -1,0 +1,1 @@
+Added launchpad.html, launchpad.css and launchpad.js. Added navigation/footer/home links and sitemap entry. No existing contract logic or live transaction code was changed. Launch controls remain disabled until audited contracts are deployed.
