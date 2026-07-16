@@ -1,0 +1,11 @@
+LUST PLATFORM — TEMPORARY FRONT-END PAUSE
+
+Changed only:
+- presale.html
+- bridge.html
+
+Presale page remains visible, but wallet connection, purchase, approval flow, claim, bonus claim and refund controls are disabled in the platform UI.
+Bridge page remains visible, but wallet connection, deposit, mint, burn, release and recovery controls are disabled in the platform UI.
+
+No smart contract, API, watcher, swap, mining, staking, factory or other page was changed.
+This is a front-end pause only and does not pause direct contract interaction outside the website.

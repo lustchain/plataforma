@@ -82,8 +82,62 @@
     gtag('config', 'G-Z8N7M5DTF4');
   </script>
 
+
+<style id="lust-temporary-pause-style">
+  .lust-pause-banner{margin:18px auto 22px;max-width:1180px;padding:18px 20px;border:1px solid rgba(255,61,154,.42);border-radius:18px;background:linear-gradient(135deg,rgba(255,45,141,.13),rgba(15,8,26,.94));box-shadow:0 18px 50px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.05);display:flex;gap:15px;align-items:flex-start;color:#fff}
+  .lust-pause-banner__icon{width:42px;height:42px;flex:0 0 42px;border-radius:13px;display:grid;place-items:center;background:rgba(255,45,141,.16);border:1px solid rgba(255,75,166,.35);font-size:20px}
+  .lust-pause-banner small{display:block;color:#ff80bd;text-transform:uppercase;letter-spacing:.12em;font-weight:800;font-size:11px;margin-bottom:5px}
+  .lust-pause-banner strong{display:block;font-size:18px;line-height:1.25;margin-bottom:4px}
+  .lust-pause-banner p{margin:0;color:rgba(255,239,247,.72);line-height:1.5;font-size:14px}
+  .lust-paused-control{opacity:.48!important;filter:saturate(.45)!important;cursor:not-allowed!important;pointer-events:none!important}
+  .lust-pause-note{margin-top:12px;padding:12px 14px;border-radius:12px;background:rgba(255,45,141,.08);border:1px solid rgba(255,45,141,.18);color:rgba(255,239,247,.72);font-size:13px;line-height:1.45}
+  @media(max-width:720px){.lust-pause-banner{margin:12px 14px 18px;padding:15px;border-radius:15px}.lust-pause-banner__icon{width:38px;height:38px;flex-basis:38px}.lust-pause-banner strong{font-size:16px}.lust-pause-banner p{font-size:13px}}
+</style>
+
 </head>
 <body>
+
+<script id="lust-bridge-temporary-pause">
+(() => {
+  'use strict';
+  const selectors = [
+    '[data-connect-wallet]','[data-bridge-deposit]','[data-bridge-mint]',
+    '[data-bridge-burn]','[data-bridge-release]','[data-bridge-primary-deposit]',
+    '[data-bridge-primary-withdraw]','[data-bsc-recover-btn]','[data-bsc-recover-mint]',
+    '[data-bridge-max-deposit]','[data-bridge-max-withdraw]',
+    '[data-lusdt-bridge] input','[data-lusdt-bridge] select','[data-lusdt-bridge] textarea',
+    '[data-bridge-network-cycle]','[data-bridge-switch]'
+  ];
+  const matchesPaused = (el) => selectors.some(s => el.matches?.(s) || el.closest?.(s));
+  const enforce = () => {
+    document.querySelectorAll(selectors.join(',')).forEach(el => {
+      el.classList.add('lust-paused-control');
+      if ('disabled' in el) el.disabled = true;
+      el.setAttribute('aria-disabled','true');
+      el.setAttribute('title','Bridge temporarily paused');
+    });
+    document.querySelectorAll('[data-bridge-primary-deposit],[data-bridge-deposit],[data-bridge-mint]').forEach(el => el.textContent='Bridge temporarily paused');
+    document.querySelectorAll('[data-bridge-primary-withdraw],[data-bridge-burn],[data-bridge-release]').forEach(el => el.textContent='Bridge temporarily paused');
+    const claim = document.querySelector('[data-bridge-claim-log]');
+    if (claim) claim.textContent='New bridge operations are temporarily paused.';
+    const release = document.querySelector('[data-bridge-release-log]');
+    if (release) release.textContent='New bridge operations are temporarily paused.';
+  };
+  const block = (event) => {
+    const target = event.target instanceof Element ? event.target : null;
+    if (!target || !matchesPaused(target)) return;
+    event.preventDefault(); event.stopImmediatePropagation();
+  };
+  ['click','submit','change','input','keydown','pointerdown','touchstart'].forEach(type => document.addEventListener(type, block, true));
+  document.addEventListener('DOMContentLoaded', () => {
+    const main = document.querySelector('main');
+    if (main && !document.querySelector('.lust-pause-banner')) main.insertAdjacentHTML('afterbegin', '<section class="lust-pause-banner" role="status"><div class="lust-pause-banner__icon">⏸</div><div><small>Temporary pause</small><strong>LUSDT Bridge is currently unavailable</strong><p>The page remains online for transparency, but new deposits, burns, mints, releases and recovery actions cannot be initiated through the platform while the next stage of the LUST ecosystem is completed.</p></div></section>');
+    enforce();
+    new MutationObserver(enforce).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['disabled','class']});
+  });
+})();
+</script>
+
 <div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
 <header class="topbar">
   <a class="brand" href="./index.html">
