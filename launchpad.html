@@ -1,297 +1,302 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>LUST Launchpad | Automated Liquidity for Creator Tokens</title>
-<meta name="description" content="Create transparent creator-token launches with bonding-curve distribution and automated liquidity on LUSTSwap." />
-<meta name="robots" content="index,follow,max-image-preview:large" />
-<link rel="canonical" href="https://platform.lustchain.org/launchpad.html" />
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="LUST Chain" />
-<meta property="og:title" content="LUST Launchpad | Automated Liquidity for Creator Tokens" />
-<meta property="og:description" content="From Token Factory to bonding curve and locked LUSTSwap liquidity — one native launch flow for creators." />
-<meta property="og:url" content="https://platform.lustchain.org/launchpad.html" />
-<meta property="og:image" content="https://platform.lustchain.org/assets/lust-og.png" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="LUST Automated Liquidity Launchpad" />
-<meta name="twitter:description" content="A native creator-token launch flow connected to LUST Token Factory and LUSTSwap." />
-<meta name="twitter:image" content="https://platform.lustchain.org/assets/lust-og.png" />
-<meta name="theme-color" content="#F70375" />
-<link rel="manifest" href="./assets/site.webmanifest" />
-<link rel="icon" href="./assets/favicon.ico?v=20260628-explorer-v2" sizes="any" />
-<link rel="icon" type="image/png" href="./assets/favicon.png?v=20260628-explorer-v2" />
-<link rel="apple-touch-icon" href="./assets/apple-touch-icon.png?v=20260628-explorer-v2" />
-<link rel="stylesheet" href="./styles.css?v=20260628-footer-v8-clean" />
-<link rel="stylesheet" href="./launchpad.css?v=20260716-launchpad-premium-v2" />
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8N7M5DTF4"></script>
+<meta content="Create transparent creator-token launches with bonding-curve distribution and automated liquidity on LUSTSwap." name="description"/>
+<meta content="index,follow,max-image-preview:large" name="robots"/>
+<link href="https://platform.lustchain.org/launchpad.html" rel="canonical"/>
+<meta content="website" property="og:type"/>
+<meta content="LUST Chain" property="og:site_name"/>
+<meta content="LUST Launchpad | Automated Liquidity for Creator Tokens" property="og:title"/>
+<meta content="From Token Factory to bonding curve and locked LUSTSwap liquidity — one native launch flow for creators." property="og:description"/>
+<meta content="https://platform.lustchain.org/launchpad.html" property="og:url"/>
+<meta content="https://platform.lustchain.org/assets/lust-og.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="LUST Automated Liquidity Launchpad" name="twitter:title"/>
+<meta content="A native creator-token launch flow connected to LUST Token Factory and LUSTSwap." name="twitter:description"/>
+<meta content="https://platform.lustchain.org/assets/lust-og.png" name="twitter:image"/>
+<meta content="#F70375" name="theme-color"/>
+<link href="./assets/site.webmanifest" rel="manifest"/>
+<link href="./assets/favicon.ico?v=20260628-explorer-v2" rel="icon" sizes="any"/>
+<link href="./assets/favicon.png?v=20260628-explorer-v2" rel="icon" type="image/png"/>
+<link href="./assets/apple-touch-icon.png?v=20260628-explorer-v2" rel="apple-touch-icon"/>
+<link href="./styles.css?v=20260628-footer-v8-clean" rel="stylesheet"/>
+<link href="./launchpad.css?v=20260716-launchpad-premium-v2" rel="stylesheet"/>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-Z8N7M5DTF4"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-Z8N7M5DTF4');</script>
 </head>
 <body>
-<div class="promo-bar">Invest in life&rsquo;s pleasures!</div>
+<div class="promo-bar">Invest in life’s pleasures!</div>
 <header class="topbar">
-  <a class="brand" href="./index.html"><div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div><div><strong>LUST</strong><span>Platform</span></div></a>
-  <nav class="nav">
-    <a href="./index.html">Home</a><a href="./presale.html">Presale</a><a href="./bridge.html">Bridge</a><a href="./swap.html">Swap</a><a href="./p2p.html">P2P</a>
-    <details class="nav-nft-menu"><summary>NFTs</summary><div class="nav-nft-dropdown" role="menu" aria-label="NFT collections"><a href="./nfts.html" role="menuitem"><strong>LUST Rabbit Club</strong><span>Premium NFT collection</span></a><a href="./pioneer.html" role="menuitem"><strong>Pioneer Rewards</strong><span>Free reward campaign</span></a></div></details>
-    <a href="./mining.html">Mining</a><a href="./faucet.html">Faucet</a><a href="./staking.html">Staking</a><a class="active" href="./launchpad.html">Launchpad</a><a href="./factory.html">Factory</a><a href="./explorer.html">Explorer</a><a href="./whitepaper.html">Whitepaper</a><a href="./docs.html">Docs</a>
-  </nav>
-  <div class="actions"><button class="btn connect-btn" type="button" data-connect-wallet aria-label="Connect wallet"><div class="connect-icon">◫</div><div class="connect-copy"><strong>Connect wallet</strong><span>Wallet not connected</span></div><div class="connect-caret">⌄</div></button></div>
+<a class="brand" href="./index.html"><div class="logo"><img alt="LUST logo" src="./assets/lust-logo.png"/></div><div><strong>LUST</strong><span>Platform</span></div></a><button aria-controls="site-navigation" aria-expanded="false" aria-label="Open navigation menu" class="mobile-nav-toggle" type="button"><span></span><span></span><span></span></button>
+<nav aria-label="Main navigation" class="nav" id="site-navigation">
+<a href="./index.html">Home</a>
+<a aria-current="page" class="active" href="./launchpad.html">Launchpad</a>
+<a href="./swap.html">Swap</a>
+<a href="./factory.html">Factory</a>
+<a href="./bridge.html">Bridge</a>
+<a href="./presale.html">Presale</a>
+<a href="./mining.html">Mining</a>
+<a href="./staking.html">Staking</a>
+<details class="nav-nft-menu">
+<summary>NFTs</summary>
+<div aria-label="NFT collections" class="nav-nft-dropdown" role="menu">
+<a href="./nfts.html" role="menuitem"><strong>LUST Rabbit Club</strong><span>Premium NFT collection</span></a>
+<a href="./pioneer.html" role="menuitem"><strong>Pioneer Rewards</strong><span>Free reward campaign</span></a>
+</div>
+</details>
+<a href="./p2p.html">P2P</a>
+<details class="nav-more-menu">
+<summary>More</summary>
+<div aria-label="More platform links" class="nav-more-dropdown" role="menu">
+<a href="./faucet.html" role="menuitem">Faucet</a>
+<a href="./explorer.html" role="menuitem">Explorer</a>
+<a href="./whitepaper.html" role="menuitem">Whitepaper</a>
+<a href="./docs.html" role="menuitem">Docs</a>
+</div>
+</details>
+</nav>
+<div class="actions"><button aria-label="Connect wallet" class="btn connect-btn" data-connect-wallet="" type="button"><div class="connect-icon">◫</div><div class="connect-copy"><strong>Connect wallet</strong><span>Wallet not connected</span></div><div class="connect-caret">⌄</div></button></div>
 </header>
-
 <main class="wrap page launchpad-page">
-  <section class="lp-hero">
-    <div class="lp-hero-copy">
-      <div class="lp-eyebrow"><span>NEW</span> Creator launches · Native LUSTSwap liquidity</div>
-      <h1>Launch your token with <em>automated liquidity</em></h1>
-      <p>Create the token in the LUST Factory, configure a transparent public sale and graduate directly to a locked liquidity pool on LUSTSwap — all through one connected flow.</p>
-      <div class="lp-actions">
-        <a class="btn primary" href="#create-launch">Configure a launch</a>
-        <a class="btn ghost" href="./factory.html">Create token first</a>
-      </div>
-      <div class="lp-benefits">
-        <article><span>✓</span><div><strong>Public launch rules</strong><small>Allocation, pricing, goal and liquidity destination visible before participation.</small></div></article>
-        <article><span>⌁</span><div><strong>Automatic graduation</strong><small>The curve graduates into a native LUSTSwap market when its target is reached.</small></div></article>
-        <article><span>▣</span><div><strong>Liquidity protection</strong><small>Initial liquidity follows the selected on-chain lock rule.</small></div></article>
-      </div>
-    </div>
-    <div class="lp-hero-console" aria-label="Launchpad flow preview">
-      <div class="lp-console-head"><span class="lp-live-dot"></span><strong>LUST Launch Engine</strong><small>PREVIEW</small></div>
-      <div class="lp-console-token">
-        <div class="lp-console-mark"><img src="./assets/lust-logo.png" alt="LUST"></div>
-        <div><small>CONNECTED INFRASTRUCTURE</small><h2>Factory → Curve → Swap</h2><p>One guided process from token contract to public liquidity.</p></div>
-      </div>
-      <div class="lp-console-flow">
-        <div><b>01</b><span>Token</span><strong>Verified</strong></div><i>→</i>
-        <div><b>02</b><span>Launch</span><strong>Transparent</strong></div><i>→</i>
-        <div><b>03</b><span>Liquidity</span><strong>Locked</strong></div>
-      </div>
-      <div class="lp-console-foot"><span>Network</span><strong>LUST Chain</strong><span>Destination</span><strong>LUSTSwap</strong></div>
-    </div>
-  </section>
-
-  <section class="lp-section lp-how">
-    <div class="lp-section-title"><small>ONE CONNECTED FLOW</small><h2>From token creation to public liquidity</h2></div>
-    <div class="lp-steps">
-      <article><b>01</b><div class="lp-step-icon">▤</div><h3>Token Factory</h3><p>Create your fixed-supply token with verified metadata on LUST Chain.</p><a href="./factory.html">Open Factory →</a></article>
-      <i>→</i>
-      <article><b>02</b><div class="lp-step-icon">⌁</div><h3>Bonding Curve</h3><p>Launch the public allocation through transparent, predefined pricing rules.</p></article>
-      <i>→</i>
-      <article><b>03</b><div class="lp-step-icon">◉</div><h3>LUSTSwap Liquidity</h3><p>When the goal is reached, liquidity is created and locked automatically.</p><a href="./swap.html">View LUSTSwap →</a></article>
-    </div>
-  </section>
-
-
-  <section class="lp-builder" id="create-launch">
-    <div class="lp-section-title lp-builder-title"><small>LAUNCH CONFIGURATOR</small><h2>Prepare your public token launch</h2><p>Configure the parameters now. Contract deployment will be enabled only after the audited Launchpad contracts are published.</p></div>
-    <div class="lp-builder-grid">
-      <form class="lp-launch-form" id="launchConfigurator" novalidate>
-        <div class="lp-form-section">
-          <div class="lp-form-heading"><span>01</span><div><h3>Token</h3><p>Select a token already created in the LUST Token Factory.</p></div></div>
-          <label class="lp-field lp-field-wide"><span>Token contract</span><div class="lp-input-action"><input id="lpToken" type="text" inputmode="text" placeholder="0x... token address" autocomplete="off"><a href="./factory.html">Open Factory</a></div><small>The contract must be deployed on LUST Chain and pass launch validation.</small></label>
-          <div class="lp-field-row">
-            <label class="lp-field"><span>Token name</span><input id="lpName" type="text" maxlength="32" value="My Creator Token" placeholder="Token name"></label>
-            <label class="lp-field"><span>Symbol</span><input id="lpSymbol" type="text" maxlength="10" value="CREATOR" placeholder="TOKEN"></label>
-          </div>
-        </div>
-
-        <div class="lp-form-section">
-          <div class="lp-form-heading"><span>02</span><div><h3>Launch rules</h3><p>Define how the public allocation and market formation will work.</p></div></div>
-          <div class="lp-field-row">
-            <label class="lp-field"><span>Quote asset</span><select id="lpQuote"><option value="LUSDT">LUSDT</option><option value="LST">LST</option></select></label>
-            <label class="lp-field"><span>Curve model</span><select id="lpCurve"><option value="Linear bonding curve">Linear bonding curve</option><option value="Fixed-price fair launch">Fixed-price fair launch</option><option value="Progressive bonding curve">Progressive bonding curve</option></select></label>
-          </div>
-          <div class="lp-field-row">
-            <label class="lp-field"><span>Tokens allocated to launch</span><div class="lp-suffix-input"><input id="lpAllocation" type="number" min="1" step="1" value="1000000"><b>TOKENS</b></div></label>
-            <label class="lp-field"><span>Graduation target</span><div class="lp-suffix-input"><input id="lpTarget" type="number" min="1" step="1" value="10000"><b id="lpTargetAsset">LUSDT</b></div></label>
-          </div>
-          <label class="lp-field lp-range-field"><span><b>Public curve allocation</b><output id="lpCurveOutput">100%</output></span><input id="lpCurveAllocation" type="range" min="50" max="100" step="1" value="100"><small>For a fully fair launch, use 100% and retain no launch allocation.</small></label>
-        </div>
-
-        <div class="lp-form-section">
-          <div class="lp-form-heading"><span>03</span><div><h3>Liquidity and protection</h3><p>Choose the destination and initial liquidity lock policy.</p></div></div>
-          <div class="lp-field-row">
-            <label class="lp-field"><span>Liquidity destination</span><select id="lpDestination" disabled><option>LUSTSwap</option></select></label>
-            <label class="lp-field"><span>Liquidity lock</span><select id="lpLock"><option value="Permanent lock">Permanent lock</option><option value="24 months">24 months</option><option value="12 months">12 months</option><option value="6 months">6 months</option></select></label>
-          </div>
-          <label class="lp-check"><input id="lpFair" type="checkbox" checked><span><strong>Fair-launch mode</strong><small>No private round and no team allocation from the public launch supply.</small></span></label>
-          <label class="lp-check"><input id="lpConfirm" type="checkbox"><span><strong>I understand these parameters become immutable after deployment</strong><small>This preview does not deploy a contract or move funds.</small></span></label>
-        </div>
-
-        <div class="lp-form-actions">
-          <button class="btn ghost" id="lpReset" type="button">Reset configuration</button>
-          <button class="btn primary lp-deploy" type="button" disabled>Deploy launch — coming soon</button>
-        </div>
-      </form>
-
-      <aside class="lp-launch-preview">
-        <div class="lp-preview-sticky">
-          <div class="lp-preview-top"><span>LIVE CONFIGURATION PREVIEW</span><b id="lpPreviewStatus">DRAFT</b></div>
-          <div class="lp-preview-token">
-            <div class="lp-preview-avatar" id="lpAvatar">C</div>
-            <div><small>CREATOR LAUNCH</small><h3 id="lpPreviewName">My Creator Token</h3><p>$<span id="lpPreviewSymbol">CREATOR</span> · LUST Chain</p></div>
-          </div>
-          <div class="lp-preview-progress"><div><span>Configuration readiness</span><strong id="lpReadinessText">80%</strong></div><div class="lp-progress-track"><i id="lpProgressBar" style="width:80%"></i></div></div>
-          <dl class="lp-preview-list">
-            <div><dt>Launch model</dt><dd id="lpPreviewCurve">Linear bonding curve</dd></div>
-            <div><dt>Quote asset</dt><dd id="lpPreviewQuote">LUSDT</dd></div>
-            <div><dt>Launch allocation</dt><dd id="lpPreviewAmount">1,000,000 tokens</dd></div>
-            <div><dt>Public curve share</dt><dd id="lpPreviewShare">100%</dd></div>
-            <div><dt>Graduation target</dt><dd id="lpPreviewTarget">10,000 LUSDT</dd></div>
-            <div><dt>Liquidity destination</dt><dd>LUSTSwap</dd></div>
-            <div><dt>Liquidity lock</dt><dd id="lpPreviewLock">Permanent lock</dd></div>
-            <div><dt>Private allocation</dt><dd id="lpPreviewPrivate">None</dd></div>
-          </dl>
-          <div class="lp-preview-result"><span>AFTER GRADUATION</span><strong>Public LUSTSwap liquidity</strong><small>The final amount and pool price will be determined by the audited contract rules.</small></div>
-          <div class="lp-preview-warning"><span>i</span><p>Configuration interface only. No wallet signature, token approval or transaction is currently requested.</p></div>
-        </div>
-      </aside>
-    </div>
-  </section>
-
-  <section class="lp-feature-grid" id="featured-launch">
-    <article class="lp-mia-card">
-      <div class="lp-mia-main">
-        <div class="lp-mia-logo"><img src="./assets/mia-token-clean.png" alt="Mia Meme Coin logo"></div>
-        <div class="lp-mia-copy">
-          <span class="lp-featured-pill">FEATURED FAIR LAUNCH</span>
-          <h2>Mia Meme Coin <em>($MIA)</em></h2>
-          <p>The first featured launch prepared for the LUST creator ecosystem: a transparent experimental community token with its full public allocation placed in the bonding curve.</p>
-        </div>
-      </div>
-      <div class="lp-mia-points">
-        <div><span>♙</span><strong>Creator-first</strong><small>Designed to demonstrate a simple launch path for independent creators.</small></div>
-        <div><span>100%</span><strong>In the curve</strong><small>The complete launch allocation is publicly distributed through the curve.</small></div>
-        <div><span>▣</span><strong>Locked liquidity</strong><small>Graduated liquidity is created on LUSTSwap and locked by contract rule.</small></div>
-      </div>
-      <div class="lp-fair-note"><span>✓</span><div><strong>No retained launch tokens. No private allocation. No hidden rules.</strong><small>Final contract addresses and parameters will be published before launch.</small></div></div>
-    </article>
-
-    <aside class="lp-summary-card">
-      <div class="lp-summary-head"><div><small>LAUNCH SUMMARY</small><h2>$MIA</h2></div><span class="lp-status">IN PREPARATION</span></div>
-      <dl>
-        <div><dt>Token</dt><dd>Mia Meme Coin</dd></div>
-        <div><dt>Network</dt><dd>LUST Chain</dd></div>
-        <div><dt>Quote asset</dt><dd>LUSDT or LST</dd></div>
-        <div><dt>Curve allocation</dt><dd>100%</dd></div>
-        <div><dt>Team allocation</dt><dd>0%</dd></div>
-        <div><dt>Liquidity destination</dt><dd>LUSTSwap</dd></div>
-        <div><dt>Liquidity protection</dt><dd>Locked by rule</dd></div>
-        <div><dt>Platform launch fee</dt><dd>To be published</dd></div>
-      </dl>
-      <button class="lp-coming" type="button" disabled>Launch coming soon</button>
-      <p>Awaiting audited contract deployment and public verification.</p>
-    </aside>
-  </section>
-
-  <section class="lp-creator-cta">
-    <div class="lp-cta-icon">✦</div>
-    <div><h2>Ready to build your creator token?</h2><p>Create the token now in the LUST Factory. Launchpad contract actions will be enabled only after auditing and public verification.</p></div>
-    <a class="btn ghost" href="./factory.html">Open Token Factory →</a>
-  </section>
-
-  <section class="lp-safety">
-    <div class="lp-section-title"><small>TRANSPARENT BY CONSTRUCTION</small><h2>Clear rules before every signature</h2></div>
-    <div class="lp-safety-grid">
-      <article><b>01</b><h3>Visible parameters</h3><p>Supply, curve, target, migration, fees and lock duration shown before launch.</p></article>
-      <article><b>02</b><h3>Verified contracts</h3><p>Only published and explorer-verified contracts will power live launch actions.</p></article>
-      <article><b>03</b><h3>Native graduation</h3><p>Successful curves create their initial public market directly on LUSTSwap.</p></article>
-      <article><b>04</b><h3>No silent custody</h3><p>Funds and tokens move according to auditable on-chain state transitions.</p></article>
-    </div>
-  </section>
+<section class="lp-hero">
+<div class="lp-hero-copy">
+<div class="lp-eyebrow"><span>NEW</span> Creator launches · Native LUSTSwap liquidity</div>
+<h1>Launch your token with <em>automated liquidity</em></h1>
+<p>Create the token in the LUST Factory, configure a transparent public sale and graduate directly to a locked liquidity pool on LUSTSwap — all through one connected flow.</p>
+<div class="lp-actions">
+<a class="btn primary" href="#create-launch">Configure a launch</a>
+<a class="btn ghost" href="./factory.html">Create token first</a>
+</div>
+<div class="lp-benefits">
+<article><span>✓</span><div><strong>Public launch rules</strong><small>Allocation, pricing, goal and liquidity destination visible before participation.</small></div></article>
+<article><span>⌁</span><div><strong>Automatic graduation</strong><small>The curve graduates into a native LUSTSwap market when its target is reached.</small></div></article>
+<article><span>▣</span><div><strong>Liquidity protection</strong><small>Initial liquidity follows the selected on-chain lock rule.</small></div></article>
+</div>
+</div>
+<div aria-label="Launchpad flow preview" class="lp-hero-console">
+<div class="lp-console-head"><span class="lp-live-dot"></span><strong>LUST Launch Engine</strong><small>PREVIEW</small></div>
+<div class="lp-console-token">
+<div class="lp-console-mark"><img alt="LUST" src="./assets/lust-logo.png"/></div>
+<div><small>CONNECTED INFRASTRUCTURE</small><h2>Factory → Curve → Swap</h2><p>One guided process from token contract to public liquidity.</p></div>
+</div>
+<div class="lp-console-flow">
+<div><b>01</b><span>Token</span><strong>Verified</strong></div><i>→</i>
+<div><b>02</b><span>Launch</span><strong>Transparent</strong></div><i>→</i>
+<div><b>03</b><span>Liquidity</span><strong>Locked</strong></div>
+</div>
+<div class="lp-console-foot"><span>Network</span><strong>LUST Chain</strong><span>Destination</span><strong>LUSTSwap</strong></div>
+</div>
+</section>
+<section class="lp-section lp-how">
+<div class="lp-section-title"><small>ONE CONNECTED FLOW</small><h2>From token creation to public liquidity</h2></div>
+<div class="lp-steps">
+<article><b>01</b><div class="lp-step-icon">▤</div><h3>Token Factory</h3><p>Create your fixed-supply token with verified metadata on LUST Chain.</p><a href="./factory.html">Open Factory →</a></article>
+<i>→</i>
+<article><b>02</b><div class="lp-step-icon">⌁</div><h3>Bonding Curve</h3><p>Launch the public allocation through transparent, predefined pricing rules.</p></article>
+<i>→</i>
+<article><b>03</b><div class="lp-step-icon">◉</div><h3>LUSTSwap Liquidity</h3><p>When the goal is reached, liquidity is created and locked automatically.</p><a href="./swap.html">View LUSTSwap →</a></article>
+</div>
+</section>
+<section class="lp-builder" id="create-launch">
+<div class="lp-section-title lp-builder-title"><small>LAUNCH CONFIGURATOR</small><h2>Prepare your public token launch</h2><p>Configure the parameters now. Contract deployment will be enabled only after the audited Launchpad contracts are published.</p></div>
+<div class="lp-builder-grid">
+<form class="lp-launch-form" id="launchConfigurator" novalidate="">
+<div class="lp-form-section">
+<div class="lp-form-heading"><span>01</span><div><h3>Token</h3><p>Select a token already created in the LUST Token Factory.</p></div></div>
+<label class="lp-field lp-field-wide"><span>Token contract</span><div class="lp-input-action"><input autocomplete="off" id="lpToken" inputmode="text" placeholder="0x... token address" type="text"/><a href="./factory.html">Open Factory</a></div><small>The contract must be deployed on LUST Chain and pass launch validation.</small></label>
+<div class="lp-field-row">
+<label class="lp-field"><span>Token name</span><input id="lpName" maxlength="32" placeholder="Token name" type="text" value="My Creator Token"/></label>
+<label class="lp-field"><span>Symbol</span><input id="lpSymbol" maxlength="10" placeholder="TOKEN" type="text" value="CREATOR"/></label>
+</div>
+</div>
+<div class="lp-form-section">
+<div class="lp-form-heading"><span>02</span><div><h3>Launch rules</h3><p>Define how the public allocation and market formation will work.</p></div></div>
+<div class="lp-field-row">
+<label class="lp-field"><span>Quote asset</span><select id="lpQuote"><option value="LUSDT">LUSDT</option><option value="LST">LST</option></select></label>
+<label class="lp-field"><span>Curve model</span><select id="lpCurve"><option value="Linear bonding curve">Linear bonding curve</option><option value="Fixed-price fair launch">Fixed-price fair launch</option><option value="Progressive bonding curve">Progressive bonding curve</option></select></label>
+</div>
+<div class="lp-field-row">
+<label class="lp-field"><span>Tokens allocated to launch</span><div class="lp-suffix-input"><input id="lpAllocation" min="1" step="1" type="number" value="1000000"/><b>TOKENS</b></div></label>
+<label class="lp-field"><span>Graduation target</span><div class="lp-suffix-input"><input id="lpTarget" min="1" step="1" type="number" value="10000"/><b id="lpTargetAsset">LUSDT</b></div></label>
+</div>
+<label class="lp-field lp-range-field"><span><b>Public curve allocation</b><output id="lpCurveOutput">100%</output></span><input id="lpCurveAllocation" max="100" min="50" step="1" type="range" value="100"/><small>For a fully fair launch, use 100% and retain no launch allocation.</small></label>
+</div>
+<div class="lp-form-section">
+<div class="lp-form-heading"><span>03</span><div><h3>Liquidity and protection</h3><p>Choose the destination and initial liquidity lock policy.</p></div></div>
+<div class="lp-field-row">
+<label class="lp-field"><span>Liquidity destination</span><select disabled="" id="lpDestination"><option>LUSTSwap</option></select></label>
+<label class="lp-field"><span>Liquidity lock</span><select id="lpLock"><option value="Permanent lock">Permanent lock</option><option value="24 months">24 months</option><option value="12 months">12 months</option><option value="6 months">6 months</option></select></label>
+</div>
+<label class="lp-check"><input checked="" id="lpFair" type="checkbox"/><span><strong>Fair-launch mode</strong><small>No private round and no team allocation from the public launch supply.</small></span></label>
+<label class="lp-check"><input id="lpConfirm" type="checkbox"/><span><strong>I understand these parameters become immutable after deployment</strong><small>This preview does not deploy a contract or move funds.</small></span></label>
+</div>
+<div class="lp-form-actions">
+<button class="btn ghost" id="lpReset" type="button">Reset configuration</button>
+<button class="btn primary lp-deploy" disabled="" type="button">Deploy launch — coming soon</button>
+</div>
+</form>
+<aside class="lp-launch-preview">
+<div class="lp-preview-sticky">
+<div class="lp-preview-top"><span>LIVE CONFIGURATION PREVIEW</span><b id="lpPreviewStatus">DRAFT</b></div>
+<div class="lp-preview-token">
+<div class="lp-preview-avatar" id="lpAvatar">C</div>
+<div><small>CREATOR LAUNCH</small><h3 id="lpPreviewName">My Creator Token</h3><p>$<span id="lpPreviewSymbol">CREATOR</span> · LUST Chain</p></div>
+</div>
+<div class="lp-preview-progress"><div><span>Configuration readiness</span><strong id="lpReadinessText">80%</strong></div><div class="lp-progress-track"><i id="lpProgressBar" style="width:80%"></i></div></div>
+<dl class="lp-preview-list">
+<div><dt>Launch model</dt><dd id="lpPreviewCurve">Linear bonding curve</dd></div>
+<div><dt>Quote asset</dt><dd id="lpPreviewQuote">LUSDT</dd></div>
+<div><dt>Launch allocation</dt><dd id="lpPreviewAmount">1,000,000 tokens</dd></div>
+<div><dt>Public curve share</dt><dd id="lpPreviewShare">100%</dd></div>
+<div><dt>Graduation target</dt><dd id="lpPreviewTarget">10,000 LUSDT</dd></div>
+<div><dt>Liquidity destination</dt><dd>LUSTSwap</dd></div>
+<div><dt>Liquidity lock</dt><dd id="lpPreviewLock">Permanent lock</dd></div>
+<div><dt>Private allocation</dt><dd id="lpPreviewPrivate">None</dd></div>
+</dl>
+<div class="lp-preview-result"><span>AFTER GRADUATION</span><strong>Public LUSTSwap liquidity</strong><small>The final amount and pool price will be determined by the audited contract rules.</small></div>
+<div class="lp-preview-warning"><span>i</span><p>Configuration interface only. No wallet signature, token approval or transaction is currently requested.</p></div>
+</div>
+</aside>
+</div>
+</section>
+<section class="lp-feature-grid" id="featured-launch">
+<article class="lp-mia-card">
+<div class="lp-mia-main">
+<div class="lp-mia-logo"><img alt="Mia Meme Coin logo" src="./assets/mia-token-clean.png"/></div>
+<div class="lp-mia-copy">
+<span class="lp-featured-pill">FEATURED FAIR LAUNCH</span>
+<h2>Mia Meme Coin <em>($MIA)</em></h2>
+<p>The first featured launch prepared for the LUST creator ecosystem: a transparent experimental community token with its full public allocation placed in the bonding curve.</p>
+</div>
+</div>
+<div class="lp-mia-points">
+<div><span>♙</span><strong>Creator-first</strong><small>Designed to demonstrate a simple launch path for independent creators.</small></div>
+<div><span>100%</span><strong>In the curve</strong><small>The complete launch allocation is publicly distributed through the curve.</small></div>
+<div><span>▣</span><strong>Locked liquidity</strong><small>Graduated liquidity is created on LUSTSwap and locked by contract rule.</small></div>
+</div>
+<div class="lp-fair-note"><span>✓</span><div><strong>No retained launch tokens. No private allocation. No hidden rules.</strong><small>Final contract addresses and parameters will be published before launch.</small></div></div>
+</article>
+<aside class="lp-summary-card">
+<div class="lp-summary-head"><div><small>LAUNCH SUMMARY</small><h2>$MIA</h2></div><span class="lp-status">IN PREPARATION</span></div>
+<dl>
+<div><dt>Token</dt><dd>Mia Meme Coin</dd></div>
+<div><dt>Network</dt><dd>LUST Chain</dd></div>
+<div><dt>Quote asset</dt><dd>LUSDT or LST</dd></div>
+<div><dt>Curve allocation</dt><dd>100%</dd></div>
+<div><dt>Team allocation</dt><dd>0%</dd></div>
+<div><dt>Liquidity destination</dt><dd>LUSTSwap</dd></div>
+<div><dt>Liquidity protection</dt><dd>Locked by rule</dd></div>
+<div><dt>Platform launch fee</dt><dd>To be published</dd></div>
+</dl>
+<button class="lp-coming" disabled="" type="button">Launch coming soon</button>
+<p>Awaiting audited contract deployment and public verification.</p>
+</aside>
+</section>
+<section class="lp-creator-cta">
+<div class="lp-cta-icon">✦</div>
+<div><h2>Ready to build your creator token?</h2><p>Create the token now in the LUST Factory. Launchpad contract actions will be enabled only after auditing and public verification.</p></div>
+<a class="btn ghost" href="./factory.html">Open Token Factory →</a>
+</section>
+<section class="lp-safety">
+<div class="lp-section-title"><small>TRANSPARENT BY CONSTRUCTION</small><h2>Clear rules before every signature</h2></div>
+<div class="lp-safety-grid">
+<article><b>01</b><h3>Visible parameters</h3><p>Supply, curve, target, migration, fees and lock duration shown before launch.</p></article>
+<article><b>02</b><h3>Verified contracts</h3><p>Only published and explorer-verified contracts will power live launch actions.</p></article>
+<article><b>03</b><h3>Native graduation</h3><p>Successful curves create their initial public market directly on LUSTSwap.</p></article>
+<article><b>04</b><h3>No silent custody</h3><p>Funds and tokens move according to auditable on-chain state transitions.</p></article>
+</div>
+</section>
 </main>
-<footer class="footer lust-footer lust-footer--v8" aria-label="LUST Chain footer">
-  <div class="lust-footer__glow" aria-hidden="true"></div>
-  <div class="lust-footer__inner">
-    <div class="lust-footer__topline">
-      <section class="lust-footer__brand" aria-label="LUST Chain summary">
-        <a class="lust-footer__logo" href="./index.html" aria-label="LUST Chain home">
-          <img src="./assets/lust-logo.png" alt="LUST Chain logo" loading="lazy" />
-        </a>
-        <div class="lust-footer__brand-copy">
-          <strong>LUST CHAIN</strong>
-          <p>Independent EVM L1 for LST, LUSDT, WLST liquidity, NFTs, swap, P2P and public mining — organized around transparent contracts and staged liquidity launch.</p>
-        </div>
-      </section>
-
-      <nav class="lust-footer__socials" aria-label="Official social links">
-        <a class="lust-footer__social" href="https://x.com/lust_chain" target="_blank" rel="noreferrer" aria-label="LUST Chain on X">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.77 7.74L23.2 22h-6.25l-4.89-6.39L6.47 22H3.36l7.24-8.27L.8 2h6.41l4.42 5.84L18.9 2Zm-1.1 18h1.73L6.26 3.9H4.4L17.8 20Z" fill="currentColor"/></svg><span>X</span>
-        </a>
-        <a class="lust-footer__social" href="https://t.me/+is17w3vOlvEyNGQ5" target="_blank" rel="noreferrer" aria-label="LUST Chain on Telegram">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 4.5 18.3 19c-.24 1.03-.88 1.28-1.77.8l-4.9-3.61-2.36 2.27c-.26.26-.48.48-.98.48l.35-4.98 9.06-8.19c.39-.35-.08-.55-.61-.2L5.92 12.6.98 11.06c-1.07-.34-1.09-1.07.22-1.58L20.5 2.03c.9-.33 1.68.2 1 2.47Z" fill="currentColor"/></svg><span>Telegram</span>
-        </a>
-        <a class="lust-footer__social" href="https://github.com/lustchain" target="_blank" rel="noreferrer" aria-label="LUST Chain on GitHub">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.66.5 12.02c0 5.1 3.3 9.42 7.87 10.95.58.11.79-.25.79-.56v-2.17c-3.2.7-3.87-1.54-3.87-1.54-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.76 2.68 1.25 3.33.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.67 0-1.25.45-2.27 1.17-3.07-.12-.29-.51-1.47.11-3.06 0 0 .96-.31 3.14 1.17a10.92 10.92 0 0 1 5.72 0c2.18-1.48 3.13-1.17 3.13-1.17.63 1.59.24 2.77.12 3.06.73.8 1.17 1.82 1.17 3.07 0 4.4-2.69 5.38-5.25 5.66.41.36.77 1.05.77 2.13v3.16c0 .31.21.68.8.56A11.53 11.53 0 0 0 23.5 12C23.5 5.66 18.35.5 12 .5Z" fill="currentColor"/></svg><span>GitHub</span>
-        </a>
-        <a class="lust-footer__social" href="mailto:contact@lustchain.org" aria-label="Email LUST Chain">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.25 5.5A2.25 2.25 0 0 1 4.5 3.25h15A2.25 2.25 0 0 1 21.75 5.5v13A2.25 2.25 0 0 1 19.5 20.75h-15A2.25 2.25 0 0 1 2.25 18.5v-13Zm1.9-.35 7.34 6.05a.8.8 0 0 0 1.02 0l7.34-6.05H4.15Zm16.1 1.55-6.63 5.47a2.3 2.3 0 0 1-2.92 0L4.07 6.7V18.5c0 .24.2.44.43.44h15c.24 0 .43-.2.43-.44V6.7Z" fill="currentColor"/></svg><span>Email</span>
-        </a>
-      </nav>
-    </div>
-
-    <div class="lust-footer__middle">
-      <nav class="lust-footer__links" aria-label="Footer navigation">
-        <div>
-          <h2>Platform</h2>
-          <a href="./index.html">Home</a>
-          <a href="./presale.html">Genesis Presale</a>
-          <a href="./bridge.html">LUSDT Bridge</a>
-          <a href="./swap.html">Swap</a>
-          <a href="./p2p.html">P2P Market</a>
-        </div>
-        <div>
-          <h2>Ecosystem</h2>
-          <a href="./mining.html">Mining</a>
-          <a href="./staking.html">Staking</a>
-          <a href="./nfts.html">NFTs</a>
-          <a href="./factory.html">Token Factory</a>
-          <a href="./faucet.html">Gas Faucet</a>
-        </div>
-        <div>
-          <h2>Resources</h2>
-          <a href="./whitepaper.html">Whitepaper</a>
-          <a href="./docs.html">Docs</a>
-          <a href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">Explorer</a>
-          <a href="https://rpc.lustchain.org" target="_blank" rel="noreferrer">RPC</a>
-          <a href="https://rpc-backup.lustchain.org" target="_blank" rel="noreferrer">Backup RPC</a>
-        </div>
-        <div>
-          <h2>Legal</h2>
-          <a href="./privacy-policy.html">Privacy Policy</a>
-          <a href="./terms-and-conditions.html">Terms & Conditions</a>
-          <a href="./risk-disclosure.html">Risk Disclosure</a>
-          <a href="https://lustchain.org" target="_blank" rel="noreferrer">Main Site</a>
-        </div>
-      </nav>
-
-      <aside class="lust-footer__network" aria-label="Network quick facts">
-        <h2>Network</h2>
-        <div class="lust-footer__badges" aria-label="Network details">
-          <span>Chain ID 6923</span>
-          <span>Native LST</span>
-          <span>LQC</span>
-          <span>15s blocks</span>
-        </div>
-        <p>Use the official explorer and docs to verify contracts, reserves and launch status.</p>
-        <div class="lust-footer__quick-actions">
-          <a href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">Explorer</a>
-          <a href="./docs.html">Docs</a>
-        </div>
-      </aside>
-    </div>
-  </div>
-
-  <div class="lust-footer__bottom">
-    <span>© 2026 LUST Chain. Built for public ownership and transparent on-chain activity.</span>
-    <span>X @lust_chain · Telegram · GitHub lustchain · contact@lustchain.org</span>
-  </div>
+<footer aria-label="LUST Chain footer" class="footer lust-footer lust-footer--v8">
+<div aria-hidden="true" class="lust-footer__glow"></div>
+<div class="lust-footer__inner">
+<div class="lust-footer__topline">
+<section aria-label="LUST Chain summary" class="lust-footer__brand">
+<a aria-label="LUST Chain home" class="lust-footer__logo" href="./index.html">
+<img alt="LUST Chain logo" loading="lazy" src="./assets/lust-logo.png">
+</img></a>
+<div class="lust-footer__brand-copy">
+<strong>LUST CHAIN</strong>
+<p>Independent EVM L1 for LST, LUSDT, WLST liquidity, NFTs, swap, P2P and public mining — organized around transparent contracts and staged liquidity launch.</p>
+</div>
+</section>
+<nav aria-label="Official social links" class="lust-footer__socials">
+<a aria-label="LUST Chain on X" class="lust-footer__social" href="https://x.com/lust_chain" rel="noreferrer" target="_blank">
+<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M18.9 2H22l-6.77 7.74L23.2 22h-6.25l-4.89-6.39L6.47 22H3.36l7.24-8.27L.8 2h6.41l4.42 5.84L18.9 2Zm-1.1 18h1.73L6.26 3.9H4.4L17.8 20Z" fill="currentColor"></path></svg><span>X</span>
+</a>
+<a aria-label="LUST Chain on Telegram" class="lust-footer__social" href="https://t.me/+is17w3vOlvEyNGQ5" rel="noreferrer" target="_blank">
+<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M21.5 4.5 18.3 19c-.24 1.03-.88 1.28-1.77.8l-4.9-3.61-2.36 2.27c-.26.26-.48.48-.98.48l.35-4.98 9.06-8.19c.39-.35-.08-.55-.61-.2L5.92 12.6.98 11.06c-1.07-.34-1.09-1.07.22-1.58L20.5 2.03c.9-.33 1.68.2 1 2.47Z" fill="currentColor"></path></svg><span>Telegram</span>
+</a>
+<a aria-label="LUST Chain on GitHub" class="lust-footer__social" href="https://github.com/lustchain" rel="noreferrer" target="_blank">
+<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.66.5 12.02c0 5.1 3.3 9.42 7.87 10.95.58.11.79-.25.79-.56v-2.17c-3.2.7-3.87-1.54-3.87-1.54-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.76 2.68 1.25 3.33.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.67 0-1.25.45-2.27 1.17-3.07-.12-.29-.51-1.47.11-3.06 0 0 .96-.31 3.14 1.17a10.92 10.92 0 0 1 5.72 0c2.18-1.48 3.13-1.17 3.13-1.17.63 1.59.24 2.77.12 3.06.73.8 1.17 1.82 1.17 3.07 0 4.4-2.69 5.38-5.25 5.66.41.36.77 1.05.77 2.13v3.16c0 .31.21.68.8.56A11.53 11.53 0 0 0 23.5 12C23.5 5.66 18.35.5 12 .5Z" fill="currentColor"></path></svg><span>GitHub</span>
+</a>
+<a aria-label="Email LUST Chain" class="lust-footer__social" href="mailto:contact@lustchain.org">
+<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M2.25 5.5A2.25 2.25 0 0 1 4.5 3.25h15A2.25 2.25 0 0 1 21.75 5.5v13A2.25 2.25 0 0 1 19.5 20.75h-15A2.25 2.25 0 0 1 2.25 18.5v-13Zm1.9-.35 7.34 6.05a.8.8 0 0 0 1.02 0l7.34-6.05H4.15Zm16.1 1.55-6.63 5.47a2.3 2.3 0 0 1-2.92 0L4.07 6.7V18.5c0 .24.2.44.43.44h15c.24 0 .43-.2.43-.44V6.7Z" fill="currentColor"></path></svg><span>Email</span>
+</a>
+</nav>
+</div>
+<div class="lust-footer__middle">
+<nav aria-label="Footer navigation" class="lust-footer__links">
+<div>
+<h2>Platform</h2>
+<a href="./index.html">Home</a>
+<a href="./presale.html">Genesis Presale</a>
+<a href="./bridge.html">LUSDT Bridge</a>
+<a href="./swap.html">Swap</a>
+<a href="./p2p.html">P2P Market</a>
+</div>
+<div>
+<h2>Ecosystem</h2>
+<a href="./mining.html">Mining</a>
+<a href="./staking.html">Staking</a>
+<a href="./nfts.html">NFTs</a>
+<a href="./factory.html">Token Factory</a>
+<a href="./faucet.html">Gas Faucet</a>
+</div>
+<div>
+<h2>Resources</h2>
+<a href="./whitepaper.html">Whitepaper</a>
+<a href="./docs.html">Docs</a>
+<a href="https://explorer.lustchain.org" rel="noreferrer" target="_blank">Explorer</a>
+<a href="https://rpc.lustchain.org" rel="noreferrer" target="_blank">RPC</a>
+<a href="https://rpc-backup.lustchain.org" rel="noreferrer" target="_blank">Backup RPC</a>
+</div>
+<div>
+<h2>Legal</h2>
+<a href="./privacy-policy.html">Privacy Policy</a>
+<a href="./terms-and-conditions.html">Terms &amp; Conditions</a>
+<a href="./risk-disclosure.html">Risk Disclosure</a>
+<a href="https://lustchain.org" rel="noreferrer" target="_blank">Main Site</a>
+</div>
+</nav>
+<aside aria-label="Network quick facts" class="lust-footer__network">
+<h2>Network</h2>
+<div aria-label="Network details" class="lust-footer__badges">
+<span>Chain ID 6923</span>
+<span>Native LST</span>
+<span>LQC</span>
+<span>15s blocks</span>
+</div>
+<p>Use the official explorer and docs to verify contracts, reserves and launch status.</p>
+<div class="lust-footer__quick-actions">
+<a href="https://explorer.lustchain.org" rel="noreferrer" target="_blank">Explorer</a>
+<a href="./docs.html">Docs</a>
+</div>
+</aside>
+</div>
+</div>
+<div class="lust-footer__bottom">
+<span>© 2026 LUST Chain. Built for public ownership and transparent on-chain activity.</span>
+<span>X @lust_chain · Telegram · GitHub lustchain · contact@lustchain.org</span>
+</div>
 </footer>
-
-<button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
-
-<script type="module" src="./app.js?v20260613-lustswap-v1"></script>
+<button aria-label="Back to top" class="back-to-top" id="backToTop" type="button">↑</button>
+<script src="./app.js?v20260613-lustswap-v1" type="module"></script>
 <script src="./launchpad.js?v=20260716-launchpad-premium-v2"></script>
 <script src="./nft-menu.js?v=20260616-hover-v5"></script>
-</body>
+<script defer="" src="./nav-mobile.js"></script></body>
 </html>
