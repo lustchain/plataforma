@@ -101,12 +101,10 @@
 (() => {
   'use strict';
   const selectors = [
-    '[data-connect-wallet]','[data-bridge-deposit]','[data-bridge-mint]',
+    '[data-bridge-deposit]','[data-bridge-mint]',
     '[data-bridge-burn]','[data-bridge-release]','[data-bridge-primary-deposit]',
     '[data-bridge-primary-withdraw]','[data-bsc-recover-btn]','[data-bsc-recover-mint]',
-    '[data-bridge-max-deposit]','[data-bridge-max-withdraw]',
-    '[data-lusdt-bridge] input','[data-lusdt-bridge] select','[data-lusdt-bridge] textarea',
-    '[data-bridge-network-cycle]','[data-bridge-switch]'
+    '[data-bridge-max-deposit]','[data-bridge-max-withdraw]'
   ];
   const matchesPaused = (el) => selectors.some(s => el.matches?.(s) || el.closest?.(s));
   const enforce = () => {
@@ -119,21 +117,23 @@
     document.querySelectorAll('[data-bridge-primary-deposit],[data-bridge-deposit],[data-bridge-mint]').forEach(el => el.textContent='Bridge temporarily paused');
     document.querySelectorAll('[data-bridge-primary-withdraw],[data-bridge-burn],[data-bridge-release]').forEach(el => el.textContent='Bridge temporarily paused');
     const claim = document.querySelector('[data-bridge-claim-log]');
-    if (claim) claim.textContent='New bridge operations are temporarily paused.';
+    if (claim) claim.textContent='Wallet connection and balance viewing are available. New bridge operations are temporarily paused.';
     const release = document.querySelector('[data-bridge-release-log]');
-    if (release) release.textContent='New bridge operations are temporarily paused.';
+    if (release) release.textContent='Wallet connection and balance viewing are available. New bridge operations are temporarily paused.';
   };
   const block = (event) => {
     const target = event.target instanceof Element ? event.target : null;
     if (!target || !matchesPaused(target)) return;
-    event.preventDefault(); event.stopImmediatePropagation();
+    event.preventDefault();
+    event.stopImmediatePropagation();
   };
-  ['click','submit','change','input','keydown','pointerdown','touchstart'].forEach(type => document.addEventListener(type, block, true));
+  document.addEventListener('click', block, true);
+  document.addEventListener('submit', block, true);
   document.addEventListener('DOMContentLoaded', () => {
     const main = document.querySelector('main');
-    if (main && !document.querySelector('.lust-pause-banner')) main.insertAdjacentHTML('afterbegin', '<section class="lust-pause-banner" role="status"><div class="lust-pause-banner__icon">⏸</div><div><small>Temporary pause</small><strong>LUSDT Bridge is currently unavailable</strong><p>The page remains online for transparency, but new deposits, burns, mints, releases and recovery actions cannot be initiated through the platform while the next stage of the LUST ecosystem is completed.</p></div></section>');
+    if (main && !document.querySelector('.lust-pause-banner')) main.insertAdjacentHTML('afterbegin', '<section class="lust-pause-banner" role="status"><div class="lust-pause-banner__icon">⏸</div><div><small>Temporary pause</small><strong>LUSDT Bridge operations are currently unavailable</strong><p>Wallet connection, network selection and balance viewing remain available. New deposits, burns, mints, releases and recovery actions cannot be initiated through the platform while the next stage of the LUST ecosystem is completed.</p></div></section>');
     enforce();
-    new MutationObserver(enforce).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['disabled','class']});
+    setTimeout(enforce, 500);
   });
 })();
 </script>

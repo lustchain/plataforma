@@ -102,9 +102,8 @@
   'use strict';
   const MESSAGE = 'The Genesis Presale is temporarily paused while the next stage of the LUST ecosystem is completed.';
   const selectors = [
-    '[data-connect-wallet]','[data-presale-buy]','[data-presale-claim]',
-    '[data-presale-claim-bonus]','[data-presale-refund]','[data-presale-max]',
-    '.presale-buy-card input','.presale-buy-card select','.presale-buy-card textarea'
+    '[data-presale-buy]','[data-presale-claim]',
+    '[data-presale-claim-bonus]','[data-presale-refund]','[data-presale-max]'
   ];
   const matchesPaused = (el) => selectors.some(s => el.matches?.(s) || el.closest?.(s));
   const enforce = () => {
@@ -123,14 +122,16 @@
   const block = (event) => {
     const target = event.target instanceof Element ? event.target : null;
     if (!target || !matchesPaused(target)) return;
-    event.preventDefault(); event.stopImmediatePropagation();
+    event.preventDefault();
+    event.stopImmediatePropagation();
   };
-  ['click','submit','change','input','keydown','pointerdown','touchstart'].forEach(type => document.addEventListener(type, block, true));
+  document.addEventListener('click', block, true);
+  document.addEventListener('submit', block, true);
   document.addEventListener('DOMContentLoaded', () => {
     const main = document.querySelector('main');
-    if (main && !document.querySelector('.lust-pause-banner')) main.insertAdjacentHTML('afterbegin', `<section class="lust-pause-banner" role="status"><div class="lust-pause-banner__icon">⏸</div><div><small>Temporary pause</small><strong>Genesis Presale is currently unavailable</strong><p>${MESSAGE} The page remains online for transparency, but purchases, approvals, claims and refunds cannot be initiated through the platform.</p></div></section>`);
+    if (main && !document.querySelector('.lust-pause-banner')) main.insertAdjacentHTML('afterbegin', `<section class="lust-pause-banner" role="status"><div class="lust-pause-banner__icon">⏸</div><div><small>Temporary pause</small><strong>Genesis Presale is currently unavailable</strong><p>${MESSAGE} Wallet connection and balance viewing remain available, but purchases, approvals, claims and refunds cannot be initiated through the platform.</p></div></section>`);
     enforce();
-    new MutationObserver(enforce).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['disabled','class']});
+    setTimeout(enforce, 500);
   });
 })();
 </script>
