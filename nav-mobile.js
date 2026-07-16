@@ -1,34 +1,23 @@
 (() => {
-  const header = document.querySelector('.topbar');
-  const toggle = document.querySelector('.mobile-nav-toggle');
-  const nav = document.querySelector('#site-navigation');
-  if (!header || !toggle || !nav) return;
+  const toggle = document.querySelector('.mobile-menu-toggle');
+  const nav = document.querySelector('#mainNavigation');
+  if (!toggle || !nav) return;
 
   const closeMenu = () => {
-    document.body.classList.remove('mobile-nav-open');
+    document.body.classList.remove('nav-open');
     toggle.setAttribute('aria-expanded', 'false');
-    toggle.setAttribute('aria-label', 'Open navigation menu');
-  };
-
-  const openMenu = () => {
-    document.body.classList.add('mobile-nav-open');
-    toggle.setAttribute('aria-expanded', 'true');
-    toggle.setAttribute('aria-label', 'Close navigation menu');
+    toggle.setAttribute('aria-label', 'Open navigation');
+    document.querySelectorAll('.nav-dropdown-menu[open]').forEach((menu) => { menu.open = false; });
   };
 
   toggle.addEventListener('click', () => {
-    document.body.classList.contains('mobile-nav-open') ? closeMenu() : openMenu();
+    const opening = !document.body.classList.contains('nav-open');
+    document.body.classList.toggle('nav-open', opening);
+    toggle.setAttribute('aria-expanded', String(opening));
+    toggle.setAttribute('aria-label', opening ? 'Close navigation' : 'Open navigation');
   });
 
-  nav.addEventListener('click', (event) => {
-    if (event.target.closest('a')) closeMenu();
-  });
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closeMenu();
-  });
-
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 980) closeMenu();
-  });
+  nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeMenu(); });
+  window.addEventListener('resize', () => { if (window.innerWidth > 900) closeMenu(); });
 })();

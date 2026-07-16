@@ -1,32 +1,32 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width,initial-scale=1" name="viewport"/>
-<title>LUST Chain Whitepaper | LQC, Tokenomics and Contracts</title>
-<meta content="Read the official LUST Chain whitepaper covering LQC public mining, tokenomics, contracts, presale, bridge, staking, NFTs and treasury." name="description"/>
-<meta content="index,follow,max-image-preview:large" name="robots"/>
-<link href="https://platform.lustchain.org/whitepaper.html" rel="canonical"/>
-<meta content="website" property="og:type"/>
-<meta content="LUST Chain" property="og:site_name"/>
-<meta content="LUST Chain Whitepaper | LQC, Tokenomics and Contracts" property="og:title"/>
-<meta content="Read the official LUST Chain whitepaper covering LQC public mining, tokenomics, contracts, presale, bridge, staking, NFTs and treasury." property="og:description"/>
-<meta content="https://platform.lustchain.org/whitepaper.html" property="og:url"/>
-<meta content="https://platform.lustchain.org/assets/lust-og.png" property="og:image"/>
-<meta content="1200" property="og:image:width"/>
-<meta content="630" property="og:image:height"/>
-<meta content="en_US" property="og:locale"/>
-<meta content="summary_large_image" name="twitter:card"/>
-<meta content="LUST Chain Whitepaper | LQC, Tokenomics and Contracts" name="twitter:title"/>
-<meta content="Read the official LUST Chain whitepaper covering LQC public mining, tokenomics, contracts, presale, bridge, staking, NFTs and treasury." name="twitter:description"/>
-<meta content="https://platform.lustchain.org/assets/lust-og.png" name="twitter:image"/>
-<meta content="#F70375" name="theme-color"/>
-<link href="./assets/site.webmanifest" rel="manifest"/>
-<link href="./assets/favicon.ico?v=20260628-explorer-v2" rel="icon" sizes="any"/>
-<link href="./assets/favicon.png?v=20260628-explorer-v2" rel="icon" type="image/png"/>
-<link href="./assets/apple-touch-icon.png?v=20260628-explorer-v2" rel="apple-touch-icon"/>
-<script type="application/ld+json">
+<meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>LUST Chain Whitepaper | LQC, Tokenomics and Contracts</title>
+  <meta name="description" content="Read the official LUST Chain whitepaper covering LQC public mining, tokenomics, contracts, presale, bridge, staking, NFTs and treasury." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <link rel="canonical" href="https://platform.lustchain.org/whitepaper.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="LUST Chain" />
+  <meta property="og:title" content="LUST Chain Whitepaper | LQC, Tokenomics and Contracts" />
+  <meta property="og:description" content="Read the official LUST Chain whitepaper covering LQC public mining, tokenomics, contracts, presale, bridge, staking, NFTs and treasury." />
+  <meta property="og:url" content="https://platform.lustchain.org/whitepaper.html" />
+  <meta property="og:image" content="https://platform.lustchain.org/assets/lust-og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="LUST Chain Whitepaper | LQC, Tokenomics and Contracts" />
+  <meta name="twitter:description" content="Read the official LUST Chain whitepaper covering LQC public mining, tokenomics, contracts, presale, bridge, staking, NFTs and treasury." />
+  <meta name="twitter:image" content="https://platform.lustchain.org/assets/lust-og.png" />
+  <meta name="theme-color" content="#F70375" />
+  <link rel="manifest" href="./assets/site.webmanifest" />
+  <link rel="icon" href="./assets/favicon.ico?v=20260628-explorer-v2" sizes="any" />
+  <link rel="icon" type="image/png" href="./assets/favicon.png?v=20260628-explorer-v2" />
+  <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png?v=20260628-explorer-v2" />
+  <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
@@ -72,10 +72,10 @@
   ]
 }
   </script>
-<link href="./styles.css?v=20260628-footer-v8-clean" rel="stylesheet"/>
-<!-- Google tag (gtag.js) - GA4 -->
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-Z8N7M5DTF4"></script>
-<script>
+<link rel="stylesheet" href="./styles.css?v=20260628-footer-v8-clean" />
+  <!-- Google tag (gtag.js) - GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8N7M5DTF4"></script>
+  <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
@@ -154,778 +154,839 @@
       table.wp-table { min-width: 680px; } .wp-logo-badge { width: 54px; height: 54px; }
     }
   </style>
-<style>
+  <style>
     .lust-whitepaper-page { max-width: 1480px; }
     .lust-whitepaper-page .wp-shell { padding-left: 0; padding-right: 0; }
     @media (max-width: 720px) { .lust-whitepaper-page { padding-left: 8px; padding-right: 8px; } }
   </style>
+
 </head>
 <body>
 <div class="promo-bar">LUST Chain official documents · Transparent rules, risks and protocol information.</div>
 <header class="topbar">
-<a class="brand" href="./index.html">
-<div class="logo"><img alt="LUST logo" src="./assets/lust-logo.png"/></div>
-<div><strong>LUST</strong><span>Platform</span></div>
-</a><button aria-controls="site-navigation" aria-expanded="false" aria-label="Open navigation menu" class="mobile-nav-toggle" type="button"><span></span><span></span><span></span></button>
-<nav aria-label="Main navigation" class="nav" id="site-navigation">
-<a href="./index.html">Home</a>
-<a href="./launchpad.html">Launchpad</a>
-<a href="./swap.html">Swap</a>
-<a href="./factory.html">Factory</a>
-<a href="./bridge.html">Bridge</a>
-<a href="./presale.html">Presale</a>
-<a href="./mining.html">Mining</a>
-<a href="./staking.html">Staking</a>
-<details class="nav-nft-menu">
-<summary>NFTs</summary>
-<div aria-label="NFT collections" class="nav-nft-dropdown" role="menu">
-<a href="./nfts.html" role="menuitem"><strong>LUST Rabbit Club</strong><span>Premium NFT collection</span></a>
-<a href="./pioneer.html" role="menuitem"><strong>Pioneer Rewards</strong><span>Free reward campaign</span></a>
-</div>
-</details>
-<a href="./p2p.html">P2P</a>
-<details class="nav-more-menu active">
-<summary>More</summary>
-<div aria-label="More platform links" class="nav-more-dropdown" role="menu">
-<a href="./faucet.html" role="menuitem">Faucet</a>
-<a href="./explorer.html" role="menuitem">Explorer</a>
-<a aria-current="page" class="active" href="./whitepaper.html" role="menuitem">Whitepaper</a>
-<a href="./docs.html" role="menuitem">Docs</a>
-</div>
-</details>
-</nav>
-<div class="actions">
-<button aria-label="Connect wallet" class="btn connect-btn" data-connect-wallet="" type="button">
-<div class="connect-icon">◫</div>
-<div class="connect-copy"><strong>Connect wallet</strong><span>Wallet not connected</span></div>
-<div class="connect-caret">⌄</div>
-</button>
-</div>
+  <a class="brand" href="./index.html">
+    <div class="logo"><img src="./assets/lust-logo.png" alt="LUST logo"></div>
+    <div><strong>LUST</strong><span>Platform</span></div>
+  </a>
+  <button class="mobile-menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mainNavigation"><span></span><span></span><span></span></button>
+  <nav class="nav" id="mainNavigation" aria-label="Main navigation">
+    <a href="./index.html">Home</a>
+    <a href="./launchpad.html">Launchpad</a>
+    <a href="./swap.html">Swap</a>
+    <a href="./factory.html">Factory</a>
+    <a href="./bridge.html">Bridge</a>
+    <a href="./presale.html">Presale</a>
+    <a href="./mining.html">Mining</a>
+    <a href="./staking.html">Staking</a>
+    <details class="nav-nft-menu nav-dropdown-menu">
+      <summary>NFTs</summary>
+      <div class="nav-nft-dropdown nav-dropdown-panel" role="menu" aria-label="NFT collections">
+        <a href="./nfts.html" role="menuitem"><strong>LUST Rabbit Club</strong><span>Premium NFT collection</span></a>
+        <a href="./pioneer.html" role="menuitem"><strong>Pioneer Rewards</strong><span>Free reward campaign</span></a>
+      </div>
+    </details>
+    <a href="./p2p.html">P2P</a>
+    <details class="nav-more-menu nav-dropdown-menu">
+      <summary class="active">More</summary>
+      <div class="nav-more-dropdown nav-dropdown-panel" role="menu" aria-label="More pages">
+        <a href="./faucet.html" role="menuitem"><strong>Faucet</strong><span>Get starter gas</span></a>
+        <a href="./explorer.html" role="menuitem"><strong>Explorer</strong><span>Verify on-chain activity</span></a>
+        <a href="./whitepaper.html" role="menuitem"><strong>Whitepaper</strong><span>Protocol and economics</span></a>
+        <a href="./docs.html" role="menuitem"><strong>Docs</strong><span>Guides and resources</span></a>
+      </div>
+    </details>
+  </nav>
+  <div class="actions">
+    <button class="btn connect-btn" type="button" data-connect-wallet aria-label="Connect wallet">
+      <div class="connect-icon">◫</div>
+      <div class="connect-copy"><strong>Connect wallet</strong><span>Wallet not connected</span></div>
+      <div class="connect-caret">⌄</div>
+    </button>
+  </div>
 </header>
+
 <main class="wrap page lust-whitepaper-page">
 <section class="wp-shell">
-<div class="wp-frame">
-<header class="wp-header">
-<div class="wp-brand-top">
-<div class="wp-logo-badge"><img alt="LUST Chain logo" src="./assets/lust-logo.png"/></div>
-<div class="wp-brand-copy">
-<div class="wp-kicker">WHITEPAPER • VERSION 2.7 • LQC EDITION</div>
-<div class="wp-brand-subtitle">LUST Chain official protocol document</div>
-</div>
-</div>
-<div class="wp-hero">
-<div class="wp-title">
-<h1>LUST <span>CHAIN</span></h1>
-<p>LUST Chain is an EVM-compatible L1 built around LQC consensus, native LST, WLST/LUSDT liquidity, public staking, verifiable contracts, NFT community infrastructure, bridge infrastructure, and a progressively decentralized treasury model.</p>
-</div>
-<div class="wp-card">
-<h2>Core Layer</h2>
-<div class="wp-pills">
-<span class="wp-pill">LST</span>
-<span class="wp-pill">WLST</span>
-<span class="wp-pill">LUSDT</span>
-<span class="wp-pill">LQC</span>
-<span class="wp-pill">Chain ID 6923</span>
-<span class="wp-pill">EVM</span>
-<span class="wp-pill">EIP-1559</span>
-</div>
-<div class="wp-stats">
-<div class="wp-stat"><small>Genesis</small><strong>15M LST</strong></div>
-<div class="wp-stat"><small>Block Time</small><strong>15s</strong></div>
-<div class="wp-stat"><small>Reward Start</small><strong>2 LST</strong></div>
-<div class="wp-stat"><small>Era Length</small><strong>6M Blocks</strong></div>
-</div>
-</div>
-</div>
-</header>
-<div class="wp-body">
-<nav aria-label="Whitepaper sections" class="wp-nav">
-<h3>Sections</h3>
-<ul>
-<li><button class="active" data-target="summary" type="button">Summary</button></li>
-<li><button data-target="introduction" type="button">1. Introduction</button></li>
-<li><button data-target="identity" type="button">2. Network Identity</button></li>
-<li><button data-target="endpoints" type="button">3. Official Endpoints</button></li>
-<li><button data-target="vision" type="button">4. Vision and Principles</button></li>
-<li><button data-target="architecture" type="button">5. Network Architecture</button></li>
-<li><button data-target="lqc" type="button">6. LQC Consensus</button></li>
-<li><button data-target="mining" type="button">7. Mining Model and Rewards</button></li>
-<li><button data-target="monetary" type="button">8. Monetary Policy</button></li>
-<li><button data-target="genesis" type="button">9. Genesis Tokenomics</button></li>
-<li><button data-target="contracts" type="button">10. Contracts and Addresses</button></li>
-<li><button data-target="presale" type="button">11. Genesis Liquidity Event</button></li>
-<li><button data-target="bridge" type="button">12. LUSDT Bridge</button></li>
-<li><button data-target="swap" type="button">13. WLST and Swap</button></li>
-<li><button data-target="staking" type="button">14. Staking</button></li>
-<li><button data-target="vesting" type="button">15. Creator Vesting</button></li>
-<li><button data-target="treasury" type="button">16. Treasury and Reserves</button></li>
-<li><button data-target="nfts" type="button">17. NFTs and Community</button></li>
-<li><button data-target="apps" type="button">18. Ecosystem Apps</button></li>
-<li><button data-target="infra" type="button">19. Infrastructure</button></li>
-<li><button data-target="roadmap" type="button">20. Roadmap</button></li>
-<li><button data-target="risks" type="button">21. Risks and Legal Notice</button></li>
-</ul>
-</nav>
-<main class="wp-content" id="wp-content">
-<article class="lust-wp-section active" id="summary">
-<h2>Summary</h2>
-<div class="wp-note"><p><strong>In simple terms:</strong> LUST Chain is an EVM-compatible blockchain with native LST, LQC public mining, transparent genesis allocations, WLST/LUSDT liquidity, fixed staking reserves, locked creator vesting, NFT community infrastructure, and a progressive path toward treasury decentralization.</p></div>
-<p><strong>LUST Chain</strong> is an <strong>EVM-compatible</strong> blockchain designed to combine low fees, public contracts, fair participation, transparent liquidity formation, NFT community infrastructure, creator-economy tools, and a progressive path toward community-controlled treasury systems.</p>
-<p>The network uses a native consensus and public participation model called <strong>LQC</strong>. LQC organizes public block participation through registration, activation, activity checks, heartbeat/active presence, producer selection, and fallback rules. Its core principle is simple: <strong>one registered and active wallet equals one valid participation chance</strong>. Stronger CPU or GPU power does not multiply a participant’s chance.</p>
-<p>The native asset is <strong>LST</strong>. The initial genesis supply is <strong>15,000,000 LST</strong>. Future supply increases only through protocol block rewards. The base reward begins at <strong>2 LST per block</strong>, with the first scheduled reduction at <strong>block 6,000,000</strong>.</p>
-<p>LUST Chain has already organized major public structures: staking vault, creator vesting, Genesis Liquidity Event, LUSDT, WLST, swap router/factory, P2P, NFT contracts, bridge contracts, community treasury, and dedicated reserve wallets.</p>
-<p>The economic launch sequence is designed to be orderly: technical bootstrap, Genesis Liquidity Event, WLST/LUSDT liquidity creation, then public staking and public mining. This avoids unrestricted pre-liquidity circulation and aligns the network around transparent liquidity and public participation.</p>
-</article>
-<article class="lust-wp-section" id="introduction">
-<h2>1. Introduction</h2>
-<h3>1.1 Motivation</h3>
-<p>Many blockchain launches suffer from unclear allocations, weak initial liquidity, excessive control by private groups, hidden operational balances, unfair mining advantages, and poor separation between technical deployment and public economic launch.</p>
-<p>LUST Chain follows a different path. The network separates technical bootstrap from economic activation and uses public contracts, public wallets, and public allocation labels to organize staking, liquidity, bridge operations, NFT communities, creator incentives, operational reserves, and future treasury governance.</p>
-<h3>1.2 Objective</h3>
-<p>The objective of LUST Chain is to provide blockchain infrastructure capable of supporting:</p>
-<ul>
-<li>EVM-compatible smart contracts, ERC-20 tokens, ERC-721 NFTs, and ERC-1155 assets;</li>
-<li>low-fee transactions using the native asset LST;</li>
-<li>LQC public mining with one-wallet-one-chance participation;</li>
-<li>staking funded by a fixed 5,000,000 LST genesis reserve, with no extra staking minting;</li>
-<li>WLST/LUSDT liquidity and swap infrastructure;</li>
-<li>LUSDT bridging from Polygon and BNB Smart Chain;</li>
-<li>NFT memberships, Rabbit Club, Pioneer Rewards, creator tools, token factory, and P2P markets;</li>
-<li>progressive movement from operational wallets into public contracts, multisigs, timelocks, and rule-based treasury systems.</li>
-</ul>
-</article>
-<article class="lust-wp-section" id="identity">
-<h2>2. Network Identity</h2>
-<div class="wp-table-wrap"><table class="wp-table">
-<thead><tr><th>Field</th><th>Value</th></tr></thead>
-<tbody>
-<tr><td>Network name</td><td><strong>LUST Chain</strong></td></tr>
-<tr><td>Native asset</td><td><strong>LST</strong></td></tr>
-<tr><td>Decimals</td><td>18</td></tr>
-<tr><td>Chain ID</td><td>6923</td></tr>
-<tr><td>Chain ID hex</td><td><code>0x1b0b</code></td></tr>
-<tr><td>Compatibility</td><td>Ethereum Virtual Machine (EVM)</td></tr>
-<tr><td>Fee model</td><td>EIP-1559</td></tr>
-<tr><td>Target block time</td><td>Approximately 15 seconds</td></tr>
-<tr><td>Consensus</td><td>LQC</td></tr>
-<tr><td>Registry</td><td><code>0x0000000000000000000000000000000000006923</code></td></tr>
-</tbody>
-</table></div>
-<p>LUST Chain is designed to work with familiar Ethereum ecosystem tools such as MetaMask, Remix, Hardhat, Foundry, EVM wallets, explorers, token standards, NFT standards, and dApp interfaces.</p>
-</article>
-<article class="lust-wp-section" id="endpoints">
-<h2>3. Official Network Endpoints</h2>
-<div class="wp-table-wrap"><table class="wp-table">
-<thead><tr><th>Endpoint</th><th>URL</th><th>Purpose</th></tr></thead>
-<tbody>
-<tr><td>Website</td><td><code>https://lustchain.org</code></td><td>Public project website</td></tr>
-<tr><td>Platform</td><td><code>https://platform.lustchain.org</code></td><td>Apps, presale, staking, bridge, swap, NFTs, mining</td></tr>
-<tr><td>Explorer</td><td><code>https://explorer.lustchain.org</code></td><td>Blocks, contracts, balances, transactions</td></tr>
-<tr><td>Primary RPC</td><td><code>https://rpc.lustchain.org</code></td><td>Main wallet and app access</td></tr>
-<tr><td>Backup RPC</td><td><code>https://rpc-backup.lustchain.org</code></td><td>Redundant network access</td></tr>
-<tr><td>Snapshot</td><td><code>https://snapshot.lustchain.org/snapshot/</code></td><td>Node/miner bootstrap snapshots</td></tr>
-<tr><td>Downloads</td><td><code>https://downloads.lustchain.org</code></td><td>Miner packages and campaign backend endpoints</td></tr>
-</tbody>
-</table></div>
-</article>
-<article class="lust-wp-section" id="vision">
-<h2>4. Vision and Principles</h2>
-<h3>4.1 Vision</h3>
-<p>LUST Chain was conceived as a long-term network for LST, LUSDT, NFTs, creator tools, public mining, staking, token creation, P2P markets, and community-driven growth. The goal is not simply to run a chain, but to build an auditable ecosystem where liquidity, rewards, reserves, vesting, and community funds are visible and progressively governed by transparent mechanisms.</p>
-<h3>4.2 Core principles</h3>
-<ul>
-<li><strong>Fair participation:</strong> public mining should not be dominated by expensive hardware.</li>
-<li><strong>Transparent allocations:</strong> major genesis allocations should be publicly named and traceable.</li>
-<li><strong>Liquidity-first economic launch:</strong> public staking and public mining open only after initial liquidity.</li>
-<li><strong>No arbitrary issuance:</strong> new LST is created only by protocol block rewards after genesis.</li>
-<li><strong>Contract-based trust:</strong> staking, vesting, liquidity, bridge, NFTs, and treasury structures should move into public contracts when possible.</li>
-<li><strong>Community growth:</strong> Rabbit Club, Pioneer Rewards, public rewards, campaigns, miners, builders, and creators are part of the long-term ecosystem.</li>
-<li><strong>Progressive decentralization:</strong> operational wallets may exist early, but the long-term direction is contracts, multisigs, timelocks, and community governance.</li>
-</ul>
-</article>
-<article class="lust-wp-section" id="architecture">
-<h2>5. General Network Architecture</h2>
-<p>LUST Chain combines the following layers:</p>
-<ul>
-<li><strong>Consensus and production:</strong> LQC registration, active participation, producer selection, committee rewards, fallback, and emergency bootstrap producers.</li>
-<li><strong>Execution:</strong> EVM smart contracts for LST, WLST, LUSDT, NFTs, staking, presale, swap, P2P, token factory, and creator applications.</li>
-<li><strong>Economics:</strong> EIP-1559 transaction model, burned base fee, priority fees to producers, era-based LST rewards, and fixed genesis allocations.</li>
-<li><strong>Liquidity:</strong> WLST/LUSDT pair, Genesis Liquidity Event, LP lock, refund path, and bridge-based LUSDT access.</li>
-<li><strong>Community:</strong> public treasury, Rabbit Club, Pioneer Rewards, NFT ecosystem reserve, community campaigns, miner incentives, and future treasury contracts.</li>
-<li><strong>Infrastructure:</strong> RPC, backup RPC, explorer, snapshot, downloads, faucet, bridge API, platform, and public contract interfaces.</li>
-</ul>
-</article>
-<article class="lust-wp-section" id="lqc">
-<h2>6. LQC Consensus</h2>
-<h3>6.1 Purpose of LQC</h3>
-<p><strong>LQC</strong> is the native consensus and public participation model of LUST Chain. It is designed to organize block production, maintain network continuity, and distribute rewards without turning the chain into a permanent hardware war.</p>
-<p>The core participation idea is <strong>one wallet = one mining identity</strong>. A registered and active wallet represents one valid public mining identity. Additional CPU or GPU power does not multiply the chance of that same wallet being selected.</p>
-<h3>6.2 Active participation</h3>
-<p>LQC rewards active participation, not passive registration. A wallet must be registered, activated, online, and recently active under the protocol heartbeat/activity rules to remain eligible.</p>
-<ul>
-<li>Registered but inactive wallets do not receive mining rewards.</li>
-<li>Offline or stale wallets are ignored automatically.</li>
-<li>Official infrastructure wallets are not treated as public mining wallets.</li>
-<li>The network includes automatic fallback protection so it can continue even if public miners go offline.</li>
-</ul>
-<h3>6.3 Economic launch rule</h3>
-<p>Public mining is tied to the economic launch sequence. The intended order is: Genesis Liquidity Event, liquidity creation, then public staking and public mining. This prevents unfair pre-liquidity access and keeps public rewards aligned with transparent liquidity and market formation.</p>
-<h3>6.4 Why LQC is different</h3>
-<p>LQC is not designed as a traditional hashrate contest and it is not a capital-weighted staking system. Its public mining layer is designed around active participation. A valid wallet must be registered, activated, synchronized, online and recently active to remain eligible.</p>
-<ul>
-<li><strong>Compared with traditional PoW:</strong> extra hardware power does not multiply the chance of the same wallet.</li>
-<li><strong>Compared with PoS:</strong> eligibility is not based on holding the largest amount of LST.</li>
-<li><strong>Compared with passive rewards:</strong> registration alone does not earn mining rewards.</li>
-<li><strong>Compared with fixed validator sets:</strong> the public layer is designed to admit many active community miners over time.</li>
-</ul>
-<h3>6.5 Identity and anti-abuse note</h3>
-<p>One wallet = one mining identity means one eligible protocol identity, not a guarantee that one wallet equals one unique human being. Because anyone can create multiple wallets, LUST Chain relies on active miner requirements, activation rules, heartbeat checks, maturity windows, bounded queues, monitoring and future anti-abuse improvements to reduce Sybil-style farming.</p>
-<p>This makes the model more accessible than industrial mining, while remaining honest about the fact that no permissionless wallet-based system can perfectly prove one human per wallet without additional identity assumptions.</p>
-</article>
-<article class="lust-wp-section" id="mining">
-<h2>7. Mining Model, Payments and Rewards</h2>
-<p>LUST Chain uses a native mining and reward system designed to support public participation, network continuity, active participation, deterministic selection, and long-term emission control. The mining reward is paid directly by the protocol in native <strong>LST</strong>.</p>
-<p>The system behaves differently depending on whether there is only one active public miner, multiple active public miners, thousands of active miners, or no active public miners at all.</p>
-<h3>7.1 Block time</h3>
-<p>LUST Chain targets an average block time of approximately <strong>15 seconds per block</strong>. At this target, the network produces approximately <strong>2,102,400 blocks per year</strong>. Actual block time may vary depending on network conditions, node connectivity, and synchronization.</p>
-<h3>7.2 Initial block reward</h3>
-<p>Before the first reward reduction, each valid block has a base reward of <strong>2 LST per block</strong>. This reward is distributed according to the active mining state of the network.</p>
-<h3>7.3 Public mining reward split</h3>
-<p>When public mining is active and there is a valid public mining committee, the base block reward is split as follows:</p>
-<ul>
-<li><strong>70%</strong> to the selected active block producer.</li>
-<li><strong>30%</strong> to the selected active public miner committee.</li>
-</ul>
-<p>With the initial reward of <strong>2 LST per block</strong>, this means <strong>1.40 LST</strong> goes to the selected active block producer and <strong>0.60 LST</strong> goes to the selected active public miner committee.</p>
-<div class="wp-note"><p>The producer of the block does not receive the 30% committee share for the same block. The producer receives the producer share. The committee share is reserved for the eligible active public committee selected for that block.</p></div>
-<h3>7.4 The 30% pool is not paid to every registered wallet</h3>
-<p>The 30% committee reward is not paid to every wallet that registered once. It is not a passive reward and it is not automatically paid to every miner in the network at the same time.</p>
-<p>The 30% committee reward is not paid to:</p>
-<ul>
-<li>inactive wallets;</li>
-<li>offline miners;</li>
-<li>wallets with expired heartbeat;</li>
-<li>wallets that stopped mining;</li>
-<li>old mining wallets no longer active;</li>
-<li>official infrastructure wallets;</li>
-<li>prod-1 and prod-2 emergency wallets.</li>
-</ul>
-<p>The 30% reward pool is paid only to eligible active public miners selected for that block’s reward committee.</p>
-<h3>7.5 How the 30% committee reward is divided</h3>
-<p>For each block, the protocol calculates the 30% committee reward and divides it equally among the selected committee members for that block.</p>
-<p>Example with a <strong>2 LST</strong> block reward:</p>
-<ul>
-<li><strong>Total block reward:</strong> 2.00 LST</li>
-<li><strong>Producer share:</strong> 1.40 LST</li>
-<li><strong>Committee reward pool:</strong> 0.60 LST</li>
-</ul>
-<div class="wp-table-wrap"><table class="wp-table">
-<thead><tr><th>Selected committee size</th><th>Reward per committee member</th></tr></thead>
-<tbody>
-<tr><td>1 eligible committee member</td><td>0.600000 LST</td></tr>
-<tr><td>2 eligible committee members</td><td>0.300000 LST each</td></tr>
-<tr><td>10 eligible committee members</td><td>0.060000 LST each</td></tr>
-<tr><td>100 eligible committee members</td><td>0.006000 LST each</td></tr>
-</tbody>
-</table></div>
-<p>The same proportional rule applies after reward reductions.</p>
-<h3>7.6 Why not pay all thousands of miners in every block?</h3>
-<p>LUST Chain is designed to support thousands of miners, but paying every active miner in every single block would be inefficient and would make each individual reward extremely small.</p>
-<p>Instead, LUST Chain uses a rotating active committee model:</p>
-<ol>
-<li>thousands of miners may be active in the network;</li>
-<li>each block selects an eligible producer;</li>
-<li>each block selects an eligible reward committee;</li>
-<li>only the selected committee for that block shares the 30% pool;</li>
-<li>the committee rotates over time through deterministic protocol rules.</li>
-</ol>
-<p>This keeps the network scalable while still rewarding active public participation.</p>
-<h3>7.7 Deterministic committee selection</h3>
-<p>The reward committee is selected by the protocol using deterministic blockchain rules based on chain state, block data, and active miner eligibility. This makes the reward process transparent and verifiable.</p>
-<ul>
-<li>No centralized server manually chooses who receives the 30%.</li>
-<li>No administrator manually distributes mining rewards.</li>
-<li>The reward is calculated and paid directly by the protocol during block finalization.</li>
-</ul>
-<h3>7.8 Active miner eligibility</h3>
-<p>A miner must be active to be eligible for the producer position or the committee reward. A miner is considered eligible only when all required conditions are met:</p>
-<ol>
-<li>the wallet is registered in the LUST mining registry;</li>
-<li>the wallet has completed activation;</li>
-<li>the miner is online;</li>
-<li>the miner has a recent valid heartbeat;</li>
-<li>the miner is inside the protocol activity window;</li>
-<li>the miner is not offline, exited, or stale;</li>
-<li>the miner is not an official emergency infrastructure wallet.</li>
-</ol>
-<p>A registered wallet alone is not enough. The miner must remain active.</p>
-<h3>7.9 Offline miner rule and network freeze protection</h3>
-<p>If a miner goes offline, stops sending heartbeat, disconnects, or becomes stale, that miner is removed from active reward eligibility. Offline miners do not receive the 30% reward pool, do not block the network, and do not freeze block production.</p>
-<p>This is important because LUST Chain may have thousands of miners, and many of them may disconnect at different times. The protocol is designed to continue operating safely even when many miners are offline.</p>
-<p>To support thousands of miners safely, the active public queue is bounded. This prevents a large number of offline wallets from blocking the chain.</p>
-<h3>7.10 One wallet, one mining identity</h3>
-<p>LUST Chain public mining is based on active wallet participation, not raw hashrate dominance. Each registered and active wallet represents one mining identity.</p>
-<p>Additional CPU or GPU power does not increase the mining chance of the same wallet. This makes mining more accessible and prevents the system from becoming a pure hardware competition.</p>
-<h3>7.11 Single active public miner scenario</h3>
-<p>If only one public miner is active and eligible, that miner may receive the full mining reward for the block because there is no separate active committee to share the 30% pool.</p>
-<p>Example before the first reward reduction:</p>
-<ul>
-<li><strong>Base reward:</strong> 2 LST</li>
-<li><strong>Only one active public miner:</strong> the active public producer may receive the full 2 LST block reward, plus applicable transaction fees.</li>
-</ul>
-<p>This avoids wasting rewards when there are not enough active public miners to form a separate committee.</p>
-<h3>7.12 Multiple active public miner scenario</h3>
-<p>If two or more public miners are active, the normal split applies:</p>
-<ul>
-<li><strong>70%</strong> to the selected active producer.</li>
-<li><strong>30%</strong> to the selected active public committee.</li>
-</ul>
-<p>Example before the first reward reduction: with a 2 LST base reward, the producer receives <strong>1.40 LST</strong> and the selected committee shares <strong>0.60 LST</strong>.</p>
-<h3>7.13 Thousands of active miners scenario</h3>
-<p>If thousands of miners are active at the same time, they do not all receive a payment in every block. Instead, the protocol selects an eligible producer and a limited reward committee for each block.</p>
-<p>Over time, committee selection rotates through active miners according to deterministic rules. This balances fairness, scalability, predictable reward distribution, network performance, and long-term decentralization.</p>
-<h3>7.14 Emergency fallback mode</h3>
-<p>If there are no active public miners available, the network enters emergency fallback mode. In emergency fallback mode, official infrastructure may produce blocks only to keep the network alive.</p>
-<p>Official emergency wallets do not receive normal mining profit. When an official emergency block is produced, the full block reward is routed to the <strong>Community Treasury</strong>, not to the official producer.</p>
-<p>This keeps the chain alive without allowing official infrastructure to accumulate passive mining rewards.</p>
-<h3>7.15 Official wallet reward rule</h3>
-<p>The official wallets are infrastructure wallets, not public miners. They may be used only as fallback or emergency producers when public miners are not available.</p>
-<ul>
-<li>They do not participate in the public 30% active miner reward pool.</li>
-<li>They do not receive passive rewards while public mining is active.</li>
-<li>They do not receive emergency mining profit.</li>
-<li>Emergency rewards are directed to the Community Treasury.</li>
-</ul>
-<h3>7.16 Community Treasury role</h3>
-<p>The Community Treasury receives rewards from emergency blocks when the network has no active public miners. This design prevents rewards from being lost to inactive wallets or accumulated by official infrastructure.</p>
-<p>The Community Treasury may be used for ecosystem growth, public incentives, liquidity, infrastructure, and long-term network support according to the official treasury policy.</p>
-<p><strong>Community Treasury address:</strong> <code>0x30aF2866A6e1A193e17a95924C15aA19d13E759F</code></p>
-<h3>7.17 Transaction fees</h3>
-<p>Transaction fees are separate from the base mining reward. Transaction fees go to the block producer and are not part of the 30% committee reward pool.</p>
-<p>The selected block producer receives:</p>
-<ol>
-<li>the producer share of the base block reward; and</li>
-<li>applicable transaction fees from the block.</li>
-</ol>
-<p>The committee receives only its share of the protocol mining reward.</p>
-<h3>7.18 Reward reduction at block 6,000,000</h3>
-<p>LUST Chain includes a scheduled block reward reduction starting at block <strong>6,000,000</strong>. The first reward reduction lowers the base block reward from <strong>2 LST per block</strong> to <strong>1 LST per block</strong>.</p>
-<p>This reduction controls long-term inflation and makes LST emission more scarce over time. At a 15-second block target, block 6,000,000 is approximately <strong>2.85 years</strong> after genesis.</p>
-<h3>7.19 Reward schedule</h3>
-<p>The reward schedule is designed around a reduction cycle of <strong>6,000,000 blocks</strong>. After Era 4, LUST Chain reaches the permanent minimum tail reward of <strong>0.125 LST per block</strong>.</p>
-<div class="wp-table-wrap"><table class="wp-table">
-<thead><tr><th>Block range</th><th>Base reward</th><th>Producer share 70%</th><th>Active miner pool 30%</th><th>Emergency reward</th></tr></thead>
-<tbody>
-<tr><td>0 – 5,999,999</td><td>2.000000 LST</td><td>1.400000 LST</td><td>0.600000 LST</td><td>2.000000 LST to Community Treasury</td></tr>
-<tr><td>6,000,000 – 11,999,999</td><td>1.000000 LST</td><td>0.700000 LST</td><td>0.300000 LST</td><td>1.000000 LST to Community Treasury</td></tr>
-<tr><td>12,000,000 – 17,999,999</td><td>0.500000 LST</td><td>0.350000 LST</td><td>0.150000 LST</td><td>0.500000 LST to Community Treasury</td></tr>
-<tr><td>18,000,000 – 23,999,999</td><td>0.250000 LST</td><td>0.175000 LST</td><td>0.075000 LST</td><td>0.250000 LST to Community Treasury</td></tr>
-<tr><td>24,000,000 onward</td><td>0.125000 LST</td><td>0.087500 LST</td><td>0.037500 LST</td><td>0.125000 LST to Community Treasury</td></tr>
-</tbody>
-</table></div>
-<h3>7.20 Approximate reduction timeline</h3>
-<div class="wp-table-wrap"><table class="wp-table">
-<thead><tr><th>Reduction block</th><th>Approximate time</th></tr></thead>
-<tbody>
-<tr><td>6,000,000</td><td>~2.85 years</td></tr>
-<tr><td>12,000,000</td><td>~5.71 years</td></tr>
-<tr><td>18,000,000</td><td>~8.56 years</td></tr>
-<tr><td>24,000,000</td><td>~11.42 years</td></tr>
-</tbody>
-</table></div>
-<p>These dates are approximate because real block production can vary slightly.</p>
-<h3>7.21 Estimated emission per era</h3>
-<p>Each reward era contains <strong>6,000,000 blocks</strong>. After the reduction at block 24,000,000, the network continues with a permanent tail emission of <strong>0.125 LST per block</strong>.</p>
-<div class="wp-table-wrap"><table class="wp-table">
-<thead><tr><th>Era</th><th>Block reward</th><th>Total LST emitted in era</th></tr></thead>
-<tbody>
-<tr><td>Era 1</td><td>2.000000 LST</td><td>12,000,000 LST</td></tr>
-<tr><td>Era 2</td><td>1.000000 LST</td><td>6,000,000 LST</td></tr>
-<tr><td>Era 3</td><td>0.500000 LST</td><td>3,000,000 LST</td></tr>
-<tr><td>Era 4</td><td>0.250000 LST</td><td>1,500,000 LST</td></tr>
-<tr><td>Era 5 and onward</td><td>0.125000 LST</td><td>~262,800 LST per year at 15s blocks</td></tr>
-</tbody>
-</table></div>
-<p>The tail emission keeps long-term block production economically sustainable while making new issuance much smaller than the initial eras.</p>
-<h3>7.22 Reward examples before block 6,000,000</h3>
-<p>Before block 6,000,000, the base reward is <strong>2 LST per block</strong>.</p>
-<ul>
-<li><strong>One active public miner:</strong> 2.00 LST to the active producer; 0 LST to committee because no separate active committee exists.</li>
-<li><strong>Multiple active public miners:</strong> 1.40 LST to the producer; 0.60 LST shared among selected active committee members.</li>
-<li><strong>No active public miners:</strong> 2.00 LST to the Community Treasury; 0 LST profit to the official producer.</li>
-</ul>
-<h3>7.23 Reward examples after block 6,000,000</h3>
-<p>After block 6,000,000, the base reward becomes <strong>1 LST per block</strong>.</p>
-<ul>
-<li><strong>One active public miner:</strong> 1.00 LST to the active producer; 0 LST to committee because no separate active committee exists.</li>
-<li><strong>Multiple active public miners:</strong> 0.70 LST to the producer; 0.30 LST shared among selected active committee members.</li>
-<li><strong>No active public miners:</strong> 1.00 LST to the Community Treasury; 0 LST profit to the official producer.</li>
-</ul>
-<h3>7.24 Reward examples at permanent tail emission</h3>
-<p>When the reward reaches the permanent minimum reward of <strong>0.125 LST per block</strong>, the normal public mining split becomes <strong>0.0875 LST</strong> to the producer and <strong>0.0375 LST</strong> to the selected committee pool. If no public miner is active, the full <strong>0.125 LST</strong> emergency reward goes to the Community Treasury.</p>
-<h3>7.25 Public mining release policy</h3>
-<p>Public mining should only be released after the protocol is stable and the <strong>LQC public mining safety layer</strong> is active and confirmed. This safety layer is the release gate for opening public mining safely to the community.</p>
-<p>Before public release, the network must confirm:</p>
-<ol>
-<li><strong>LQC public mining safety layer</strong> activation has passed successfully.</li>
-<li>Blocks continue normally after activation.</li>
-<li>RPC endpoints are synchronized.</li>
-<li>The explorer is indexing blocks correctly.</li>
-<li>Official emergency fallback works.</li>
-<li>Offline miners cannot freeze the chain.</li>
-<li>Active miners are the only wallets eligible for the 30% reward pool.</li>
-<li>Public miner packages are updated and verified.</li>
-</ol>
-<h3>7.26 Public miner package</h3>
-<p>The official public miner package should include:</p>
-<ul>
-<li>LUST Chain node binary;</li>
-<li>Windows start script;</li>
-<li>Ubuntu/Linux start script;</li>
-<li>register script;</li>
-<li>status script;</li>
-<li>stop script;</li>
-<li>heartbeat/active mining logic;</li>
-<li>genesis file;</li>
-<li>bootnode configuration;</li>
-<li>RPC configuration;</li>
-<li>snapshot instructions;</li>
-<li>checksum file;</li>
-<li>README;</li>
-<li>warnings not to use old miner versions.</li>
-</ul>
-<p>Old mining packages must not be used after the final public mining release.</p>
-<h3>7.27 Final payment and mining rules summary</h3>
-<ol>
-<li>LUST Chain targets approximately 15 seconds per block.</li>
-<li>The initial reward is 2 LST per block.</li>
-<li>The first reward reduction happens at block 6,000,000.</li>
-<li>After block 6,000,000, the reward becomes 1 LST per block.</li>
-<li>Public mining blocks pay the producer reward to the selected active producer.</li>
-<li>If multiple public miners are active, the selected active producer receives 70% and the selected active public committee shares 30%.</li>
-<li>The selected producer does not receive the 30% committee share for the same block.</li>
-<li>If only one public miner is active, that miner may receive the full base block reward.</li>
-<li>The 30% pool is shared only by selected active public committee members.</li>
-<li>Registered but inactive wallets receive nothing.</li>
-<li>Offline wallets receive nothing.</li>
-<li>Expired-heartbeat wallets receive nothing.</li>
-<li>Official wallets do not receive the 30% public miner reward.</li>
-<li>Transaction fees go to the block producer.</li>
-<li>If no public miner is active, emergency rewards go to the Community Treasury.</li>
-<li>With thousands of miners, the reward committee rotates over time instead of paying every miner in every block.</li>
-<li>The network must not freeze when miners leave or go offline.</li>
-<li>The public mining queue is bounded to support thousands of miners.</li>
-<li>Public mining must only be released after the LQC public mining safety layer activation is confirmed.</li>
-</ol>
-<p>This model allows LUST Chain to support large-scale public mining while keeping block rewards efficient, predictable, sustainable, accessible, and resistant to failures caused by offline miners.</p>
-</article>
-<article class="lust-wp-section" id="monetary">
-<h2>8. Monetary Policy and Fees</h2>
-<h3>8.1 Genesis supply and protocol issuance</h3>
-<p>LUST Chain launched with an initial genesis supply of <strong>15,000,000 LST</strong>. This is not the same as final long-term supply. After genesis, new LST is created only through protocol block rewards according to the mining reward schedule.</p>
-<p>The protocol reward schedule starts with higher early issuance to support network bootstrapping and then decreases until it reaches a permanent minimum tail emission.</p>
-<h3>8.2 Era-based reward schedule</h3>
-<div class="wp-table-wrap"><table class="wp-table">
-<thead><tr><th>Era</th><th>Block range</th><th>Reward</th><th>Approx. emission</th></tr></thead>
-<tbody>
-<tr><td>Era 1</td><td>0 to 5,999,999</td><td>2.0 LST / block</td><td>12,000,000 LST</td></tr>
-<tr><td>Era 2</td><td>6,000,000 to 11,999,999</td><td>1.0 LST / block</td><td>6,000,000 LST</td></tr>
-<tr><td>Era 3</td><td>12,000,000 to 17,999,999</td><td>0.5 LST / block</td><td>3,000,000 LST</td></tr>
-<tr><td>Era 4</td><td>18,000,000 to 23,999,999</td><td>0.25 LST / block</td><td>1,500,000 LST</td></tr>
-<tr><td>Era 5 and onward</td><td>24,000,000 onward</td><td>0.125 LST / block</td><td>~262,800 LST / year at 15s blocks</td></tr>
-</tbody>
-</table></div>
-<p>Each reduction cycle contains <strong>6,000,000 blocks</strong>, which represents approximately 2.85 years at the 15-second target block time. Actual calendar time may vary depending on real block production.</p>
-<p>The permanent tail emission exists to keep long-term block production economically sustainable while making new issuance much smaller than the initial eras.</p>
-<h3>8.3 Fee model</h3>
-<ul>
-<li><strong>Base fee:</strong> burned under the EIP-1559 model.</li>
-<li><strong>Priority fee:</strong> paid to the block producer.</li>
-<li><strong>Transaction fees:</strong> separate from the 30% committee reward pool and paid to the selected block producer.</li>
-<li><strong>Block reward:</strong> distributed according to LQC producer, active committee, single-miner, and emergency fallback rules.</li>
-</ul>
-<p>Staking rewards are not minted separately. The staking vault is funded from the fixed genesis allocation.</p>
-</article>
-<article class="lust-wp-section" id="genesis">
-<h2>9. Genesis Tokenomics and Operational Structure</h2>
-<p>The initial genesis supply of LUST Chain is <strong>15,000,000 LST</strong>. The current public allocation structure is organized as follows:</p>
-<div class="wp-table-wrap"><table class="wp-table">
-<thead><tr><th>Allocation</th><th>Base amount</th><th>Address / rule</th><th>Purpose</th></tr></thead>
-<tbody>
-<tr><td><strong>Community Staking Vault</strong></td><td>5,000,000 LST</td><td><code>0x300D30d1585BE7865dC5005Eb3C08dd6Ec1C73f1</code></td><td>Fixed staking reward reserve</td></tr>
-<tr><td><strong>Creator Vesting</strong></td><td>2,000,000 LST</td><td><code>0xDA389505bFCf1e11b894CF0A7Ef0116DbC436e8A</code></td><td>Locked creator allocation with delayed release</td></tr>
-<tr><td><strong>Genesis Liquidity Event</strong></td><td>700,000 LST</td><td><code>0x6AD87104DDC8F7CEd9267F115EE107F44AA9f936</code></td><td>Presale and first WLST/LUSDT liquidity structure</td></tr>
-<tr><td><strong>Operational &amp; Infrastructure Reserve</strong></td><td>500,000 LST</td><td><code>0x1429501E5F963Cbf590e60C6F4a75beB33396046</code></td><td>Servers, RPC, explorer, bridge, domains, development, audits, maintenance</td></tr>
-<tr><td><strong>Core Contributors Reserve</strong></td><td>1,000,000 LST</td><td><code>0x62E94D7a807593d443AdF8B2D873bcF3AE0fBe9A</code></td><td>Developers, security contributors, strategic builders and grants</td></tr>
-<tr><td><strong>Rabbit Club &amp; NFT Ecosystem Reserve</strong></td><td>1,500,000 LST</td><td><code>0xe5edd2A4b8895CA07401CdbA090772a8FBe8ad09</code></td><td>Rabbit Club, Pioneer Rewards, NFT campaigns, holder rewards, future NFT seasons</td></tr>
-<tr><td><strong>Community Treasury &amp; Public Rewards</strong></td><td>2,000,000 LST base + bootstrap rewards</td><td><code>0x30aF2866A6e1A193e17a95924C15aA19d13E759F</code></td><td>Public rewards, campaigns, faucet support, bootstrap rewards, community programs</td></tr>
-<tr><td><strong>Ecosystem Growth Reserve</strong></td><td>1,500,000 LST</td><td><code>0x67A8eE3212a46eeEe661C817BDf595aB1F61D202</code></td><td>Integrations, grants, builders, apps, marketplace, ecosystem expansion</td></tr>
-<tr><td><strong>Strategic Reserve &amp; Future Liquidity</strong></td><td>800,000 LST</td><td><code>0x6e81Cb6C6e010ce9C77eB466c16bf481362c5Dd1</code></td><td>Emergency reserve, future liquidity, strategic protection and growth</td></tr>
-</tbody>
-</table></div>
-<div class="wp-note"><p><strong>Total base genesis allocation:</strong> 15,000,000 LST. Current balances on the explorer may exceed base allocations because protocol block rewards can be received by public treasury or operational addresses during bootstrap.</p></div>
-<h3>9.1 Community Treasury balance</h3>
-<p>The Community Treasury has a base allocation of <strong>2,000,000 LST</strong>. Its live balance may be higher because it can receive bootstrap/public rewards generated while official producers maintain the network before broad public mining participation is open.</p>
-<h3>9.2 Operational costs</h3>
-<p>The Operational &amp; Infrastructure Reserve exists for real project costs. It is separate from creator vesting and is not described as personal founder income. It supports infrastructure, security, development, maintenance, launch operations, integrations, and public services.</p>
-</article>
-<article class="lust-wp-section" id="contracts">
-<h2>10. Deployed Contracts and Public Addresses</h2>
-<p>The following public addresses define the current LUST Chain core architecture.</p>
-<div class="wp-table-wrap"><table class="wp-table">
-<thead><tr><th>Category</th><th>Name</th><th>Address</th><th>Status / role</th></tr></thead>
-<tbody>
-<tr><td>Token</td><td>LUSDT</td><td><code>0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE</code></td><td>Stable token on LUST Chain, 6 decimals</td></tr>
-<tr><td>Token</td><td>WLST</td><td><code>0xF8E57f2ee77B13F6673155308C9c431Ce9F90D86</code></td><td>Wrapped LST for ERC-20 style DeFi use</td></tr>
-<tr><td>Presale</td><td>Genesis Liquidity Event</td><td><code>0x6AD87104DDC8F7CEd9267F115EE107F44AA9f936</code></td><td>Presale, liquidity creation, claim, bonus and refund logic</td></tr>
-<tr><td>Staking</td><td>Community Staking Vault</td><td><code>0x300D30d1585BE7865dC5005Eb3C08dd6Ec1C73f1</code></td><td>5,000,000 LST fixed staking reserve</td></tr>
-<tr><td>Vesting</td><td>Creator Vesting</td><td><code>0xDA389505bFCf1e11b894CF0A7Ef0116DbC436e8A</code></td><td>2,000,000 LST creator vesting</td></tr>
-<tr><td>Bridge</td><td>LUST Bridge Executor</td><td><code>0xbBC818f161D1B7190f85bE258CDB568a5A63f380</code></td><td>Executor on LUST Chain</td></tr>
-<tr><td>Bridge</td><td>Polygon / BSC Lockbox</td><td><code>0x273cC6A72aF97381daa07332Df768a05cb30CE47</code></td><td>External lockbox address on Polygon and BSC</td></tr>
-<tr><td>Swap</td><td>Router</td><td><code>0x62883a46b045Cf1811DfDBec3FE0EAdc78f888f0</code></td><td>LUST swap router</td></tr>
-<tr><td>Swap</td><td>Factory</td><td><code>0x97E0B70fc246BF98Db90D94C10B3409A809319bD</code></td><td>LUST swap factory</td></tr>
-<tr><td>P2P</td><td>P2P LST/LUSDT</td><td><code>0xcd821edE23048F8fea777EEEc3948135758E4926</code></td><td>Order-based LST/LUSDT market</td></tr>
-<tr><td>NFT</td><td>LUST Rabbit Club</td><td><code>0x81b9a5bB109919CFF3eE4C92B2372ABCd73614e6</code></td><td>Official Rabbit NFT collection</td></tr>
-<tr><td>NFT</td><td>Rabbit Whitelist Registry</td><td><code>0xA16DE59e5F13edf51464EdF807d0B23175cecfA6</code></td><td>On-chain whitelist registration</td></tr>
-<tr><td>NFT</td><td>Pioneer Rewards</td><td><code>0xCb207489E4dbd6D4e3bf75CA947D0C43d621Fef1</code></td><td>Free social campaign NFT and reward-card system</td></tr>
-<tr><td>Factory</td><td>Token Factory Pro</td><td><code>0xbCB6A89713796eE1C0414c8898dED5657e6b9526</code></td><td>Community token creation and metadata plans</td></tr>
-<tr><td>Treasury</td><td>Fee / admin treasury</td><td><code>0x5feb6d7135318565Fb02F6513dB4758dB51Df9D7</code></td><td>Operational admin, fee recipient, bridge fee treasury where applicable</td></tr>
-<tr><td>NFT</td><td>Rabbit project / royalty receiver</td><td><code>0x74b8db40d1bC5B590bB8dBB62dCc60Eb2DaD8f12</code></td><td>Rabbit NFT receiver / project wallet shown on platform</td></tr>
-</tbody>
-</table></div>
-</article>
-<article class="lust-wp-section" id="presale">
-<h2>11. Genesis Liquidity Event</h2>
-<p>The Genesis Liquidity Event is the public LUSDT-based presale designed to create the first <strong>WLST/LUSDT</strong> liquidity pool.</p>
-<div class="wp-table-wrap"><table class="wp-table">
-<thead><tr><th>Parameter</th><th>Value</th></tr></thead>
-<tbody>
-<tr><td>Contract</td><td><code>0x6AD87104DDC8F7CEd9267F115EE107F44AA9f936</code></td></tr>
-<tr><td>Payment token</td><td>LUSDT on LUST Chain, 6 decimals</td></tr>
-<tr><td>Genesis price</td><td>1 LST = 0.10 LUSDT</td></tr>
-<tr><td>Conversion</td><td>1 LUSDT = 10 LST</td></tr>
-<tr><td>Minimum buy</td><td>10 LUSDT</td></tr>
-<tr><td>Maximum per wallet</td><td>500 LUSDT</td></tr>
-<tr><td>Softcap</td><td>5,000 LUSDT</td></tr>
-<tr><td>Main target</td><td>15,000 LUSDT</td></tr>
-<tr><td>Hardcap</td><td>30,000 LUSDT</td></tr>
-<tr><td>Duration</td><td>60 days after contract start</td></tr>
-<tr><td>Buy fee</td><td>0.20%</td></tr>
-<tr><td>Liquidity use</td><td>100% of net LUSDT raised is designed for WLST/LUSDT liquidity</td></tr>
-<tr><td>LP lock</td><td>LP tokens locked inside the presale contract for 12 months</td></tr>
-<tr><td>Refund case 1</td><td>Softcap not reached</td></tr>
-<tr><td>Refund case 2</td><td>Softcap reached but liquidity not created during the grace period</td></tr>
-</tbody>
-</table></div>
-<h3>11.1 Bonus schedule</h3>
-<ul>
-<li>Days 1–15: <strong>20%</strong> bonus.</li>
-<li>Days 16–30: <strong>15%</strong> bonus.</li>
-<li>Days 31–60: <strong>10%</strong> bonus.</li>
-<li>Bonus unlocks after liquidity in three stages: <strong>6, 9, and 12 months</strong>.</li>
-</ul>
-<p>Purchased LST becomes claimable only after liquidity is created. Bonus LST is separate and follows the delayed unlock schedule.</p>
-<h3>11.2 Liquidity-first rule</h3>
-<p>Public staking and public mining remain locked for the community until the first WLST/LUSDT liquidity pool is created. The intended order is presale, then liquidity, then public staking and public mining.</p>
-</article>
-<article class="lust-wp-section" id="bridge">
-<h2>12. LUSDT Bridge</h2>
-<p>The LUSDT bridge connects external USDT liquidity from Polygon and BNB Smart Chain to LUST Chain, where users receive LUSDT for presale and ecosystem use.</p>
-<div class="wp-table-wrap"><table class="wp-table">
-<thead><tr><th>Bridge element</th><th>Value</th></tr></thead>
-<tbody>
-<tr><td>LUST LUSDT token</td><td><code>0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE</code></td></tr>
-<tr><td>LUST executor</td><td><code>0xbBC818f161D1B7190f85bE258CDB568a5A63f380</code></td></tr>
-<tr><td>Polygon lockbox</td><td><code>0x273cC6A72aF97381daa07332Df768a05cb30CE47</code></td></tr>
-<tr><td>BSC lockbox</td><td><code>0x273cC6A72aF97381daa07332Df768a05cb30CE47</code></td></tr>
-<tr><td>Security threshold</td><td>2 of 4 validators</td></tr>
-<tr><td>Bridge fee</td><td>0.20%</td></tr>
-<tr><td>Fee treasury</td><td><code>0x5feb6d7135318565Fb02F6513dB4758dB51Df9D7</code></td></tr>
-</tbody>
-</table></div>
-<p>The bridge is designed to support deposits from Polygon or BSC and mint LUSDT on LUST Chain. Burns or releases in the reverse direction depend on destination reserves, validator authorization, and bridge rules.</p>
-</article>
-<article class="lust-wp-section" id="swap">
-<h2>13. WLST and Swap Infrastructure</h2>
-<h3>13.1 WLST</h3>
-<p><strong>WLST</strong> is the wrapped version of native LST. It allows native LST to be used as an ERC-20 style asset in swap pools, liquidity contracts, routing logic, and DeFi-style integrations.</p>
-<ul>
-<li><strong>WLST contract:</strong> <code>0xF8E57f2ee77B13F6673155308C9c431Ce9F90D86</code></li>
-<li><strong>Relationship:</strong> intended to operate as a 1:1 wrapped representation of native LST.</li>
-</ul>
-<h3>13.2 Swap contracts</h3>
-<ul>
-<li><strong>Router:</strong> <code>0x62883a46b045Cf1811DfDBec3FE0EAdc78f888f0</code></li>
-<li><strong>Factory:</strong> <code>0x97E0B70fc246BF98Db90D94C10B3409A809319bD</code></li>
-<li><strong>Default assets:</strong> LST, WLST, LUSDT, and community-created tokens.</li>
-<li><strong>Swap fee:</strong> 0.30% on the swap interface.</li>
-</ul>
-<p>The initial public liquidity plan is centered on the WLST/LUSDT pair created after the Genesis Liquidity Event.</p>
-</article>
-<article class="lust-wp-section" id="staking">
-<h2>14. Staking</h2>
-<p>LUST staking is separate from consensus mining. It uses a fixed <strong>5,000,000 LST</strong> reserve funded from the genesis allocation. There is no infinite minting and no extra staking issuance outside the funded vault.</p>
-<div class="wp-table-wrap"><table class="wp-table">
-<thead><tr><th>Parameter</th><th>Value</th></tr></thead>
-<tbody>
-<tr><td>Contract</td><td><code>0x300D30d1585BE7865dC5005Eb3C08dd6Ec1C73f1</code></td></tr>
-<tr><td>Reward reserve</td><td>5,000,000 LST</td></tr>
-<tr><td>Minimum stake</td><td>100 LST</td></tr>
-<tr><td>Maximum active principal</td><td>10,000 LST per wallet</td></tr>
-<tr><td>Claim interval</td><td>Every 24 hours</td></tr>
-<tr><td>Opening</td><td>After liquidity launch / public community launch</td></tr>
-</tbody>
-</table></div>
-<h3>14.1 Staking plans</h3>
-<div class="wp-table-wrap"><table class="wp-table">
-<thead><tr><th>Plan</th><th>Duration</th><th>APR</th><th>Early-exit protection</th></tr></thead>
-<tbody>
-<tr><td>LUST Spark</td><td>30 days</td><td>6%</td><td>3%</td></tr>
-<tr><td>LUST Flame</td><td>90 days</td><td>10%</td><td>5%</td></tr>
-<tr><td>LUST Diamond</td><td>180 days</td><td>15%</td><td>8%</td></tr>
-<tr><td>LUST Eternal</td><td>360 days</td><td>20%</td><td>12%</td></tr>
-</tbody>
-</table></div>
-<p>Early exit protections, forfeited rewards, and clawbacks remain in the community staking reserve, helping protect the long-term pool.</p>
-</article>
-<article class="lust-wp-section" id="vesting">
-<h2>15. Creator Vesting</h2>
-<p>The creator allocation is locked in a public vesting contract and is not freely available at launch.</p>
-<div class="wp-table-wrap"><table class="wp-table">
-<thead><tr><th>Rule</th><th>Value</th></tr></thead>
-<tbody>
-<tr><td>Contract</td><td><code>0xDA389505bFCf1e11b894CF0A7Ef0116DbC436e8A</code></td></tr>
-<tr><td>Total allocation</td><td>2,000,000 LST</td></tr>
-<tr><td>Funding</td><td>Contract funded before launch activation</td></tr>
-<tr><td>Start trigger</td><td>Only when community launch is set after liquidity and public mining are opened</td></tr>
-<tr><td>Cliff</td><td>180 days after community launch time</td></tr>
-<tr><td>First release</td><td>10% after cliff</td></tr>
-<tr><td>Remaining release</td><td>90% over 24 periods of 30 days</td></tr>
-<tr><td>Excess recovery</td><td>Only excess sent by mistake can be recovered; reserved allocation cannot be withdrawn early</td></tr>
-</tbody>
-</table></div>
-<p>This structure aligns the creator with long-term development and reduces the risk of early unrestricted selling.</p>
-</article>
-<article class="lust-wp-section" id="treasury">
-<h2>16. Treasury, Reserves and Progressive Decentralization</h2>
-<p>The treasury model separates operational costs, community rewards, ecosystem growth, NFT community incentives, contributors, and strategic reserves.</p>
-<h3>16.1 Public reserve addresses</h3>
-<div class="wp-table-wrap"><table class="wp-table">
-<thead><tr><th>Reserve</th><th>Address</th><th>Base amount</th><th>Purpose</th></tr></thead>
-<tbody>
-<tr><td>Community Treasury &amp; Public Rewards</td><td><code>0x30aF2866A6e1A193e17a95924C15aA19d13E759F</code></td><td>2,000,000 LST + bootstrap rewards</td><td>Community rewards, campaigns, faucet support, public incentives</td></tr>
-<tr><td>Operational &amp; Infrastructure Reserve</td><td><code>0x1429501E5F963Cbf590e60C6F4a75beB33396046</code></td><td>500,000 LST</td><td>RPC, explorer, bridge, servers, security, domains, development, audits, operations</td></tr>
-<tr><td>Core Contributors Reserve</td><td><code>0x62E94D7a807593d443AdF8B2D873bcF3AE0fBe9A</code></td><td>1,000,000 LST</td><td>Developers, contributors, security, technical grants</td></tr>
-<tr><td>Rabbit Club &amp; NFT Ecosystem Reserve</td><td><code>0xe5edd2A4b8895CA07401CdbA090772a8FBe8ad09</code></td><td>1,500,000 LST</td><td>Rabbit Club, Pioneer Rewards, NFT campaigns, holder rewards, future NFT seasons</td></tr>
-<tr><td>Ecosystem Growth Reserve</td><td><code>0x67A8eE3212a46eeEe661C817BDf595aB1F61D202</code></td><td>1,500,000 LST</td><td>Grants, integrations, apps, marketplace, partnerships, builder growth</td></tr>
-<tr><td>Strategic Reserve &amp; Future Liquidity</td><td><code>0x6e81Cb6C6e010ce9C77eB466c16bf481362c5Dd1</code></td><td>800,000 LST</td><td>Emergency reserve, future pools, liquidity support, strategic protection</td></tr>
-</tbody>
-</table></div>
-<h3>16.2 Community Treasury</h3>
-<p>The Community Treasury may receive rewards generated by official producers during bootstrap, when no eligible public miners are active or before public mining is opened economically. These rewards are treated as community resources, not as a permanent private advantage.</p>
-<p>Because protocol rewards can accumulate over time, the live Community Treasury balance may be higher than its 2,000,000 LST base allocation. The live balance should be checked on the explorer.</p>
-<h3>16.3 Future treasury contract</h3>
-<p>The Community Treasury may remain as a public operational wallet during the early phase. As the network matures, community-controlled funds are intended to migrate into public smart contracts, multisig structures, timelocks, or decentralized governance mechanisms.</p>
-<p>The long-term goal is to reduce dependency on any single operator and progressively move community resources toward transparent, auditable, and rule-based on-chain management.</p>
-</article>
-<article class="lust-wp-section" id="nfts">
-<h2>17. NFTs, Rabbit Club and Pioneer Rewards</h2>
-<h3>17.1 LUST Rabbit Club</h3>
-<p>LUST Rabbit Club is the official founder NFT collection of LUST Chain and a central part of the community identity strategy.</p>
-<div class="wp-table-wrap"><table class="wp-table">
-<thead><tr><th>Field</th><th>Value</th></tr></thead>
-<tbody>
-<tr><td>Collection contract</td><td><code>0x81b9a5bB109919CFF3eE4C92B2372ABCd73614e6</code></td></tr>
-<tr><td>Whitelist registry</td><td><code>0xA16DE59e5F13edf51464EdF807d0B23175cecfA6</code></td></tr>
-<tr><td>Payment token</td><td>LUSDT</td></tr>
-<tr><td>Total supply</td><td>10,000 Rabbits</td></tr>
-<tr><td>Mint supply</td><td>9,700 whitelist/public mint</td></tr>
-<tr><td>Reserve supply</td><td>300 transparent community/ecosystem Rabbits</td></tr>
-<tr><td>Whitelist mint</td><td>50 LUSDT for approved wallets after whitelist sale opens</td></tr>
-<tr><td>Public mint</td><td>100 LUSDT after public sale opens</td></tr>
-<tr><td>Secondary royalty</td><td>5% on supported marketplaces</td></tr>
-<tr><td>Project / royalty receiver</td><td><code>0x74b8db40d1bC5B590bB8dBB62dCc60Eb2DaD8f12</code></td></tr>
-</tbody>
-</table></div>
-<p>The 300 reserved Rabbits are not a hidden rarity allocation. They are reserved for community rewards, miners, ambassadors, campaigns, partners, and future activations.</p>
-<p>Rabbit Club is a membership and community utility collection. It does not promise dividends, guaranteed returns, or profit sharing.</p>
-<h3>17.2 Rabbit Club &amp; NFT Ecosystem Reserve</h3>
-<p>The <strong>1,500,000 LST</strong> Rabbit Club &amp; NFT Ecosystem Reserve supports current and future NFT/community activations, including holder rewards, future Pioneer seasons, Bunny Pets, Rabbit Serum, ambassadors, miner campaigns, marketplace incentives, creator campaigns, and NFT partnerships.</p>
-<h3>17.3 LUST Pioneer Rewards</h3>
-<div class="wp-table-wrap"><table class="wp-table">
-<thead><tr><th>Field</th><th>Value</th></tr></thead>
-<tbody>
-<tr><td>Contract</td><td><code>0xCb207489E4dbd6D4e3bf75CA947D0C43d621Fef1</code></td></tr>
-<tr><td>Campaign model</td><td>Free reward campaign connected to social/presale promotion</td></tr>
-<tr><td>Supply</td><td>10,000 Pioneer NFTs</td></tr>
-<tr><td>Mint rule</td><td>One wallet and one normalized X account hash can mint only once</td></tr>
-<tr><td>Reward tiers</td><td>0, 5, 10, 20, and 50 LST</td></tr>
-<tr><td>Claim rule</td><td>Claims remain locked until liquidity is officially opened</td></tr>
-<tr><td>Purpose</td><td>Early community growth, presale awareness, and public campaign participation</td></tr>
-</tbody>
-</table></div>
-</article>
-<article class="lust-wp-section" id="apps">
-<h2>18. Ecosystem Apps: P2P, Token Factory and Creator Tools</h2>
-<h3>18.1 P2P LST/LUSDT market</h3>
-<p>The P2P market allows users to create buy or sell orders, support partial fills, and settle directly through a public contract. Native LST is locked for sell orders and LUSDT is locked for buy orders.</p>
-<ul>
-<li><strong>P2P contract:</strong> <code>0xcd821edE23048F8fea777EEEc3948135758E4926</code></li>
-<li><strong>Pricing:</strong> LUSDT per 1 LST.</li>
-<li><strong>Purpose:</strong> community-driven market access around LST and LUSDT.</li>
-</ul>
-<h3>18.2 Token Factory</h3>
-<p>The Token Factory lets users create community tokens on LUST Chain. Plans include Basic, Logo, and Premium token creation with optional explorer metadata and social/profile information.</p>
-<ul>
-<li><strong>Factory contract:</strong> <code>0xbCB6A89713796eE1C0414c8898dED5657e6b9526</code></li>
-<li><strong>Basic plan:</strong> token creation only.</li>
-<li><strong>Logo plan:</strong> token creation with logo and short explorer metadata.</li>
-<li><strong>Premium plan:</strong> token creation with logo, full description, website, socials, docs, audit links, and market links.</li>
-</ul>
-<p>Community-created tokens are not automatically audited or endorsed by LUST Chain. Users should always verify contract addresses and understand the risks.</p>
-<h3>18.3 Creator economy direction</h3>
-<p>The ecosystem may evolve to support collectible NFTs, utility NFTs, memberships, access passes, creator storefronts, royalties, direct monetization, campaigns, marketplace tools, and gated community experiences. Restricted-access models should comply with applicable laws, age restrictions where applicable, moderation standards, and access-control requirements.</p>
-</article>
-<article class="lust-wp-section" id="infra">
-<h2>19. Infrastructure, Operations and Transparency</h2>
-<h3>19.1 Public infrastructure</h3>
-<p>LUST infrastructure includes the public website, platform, explorer, primary RPC, backup RPC, snapshot service, downloads, bridge system, faucet, mining interface, presale interface, staking interface, swap interface, P2P market, token factory, NFT pages, and public contract references.</p>
-<h3>19.2 Operational reserve</h3>
-<p>The Operational &amp; Infrastructure Reserve contains <strong>500,000 LST</strong> and exists to support real costs required to operate, secure, maintain, and expand LUST Chain.</p>
-<p>Eligible operational uses include RPC infrastructure, explorer infrastructure, bridge infrastructure, servers, backups, domains, security, frontend/backend development, smart contract development, audits, public launch support, integrations, listings, documentation, user support, official tools, and long-term maintenance.</p>
-<h3>19.3 Transparency direction</h3>
-<p>The project direction is to reduce dependence on large private balances. Major resources should progressively move toward public contracts, vaults, vesting systems, liquidity locks, timelocks, multisigs, dashboards, and public reporting.</p>
-<p>The ecosystem should publish updates about liquidity creation, LP lock status, staking opening, public mining opening, treasury transfers, reserve usage, major NFT/community campaigns, and contract changes.</p>
-</article>
-<article class="lust-wp-section" id="roadmap">
-<h2>20. Roadmap</h2>
-<ul>
-<li><strong>Phase 1 — Technical Bootstrap:</strong> mainnet operation, RPC, backup RPC, explorer, snapshot, downloads, bridge infrastructure, platform, and initial contracts.</li>
-<li><strong>Phase 2 — Allocation Organization:</strong> staking vault, creator vesting, Genesis Liquidity Event, reserve wallets, public labels, and tokenomics alignment.</li>
-<li><strong>Phase 3 — Genesis Liquidity Event:</strong> LUSDT-based presale, buyer limits, bonus schedule, refund protection, and LST allocation for liquidity formation.</li>
-<li><strong>Phase 4 — Liquidity Launch:</strong> creation of the first WLST/LUSDT pool, LP lock, presale claim opening, and public liquidity transparency.</li>
-<li><strong>Phase 5 — Public Staking and Mining:</strong> staking opening, public miner registration, LQC activation, heartbeat rules, public rewards, and reduced dependence on official producers.</li>
-<li><strong>Phase 6 — Community Treasury Vault:</strong> migration of community resources from operational wallet to public contract, multisig, timelock, or governance-based system.</li>
-<li><strong>Phase 7 — NFT and Creator Expansion:</strong> Rabbit Club activation, Pioneer seasons, Bunny Pets, Rabbit Serum, marketplace incentives, creator tools, and gated community systems.</li>
-<li><strong>Phase 8 — Ecosystem Growth:</strong> token factory growth, P2P usage, integrations, grants, builder onboarding, strategic liquidity, partnerships, and long-term community governance.</li>
-</ul>
-</article>
-<article class="lust-wp-section" id="risks">
-<h2>21. Risks, Legal Notice and Conclusion</h2>
-<h3>21.1 Risks and limitations</h3>
-<p>LUST Chain involves risks, including technical risk in the client, bridge, contracts and infrastructure; economic and liquidity risk; regulatory risk; adoption risk; execution risk; lower-than-expected participation; validator or bridge operation risk; smart contract bugs; NFT market risk; treasury management risk; and market volatility.</p>
-<h3>21.2 Legal notice</h3>
-<p>LUST Chain is a blockchain software and infrastructure project. LST does not represent equity, ownership interest, debt, guaranteed yield, dividend, ownership of the project, or a promise of profit. This document is informational and descriptive only and does not constitute financial, legal, tax, or investment advice.</p>
-<p>Participation in presale, staking, mining, bridge usage, NFTs, swaps, token factory, P2P markets, or any ecosystem activity involves risk. Users should review contracts, understand the rules, verify addresses, and make independent decisions.</p>
-<h3>21.3 Conclusion</h3>
-<p>LUST Chain combines LQC consensus, EVM compatibility, native LST, WLST, LUSDT bridge infrastructure, transparent presale liquidity formation, era-based protocol rewards, fixed staking reserve, creator vesting, public treasury growth, reserve labeling, Rabbit Club, Pioneer Rewards, swap infrastructure, P2P, token factory, and progressive decentralization.</p>
-<p>The objective is to build a durable, auditable, and community-centered ecosystem where liquidity, public mining, staking, treasury resources, NFTs, creator tools, and public rewards are introduced in an organized and transparent sequence.</p>
-</article>
-</main>
-</div>
-</div>
-</section>
-<script>
+    <div class="wp-frame">
+      <header class="wp-header">
+        <div class="wp-brand-top">
+          <div class="wp-logo-badge"><img src="./assets/lust-logo.png" alt="LUST Chain logo" /></div>
+          <div class="wp-brand-copy">
+            <div class="wp-kicker">WHITEPAPER • VERSION 2.7 • LQC EDITION</div>
+            <div class="wp-brand-subtitle">LUST Chain official protocol document</div>
+          </div>
+        </div>
+        <div class="wp-hero">
+          <div class="wp-title">
+            
+            <h1>LUST <span>CHAIN</span></h1>
+            <p>LUST Chain is an EVM-compatible L1 built around LQC consensus, native LST, WLST/LUSDT liquidity, public staking, verifiable contracts, NFT community infrastructure, bridge infrastructure, and a progressively decentralized treasury model.</p>
+          </div>
+          <div class="wp-card">
+            <h2>Core Layer</h2>
+            <div class="wp-pills">
+              <span class="wp-pill">LST</span>
+              <span class="wp-pill">WLST</span>
+              <span class="wp-pill">LUSDT</span>
+              <span class="wp-pill">LQC</span>
+              <span class="wp-pill">Chain ID 6923</span>
+              <span class="wp-pill">EVM</span>
+              <span class="wp-pill">EIP-1559</span>
+            </div>
+            <div class="wp-stats">
+              <div class="wp-stat"><small>Genesis</small><strong>15M LST</strong></div>
+              <div class="wp-stat"><small>Block Time</small><strong>15s</strong></div>
+              <div class="wp-stat"><small>Reward Start</small><strong>2 LST</strong></div>
+              <div class="wp-stat"><small>Era Length</small><strong>6M Blocks</strong></div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="wp-body">
+        <nav class="wp-nav" aria-label="Whitepaper sections">
+          <h3>Sections</h3>
+          <ul>
+            <li><button type="button" data-target="summary" class="active">Summary</button></li>
+            <li><button type="button" data-target="introduction">1. Introduction</button></li>
+            <li><button type="button" data-target="identity">2. Network Identity</button></li>
+            <li><button type="button" data-target="endpoints">3. Official Endpoints</button></li>
+            <li><button type="button" data-target="vision">4. Vision and Principles</button></li>
+            <li><button type="button" data-target="architecture">5. Network Architecture</button></li>
+            <li><button type="button" data-target="lqc">6. LQC Consensus</button></li>
+            <li><button type="button" data-target="mining">7. Mining Model and Rewards</button></li>
+            <li><button type="button" data-target="monetary">8. Monetary Policy</button></li>
+            <li><button type="button" data-target="genesis">9. Genesis Tokenomics</button></li>
+            <li><button type="button" data-target="contracts">10. Contracts and Addresses</button></li>
+            <li><button type="button" data-target="presale">11. Genesis Liquidity Event</button></li>
+            <li><button type="button" data-target="bridge">12. LUSDT Bridge</button></li>
+            <li><button type="button" data-target="swap">13. WLST and Swap</button></li>
+            <li><button type="button" data-target="staking">14. Staking</button></li>
+            <li><button type="button" data-target="vesting">15. Creator Vesting</button></li>
+            <li><button type="button" data-target="treasury">16. Treasury and Reserves</button></li>
+            <li><button type="button" data-target="nfts">17. NFTs and Community</button></li>
+            <li><button type="button" data-target="apps">18. Ecosystem Apps</button></li>
+            <li><button type="button" data-target="infra">19. Infrastructure</button></li>
+            <li><button type="button" data-target="roadmap">20. Roadmap</button></li>
+            <li><button type="button" data-target="risks">21. Risks and Legal Notice</button></li>
+          </ul>
+        </nav>
+
+        <main class="wp-content" id="wp-content">
+          <article id="summary" class="lust-wp-section active">
+            <h2>Summary</h2>
+            <div class="wp-note"><p><strong>In simple terms:</strong> LUST Chain is an EVM-compatible blockchain with native LST, LQC public mining, transparent genesis allocations, WLST/LUSDT liquidity, fixed staking reserves, locked creator vesting, NFT community infrastructure, and a progressive path toward treasury decentralization.</p></div>
+            <p><strong>LUST Chain</strong> is an <strong>EVM-compatible</strong> blockchain designed to combine low fees, public contracts, fair participation, transparent liquidity formation, NFT community infrastructure, creator-economy tools, and a progressive path toward community-controlled treasury systems.</p>
+            <p>The network uses a native consensus and public participation model called <strong>LQC</strong>. LQC organizes public block participation through registration, activation, activity checks, heartbeat/active presence, producer selection, and fallback rules. Its core principle is simple: <strong>one registered and active wallet equals one valid participation chance</strong>. Stronger CPU or GPU power does not multiply a participant’s chance.</p>
+            <p>The native asset is <strong>LST</strong>. The initial genesis supply is <strong>15,000,000 LST</strong>. Future supply increases only through protocol block rewards. The base reward begins at <strong>2 LST per block</strong>, with the first scheduled reduction at <strong>block 6,000,000</strong>.</p>
+            <p>LUST Chain has already organized major public structures: staking vault, creator vesting, Genesis Liquidity Event, LUSDT, WLST, swap router/factory, P2P, NFT contracts, bridge contracts, community treasury, and dedicated reserve wallets.</p>
+            <p>The economic launch sequence is designed to be orderly: technical bootstrap, Genesis Liquidity Event, WLST/LUSDT liquidity creation, then public staking and public mining. This avoids unrestricted pre-liquidity circulation and aligns the network around transparent liquidity and public participation.</p>
+          </article>
+
+          <article id="introduction" class="lust-wp-section">
+            <h2>1. Introduction</h2>
+            <h3>1.1 Motivation</h3>
+            <p>Many blockchain launches suffer from unclear allocations, weak initial liquidity, excessive control by private groups, hidden operational balances, unfair mining advantages, and poor separation between technical deployment and public economic launch.</p>
+            <p>LUST Chain follows a different path. The network separates technical bootstrap from economic activation and uses public contracts, public wallets, and public allocation labels to organize staking, liquidity, bridge operations, NFT communities, creator incentives, operational reserves, and future treasury governance.</p>
+            <h3>1.2 Objective</h3>
+            <p>The objective of LUST Chain is to provide blockchain infrastructure capable of supporting:</p>
+            <ul>
+              <li>EVM-compatible smart contracts, ERC-20 tokens, ERC-721 NFTs, and ERC-1155 assets;</li>
+              <li>low-fee transactions using the native asset LST;</li>
+              <li>LQC public mining with one-wallet-one-chance participation;</li>
+              <li>staking funded by a fixed 5,000,000 LST genesis reserve, with no extra staking minting;</li>
+              <li>WLST/LUSDT liquidity and swap infrastructure;</li>
+              <li>LUSDT bridging from Polygon and BNB Smart Chain;</li>
+              <li>NFT memberships, Rabbit Club, Pioneer Rewards, creator tools, token factory, and P2P markets;</li>
+              <li>progressive movement from operational wallets into public contracts, multisigs, timelocks, and rule-based treasury systems.</li>
+            </ul>
+          </article>
+
+          <article id="identity" class="lust-wp-section">
+            <h2>2. Network Identity</h2>
+            <div class="wp-table-wrap"><table class="wp-table">
+              <thead><tr><th>Field</th><th>Value</th></tr></thead>
+              <tbody>
+                <tr><td>Network name</td><td><strong>LUST Chain</strong></td></tr>
+                <tr><td>Native asset</td><td><strong>LST</strong></td></tr>
+                <tr><td>Decimals</td><td>18</td></tr>
+                <tr><td>Chain ID</td><td>6923</td></tr>
+                <tr><td>Chain ID hex</td><td><code>0x1b0b</code></td></tr>
+                <tr><td>Compatibility</td><td>Ethereum Virtual Machine (EVM)</td></tr>
+                <tr><td>Fee model</td><td>EIP-1559</td></tr>
+                <tr><td>Target block time</td><td>Approximately 15 seconds</td></tr>
+                <tr><td>Consensus</td><td>LQC</td></tr>
+                <tr><td>Registry</td><td><code>0x0000000000000000000000000000000000006923</code></td></tr>
+              </tbody>
+            </table></div>
+            <p>LUST Chain is designed to work with familiar Ethereum ecosystem tools such as MetaMask, Remix, Hardhat, Foundry, EVM wallets, explorers, token standards, NFT standards, and dApp interfaces.</p>
+          </article>
+
+          <article id="endpoints" class="lust-wp-section">
+            <h2>3. Official Network Endpoints</h2>
+            <div class="wp-table-wrap"><table class="wp-table">
+              <thead><tr><th>Endpoint</th><th>URL</th><th>Purpose</th></tr></thead>
+              <tbody>
+                <tr><td>Website</td><td><code>https://lustchain.org</code></td><td>Public project website</td></tr>
+                <tr><td>Platform</td><td><code>https://platform.lustchain.org</code></td><td>Apps, presale, staking, bridge, swap, NFTs, mining</td></tr>
+                <tr><td>Explorer</td><td><code>https://explorer.lustchain.org</code></td><td>Blocks, contracts, balances, transactions</td></tr>
+                <tr><td>Primary RPC</td><td><code>https://rpc.lustchain.org</code></td><td>Main wallet and app access</td></tr>
+                <tr><td>Backup RPC</td><td><code>https://rpc-backup.lustchain.org</code></td><td>Redundant network access</td></tr>
+                <tr><td>Snapshot</td><td><code>https://snapshot.lustchain.org/snapshot/</code></td><td>Node/miner bootstrap snapshots</td></tr>
+                <tr><td>Downloads</td><td><code>https://downloads.lustchain.org</code></td><td>Miner packages and campaign backend endpoints</td></tr>
+              </tbody>
+            </table></div>
+          </article>
+
+          <article id="vision" class="lust-wp-section">
+            <h2>4. Vision and Principles</h2>
+            <h3>4.1 Vision</h3>
+            <p>LUST Chain was conceived as a long-term network for LST, LUSDT, NFTs, creator tools, public mining, staking, token creation, P2P markets, and community-driven growth. The goal is not simply to run a chain, but to build an auditable ecosystem where liquidity, rewards, reserves, vesting, and community funds are visible and progressively governed by transparent mechanisms.</p>
+            <h3>4.2 Core principles</h3>
+            <ul>
+              <li><strong>Fair participation:</strong> public mining should not be dominated by expensive hardware.</li>
+              <li><strong>Transparent allocations:</strong> major genesis allocations should be publicly named and traceable.</li>
+              <li><strong>Liquidity-first economic launch:</strong> public staking and public mining open only after initial liquidity.</li>
+              <li><strong>No arbitrary issuance:</strong> new LST is created only by protocol block rewards after genesis.</li>
+              <li><strong>Contract-based trust:</strong> staking, vesting, liquidity, bridge, NFTs, and treasury structures should move into public contracts when possible.</li>
+              <li><strong>Community growth:</strong> Rabbit Club, Pioneer Rewards, public rewards, campaigns, miners, builders, and creators are part of the long-term ecosystem.</li>
+              <li><strong>Progressive decentralization:</strong> operational wallets may exist early, but the long-term direction is contracts, multisigs, timelocks, and community governance.</li>
+            </ul>
+          </article>
+
+          <article id="architecture" class="lust-wp-section">
+            <h2>5. General Network Architecture</h2>
+            <p>LUST Chain combines the following layers:</p>
+            <ul>
+              <li><strong>Consensus and production:</strong> LQC registration, active participation, producer selection, committee rewards, fallback, and emergency bootstrap producers.</li>
+              <li><strong>Execution:</strong> EVM smart contracts for LST, WLST, LUSDT, NFTs, staking, presale, swap, P2P, token factory, and creator applications.</li>
+              <li><strong>Economics:</strong> EIP-1559 transaction model, burned base fee, priority fees to producers, era-based LST rewards, and fixed genesis allocations.</li>
+              <li><strong>Liquidity:</strong> WLST/LUSDT pair, Genesis Liquidity Event, LP lock, refund path, and bridge-based LUSDT access.</li>
+              <li><strong>Community:</strong> public treasury, Rabbit Club, Pioneer Rewards, NFT ecosystem reserve, community campaigns, miner incentives, and future treasury contracts.</li>
+              <li><strong>Infrastructure:</strong> RPC, backup RPC, explorer, snapshot, downloads, faucet, bridge API, platform, and public contract interfaces.</li>
+            </ul>
+          </article>
+
+          <article id="lqc" class="lust-wp-section">
+            <h2>6. LQC Consensus</h2>
+            <h3>6.1 Purpose of LQC</h3>
+            <p><strong>LQC</strong> is the native consensus and public participation model of LUST Chain. It is designed to organize block production, maintain network continuity, and distribute rewards without turning the chain into a permanent hardware war.</p>
+            <p>The core participation idea is <strong>one wallet = one mining identity</strong>. A registered and active wallet represents one valid public mining identity. Additional CPU or GPU power does not multiply the chance of that same wallet being selected.</p>
+            <h3>6.2 Active participation</h3>
+            <p>LQC rewards active participation, not passive registration. A wallet must be registered, activated, online, and recently active under the protocol heartbeat/activity rules to remain eligible.</p>
+            <ul>
+              <li>Registered but inactive wallets do not receive mining rewards.</li>
+              <li>Offline or stale wallets are ignored automatically.</li>
+              <li>Official infrastructure wallets are not treated as public mining wallets.</li>
+              <li>The network includes automatic fallback protection so it can continue even if public miners go offline.</li>
+            </ul>
+            <h3>6.3 Economic launch rule</h3>
+            <p>Public mining is tied to the economic launch sequence. The intended order is: Genesis Liquidity Event, liquidity creation, then public staking and public mining. This prevents unfair pre-liquidity access and keeps public rewards aligned with transparent liquidity and market formation.</p>
+
+            <h3>6.4 Why LQC is different</h3>
+            <p>LQC is not designed as a traditional hashrate contest and it is not a capital-weighted staking system. Its public mining layer is designed around active participation. A valid wallet must be registered, activated, synchronized, online and recently active to remain eligible.</p>
+            <ul>
+              <li><strong>Compared with traditional PoW:</strong> extra hardware power does not multiply the chance of the same wallet.</li>
+              <li><strong>Compared with PoS:</strong> eligibility is not based on holding the largest amount of LST.</li>
+              <li><strong>Compared with passive rewards:</strong> registration alone does not earn mining rewards.</li>
+              <li><strong>Compared with fixed validator sets:</strong> the public layer is designed to admit many active community miners over time.</li>
+            </ul>
+
+            <h3>6.5 Identity and anti-abuse note</h3>
+            <p>One wallet = one mining identity means one eligible protocol identity, not a guarantee that one wallet equals one unique human being. Because anyone can create multiple wallets, LUST Chain relies on active miner requirements, activation rules, heartbeat checks, maturity windows, bounded queues, monitoring and future anti-abuse improvements to reduce Sybil-style farming.</p>
+            <p>This makes the model more accessible than industrial mining, while remaining honest about the fact that no permissionless wallet-based system can perfectly prove one human per wallet without additional identity assumptions.</p>
+          </article>
+
+          <article id="mining" class="lust-wp-section">
+            <h2>7. Mining Model, Payments and Rewards</h2>
+            <p>LUST Chain uses a native mining and reward system designed to support public participation, network continuity, active participation, deterministic selection, and long-term emission control. The mining reward is paid directly by the protocol in native <strong>LST</strong>.</p>
+            <p>The system behaves differently depending on whether there is only one active public miner, multiple active public miners, thousands of active miners, or no active public miners at all.</p>
+
+            <h3>7.1 Block time</h3>
+            <p>LUST Chain targets an average block time of approximately <strong>15 seconds per block</strong>. At this target, the network produces approximately <strong>2,102,400 blocks per year</strong>. Actual block time may vary depending on network conditions, node connectivity, and synchronization.</p>
+
+            <h3>7.2 Initial block reward</h3>
+            <p>Before the first reward reduction, each valid block has a base reward of <strong>2 LST per block</strong>. This reward is distributed according to the active mining state of the network.</p>
+
+            <h3>7.3 Public mining reward split</h3>
+            <p>When public mining is active and there is a valid public mining committee, the base block reward is split as follows:</p>
+            <ul>
+              <li><strong>70%</strong> to the selected active block producer.</li>
+              <li><strong>30%</strong> to the selected active public miner committee.</li>
+            </ul>
+            <p>With the initial reward of <strong>2 LST per block</strong>, this means <strong>1.40 LST</strong> goes to the selected active block producer and <strong>0.60 LST</strong> goes to the selected active public miner committee.</p>
+            <div class="wp-note"><p>The producer of the block does not receive the 30% committee share for the same block. The producer receives the producer share. The committee share is reserved for the eligible active public committee selected for that block.</p></div>
+
+            <h3>7.4 The 30% pool is not paid to every registered wallet</h3>
+            <p>The 30% committee reward is not paid to every wallet that registered once. It is not a passive reward and it is not automatically paid to every miner in the network at the same time.</p>
+            <p>The 30% committee reward is not paid to:</p>
+            <ul>
+              <li>inactive wallets;</li>
+              <li>offline miners;</li>
+              <li>wallets with expired heartbeat;</li>
+              <li>wallets that stopped mining;</li>
+              <li>old mining wallets no longer active;</li>
+              <li>official infrastructure wallets;</li>
+              <li>prod-1 and prod-2 emergency wallets.</li>
+            </ul>
+            <p>The 30% reward pool is paid only to eligible active public miners selected for that block’s reward committee.</p>
+
+            <h3>7.5 How the 30% committee reward is divided</h3>
+            <p>For each block, the protocol calculates the 30% committee reward and divides it equally among the selected committee members for that block.</p>
+            <p>Example with a <strong>2 LST</strong> block reward:</p>
+            <ul>
+              <li><strong>Total block reward:</strong> 2.00 LST</li>
+              <li><strong>Producer share:</strong> 1.40 LST</li>
+              <li><strong>Committee reward pool:</strong> 0.60 LST</li>
+            </ul>
+            <div class="wp-table-wrap"><table class="wp-table">
+              <thead><tr><th>Selected committee size</th><th>Reward per committee member</th></tr></thead>
+              <tbody>
+                <tr><td>1 eligible committee member</td><td>0.600000 LST</td></tr>
+                <tr><td>2 eligible committee members</td><td>0.300000 LST each</td></tr>
+                <tr><td>10 eligible committee members</td><td>0.060000 LST each</td></tr>
+                <tr><td>100 eligible committee members</td><td>0.006000 LST each</td></tr>
+              </tbody>
+            </table></div>
+            <p>The same proportional rule applies after reward reductions.</p>
+
+            <h3>7.6 Why not pay all thousands of miners in every block?</h3>
+            <p>LUST Chain is designed to support thousands of miners, but paying every active miner in every single block would be inefficient and would make each individual reward extremely small.</p>
+            <p>Instead, LUST Chain uses a rotating active committee model:</p>
+            <ol>
+              <li>thousands of miners may be active in the network;</li>
+              <li>each block selects an eligible producer;</li>
+              <li>each block selects an eligible reward committee;</li>
+              <li>only the selected committee for that block shares the 30% pool;</li>
+              <li>the committee rotates over time through deterministic protocol rules.</li>
+            </ol>
+            <p>This keeps the network scalable while still rewarding active public participation.</p>
+
+            <h3>7.7 Deterministic committee selection</h3>
+            <p>The reward committee is selected by the protocol using deterministic blockchain rules based on chain state, block data, and active miner eligibility. This makes the reward process transparent and verifiable.</p>
+            <ul>
+              <li>No centralized server manually chooses who receives the 30%.</li>
+              <li>No administrator manually distributes mining rewards.</li>
+              <li>The reward is calculated and paid directly by the protocol during block finalization.</li>
+            </ul>
+
+            <h3>7.8 Active miner eligibility</h3>
+            <p>A miner must be active to be eligible for the producer position or the committee reward. A miner is considered eligible only when all required conditions are met:</p>
+            <ol>
+              <li>the wallet is registered in the LUST mining registry;</li>
+              <li>the wallet has completed activation;</li>
+              <li>the miner is online;</li>
+              <li>the miner has a recent valid heartbeat;</li>
+              <li>the miner is inside the protocol activity window;</li>
+              <li>the miner is not offline, exited, or stale;</li>
+              <li>the miner is not an official emergency infrastructure wallet.</li>
+            </ol>
+            <p>A registered wallet alone is not enough. The miner must remain active.</p>
+
+            <h3>7.9 Offline miner rule and network freeze protection</h3>
+            <p>If a miner goes offline, stops sending heartbeat, disconnects, or becomes stale, that miner is removed from active reward eligibility. Offline miners do not receive the 30% reward pool, do not block the network, and do not freeze block production.</p>
+            <p>This is important because LUST Chain may have thousands of miners, and many of them may disconnect at different times. The protocol is designed to continue operating safely even when many miners are offline.</p>
+            <p>To support thousands of miners safely, the active public queue is bounded. This prevents a large number of offline wallets from blocking the chain.</p>
+
+            <h3>7.10 One wallet, one mining identity</h3>
+            <p>LUST Chain public mining is based on active wallet participation, not raw hashrate dominance. Each registered and active wallet represents one mining identity.</p>
+            <p>Additional CPU or GPU power does not increase the mining chance of the same wallet. This makes mining more accessible and prevents the system from becoming a pure hardware competition.</p>
+
+            <h3>7.11 Single active public miner scenario</h3>
+            <p>If only one public miner is active and eligible, that miner may receive the full mining reward for the block because there is no separate active committee to share the 30% pool.</p>
+            <p>Example before the first reward reduction:</p>
+            <ul>
+              <li><strong>Base reward:</strong> 2 LST</li>
+              <li><strong>Only one active public miner:</strong> the active public producer may receive the full 2 LST block reward, plus applicable transaction fees.</li>
+            </ul>
+            <p>This avoids wasting rewards when there are not enough active public miners to form a separate committee.</p>
+
+            <h3>7.12 Multiple active public miner scenario</h3>
+            <p>If two or more public miners are active, the normal split applies:</p>
+            <ul>
+              <li><strong>70%</strong> to the selected active producer.</li>
+              <li><strong>30%</strong> to the selected active public committee.</li>
+            </ul>
+            <p>Example before the first reward reduction: with a 2 LST base reward, the producer receives <strong>1.40 LST</strong> and the selected committee shares <strong>0.60 LST</strong>.</p>
+
+            <h3>7.13 Thousands of active miners scenario</h3>
+            <p>If thousands of miners are active at the same time, they do not all receive a payment in every block. Instead, the protocol selects an eligible producer and a limited reward committee for each block.</p>
+            <p>Over time, committee selection rotates through active miners according to deterministic rules. This balances fairness, scalability, predictable reward distribution, network performance, and long-term decentralization.</p>
+
+            <h3>7.14 Emergency fallback mode</h3>
+            <p>If there are no active public miners available, the network enters emergency fallback mode. In emergency fallback mode, official infrastructure may produce blocks only to keep the network alive.</p>
+            <p>Official emergency wallets do not receive normal mining profit. When an official emergency block is produced, the full block reward is routed to the <strong>Community Treasury</strong>, not to the official producer.</p>
+            <p>This keeps the chain alive without allowing official infrastructure to accumulate passive mining rewards.</p>
+
+            <h3>7.15 Official wallet reward rule</h3>
+            <p>The official wallets are infrastructure wallets, not public miners. They may be used only as fallback or emergency producers when public miners are not available.</p>
+            <ul>
+              <li>They do not participate in the public 30% active miner reward pool.</li>
+              <li>They do not receive passive rewards while public mining is active.</li>
+              <li>They do not receive emergency mining profit.</li>
+              <li>Emergency rewards are directed to the Community Treasury.</li>
+            </ul>
+
+            <h3>7.16 Community Treasury role</h3>
+            <p>The Community Treasury receives rewards from emergency blocks when the network has no active public miners. This design prevents rewards from being lost to inactive wallets or accumulated by official infrastructure.</p>
+            <p>The Community Treasury may be used for ecosystem growth, public incentives, liquidity, infrastructure, and long-term network support according to the official treasury policy.</p>
+            <p><strong>Community Treasury address:</strong> <code>0x30aF2866A6e1A193e17a95924C15aA19d13E759F</code></p>
+
+            <h3>7.17 Transaction fees</h3>
+            <p>Transaction fees are separate from the base mining reward. Transaction fees go to the block producer and are not part of the 30% committee reward pool.</p>
+            <p>The selected block producer receives:</p>
+            <ol>
+              <li>the producer share of the base block reward; and</li>
+              <li>applicable transaction fees from the block.</li>
+            </ol>
+            <p>The committee receives only its share of the protocol mining reward.</p>
+
+            <h3>7.18 Reward reduction at block 6,000,000</h3>
+            <p>LUST Chain includes a scheduled block reward reduction starting at block <strong>6,000,000</strong>. The first reward reduction lowers the base block reward from <strong>2 LST per block</strong> to <strong>1 LST per block</strong>.</p>
+            <p>This reduction controls long-term inflation and makes LST emission more scarce over time. At a 15-second block target, block 6,000,000 is approximately <strong>2.85 years</strong> after genesis.</p>
+
+            <h3>7.19 Reward schedule</h3>
+            <p>The reward schedule is designed around a reduction cycle of <strong>6,000,000 blocks</strong>. After Era 4, LUST Chain reaches the permanent minimum tail reward of <strong>0.125 LST per block</strong>.</p>
+            <div class="wp-table-wrap"><table class="wp-table">
+              <thead><tr><th>Block range</th><th>Base reward</th><th>Producer share 70%</th><th>Active miner pool 30%</th><th>Emergency reward</th></tr></thead>
+              <tbody>
+                <tr><td>0 – 5,999,999</td><td>2.000000 LST</td><td>1.400000 LST</td><td>0.600000 LST</td><td>2.000000 LST to Community Treasury</td></tr>
+                <tr><td>6,000,000 – 11,999,999</td><td>1.000000 LST</td><td>0.700000 LST</td><td>0.300000 LST</td><td>1.000000 LST to Community Treasury</td></tr>
+                <tr><td>12,000,000 – 17,999,999</td><td>0.500000 LST</td><td>0.350000 LST</td><td>0.150000 LST</td><td>0.500000 LST to Community Treasury</td></tr>
+                <tr><td>18,000,000 – 23,999,999</td><td>0.250000 LST</td><td>0.175000 LST</td><td>0.075000 LST</td><td>0.250000 LST to Community Treasury</td></tr>
+                <tr><td>24,000,000 onward</td><td>0.125000 LST</td><td>0.087500 LST</td><td>0.037500 LST</td><td>0.125000 LST to Community Treasury</td></tr>
+              </tbody>
+            </table></div>
+
+            <h3>7.20 Approximate reduction timeline</h3>
+            <div class="wp-table-wrap"><table class="wp-table">
+              <thead><tr><th>Reduction block</th><th>Approximate time</th></tr></thead>
+              <tbody>
+                <tr><td>6,000,000</td><td>~2.85 years</td></tr>
+                <tr><td>12,000,000</td><td>~5.71 years</td></tr>
+                <tr><td>18,000,000</td><td>~8.56 years</td></tr>
+                <tr><td>24,000,000</td><td>~11.42 years</td></tr>
+              </tbody>
+            </table></div>
+            <p>These dates are approximate because real block production can vary slightly.</p>
+
+            <h3>7.21 Estimated emission per era</h3>
+            <p>Each reward era contains <strong>6,000,000 blocks</strong>. After the reduction at block 24,000,000, the network continues with a permanent tail emission of <strong>0.125 LST per block</strong>.</p>
+            <div class="wp-table-wrap"><table class="wp-table">
+              <thead><tr><th>Era</th><th>Block reward</th><th>Total LST emitted in era</th></tr></thead>
+              <tbody>
+                <tr><td>Era 1</td><td>2.000000 LST</td><td>12,000,000 LST</td></tr>
+                <tr><td>Era 2</td><td>1.000000 LST</td><td>6,000,000 LST</td></tr>
+                <tr><td>Era 3</td><td>0.500000 LST</td><td>3,000,000 LST</td></tr>
+                <tr><td>Era 4</td><td>0.250000 LST</td><td>1,500,000 LST</td></tr>
+                <tr><td>Era 5 and onward</td><td>0.125000 LST</td><td>~262,800 LST per year at 15s blocks</td></tr>
+              </tbody>
+            </table></div>
+            <p>The tail emission keeps long-term block production economically sustainable while making new issuance much smaller than the initial eras.</p>
+
+            <h3>7.22 Reward examples before block 6,000,000</h3>
+            <p>Before block 6,000,000, the base reward is <strong>2 LST per block</strong>.</p>
+            <ul>
+              <li><strong>One active public miner:</strong> 2.00 LST to the active producer; 0 LST to committee because no separate active committee exists.</li>
+              <li><strong>Multiple active public miners:</strong> 1.40 LST to the producer; 0.60 LST shared among selected active committee members.</li>
+              <li><strong>No active public miners:</strong> 2.00 LST to the Community Treasury; 0 LST profit to the official producer.</li>
+            </ul>
+
+            <h3>7.23 Reward examples after block 6,000,000</h3>
+            <p>After block 6,000,000, the base reward becomes <strong>1 LST per block</strong>.</p>
+            <ul>
+              <li><strong>One active public miner:</strong> 1.00 LST to the active producer; 0 LST to committee because no separate active committee exists.</li>
+              <li><strong>Multiple active public miners:</strong> 0.70 LST to the producer; 0.30 LST shared among selected active committee members.</li>
+              <li><strong>No active public miners:</strong> 1.00 LST to the Community Treasury; 0 LST profit to the official producer.</li>
+            </ul>
+
+            <h3>7.24 Reward examples at permanent tail emission</h3>
+            <p>When the reward reaches the permanent minimum reward of <strong>0.125 LST per block</strong>, the normal public mining split becomes <strong>0.0875 LST</strong> to the producer and <strong>0.0375 LST</strong> to the selected committee pool. If no public miner is active, the full <strong>0.125 LST</strong> emergency reward goes to the Community Treasury.</p>
+
+            <h3>7.25 Public mining release policy</h3>
+            <p>Public mining should only be released after the protocol is stable and the <strong>LQC public mining safety layer</strong> is active and confirmed. This safety layer is the release gate for opening public mining safely to the community.</p>
+            <p>Before public release, the network must confirm:</p>
+            <ol>
+              <li><strong>LQC public mining safety layer</strong> activation has passed successfully.</li>
+              <li>Blocks continue normally after activation.</li>
+              <li>RPC endpoints are synchronized.</li>
+              <li>The explorer is indexing blocks correctly.</li>
+              <li>Official emergency fallback works.</li>
+              <li>Offline miners cannot freeze the chain.</li>
+              <li>Active miners are the only wallets eligible for the 30% reward pool.</li>
+              <li>Public miner packages are updated and verified.</li>
+            </ol>
+
+            <h3>7.26 Public miner package</h3>
+            <p>The official public miner package should include:</p>
+            <ul>
+              <li>LUST Chain node binary;</li>
+              <li>Windows start script;</li>
+              <li>Ubuntu/Linux start script;</li>
+              <li>register script;</li>
+              <li>status script;</li>
+              <li>stop script;</li>
+              <li>heartbeat/active mining logic;</li>
+              <li>genesis file;</li>
+              <li>bootnode configuration;</li>
+              <li>RPC configuration;</li>
+              <li>snapshot instructions;</li>
+              <li>checksum file;</li>
+              <li>README;</li>
+              <li>warnings not to use old miner versions.</li>
+            </ul>
+            <p>Old mining packages must not be used after the final public mining release.</p>
+
+            <h3>7.27 Final payment and mining rules summary</h3>
+            <ol>
+              <li>LUST Chain targets approximately 15 seconds per block.</li>
+              <li>The initial reward is 2 LST per block.</li>
+              <li>The first reward reduction happens at block 6,000,000.</li>
+              <li>After block 6,000,000, the reward becomes 1 LST per block.</li>
+              <li>Public mining blocks pay the producer reward to the selected active producer.</li>
+              <li>If multiple public miners are active, the selected active producer receives 70% and the selected active public committee shares 30%.</li>
+              <li>The selected producer does not receive the 30% committee share for the same block.</li>
+              <li>If only one public miner is active, that miner may receive the full base block reward.</li>
+              <li>The 30% pool is shared only by selected active public committee members.</li>
+              <li>Registered but inactive wallets receive nothing.</li>
+              <li>Offline wallets receive nothing.</li>
+              <li>Expired-heartbeat wallets receive nothing.</li>
+              <li>Official wallets do not receive the 30% public miner reward.</li>
+              <li>Transaction fees go to the block producer.</li>
+              <li>If no public miner is active, emergency rewards go to the Community Treasury.</li>
+              <li>With thousands of miners, the reward committee rotates over time instead of paying every miner in every block.</li>
+              <li>The network must not freeze when miners leave or go offline.</li>
+              <li>The public mining queue is bounded to support thousands of miners.</li>
+              <li>Public mining must only be released after the LQC public mining safety layer activation is confirmed.</li>
+            </ol>
+            <p>This model allows LUST Chain to support large-scale public mining while keeping block rewards efficient, predictable, sustainable, accessible, and resistant to failures caused by offline miners.</p>
+          </article>
+
+
+          <article id="monetary" class="lust-wp-section">
+            <h2>8. Monetary Policy and Fees</h2>
+            <h3>8.1 Genesis supply and protocol issuance</h3>
+            <p>LUST Chain launched with an initial genesis supply of <strong>15,000,000 LST</strong>. This is not the same as final long-term supply. After genesis, new LST is created only through protocol block rewards according to the mining reward schedule.</p>
+            <p>The protocol reward schedule starts with higher early issuance to support network bootstrapping and then decreases until it reaches a permanent minimum tail emission.</p>
+
+            <h3>8.2 Era-based reward schedule</h3>
+            <div class="wp-table-wrap"><table class="wp-table">
+              <thead><tr><th>Era</th><th>Block range</th><th>Reward</th><th>Approx. emission</th></tr></thead>
+              <tbody>
+                <tr><td>Era 1</td><td>0 to 5,999,999</td><td>2.0 LST / block</td><td>12,000,000 LST</td></tr>
+                <tr><td>Era 2</td><td>6,000,000 to 11,999,999</td><td>1.0 LST / block</td><td>6,000,000 LST</td></tr>
+                <tr><td>Era 3</td><td>12,000,000 to 17,999,999</td><td>0.5 LST / block</td><td>3,000,000 LST</td></tr>
+                <tr><td>Era 4</td><td>18,000,000 to 23,999,999</td><td>0.25 LST / block</td><td>1,500,000 LST</td></tr>
+                <tr><td>Era 5 and onward</td><td>24,000,000 onward</td><td>0.125 LST / block</td><td>~262,800 LST / year at 15s blocks</td></tr>
+              </tbody>
+            </table></div>
+            <p>Each reduction cycle contains <strong>6,000,000 blocks</strong>, which represents approximately 2.85 years at the 15-second target block time. Actual calendar time may vary depending on real block production.</p>
+            <p>The permanent tail emission exists to keep long-term block production economically sustainable while making new issuance much smaller than the initial eras.</p>
+
+            <h3>8.3 Fee model</h3>
+            <ul>
+              <li><strong>Base fee:</strong> burned under the EIP-1559 model.</li>
+              <li><strong>Priority fee:</strong> paid to the block producer.</li>
+              <li><strong>Transaction fees:</strong> separate from the 30% committee reward pool and paid to the selected block producer.</li>
+              <li><strong>Block reward:</strong> distributed according to LQC producer, active committee, single-miner, and emergency fallback rules.</li>
+            </ul>
+            <p>Staking rewards are not minted separately. The staking vault is funded from the fixed genesis allocation.</p>
+          </article>
+
+
+<article id="genesis" class="lust-wp-section">
+            <h2>9. Genesis Tokenomics and Operational Structure</h2>
+            <p>The initial genesis supply of LUST Chain is <strong>15,000,000 LST</strong>. The current public allocation structure is organized as follows:</p>
+            <div class="wp-table-wrap"><table class="wp-table">
+              <thead><tr><th>Allocation</th><th>Base amount</th><th>Address / rule</th><th>Purpose</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Community Staking Vault</strong></td><td>5,000,000 LST</td><td><code>0x300D30d1585BE7865dC5005Eb3C08dd6Ec1C73f1</code></td><td>Fixed staking reward reserve</td></tr>
+                <tr><td><strong>Creator Vesting</strong></td><td>2,000,000 LST</td><td><code>0xDA389505bFCf1e11b894CF0A7Ef0116DbC436e8A</code></td><td>Locked creator allocation with delayed release</td></tr>
+                <tr><td><strong>Genesis Liquidity Event</strong></td><td>700,000 LST</td><td><code>0x6AD87104DDC8F7CEd9267F115EE107F44AA9f936</code></td><td>Presale and first WLST/LUSDT liquidity structure</td></tr>
+                <tr><td><strong>Operational &amp; Infrastructure Reserve</strong></td><td>500,000 LST</td><td><code>0x1429501E5F963Cbf590e60C6F4a75beB33396046</code></td><td>Servers, RPC, explorer, bridge, domains, development, audits, maintenance</td></tr>
+                <tr><td><strong>Core Contributors Reserve</strong></td><td>1,000,000 LST</td><td><code>0x62E94D7a807593d443AdF8B2D873bcF3AE0fBe9A</code></td><td>Developers, security contributors, strategic builders and grants</td></tr>
+                <tr><td><strong>Rabbit Club &amp; NFT Ecosystem Reserve</strong></td><td>1,500,000 LST</td><td><code>0xe5edd2A4b8895CA07401CdbA090772a8FBe8ad09</code></td><td>Rabbit Club, Pioneer Rewards, NFT campaigns, holder rewards, future NFT seasons</td></tr>
+                <tr><td><strong>Community Treasury &amp; Public Rewards</strong></td><td>2,000,000 LST base + bootstrap rewards</td><td><code>0x30aF2866A6e1A193e17a95924C15aA19d13E759F</code></td><td>Public rewards, campaigns, faucet support, bootstrap rewards, community programs</td></tr>
+                <tr><td><strong>Ecosystem Growth Reserve</strong></td><td>1,500,000 LST</td><td><code>0x67A8eE3212a46eeEe661C817BDf595aB1F61D202</code></td><td>Integrations, grants, builders, apps, marketplace, ecosystem expansion</td></tr>
+                <tr><td><strong>Strategic Reserve &amp; Future Liquidity</strong></td><td>800,000 LST</td><td><code>0x6e81Cb6C6e010ce9C77eB466c16bf481362c5Dd1</code></td><td>Emergency reserve, future liquidity, strategic protection and growth</td></tr>
+              </tbody>
+            </table></div>
+            <div class="wp-note"><p><strong>Total base genesis allocation:</strong> 15,000,000 LST. Current balances on the explorer may exceed base allocations because protocol block rewards can be received by public treasury or operational addresses during bootstrap.</p></div>
+            <h3>9.1 Community Treasury balance</h3>
+            <p>The Community Treasury has a base allocation of <strong>2,000,000 LST</strong>. Its live balance may be higher because it can receive bootstrap/public rewards generated while official producers maintain the network before broad public mining participation is open.</p>
+            <h3>9.2 Operational costs</h3>
+            <p>The Operational &amp; Infrastructure Reserve exists for real project costs. It is separate from creator vesting and is not described as personal founder income. It supports infrastructure, security, development, maintenance, launch operations, integrations, and public services.</p>
+          </article>
+
+          <article id="contracts" class="lust-wp-section">
+            <h2>10. Deployed Contracts and Public Addresses</h2>
+            <p>The following public addresses define the current LUST Chain core architecture.</p>
+            <div class="wp-table-wrap"><table class="wp-table">
+              <thead><tr><th>Category</th><th>Name</th><th>Address</th><th>Status / role</th></tr></thead>
+              <tbody>
+                <tr><td>Token</td><td>LUSDT</td><td><code>0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE</code></td><td>Stable token on LUST Chain, 6 decimals</td></tr>
+                <tr><td>Token</td><td>WLST</td><td><code>0xF8E57f2ee77B13F6673155308C9c431Ce9F90D86</code></td><td>Wrapped LST for ERC-20 style DeFi use</td></tr>
+                <tr><td>Presale</td><td>Genesis Liquidity Event</td><td><code>0x6AD87104DDC8F7CEd9267F115EE107F44AA9f936</code></td><td>Presale, liquidity creation, claim, bonus and refund logic</td></tr>
+                <tr><td>Staking</td><td>Community Staking Vault</td><td><code>0x300D30d1585BE7865dC5005Eb3C08dd6Ec1C73f1</code></td><td>5,000,000 LST fixed staking reserve</td></tr>
+                <tr><td>Vesting</td><td>Creator Vesting</td><td><code>0xDA389505bFCf1e11b894CF0A7Ef0116DbC436e8A</code></td><td>2,000,000 LST creator vesting</td></tr>
+                <tr><td>Bridge</td><td>LUST Bridge Executor</td><td><code>0xbBC818f161D1B7190f85bE258CDB568a5A63f380</code></td><td>Executor on LUST Chain</td></tr>
+                <tr><td>Bridge</td><td>Polygon / BSC Lockbox</td><td><code>0x273cC6A72aF97381daa07332Df768a05cb30CE47</code></td><td>External lockbox address on Polygon and BSC</td></tr>
+                <tr><td>Swap</td><td>Router</td><td><code>0x62883a46b045Cf1811DfDBec3FE0EAdc78f888f0</code></td><td>LUST swap router</td></tr>
+                <tr><td>Swap</td><td>Factory</td><td><code>0x97E0B70fc246BF98Db90D94C10B3409A809319bD</code></td><td>LUST swap factory</td></tr>
+                <tr><td>P2P</td><td>P2P LST/LUSDT</td><td><code>0xcd821edE23048F8fea777EEEc3948135758E4926</code></td><td>Order-based LST/LUSDT market</td></tr>
+                <tr><td>NFT</td><td>LUST Rabbit Club</td><td><code>0x81b9a5bB109919CFF3eE4C92B2372ABCd73614e6</code></td><td>Official Rabbit NFT collection</td></tr>
+                <tr><td>NFT</td><td>Rabbit Whitelist Registry</td><td><code>0xA16DE59e5F13edf51464EdF807d0B23175cecfA6</code></td><td>On-chain whitelist registration</td></tr>
+                <tr><td>NFT</td><td>Pioneer Rewards</td><td><code>0xCb207489E4dbd6D4e3bf75CA947D0C43d621Fef1</code></td><td>Free social campaign NFT and reward-card system</td></tr>
+                <tr><td>Factory</td><td>Token Factory Pro</td><td><code>0xbCB6A89713796eE1C0414c8898dED5657e6b9526</code></td><td>Community token creation and metadata plans</td></tr>
+                <tr><td>Treasury</td><td>Fee / admin treasury</td><td><code>0x5feb6d7135318565Fb02F6513dB4758dB51Df9D7</code></td><td>Operational admin, fee recipient, bridge fee treasury where applicable</td></tr>
+                <tr><td>NFT</td><td>Rabbit project / royalty receiver</td><td><code>0x74b8db40d1bC5B590bB8dBB62dCc60Eb2DaD8f12</code></td><td>Rabbit NFT receiver / project wallet shown on platform</td></tr>
+              </tbody>
+            </table></div>
+          </article>
+
+          <article id="presale" class="lust-wp-section">
+            <h2>11. Genesis Liquidity Event</h2>
+            <p>The Genesis Liquidity Event is the public LUSDT-based presale designed to create the first <strong>WLST/LUSDT</strong> liquidity pool.</p>
+            <div class="wp-table-wrap"><table class="wp-table">
+              <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+              <tbody>
+                <tr><td>Contract</td><td><code>0x6AD87104DDC8F7CEd9267F115EE107F44AA9f936</code></td></tr>
+                <tr><td>Payment token</td><td>LUSDT on LUST Chain, 6 decimals</td></tr>
+                <tr><td>Genesis price</td><td>1 LST = 0.10 LUSDT</td></tr>
+                <tr><td>Conversion</td><td>1 LUSDT = 10 LST</td></tr>
+                <tr><td>Minimum buy</td><td>10 LUSDT</td></tr>
+                <tr><td>Maximum per wallet</td><td>500 LUSDT</td></tr>
+                <tr><td>Softcap</td><td>5,000 LUSDT</td></tr>
+                <tr><td>Main target</td><td>15,000 LUSDT</td></tr>
+                <tr><td>Hardcap</td><td>30,000 LUSDT</td></tr>
+                <tr><td>Duration</td><td>60 days after contract start</td></tr>
+                <tr><td>Buy fee</td><td>0.20%</td></tr>
+                <tr><td>Liquidity use</td><td>100% of net LUSDT raised is designed for WLST/LUSDT liquidity</td></tr>
+                <tr><td>LP lock</td><td>LP tokens locked inside the presale contract for 12 months</td></tr>
+                <tr><td>Refund case 1</td><td>Softcap not reached</td></tr>
+                <tr><td>Refund case 2</td><td>Softcap reached but liquidity not created during the grace period</td></tr>
+              </tbody>
+            </table></div>
+            <h3>11.1 Bonus schedule</h3>
+            <ul>
+              <li>Days 1–15: <strong>20%</strong> bonus.</li>
+              <li>Days 16–30: <strong>15%</strong> bonus.</li>
+              <li>Days 31–60: <strong>10%</strong> bonus.</li>
+              <li>Bonus unlocks after liquidity in three stages: <strong>6, 9, and 12 months</strong>.</li>
+            </ul>
+            <p>Purchased LST becomes claimable only after liquidity is created. Bonus LST is separate and follows the delayed unlock schedule.</p>
+            <h3>11.2 Liquidity-first rule</h3>
+            <p>Public staking and public mining remain locked for the community until the first WLST/LUSDT liquidity pool is created. The intended order is presale, then liquidity, then public staking and public mining.</p>
+          </article>
+
+          <article id="bridge" class="lust-wp-section">
+            <h2>12. LUSDT Bridge</h2>
+            <p>The LUSDT bridge connects external USDT liquidity from Polygon and BNB Smart Chain to LUST Chain, where users receive LUSDT for presale and ecosystem use.</p>
+            <div class="wp-table-wrap"><table class="wp-table">
+              <thead><tr><th>Bridge element</th><th>Value</th></tr></thead>
+              <tbody>
+                <tr><td>LUST LUSDT token</td><td><code>0x1E8636066d7e86De0A8Bd6Acb1e54BE129aC19AE</code></td></tr>
+                <tr><td>LUST executor</td><td><code>0xbBC818f161D1B7190f85bE258CDB568a5A63f380</code></td></tr>
+                <tr><td>Polygon lockbox</td><td><code>0x273cC6A72aF97381daa07332Df768a05cb30CE47</code></td></tr>
+                <tr><td>BSC lockbox</td><td><code>0x273cC6A72aF97381daa07332Df768a05cb30CE47</code></td></tr>
+                <tr><td>Security threshold</td><td>2 of 4 validators</td></tr>
+                <tr><td>Bridge fee</td><td>0.20%</td></tr>
+                <tr><td>Fee treasury</td><td><code>0x5feb6d7135318565Fb02F6513dB4758dB51Df9D7</code></td></tr>
+              </tbody>
+            </table></div>
+            <p>The bridge is designed to support deposits from Polygon or BSC and mint LUSDT on LUST Chain. Burns or releases in the reverse direction depend on destination reserves, validator authorization, and bridge rules.</p>
+          </article>
+
+          <article id="swap" class="lust-wp-section">
+            <h2>13. WLST and Swap Infrastructure</h2>
+            <h3>13.1 WLST</h3>
+            <p><strong>WLST</strong> is the wrapped version of native LST. It allows native LST to be used as an ERC-20 style asset in swap pools, liquidity contracts, routing logic, and DeFi-style integrations.</p>
+            <ul>
+              <li><strong>WLST contract:</strong> <code>0xF8E57f2ee77B13F6673155308C9c431Ce9F90D86</code></li>
+              <li><strong>Relationship:</strong> intended to operate as a 1:1 wrapped representation of native LST.</li>
+            </ul>
+            <h3>13.2 Swap contracts</h3>
+            <ul>
+              <li><strong>Router:</strong> <code>0x62883a46b045Cf1811DfDBec3FE0EAdc78f888f0</code></li>
+              <li><strong>Factory:</strong> <code>0x97E0B70fc246BF98Db90D94C10B3409A809319bD</code></li>
+              <li><strong>Default assets:</strong> LST, WLST, LUSDT, and community-created tokens.</li>
+              <li><strong>Swap fee:</strong> 0.30% on the swap interface.</li>
+            </ul>
+            <p>The initial public liquidity plan is centered on the WLST/LUSDT pair created after the Genesis Liquidity Event.</p>
+          </article>
+
+          <article id="staking" class="lust-wp-section">
+            <h2>14. Staking</h2>
+            <p>LUST staking is separate from consensus mining. It uses a fixed <strong>5,000,000 LST</strong> reserve funded from the genesis allocation. There is no infinite minting and no extra staking issuance outside the funded vault.</p>
+            <div class="wp-table-wrap"><table class="wp-table">
+              <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+              <tbody>
+                <tr><td>Contract</td><td><code>0x300D30d1585BE7865dC5005Eb3C08dd6Ec1C73f1</code></td></tr>
+                <tr><td>Reward reserve</td><td>5,000,000 LST</td></tr>
+                <tr><td>Minimum stake</td><td>100 LST</td></tr>
+                <tr><td>Maximum active principal</td><td>10,000 LST per wallet</td></tr>
+                <tr><td>Claim interval</td><td>Every 24 hours</td></tr>
+                <tr><td>Opening</td><td>After liquidity launch / public community launch</td></tr>
+              </tbody>
+            </table></div>
+            <h3>14.1 Staking plans</h3>
+            <div class="wp-table-wrap"><table class="wp-table">
+              <thead><tr><th>Plan</th><th>Duration</th><th>APR</th><th>Early-exit protection</th></tr></thead>
+              <tbody>
+                <tr><td>LUST Spark</td><td>30 days</td><td>6%</td><td>3%</td></tr>
+                <tr><td>LUST Flame</td><td>90 days</td><td>10%</td><td>5%</td></tr>
+                <tr><td>LUST Diamond</td><td>180 days</td><td>15%</td><td>8%</td></tr>
+                <tr><td>LUST Eternal</td><td>360 days</td><td>20%</td><td>12%</td></tr>
+              </tbody>
+            </table></div>
+            <p>Early exit protections, forfeited rewards, and clawbacks remain in the community staking reserve, helping protect the long-term pool.</p>
+          </article>
+
+          <article id="vesting" class="lust-wp-section">
+            <h2>15. Creator Vesting</h2>
+            <p>The creator allocation is locked in a public vesting contract and is not freely available at launch.</p>
+            <div class="wp-table-wrap"><table class="wp-table">
+              <thead><tr><th>Rule</th><th>Value</th></tr></thead>
+              <tbody>
+                <tr><td>Contract</td><td><code>0xDA389505bFCf1e11b894CF0A7Ef0116DbC436e8A</code></td></tr>
+                <tr><td>Total allocation</td><td>2,000,000 LST</td></tr>
+                <tr><td>Funding</td><td>Contract funded before launch activation</td></tr>
+                <tr><td>Start trigger</td><td>Only when community launch is set after liquidity and public mining are opened</td></tr>
+                <tr><td>Cliff</td><td>180 days after community launch time</td></tr>
+                <tr><td>First release</td><td>10% after cliff</td></tr>
+                <tr><td>Remaining release</td><td>90% over 24 periods of 30 days</td></tr>
+                <tr><td>Excess recovery</td><td>Only excess sent by mistake can be recovered; reserved allocation cannot be withdrawn early</td></tr>
+              </tbody>
+            </table></div>
+            <p>This structure aligns the creator with long-term development and reduces the risk of early unrestricted selling.</p>
+          </article>
+
+          <article id="treasury" class="lust-wp-section">
+            <h2>16. Treasury, Reserves and Progressive Decentralization</h2>
+            <p>The treasury model separates operational costs, community rewards, ecosystem growth, NFT community incentives, contributors, and strategic reserves.</p>
+            <h3>16.1 Public reserve addresses</h3>
+            <div class="wp-table-wrap"><table class="wp-table">
+              <thead><tr><th>Reserve</th><th>Address</th><th>Base amount</th><th>Purpose</th></tr></thead>
+              <tbody>
+                <tr><td>Community Treasury &amp; Public Rewards</td><td><code>0x30aF2866A6e1A193e17a95924C15aA19d13E759F</code></td><td>2,000,000 LST + bootstrap rewards</td><td>Community rewards, campaigns, faucet support, public incentives</td></tr>
+                <tr><td>Operational &amp; Infrastructure Reserve</td><td><code>0x1429501E5F963Cbf590e60C6F4a75beB33396046</code></td><td>500,000 LST</td><td>RPC, explorer, bridge, servers, security, domains, development, audits, operations</td></tr>
+                <tr><td>Core Contributors Reserve</td><td><code>0x62E94D7a807593d443AdF8B2D873bcF3AE0fBe9A</code></td><td>1,000,000 LST</td><td>Developers, contributors, security, technical grants</td></tr>
+                <tr><td>Rabbit Club &amp; NFT Ecosystem Reserve</td><td><code>0xe5edd2A4b8895CA07401CdbA090772a8FBe8ad09</code></td><td>1,500,000 LST</td><td>Rabbit Club, Pioneer Rewards, NFT campaigns, holder rewards, future NFT seasons</td></tr>
+                <tr><td>Ecosystem Growth Reserve</td><td><code>0x67A8eE3212a46eeEe661C817BDf595aB1F61D202</code></td><td>1,500,000 LST</td><td>Grants, integrations, apps, marketplace, partnerships, builder growth</td></tr>
+                <tr><td>Strategic Reserve &amp; Future Liquidity</td><td><code>0x6e81Cb6C6e010ce9C77eB466c16bf481362c5Dd1</code></td><td>800,000 LST</td><td>Emergency reserve, future pools, liquidity support, strategic protection</td></tr>
+              </tbody>
+            </table></div>
+            <h3>16.2 Community Treasury</h3>
+            <p>The Community Treasury may receive rewards generated by official producers during bootstrap, when no eligible public miners are active or before public mining is opened economically. These rewards are treated as community resources, not as a permanent private advantage.</p>
+            <p>Because protocol rewards can accumulate over time, the live Community Treasury balance may be higher than its 2,000,000 LST base allocation. The live balance should be checked on the explorer.</p>
+            <h3>16.3 Future treasury contract</h3>
+            <p>The Community Treasury may remain as a public operational wallet during the early phase. As the network matures, community-controlled funds are intended to migrate into public smart contracts, multisig structures, timelocks, or decentralized governance mechanisms.</p>
+            <p>The long-term goal is to reduce dependency on any single operator and progressively move community resources toward transparent, auditable, and rule-based on-chain management.</p>
+          </article>
+
+          <article id="nfts" class="lust-wp-section">
+            <h2>17. NFTs, Rabbit Club and Pioneer Rewards</h2>
+            <h3>17.1 LUST Rabbit Club</h3>
+            <p>LUST Rabbit Club is the official founder NFT collection of LUST Chain and a central part of the community identity strategy.</p>
+            <div class="wp-table-wrap"><table class="wp-table">
+              <thead><tr><th>Field</th><th>Value</th></tr></thead>
+              <tbody>
+                <tr><td>Collection contract</td><td><code>0x81b9a5bB109919CFF3eE4C92B2372ABCd73614e6</code></td></tr>
+                <tr><td>Whitelist registry</td><td><code>0xA16DE59e5F13edf51464EdF807d0B23175cecfA6</code></td></tr>
+                <tr><td>Payment token</td><td>LUSDT</td></tr>
+                <tr><td>Total supply</td><td>10,000 Rabbits</td></tr>
+                <tr><td>Mint supply</td><td>9,700 whitelist/public mint</td></tr>
+                <tr><td>Reserve supply</td><td>300 transparent community/ecosystem Rabbits</td></tr>
+                <tr><td>Whitelist mint</td><td>50 LUSDT for approved wallets after whitelist sale opens</td></tr>
+                <tr><td>Public mint</td><td>100 LUSDT after public sale opens</td></tr>
+                <tr><td>Secondary royalty</td><td>5% on supported marketplaces</td></tr>
+                <tr><td>Project / royalty receiver</td><td><code>0x74b8db40d1bC5B590bB8dBB62dCc60Eb2DaD8f12</code></td></tr>
+              </tbody>
+            </table></div>
+            <p>The 300 reserved Rabbits are not a hidden rarity allocation. They are reserved for community rewards, miners, ambassadors, campaigns, partners, and future activations.</p>
+            <p>Rabbit Club is a membership and community utility collection. It does not promise dividends, guaranteed returns, or profit sharing.</p>
+            <h3>17.2 Rabbit Club &amp; NFT Ecosystem Reserve</h3>
+            <p>The <strong>1,500,000 LST</strong> Rabbit Club &amp; NFT Ecosystem Reserve supports current and future NFT/community activations, including holder rewards, future Pioneer seasons, Bunny Pets, Rabbit Serum, ambassadors, miner campaigns, marketplace incentives, creator campaigns, and NFT partnerships.</p>
+            <h3>17.3 LUST Pioneer Rewards</h3>
+            <div class="wp-table-wrap"><table class="wp-table">
+              <thead><tr><th>Field</th><th>Value</th></tr></thead>
+              <tbody>
+                <tr><td>Contract</td><td><code>0xCb207489E4dbd6D4e3bf75CA947D0C43d621Fef1</code></td></tr>
+                <tr><td>Campaign model</td><td>Free reward campaign connected to social/presale promotion</td></tr>
+                <tr><td>Supply</td><td>10,000 Pioneer NFTs</td></tr>
+                <tr><td>Mint rule</td><td>One wallet and one normalized X account hash can mint only once</td></tr>
+                <tr><td>Reward tiers</td><td>0, 5, 10, 20, and 50 LST</td></tr>
+                <tr><td>Claim rule</td><td>Claims remain locked until liquidity is officially opened</td></tr>
+                <tr><td>Purpose</td><td>Early community growth, presale awareness, and public campaign participation</td></tr>
+              </tbody>
+            </table></div>
+          </article>
+
+          <article id="apps" class="lust-wp-section">
+            <h2>18. Ecosystem Apps: P2P, Token Factory and Creator Tools</h2>
+            <h3>18.1 P2P LST/LUSDT market</h3>
+            <p>The P2P market allows users to create buy or sell orders, support partial fills, and settle directly through a public contract. Native LST is locked for sell orders and LUSDT is locked for buy orders.</p>
+            <ul>
+              <li><strong>P2P contract:</strong> <code>0xcd821edE23048F8fea777EEEc3948135758E4926</code></li>
+              <li><strong>Pricing:</strong> LUSDT per 1 LST.</li>
+              <li><strong>Purpose:</strong> community-driven market access around LST and LUSDT.</li>
+            </ul>
+            <h3>18.2 Token Factory</h3>
+            <p>The Token Factory lets users create community tokens on LUST Chain. Plans include Basic, Logo, and Premium token creation with optional explorer metadata and social/profile information.</p>
+            <ul>
+              <li><strong>Factory contract:</strong> <code>0xbCB6A89713796eE1C0414c8898dED5657e6b9526</code></li>
+              <li><strong>Basic plan:</strong> token creation only.</li>
+              <li><strong>Logo plan:</strong> token creation with logo and short explorer metadata.</li>
+              <li><strong>Premium plan:</strong> token creation with logo, full description, website, socials, docs, audit links, and market links.</li>
+            </ul>
+            <p>Community-created tokens are not automatically audited or endorsed by LUST Chain. Users should always verify contract addresses and understand the risks.</p>
+            <h3>18.3 Creator economy direction</h3>
+            <p>The ecosystem may evolve to support collectible NFTs, utility NFTs, memberships, access passes, creator storefronts, royalties, direct monetization, campaigns, marketplace tools, and gated community experiences. Restricted-access models should comply with applicable laws, age restrictions where applicable, moderation standards, and access-control requirements.</p>
+          </article>
+
+          <article id="infra" class="lust-wp-section">
+            <h2>19. Infrastructure, Operations and Transparency</h2>
+            <h3>19.1 Public infrastructure</h3>
+            <p>LUST infrastructure includes the public website, platform, explorer, primary RPC, backup RPC, snapshot service, downloads, bridge system, faucet, mining interface, presale interface, staking interface, swap interface, P2P market, token factory, NFT pages, and public contract references.</p>
+            <h3>19.2 Operational reserve</h3>
+            <p>The Operational &amp; Infrastructure Reserve contains <strong>500,000 LST</strong> and exists to support real costs required to operate, secure, maintain, and expand LUST Chain.</p>
+            <p>Eligible operational uses include RPC infrastructure, explorer infrastructure, bridge infrastructure, servers, backups, domains, security, frontend/backend development, smart contract development, audits, public launch support, integrations, listings, documentation, user support, official tools, and long-term maintenance.</p>
+            <h3>19.3 Transparency direction</h3>
+            <p>The project direction is to reduce dependence on large private balances. Major resources should progressively move toward public contracts, vaults, vesting systems, liquidity locks, timelocks, multisigs, dashboards, and public reporting.</p>
+            <p>The ecosystem should publish updates about liquidity creation, LP lock status, staking opening, public mining opening, treasury transfers, reserve usage, major NFT/community campaigns, and contract changes.</p>
+          </article>
+
+          <article id="roadmap" class="lust-wp-section">
+            <h2>20. Roadmap</h2>
+            <ul>
+              <li><strong>Phase 1 — Technical Bootstrap:</strong> mainnet operation, RPC, backup RPC, explorer, snapshot, downloads, bridge infrastructure, platform, and initial contracts.</li>
+              <li><strong>Phase 2 — Allocation Organization:</strong> staking vault, creator vesting, Genesis Liquidity Event, reserve wallets, public labels, and tokenomics alignment.</li>
+              <li><strong>Phase 3 — Genesis Liquidity Event:</strong> LUSDT-based presale, buyer limits, bonus schedule, refund protection, and LST allocation for liquidity formation.</li>
+              <li><strong>Phase 4 — Liquidity Launch:</strong> creation of the first WLST/LUSDT pool, LP lock, presale claim opening, and public liquidity transparency.</li>
+              <li><strong>Phase 5 — Public Staking and Mining:</strong> staking opening, public miner registration, LQC activation, heartbeat rules, public rewards, and reduced dependence on official producers.</li>
+              <li><strong>Phase 6 — Community Treasury Vault:</strong> migration of community resources from operational wallet to public contract, multisig, timelock, or governance-based system.</li>
+              <li><strong>Phase 7 — NFT and Creator Expansion:</strong> Rabbit Club activation, Pioneer seasons, Bunny Pets, Rabbit Serum, marketplace incentives, creator tools, and gated community systems.</li>
+              <li><strong>Phase 8 — Ecosystem Growth:</strong> token factory growth, P2P usage, integrations, grants, builder onboarding, strategic liquidity, partnerships, and long-term community governance.</li>
+            </ul>
+          </article>
+
+          <article id="risks" class="lust-wp-section">
+            <h2>21. Risks, Legal Notice and Conclusion</h2>
+            <h3>21.1 Risks and limitations</h3>
+            <p>LUST Chain involves risks, including technical risk in the client, bridge, contracts and infrastructure; economic and liquidity risk; regulatory risk; adoption risk; execution risk; lower-than-expected participation; validator or bridge operation risk; smart contract bugs; NFT market risk; treasury management risk; and market volatility.</p>
+            <h3>21.2 Legal notice</h3>
+            <p>LUST Chain is a blockchain software and infrastructure project. LST does not represent equity, ownership interest, debt, guaranteed yield, dividend, ownership of the project, or a promise of profit. This document is informational and descriptive only and does not constitute financial, legal, tax, or investment advice.</p>
+            <p>Participation in presale, staking, mining, bridge usage, NFTs, swaps, token factory, P2P markets, or any ecosystem activity involves risk. Users should review contracts, understand the rules, verify addresses, and make independent decisions.</p>
+            <h3>21.3 Conclusion</h3>
+            <p>LUST Chain combines LQC consensus, EVM compatibility, native LST, WLST, LUSDT bridge infrastructure, transparent presale liquidity formation, era-based protocol rewards, fixed staking reserve, creator vesting, public treasury growth, reserve labeling, Rabbit Club, Pioneer Rewards, swap infrastructure, P2P, token factory, and progressive decentralization.</p>
+            <p>The objective is to build a durable, auditable, and community-centered ecosystem where liquidity, public mining, staking, treasury resources, NFTs, creator tools, and public rewards are introduced in an organized and transparent sequence.</p>
+          </article>
+        </main>
+      </div>
+    </div>
+  </section>
+
+  <script>
     (function () {
       const buttons = document.querySelectorAll(".wp-nav button[data-target]");
       const sections = document.querySelectorAll(".lust-wp-section");
@@ -942,92 +1003,96 @@
     })();
   </script>
 </main>
-<footer aria-label="LUST Chain footer" class="footer lust-footer lust-footer--v8">
-<div aria-hidden="true" class="lust-footer__glow"></div>
-<div class="lust-footer__inner">
-<div class="lust-footer__topline">
-<section aria-label="LUST Chain summary" class="lust-footer__brand">
-<a aria-label="LUST Chain home" class="lust-footer__logo" href="./index.html">
-<img alt="LUST Chain logo" loading="lazy" src="./assets/lust-logo.png"/>
-</a>
-<div class="lust-footer__brand-copy">
-<strong>LUST CHAIN</strong>
-<p>Independent EVM L1 for LST, LUSDT, WLST liquidity, NFTs, swap, P2P and public mining — organized around transparent contracts and staged liquidity launch.</p>
-</div>
-</section>
-<nav aria-label="Official social links" class="lust-footer__socials">
-<a aria-label="LUST Chain on X" class="lust-footer__social" href="https://x.com/lust_chain" rel="noreferrer" target="_blank">
-<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M18.9 2H22l-6.77 7.74L23.2 22h-6.25l-4.89-6.39L6.47 22H3.36l7.24-8.27L.8 2h6.41l4.42 5.84L18.9 2Zm-1.1 18h1.73L6.26 3.9H4.4L17.8 20Z" fill="currentColor"></path></svg><span>X</span>
-</a>
-<a aria-label="LUST Chain on Telegram" class="lust-footer__social" href="https://t.me/+is17w3vOlvEyNGQ5" rel="noreferrer" target="_blank">
-<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M21.5 4.5 18.3 19c-.24 1.03-.88 1.28-1.77.8l-4.9-3.61-2.36 2.27c-.26.26-.48.48-.98.48l.35-4.98 9.06-8.19c.39-.35-.08-.55-.61-.2L5.92 12.6.98 11.06c-1.07-.34-1.09-1.07.22-1.58L20.5 2.03c.9-.33 1.68.2 1 2.47Z" fill="currentColor"></path></svg><span>Telegram</span>
-</a>
-<a aria-label="LUST Chain on GitHub" class="lust-footer__social" href="https://github.com/lustchain" rel="noreferrer" target="_blank">
-<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.66.5 12.02c0 5.1 3.3 9.42 7.87 10.95.58.11.79-.25.79-.56v-2.17c-3.2.7-3.87-1.54-3.87-1.54-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.76 2.68 1.25 3.33.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.67 0-1.25.45-2.27 1.17-3.07-.12-.29-.51-1.47.11-3.06 0 0 .96-.31 3.14 1.17a10.92 10.92 0 0 1 5.72 0c2.18-1.48 3.13-1.17 3.13-1.17.63 1.59.24 2.77.12 3.06.73.8 1.17 1.82 1.17 3.07 0 4.4-2.69 5.38-5.25 5.66.41.36.77 1.05.77 2.13v3.16c0 .31.21.68.8.56A11.53 11.53 0 0 0 23.5 12C23.5 5.66 18.35.5 12 .5Z" fill="currentColor"></path></svg><span>GitHub</span>
-</a>
-<a aria-label="Email LUST Chain" class="lust-footer__social" href="mailto:contact@lustchain.org">
-<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M2.25 5.5A2.25 2.25 0 0 1 4.5 3.25h15A2.25 2.25 0 0 1 21.75 5.5v13A2.25 2.25 0 0 1 19.5 20.75h-15A2.25 2.25 0 0 1 2.25 18.5v-13Zm1.9-.35 7.34 6.05a.8.8 0 0 0 1.02 0l7.34-6.05H4.15Zm16.1 1.55-6.63 5.47a2.3 2.3 0 0 1-2.92 0L4.07 6.7V18.5c0 .24.2.44.43.44h15c.24 0 .43-.2.43-.44V6.7Z" fill="currentColor"></path></svg><span>Email</span>
-</a>
-</nav>
-</div>
-<div class="lust-footer__middle">
-<nav aria-label="Footer navigation" class="lust-footer__links">
-<div>
-<h2>Platform</h2>
-<a href="./index.html">Home</a>
-<a href="./presale.html">Genesis Presale</a>
-<a href="./bridge.html">LUSDT Bridge</a>
-<a href="./swap.html">Swap</a>
-<a href="./p2p.html">P2P Market</a>
-</div>
-<div>
-<h2>Ecosystem</h2>
-<a href="./mining.html">Mining</a>
-<a href="./staking.html">Staking</a>
-<a href="./nfts.html">NFTs</a>
-<a href="./launchpad.html">Liquidity Launchpad</a>
-<a href="./factory.html">Token Factory</a>
-<a href="./faucet.html">Gas Faucet</a>
-</div>
-<div>
-<h2>Resources</h2>
-<a href="./whitepaper.html">Whitepaper</a>
-<a href="./docs.html">Docs</a>
-<a href="https://explorer.lustchain.org" rel="noreferrer" target="_blank">Explorer</a>
-<a href="https://rpc.lustchain.org" rel="noreferrer" target="_blank">RPC</a>
-<a href="https://rpc-backup.lustchain.org" rel="noreferrer" target="_blank">Backup RPC</a>
-</div>
-<div>
-<h2>Legal</h2>
-<a href="./privacy-policy.html">Privacy Policy</a>
-<a href="./terms-and-conditions.html">Terms &amp; Conditions</a>
-<a href="./risk-disclosure.html">Risk Disclosure</a>
-<a href="https://lustchain.org" rel="noreferrer" target="_blank">Main Site</a>
-</div>
-</nav>
-<aside aria-label="Network quick facts" class="lust-footer__network">
-<h2>Network</h2>
-<div aria-label="Network details" class="lust-footer__badges">
-<span>Chain ID 6923</span>
-<span>Native LST</span>
-<span>LQC</span>
-<span>15s blocks</span>
-</div>
-<p>Use the official explorer and docs to verify contracts, reserves and launch status.</p>
-<div class="lust-footer__quick-actions">
-<a href="https://explorer.lustchain.org" rel="noreferrer" target="_blank">Explorer</a>
-<a href="./docs.html">Docs</a>
-</div>
-</aside>
-</div>
-</div>
-<div class="lust-footer__bottom">
-<span>© 2026 LUST Chain. Built for public ownership and transparent on-chain activity.</span>
-<span>X @lust_chain · Telegram · GitHub lustchain · contact@lustchain.org</span>
-</div>
+<footer class="footer lust-footer lust-footer--v8" aria-label="LUST Chain footer">
+  <div class="lust-footer__glow" aria-hidden="true"></div>
+  <div class="lust-footer__inner">
+    <div class="lust-footer__topline">
+      <section class="lust-footer__brand" aria-label="LUST Chain summary">
+        <a class="lust-footer__logo" href="./index.html" aria-label="LUST Chain home">
+          <img src="./assets/lust-logo.png" alt="LUST Chain logo" loading="lazy" />
+        </a>
+        <div class="lust-footer__brand-copy">
+          <strong>LUST CHAIN</strong>
+          <p>Independent EVM L1 for LST, LUSDT, WLST liquidity, NFTs, swap, P2P and public mining — organized around transparent contracts and staged liquidity launch.</p>
+        </div>
+      </section>
+
+      <nav class="lust-footer__socials" aria-label="Official social links">
+        <a class="lust-footer__social" href="https://x.com/lust_chain" target="_blank" rel="noreferrer" aria-label="LUST Chain on X">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.77 7.74L23.2 22h-6.25l-4.89-6.39L6.47 22H3.36l7.24-8.27L.8 2h6.41l4.42 5.84L18.9 2Zm-1.1 18h1.73L6.26 3.9H4.4L17.8 20Z" fill="currentColor"/></svg><span>X</span>
+        </a>
+        <a class="lust-footer__social" href="https://t.me/+is17w3vOlvEyNGQ5" target="_blank" rel="noreferrer" aria-label="LUST Chain on Telegram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 4.5 18.3 19c-.24 1.03-.88 1.28-1.77.8l-4.9-3.61-2.36 2.27c-.26.26-.48.48-.98.48l.35-4.98 9.06-8.19c.39-.35-.08-.55-.61-.2L5.92 12.6.98 11.06c-1.07-.34-1.09-1.07.22-1.58L20.5 2.03c.9-.33 1.68.2 1 2.47Z" fill="currentColor"/></svg><span>Telegram</span>
+        </a>
+        <a class="lust-footer__social" href="https://github.com/lustchain" target="_blank" rel="noreferrer" aria-label="LUST Chain on GitHub">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.66.5 12.02c0 5.1 3.3 9.42 7.87 10.95.58.11.79-.25.79-.56v-2.17c-3.2.7-3.87-1.54-3.87-1.54-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.76 2.68 1.25 3.33.96.1-.75.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.67 0-1.25.45-2.27 1.17-3.07-.12-.29-.51-1.47.11-3.06 0 0 .96-.31 3.14 1.17a10.92 10.92 0 0 1 5.72 0c2.18-1.48 3.13-1.17 3.13-1.17.63 1.59.24 2.77.12 3.06.73.8 1.17 1.82 1.17 3.07 0 4.4-2.69 5.38-5.25 5.66.41.36.77 1.05.77 2.13v3.16c0 .31.21.68.8.56A11.53 11.53 0 0 0 23.5 12C23.5 5.66 18.35.5 12 .5Z" fill="currentColor"/></svg><span>GitHub</span>
+        </a>
+        <a class="lust-footer__social" href="mailto:contact@lustchain.org" aria-label="Email LUST Chain">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.25 5.5A2.25 2.25 0 0 1 4.5 3.25h15A2.25 2.25 0 0 1 21.75 5.5v13A2.25 2.25 0 0 1 19.5 20.75h-15A2.25 2.25 0 0 1 2.25 18.5v-13Zm1.9-.35 7.34 6.05a.8.8 0 0 0 1.02 0l7.34-6.05H4.15Zm16.1 1.55-6.63 5.47a2.3 2.3 0 0 1-2.92 0L4.07 6.7V18.5c0 .24.2.44.43.44h15c.24 0 .43-.2.43-.44V6.7Z" fill="currentColor"/></svg><span>Email</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="lust-footer__middle">
+      <nav class="lust-footer__links" aria-label="Footer navigation">
+        <div>
+          <h2>Platform</h2>
+          <a href="./index.html">Home</a>
+          <a href="./presale.html">Genesis Presale</a>
+          <a href="./bridge.html">LUSDT Bridge</a>
+          <a href="./swap.html">Swap</a>
+          <a href="./p2p.html">P2P Market</a>
+        </div>
+        <div>
+          <h2>Ecosystem</h2>
+          <a href="./mining.html">Mining</a>
+          <a href="./staking.html">Staking</a>
+          <a href="./nfts.html">NFTs</a>
+          <a href="./launchpad.html">Liquidity Launchpad</a>
+          <a href="./factory.html">Token Factory</a>
+          <a href="./faucet.html">Gas Faucet</a>
+        </div>
+        <div>
+          <h2>Resources</h2>
+          <a href="./whitepaper.html">Whitepaper</a>
+          <a href="./docs.html">Docs</a>
+          <a href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">Explorer</a>
+          <a href="https://rpc.lustchain.org" target="_blank" rel="noreferrer">RPC</a>
+          <a href="https://rpc-backup.lustchain.org" target="_blank" rel="noreferrer">Backup RPC</a>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <a href="./privacy-policy.html">Privacy Policy</a>
+          <a href="./terms-and-conditions.html">Terms & Conditions</a>
+          <a href="./risk-disclosure.html">Risk Disclosure</a>
+          <a href="https://lustchain.org" target="_blank" rel="noreferrer">Main Site</a>
+        </div>
+      </nav>
+
+      <aside class="lust-footer__network" aria-label="Network quick facts">
+        <h2>Network</h2>
+        <div class="lust-footer__badges" aria-label="Network details">
+          <span>Chain ID 6923</span>
+          <span>Native LST</span>
+          <span>LQC</span>
+          <span>15s blocks</span>
+        </div>
+        <p>Use the official explorer and docs to verify contracts, reserves and launch status.</p>
+        <div class="lust-footer__quick-actions">
+          <a href="https://explorer.lustchain.org" target="_blank" rel="noreferrer">Explorer</a>
+          <a href="./docs.html">Docs</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="lust-footer__bottom">
+    <span>© 2026 LUST Chain. Built for public ownership and transparent on-chain activity.</span>
+    <span>X @lust_chain · Telegram · GitHub lustchain · contact@lustchain.org</span>
+  </div>
 </footer>
-<button aria-label="Back to top" class="back-to-top" id="backToTop" type="button">↑</button>
-<script src="./app.js?v20260613-lustswap-v1" type="module"></script>
+<button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
+<script type="module" src="./app.js?v20260613-lustswap-v1"></script>
 <script src="./nft-menu.js?v=20260616-hover-v5"></script>
 <script>
 (function () {
@@ -1045,5 +1110,6 @@
   });
 })();
 </script>
-<script defer="" src="./nav-mobile.js"></script></body>
+<script src="./nav-mobile.js?v=20260716-mobile-final"></script>
+</body>
 </html>

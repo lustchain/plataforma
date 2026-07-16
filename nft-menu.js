@@ -1,13 +1,13 @@
 (() => {
   const desktopPointer = window.matchMedia('(hover: hover) and (pointer: fine)');
-  const menus = Array.from(document.querySelectorAll('.nav-nft-menu'));
+  const menus = Array.from(document.querySelectorAll('.nav-dropdown-menu'));
   const CLOSE_DELAY_MS = 120;
 
   const isDesktop = () => desktopPointer.matches;
 
   menus.forEach((menu) => {
     const summary = menu.querySelector(':scope > summary');
-    const dropdown = menu.querySelector(':scope > .nav-nft-dropdown');
+    const dropdown = menu.querySelector(':scope > .nav-dropdown-panel');
     if (!summary || !dropdown) return;
 
     let closeTimer = null;
